@@ -4,7 +4,7 @@ const postSchema = new Schema({
 	authorName: String,
 	title: String,
 	imageLink: String,
-	category: String,
+	categories: [String],
 	description: String,
 	isFeaturedPost: Boolean,
 	timeOfPost: { type: Date, default: Date.now },
