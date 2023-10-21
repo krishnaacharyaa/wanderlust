@@ -1,6 +1,18 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/home-page";
+import AddBlog from "./pages/add-blog";
+import DetailsPage from "./pages/details-page";
 function App() {
 	return (
-		<h1 className="text-3xl font-bold text-red-400 underline">Hello world!</h1>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/">
+					<Route index element={<HomePage />} />
+					<Route path="add-blog" element={<AddBlog />} />
+					<Route path="details-page" element={<DetailsPage />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
