@@ -3,6 +3,7 @@ import FeaturedPostCard from "../components/featured-post-card";
 import { CATEGORIES } from "../constants/categories";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { categoryProps } from "../utils/category-props";
 export default function BlogFeed() {
 	const [selectedCategory, setSelectedCategory] = useState("featured");
 	const [posts, setPosts] = useState([]);
@@ -53,7 +54,7 @@ export default function BlogFeed() {
 				<div className="w-full md:w-1/3 p-4">
 					<div className="mb-4">
 						<h2 className="text-xl font-semibold mb-2">Categories</h2>
-						<div className="flex flex-wrap">
+						<div className="flex flex-wrap gap-2">
 							{CATEGORIES.map((category) => (
 								<button
 									key={category}
@@ -62,11 +63,11 @@ export default function BlogFeed() {
 											selectedCategory === category ? "featured" : category
 										)
 									}
-									className={`px-2 py-1 rounded-full mr-2 mb-2 ${
+									className={
 										selectedCategory === category
-											? "bg-blue-500 text-white"
-											: "bg-gray-200 text-gray-700"
-									}`}
+											? categoryProps(category, true)
+											: categoryProps(category)
+									}
 								>
 									{category}
 								</button>
