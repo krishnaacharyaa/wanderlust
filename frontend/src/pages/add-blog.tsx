@@ -10,7 +10,7 @@ type FormData = {
 	description: string;
 	isFeaturedPost: boolean;
 };
-
+import { FiArrowLeft } from "react-icons/fi";
 function AddBlog() {
 	const [formData, setFormData] = useState<FormData>({
 		title: "",
@@ -67,8 +67,17 @@ function AddBlog() {
 	};
 	const navigate = useNavigate();
 	return (
-		<div className="p-4 px-16 bg-white shadow">
-			<h2 className="text-2xl font-bold mb-4">Create Post</h2>
+		<div className="p-4 px-16 bg-white ">
+			<div className="flex justify-start items-center mb-4">
+				<div className=" text-black cursor-pointer w-fit">
+					<FiArrowLeft
+						style={{ fontSize: "24px" }}
+						onClick={() => navigate(-1)}
+					/>
+				</div>
+				<h2 className="text-2xl font-bold ml-4">Create Post</h2>
+			</div>
+
 			<form onSubmit={handleSubmit}>
 				<div className="mb-4">
 					<input

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import formatPostTime from "../utils/format-post-time";
 import Post from "../types/post-type";
-import { FiArrowLeft } from "react-icons/fi"; // Assuming you have an arrow icon from a library
+import { FiArrowLeft } from "react-icons/fi";
 
 const DetailsPage = () => {
 	const { state } = useLocation();
