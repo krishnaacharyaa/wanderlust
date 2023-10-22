@@ -42,7 +42,7 @@ export default function BlogFeed() {
 					<h1 className="text-2xl font-semibold">
 						{selectedCategory === "featured"
 							? "Featured Posts"
-							: `Posts in ${selectedCategory}`}
+							: `Posts related to "${selectedCategory}"`}
 					</h1>
 					<div className="flex flex-col gap-4">
 						{posts.slice(0, 5).map((post) => (
