@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { CATEGORIES } from "../constants/categories";
 type FormData = {
 	title: string;
 	authorName: string;
@@ -9,14 +10,6 @@ type FormData = {
 	description: string;
 	isFeaturedPost: boolean;
 };
-
-const predefinedCategories = [
-	"Adventure",
-	"Food",
-	"Nature",
-	"Culture",
-	"Travel Tips",
-];
 
 function AddBlog() {
 	const [formData, setFormData] = useState<FormData>({
@@ -120,7 +113,7 @@ function AddBlog() {
 				<div className="mb-4 flex items-center ">
 					<label className="block font-semibold mb-2 mr-8">Categories</label>
 					<div>
-						{predefinedCategories.map((category, index) => (
+						{CATEGORIES.map((category, index) => (
 							<span
 								key={category}
 								className={`mr-4 px-3 py-2 rounded-3xl cursor-pointer  ${

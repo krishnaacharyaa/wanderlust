@@ -5,23 +5,14 @@ import Post from "../types/post-type";
 import PostCard from "../components/post-card";
 import LatestPostCard from "../components/latest-post-card";
 import FeaturedPostCard from "../components/featured-post-card";
+import { CATEGORIES } from "../constants/categories";
 
 function PostList() {
 	const [selectedCategory, setSelectedCategory] = useState("featured");
 	const [posts, setPosts] = useState([]);
-	const categories = [
-		"Travel",
-		"Nature",
-		"City",
-		"Adventure",
-		"Beaches",
-		"Landmarks",
-		"Mountains",
-	];
 	const [latestPosts, setLatestPosts] = useState([]);
 
 	useEffect(() => {
-		// Fetch posts based on selected category (or featured posts if "featured" is selected)
 		let categoryEndpoint =
 			selectedCategory === "featured"
 				? "/api/posts/featured-posts"
@@ -67,7 +58,7 @@ function PostList() {
 					<div className="mb-4">
 						<h2 className="text-xl font-semibold mb-2">Categories</h2>
 						<div className="flex flex-wrap">
-							{categories.map((category) => (
+							{CATEGORIES.map((category) => (
 								<button
 									key={category}
 									onClick={() =>
