@@ -39,7 +39,7 @@ const DetailsPage = () => {
 			</div>
 			<div className="px-64">
 				<div className="mt-4">
-					<p className="text-lg text-gray-700">{post.description}</p>
+					<p className=" text-gray-700">{post.description}</p>
 				</div>
 				<div className="mt-4 ">
 					<p className=" font-semibold text-gray-600">By {post.authorName}</p>
