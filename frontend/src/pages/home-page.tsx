@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { FiArrowUpRight } from "react-icons/fi";
 interface Post {
 	_id: string;
 	authorName: string;
@@ -21,8 +21,12 @@ function formatPostTime(time: string) {
 	return new Date(time).toLocaleDateString("en-US", options);
 }
 function PostCard({ post }: { post: Post }) {
+	const navigate = useNavigate();
 	return (
-		<div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 ">
+		<div
+			className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 cursor-pointer"
+			onClick={() => navigate("/details-page", { state: { post } })}
+		>
 			<div className="bg-white rounded-lg shadow-md">
 				<img
 					src={post.imageLink}
@@ -200,8 +204,12 @@ function HomePage() {
 }
 
 function FeaturedPostCard({ post }: { post: Post }) {
+	const navigate = useNavigate();
 	return (
-		<div className="bg-white rounded-lg  h-48 flex gap-4 ">
+		<div
+			className="bg-white rounded-lg  h-48 flex gap-4 cursor-pointer"
+			onClick={() => navigate("/details-page", { state: { post } })}
+		>
 			<div className="w-1/3">
 				<img
 					src={post.imageLink}
@@ -233,17 +241,24 @@ function FeaturedPostCard({ post }: { post: Post }) {
 }
 
 function LatestPostCard({ post }: { post: Post }) {
+	const navigate = useNavigate();
 	return (
-		<div className="bg-white rounded-lg  p-4 shadow-sm">
-			<div className="flex flex-wrap mb-2">
-				{post.categories.map((category, index) => (
-					<span
-						key={index}
-						className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
-					>
-						{category}
-					</span>
-				))}
+		<div
+			className="bg-white rounded-lg  p-4 shadow-sm cursor-pointer"
+			onClick={() => navigate("/details-page", { state: { post } })}
+		>
+			<div className="flex">
+				<div className="flex flex-wrap mb-2 flex-1">
+					{post.categories.map((category, index) => (
+						<span
+							key={index}
+							className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
+						>
+							{category}
+						</span>
+					))}
+				</div>
+				<FiArrowUpRight className="mt-1" />
 			</div>
 			<div className="text-xl font-semibold mb-2 line-clamp-2">
 				{post.title}
