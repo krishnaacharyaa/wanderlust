@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { FiArrowUpRight } from "react-icons/fi";
 import Post from "../types/post-type";
 import PostCard from "../components/post-card";
+import LatestPostCard from "../components/latest-post-card";
+import FeaturedPostCard from "../components/featured-post-card";
 
 function PostList() {
 	const [selectedCategory, setSelectedCategory] = useState("featured");
@@ -152,70 +153,4 @@ function HomePage() {
 	);
 }
 
-function FeaturedPostCard({ post }: { post: Post }) {
-	const navigate = useNavigate();
-	return (
-		<div
-			className="bg-white rounded-lg  h-48 flex gap-4 cursor-pointer"
-			onClick={() => navigate("/details-page", { state: { post } })}
-		>
-			<div className="w-1/3">
-				<img
-					src={post.imageLink}
-					alt={post.title}
-					className="w-full h-full object-cover rounded-lg"
-				/>
-			</div>
-			<div className="w-2/3 flex flex-col gap-2 h-full ">
-				<div className="text-xl font-semibold">{post.title}</div>
-				<div className="flex flex-wrap">
-					{post.categories.map((category, index) => (
-						<span
-							key={index}
-							className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
-						>
-							{category}
-						</span>
-					))}
-				</div>
-				<div className=" text-gray-600  line-clamp-2  ">
-					<p className="overflow-ellipsis">{post.description}</p>
-				</div>
-				<div className=" text-gray-500 text-xs mb-1 flex-1 flex items-end  ">
-					{post.authorName} • {post.timeOfPost}
-				</div>
-			</div>
-		</div>
-	);
-}
-
-function LatestPostCard({ post }: { post: Post }) {
-	const navigate = useNavigate();
-	return (
-		<div
-			className="bg-white rounded-lg  p-4 shadow-sm cursor-pointer"
-			onClick={() => navigate("/details-page", { state: { post } })}
-		>
-			<div className="flex">
-				<div className="flex flex-wrap mb-2 flex-1">
-					{post.categories.map((category, index) => (
-						<span
-							key={index}
-							className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
-						>
-							{category}
-						</span>
-					))}
-				</div>
-				<FiArrowUpRight className="mt-1" />
-			</div>
-			<div className="text-xl font-semibold mb-2 line-clamp-2">
-				{post.title}
-			</div>
-			<div className="text-gray-500 text-xs">
-				{post.authorName} • {post.timeOfPost}
-			</div>
-		</div>
-	);
-}
 export default HomePage;
