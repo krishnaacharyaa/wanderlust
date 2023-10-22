@@ -9,6 +9,8 @@ type FormData = {
 	description: string;
 	isFeaturedPost: boolean;
 };
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FiArrowLeft } from "react-icons/fi";
 import { categoryProps } from "../utils/category-props";
 import axios from "axios";
@@ -46,25 +48,48 @@ function AddBlog() {
 	const handleCheckboxChange = () => {
 		setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
 	};
+	const validateFormData = () => {
+		if (
+			!formData.title ||
+			!formData.authorName ||
+			!formData.imageLink ||
+			!formData.description ||
+			formData.categories.length === 0
+		) {
+			toast.error("All fields must be filled out.");
+			return false;
+		}
 
+		const imageLinkRegex = /\.(jpg|jpeg|png)$/i;
+		if (!imageLinkRegex.test(formData.imageLink)) {
+			toast.error("Image URL must end with .jpg, .jpeg, or .png");
+			return false;
+		}
+		if (formData.categories.length > 3) {
+			toast.error("Select up to three categories.");
+			return false;
+		}
+
+		return true;
+	};
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(formData);
+		if (validateFormData()) {
+			try {
+				const response = await axios.post(
+					import.meta.env.VITE_API_PATH + "/api/posts/",
+					formData
+				);
 
-		try {
-			const response = await axios.post(
-				import.meta.env.VITE_API_PATH + "/api/posts/",
-				formData
-			);
-
-			if (response.status === 200) {
-				console.log("Blog post successfully created!");
-				navigate("/");
-			} else {
-				console.error("Error:", response.data.message);
+				if (response.status === 200) {
+					toast.success("Blog post successfully created!");
+					navigate("/");
+				} else {
+					toast.error("Error: " + response.data.message);
+				}
+			} catch (err: any) {
+				toast.error("Error: " + err.message);
 			}
-		} catch (err: any) {
-			console.error("Error:", err.message);
 		}
 	};
 	const navigate = useNavigate();
