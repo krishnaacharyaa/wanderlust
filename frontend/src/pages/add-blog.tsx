@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 type FormData = {
 	title: string;
 	authorName: string;
@@ -58,7 +59,7 @@ function AddBlog() {
 		console.log("API PATH", import.meta.env.VITE_API_PATH);
 		try {
 			const response = await axios.post(
-				import.meta.env.VITE_API_PATH + "api/posts/",
+				import.meta.env.VITE_API_PATH + "/api/posts/",
 				formData
 			);
 
@@ -71,7 +72,7 @@ function AddBlog() {
 			console.error("Error:", err.message);
 		}
 	};
-
+	const navigate = useNavigate();
 	return (
 		<div className="p-4 px-16 bg-white shadow">
 			<h2 className="text-2xl font-bold mb-4">Create Post</h2>
@@ -152,6 +153,7 @@ function AddBlog() {
 				<button
 					type="submit"
 					className="bg-black text-white p-2 rounded-lg hover:bg-gray-800"
+					onClick={() => navigate("/")}
 				>
 					Create Blog
 				</button>
