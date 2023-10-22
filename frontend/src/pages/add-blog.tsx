@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CATEGORIES } from "../constants/categories";
 type FormData = {
@@ -11,6 +10,8 @@ type FormData = {
 	isFeaturedPost: boolean;
 };
 import { FiArrowLeft } from "react-icons/fi";
+import { categoryProps } from "../utils/category-props";
+import axios from "axios";
 function AddBlog() {
 	const [formData, setFormData] = useState<FormData>({
 		title: "",
@@ -49,7 +50,7 @@ function AddBlog() {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		console.log(formData);
-		console.log("API PATH", import.meta.env.VITE_API_PATH);
+
 		try {
 			const response = await axios.post(
 				import.meta.env.VITE_API_PATH + "/api/posts/",
@@ -58,6 +59,7 @@ function AddBlog() {
 
 			if (response.status === 200) {
 				console.log("Blog post successfully created!");
+				navigate("/");
 			} else {
 				console.error("Error:", response.data.message);
 			}
@@ -67,7 +69,7 @@ function AddBlog() {
 	};
 	const navigate = useNavigate();
 	return (
-		<div className="p-4 px-16 bg-white ">
+		<div className="font-[Poppins] p-4 px-16 bg-white ">
 			<div className="flex justify-start items-center mb-4">
 				<div className=" text-black cursor-pointer w-fit">
 					<FiArrowLeft
@@ -121,15 +123,16 @@ function AddBlog() {
 				</div>
 				<div className="mb-4 flex items-center ">
 					<label className="block font-semibold mb-2 mr-8">Categories</label>
-					<div>
-						{CATEGORIES.map((category, index) => (
+					<div className="flex flex-wrap gap-2">
+						{CATEGORIES.map((category) => (
 							<span
 								key={category}
-								className={`mr-4 px-3 py-2 rounded-3xl cursor-pointer  ${
-									formData.categories.includes(category)
-										? getSelectedCategoryBackgroundColor(index)
-										: getCategoryBackgroundColor(index)
-								}`}
+								className={`cursor-pointer
+									${
+										formData.categories.includes(category)
+											? categoryProps(category, true)
+											: categoryProps(category, false)
+									}`}
 								onClick={() => handleCategoryClick(category)}
 							>
 								{category}
@@ -155,7 +158,6 @@ function AddBlog() {
 				<button
 					type="submit"
 					className="bg-black text-white p-2 rounded-lg hover:bg-gray-800"
-					onClick={() => navigate("/")}
 				>
 					Create Blog
 				</button>
@@ -164,25 +166,4 @@ function AddBlog() {
 	);
 }
 
-function getCategoryBackgroundColor(index: number): string {
-	const colors = [
-		"bg-pink-100",
-		"bg-green-100",
-		"bg-yellow-100",
-		"bg-blue-100",
-		"bg-purple-100",
-	];
-	return colors[index % colors.length];
-}
-
-function getSelectedCategoryBackgroundColor(index: number): string {
-	const colors = [
-		"bg-pink-500",
-		"bg-green-500",
-		"bg-yellow-500",
-		"bg-blue-500",
-		"bg-purple-500",
-	];
-	return colors[index % colors.length];
-}
 export default AddBlog;
