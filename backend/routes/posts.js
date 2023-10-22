@@ -47,9 +47,7 @@ router.get("/category/:category", async (req, res) => {
 // Route for fetching the latest posts
 router.get("/latestposts", async (req, res) => {
 	try {
-		console.log("Hitting latest posts");
 		const latestPosts = await Post.find().sort({ timeOfPost: -1 });
-		console.log(latestPosts);
 		res.json(latestPosts);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
