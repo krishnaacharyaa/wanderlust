@@ -1,10 +1,10 @@
 {
 	"version": 2,
-	"builds": [{ "src": "server.cjs", "use": "@now/node" }],
+	"builds": [{ "src": "server.mjs", "use": "@now/node" }],
 	"routes": [
 		{
 			"src": "/(.*)",
-			"dest": "server.cjs"
+			"dest": "server.mjs"
 		}
 	]
 }

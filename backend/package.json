@@ -7,6 +7,6 @@
 		"mongoose": "^7.6.3"
 	},
 	"scripts": {
-		"start": "nodemon server.js"
+		"start": "nodemon server.mjs"
 	}
 }
