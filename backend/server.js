@@ -15,6 +15,10 @@ connectDB();
 // API route
 app.use("/api/posts", postsRouter);
 
+app.get("/", (req, res) => {
+	res.send("Yay!! Backend of wanderlust app is now accessible ");
+});
+
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
