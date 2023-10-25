@@ -48,7 +48,7 @@ function HomePage() {
       </div>
       <div className="px-16">
         <BlogFeed />
-        <h1 className="text-3xl font-semibold ">All Blog Posts</h1>
+        <h1 className="text-2xl font-semibold ">All Blog Posts</h1>
         <div className="flex flex-wrap -mx-4">
           {posts.map((post) => (
             <PostCard key={post._id} post={post} />
