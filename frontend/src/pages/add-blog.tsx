@@ -94,7 +94,7 @@ function AddBlog() {
         <div className=" text-black cursor-pointer w-fit">
           <FiArrowLeft style={{ fontSize: '24px' }} onClick={() => navigate(-1)} />
         </div>
-        <h2 className="text-2xl font-bold ml-4">Create Post</h2>
+        <h2 className="text-lg md:text-2xl font-bold ml-4">Create Post</h2>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -138,14 +138,14 @@ function AddBlog() {
             onChange={handleInputChange}
           />
         </div>
-        <div className="mb-4 flex items-center ">
-          <label className="block font-semibold mb-2 mr-8">Categories</label>
+        <div className="mb-4 flex flex-col md:flex-row items-center ">
+          <label className="block font-semibold mb-2 mr-8 ">Categories</label>
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((category) => (
               <span
                 key={category}
                 className={`cursor-pointer
-									${
+                  ${
                     formData.categories.includes(category)
                       ? categoryProps(category, true)
                       : categoryProps(category, false)
@@ -170,9 +170,11 @@ function AddBlog() {
           </label>
         </div>
 
-        <button type="submit" className="bg-black text-white p-2 rounded-lg hover:bg-gray-800">
-          Create Blog
-        </button>
+        <div className="w-full  flex items-center justify-center">
+          <button type="submit" className="bg-black text-white p-2 rounded-lg hover:bg-gray-800">
+            Create Blog
+          </button>
+        </div>
       </form>
     </div>
   );
