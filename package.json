@@ -1,0 +1,15 @@
+{
+	"name": "wanderlust",
+	"version": "1.0.0",
+	"dependencies": {
+		"concurrently": "^8.2.2"
+	},
+	"scripts": {
+		"start": "concurrently \"cd backend && npm start\" \"cd frontend && npm run dev\"",
+		"install-root": "npm i",
+		"install-frontend": "cd frontend && npm i",
+		"install-backend": "cd backend && npm i",
+		"install-all": "npm run install-root && npm run  install-frontend && npm run install-backend"
+	},
+	"license": "MIT"
+}
