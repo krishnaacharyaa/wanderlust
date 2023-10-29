@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import Post from "../types/post-type";
-import formatPostTime from "../utils/format-post-time";
-import { categoryProps } from "../utils/category-props";
+import { useNavigate } from 'react-router-dom';
+import Post from '../types/post-type';
+import formatPostTime from '../utils/format-post-time';
+import { categoryProps } from '../utils/category-props';
 
 export default function FeaturedPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
     <div
       className="bg-white rounded-lg  h-48 flex gap-4 cursor-pointer"
-      onClick={() => navigate("/details-page", { state: { post } })}
+      onClick={() => navigate('/details-page', { state: { post } })}
     >
       <div className="w-1/3">
         <img

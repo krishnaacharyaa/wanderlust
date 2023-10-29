@@ -1,6 +1,6 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { CATEGORIES } from "../constants/categories";
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CATEGORIES } from '../constants/categories';
 type FormData = {
   title: string;
   authorName: string;
@@ -9,24 +9,22 @@ type FormData = {
   description: string;
   isFeaturedPost: boolean;
 };
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { FiArrowLeft } from "react-icons/fi";
-import { categoryProps } from "../utils/category-props";
-import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FiArrowLeft } from 'react-icons/fi';
+import { categoryProps } from '../utils/category-props';
+import axios from 'axios';
 function AddBlog() {
   const [formData, setFormData] = useState<FormData>({
-    title: "",
-    authorName: "",
-    imageLink: "",
+    title: '',
+    authorName: '',
+    imageLink: '',
     categories: [],
-    description: "",
+    description: '',
     isFeaturedPost: false,
   });
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -56,17 +54,17 @@ function AddBlog() {
       !formData.description ||
       formData.categories.length === 0
     ) {
-      toast.error("All fields must be filled out.");
+      toast.error('All fields must be filled out.');
       return false;
     }
 
     const imageLinkRegex = /\.(jpg|jpeg|png)$/i;
     if (!imageLinkRegex.test(formData.imageLink)) {
-      toast.error("Image URL must end with .jpg, .jpeg, or .png");
+      toast.error('Image URL must end with .jpg, .jpeg, or .png');
       return false;
     }
     if (formData.categories.length > 3) {
-      toast.error("Select up to three categories.");
+      toast.error('Select up to three categories.');
       return false;
     }
 
@@ -76,19 +74,16 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post(
-          import.meta.env.VITE_API_PATH + "/api/posts/",
-          formData
-        );
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
 
         if (response.status === 200) {
-          toast.success("Blog post successfully created!");
-          navigate("/");
+          toast.success('Blog post successfully created!');
+          navigate('/');
         } else {
-          toast.error("Error: " + response.data.message);
+          toast.error('Error: ' + response.data.message);
         }
       } catch (err: any) {
-        toast.error("Error: " + err.message);
+        toast.error('Error: ' + err.message);
       }
     }
   };
@@ -97,10 +92,7 @@ function AddBlog() {
     <div className="font-[Poppins] p-4 px-16 bg-white ">
       <div className="flex justify-start items-center mb-4">
         <div className=" text-black cursor-pointer w-fit">
-          <FiArrowLeft
-            style={{ fontSize: "24px" }}
-            onClick={() => navigate(-1)}
-          />
+          <FiArrowLeft style={{ fontSize: '24px' }} onClick={() => navigate(-1)} />
         </div>
         <h2 className="text-2xl font-bold ml-4">Create Post</h2>
       </div>
@@ -174,16 +166,11 @@ function AddBlog() {
               checked={formData.isFeaturedPost}
               onChange={handleCheckboxChange}
             />
-            <span className="text-gray-800 text-base font-medium">
-              Featured Post
-            </span>
+            <span className="text-gray-800 text-base font-medium">Featured Post</span>
           </label>
         </div>
 
-        <button
-          type="submit"
-          className="bg-black text-white p-2 rounded-lg hover:bg-gray-800"
-        >
+        <button type="submit" className="bg-black text-white p-2 rounded-lg hover:bg-gray-800">
           Create Blog
         </button>
       </form>

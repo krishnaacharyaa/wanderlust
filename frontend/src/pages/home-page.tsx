@@ -1,16 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import BlogFeed from "../components/blog-feed";
-import PostCard from "../components/post-card";
-import Post from "../types/post-type";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import BlogFeed from '../components/blog-feed';
+import PostCard from '../components/post-card';
+import Post from '../types/post-type';
 
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     axios
-      .get(import.meta.env.VITE_API_PATH + "/api/posts")
+      .get(import.meta.env.VITE_API_PATH + '/api/posts')
       .then((response) => {
         setPosts(response.data);
       })
@@ -29,7 +29,7 @@ function HomePage() {
             <button
               className="border border-white rounded px-4 py-2"
               onClick={() => {
-                navigate("/add-blog");
+                navigate('/add-blog');
               }}
             >
               Create post
@@ -38,9 +38,8 @@ function HomePage() {
           <div className="flex flex-1 flex-col justify-end pb-8 max-w-5xl">
             <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>
             <p className="text-xl my-4">
-              Dive into the World of Travel with Stories That Transport You to
-              Far-Off Lands. Adventure awaits around every corner. It's time to
-              explore the world!
+              Dive into the World of Travel with Stories That Transport You to Far-Off Lands.
+              Adventure awaits around every corner. It's time to explore the world!
             </p>
             <div className="   text-xl font-semibold">Let's Go !!!</div>
           </div>

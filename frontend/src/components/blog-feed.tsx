@@ -1,18 +1,18 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import FeaturedPostCard from "../components/featured-post-card";
-import LatestPostCard from "../components/latest-post-card";
-import { CATEGORIES } from "../constants/categories";
-import { categoryProps } from "../utils/category-props";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import FeaturedPostCard from '../components/featured-post-card';
+import LatestPostCard from '../components/latest-post-card';
+import { CATEGORIES } from '../constants/categories';
+import { categoryProps } from '../utils/category-props';
 export default function BlogFeed() {
-  const [selectedCategory, setSelectedCategory] = useState("featured");
+  const [selectedCategory, setSelectedCategory] = useState('featured');
   const [posts, setPosts] = useState([]);
   const [latestPosts, setLatestPosts] = useState([]);
 
   useEffect(() => {
     let categoryEndpoint =
-      selectedCategory === "featured"
-        ? "/api/posts/featured-posts"
+      selectedCategory === 'featured'
+        ? '/api/posts/featured-posts'
         : `/api/posts/category/${selectedCategory}`;
 
     axios
@@ -27,7 +27,7 @@ export default function BlogFeed() {
 
   useEffect(() => {
     axios
-      .get(import.meta.env.VITE_API_PATH + "/api/posts/latestposts")
+      .get(import.meta.env.VITE_API_PATH + '/api/posts/latestposts')
       .then((response) => {
         setLatestPosts(response.data);
       })
@@ -41,8 +41,8 @@ export default function BlogFeed() {
       <div className="flex flex-wrap -mx-4">
         <div className="w-full md:w-2/3 p-4">
           <h1 className="text-2xl font-semibold mb-4">
-            {selectedCategory === "featured"
-              ? "Featured Posts"
+            {selectedCategory === 'featured'
+              ? 'Featured Posts'
               : `Posts related to "${selectedCategory}"`}
           </h1>
           <div className="flex flex-col gap-4">
@@ -60,7 +60,7 @@ export default function BlogFeed() {
                 <button
                   key={category}
                   onClick={() =>
-                    setSelectedCategory(selectedCategory === category ? "featured" : category)
+                    setSelectedCategory(selectedCategory === category ? 'featured' : category)
                   }
                   className={
                     selectedCategory === category
