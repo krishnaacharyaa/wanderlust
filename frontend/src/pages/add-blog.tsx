@@ -171,7 +171,7 @@ function AddBlog() {
         </div>
 
         <div className="w-full  flex items-center justify-center">
-          <button type="submit" className="bg-black text-white p-2 rounded-lg hover:bg-gray-800">
+          <button type="submit" className="bg-black text-white   p-2 rounded-lg hover:bg-gray-800">
             Create Blog
           </button>
         </div>
