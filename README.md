@@ -8,22 +8,15 @@ WanderLust is your ultimate travel blog, built with the power of MERN stack. Imm
 
 ## Getting Started
 
-### Setting up the Backend
+### Setting up the Project
 1. Fork this project.
 2. Clone your forked repository.
-3. Navigate to the `backend` directory, run `cd backend`
-4. Run `npm install` to install the required dependencies.
-5. Set up your MongoDB database:
+3. Run `npm run installer`
+4. Set up your MongoDB database:
    - Open MongoDB Compass and run MongoDB locally at `mongodb://localhost:27017`.
    - Import sample posts data from `backend/data/sample_posts.json`.
-6. Rename the `.env.sample` file to `.env`.
-7. Start the backend server with `npm start`.
-
-### Setting up the Frontend
-1. Navigate to the `frontend` directory, run `cd frontend`
-2. Run `npm install` to install the necessary frontend dependencies.
-3. Rename the `.env.sample` file to `.env.local`.
-4. Launch the development server with `npm run dev`.
+6. Rename the the `.env.sample` file in backend and frontend folders to `.env`.
+7. Launch the development server with `npm start` in the root directory of the repository.
 
 ## ⭐ Show Your Support
 
