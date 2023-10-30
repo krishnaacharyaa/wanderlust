@@ -128,6 +128,15 @@ function AddBlog() {
             onChange={handleInputChange}
           />
         </div>
+        <div className="mt-4 mb-4 ">
+          <textarea
+            name="description"
+            placeholder="Description"
+            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+            value={formData.description}
+            onChange={handleInputChange}
+          />
+        </div>
 
         <div className="mb-4 flex items-center flex-col md:flex-row ">
           <label className="block font-semibold mb-2 w-full md:w-fit  md:mr-8">Categories</label>
@@ -148,15 +157,7 @@ function AddBlog() {
             ))}
           </div>
         </div>
-        <div className="mt-4 mb-4 ">
-          <textarea
-            name="description"
-            placeholder="Description"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
-            value={formData.description}
-            onChange={handleInputChange}
-          />
-        </div>
+
         <div className="mb-4 flex items-center">
           <label className="flex items-center">
             <span className="text-gray-800 text-base font-medium">Featured Post</span>
@@ -172,7 +173,7 @@ function AddBlog() {
 
         <button
           type="submit"
-          className="bg-black text-white text-[16px] md:text-lg lg:text-xl p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+          className="bg-black text-white flex items-center justify-center text-base md:text-lg lg:text-xl p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
         >
           Create Blog
         </button>
