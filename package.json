@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run dev",
+    "start": "concurrently -n \"BACKEND,FRONTEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start:backend\" \"npm run start:frontend\"",
+    "install": "cd backend && npm install && cd ../frontend && npm install"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
