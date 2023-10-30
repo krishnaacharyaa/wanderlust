@@ -91,8 +91,8 @@ function AddBlog() {
   return (
     <div className="font-[Poppins] p-4 px-16 bg-white ">
       <div className="flex justify-start items-center mb-4">
-        <div className=" text-black cursor-pointer w-fit">
-          <FiArrowLeft style={{ fontSize: '24px' }} onClick={() => navigate(-1)} />
+        <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl">
+          <FiArrowLeft onClick={() => navigate(-1)} />
         </div>
         <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
       </div>
@@ -172,7 +172,7 @@ function AddBlog() {
 
         <button
           type="submit"
-          className="bg-black text-white p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+          className="bg-black text-white text-[16px] md:text-lg lg:text-xl p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
         >
           Create Blog
         </button>
