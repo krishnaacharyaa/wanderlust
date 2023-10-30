@@ -94,7 +94,7 @@ function AddBlog() {
         <div className=" text-black cursor-pointer w-fit">
           <FiArrowLeft style={{ fontSize: '24px' }} onClick={() => navigate(-1)} />
         </div>
-        <h2 className="text-2xl font-bold ml-4">Create Post</h2>
+        <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -129,17 +129,8 @@ function AddBlog() {
           />
         </div>
 
-        <div className="mb-4">
-          <textarea
-            name="description"
-            placeholder="Description"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
-            value={formData.description}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mb-4 flex items-center ">
-          <label className="block font-semibold mb-2 mr-8">Categories</label>
+        <div className="mb-4 flex items-center flex-col md:flex-row ">
+          <label className="block font-semibold mb-2 w-full md:w-fit  md:mr-8">Categories</label>
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((category) => (
               <span
@@ -157,20 +148,32 @@ function AddBlog() {
             ))}
           </div>
         </div>
+        <div className="mt-4 mb-4 ">
+          <textarea
+            name="description"
+            placeholder="Description"
+            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+            value={formData.description}
+            onChange={handleInputChange}
+          />
+        </div>
         <div className="mb-4 flex items-center">
           <label className="flex items-center">
+            <span className="text-gray-800 text-base font-medium">Featured Post</span>
             <input
               type="checkbox"
               name="isFeaturedPost"
-              className="mr-2 h-5 w-5 text-indigo-600 border rounded focus:ring-indigo-400"
+              className="ml-2 h-5 w-5 text-indigo-600 border rounded focus:ring-indigo-400"
               checked={formData.isFeaturedPost}
               onChange={handleCheckboxChange}
             />
-            <span className="text-gray-800 text-base font-medium">Featured Post</span>
           </label>
         </div>
 
-        <button type="submit" className="bg-black text-white p-2 rounded-lg hover:bg-gray-800">
+        <button
+          type="submit"
+          className="bg-black text-white p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+        >
           Create Blog
         </button>
       </form>
