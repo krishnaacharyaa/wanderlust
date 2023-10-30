@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "concurrently": "^8.2.2"
-  },"scripts": {
+  },
+  "scripts": {
     "start-frontend": "cd frontend && npm run dev",
     "start-backend": "cd backend && npm start",
     "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
     "install-frontend": "cd frontend && npm i",
     "install-backend": "cd backend && npm i",
-    "ins": "npm i && npm run install-backend && npm run install-frontend"
+    "installer": "npm i && npm run install-backend && npm run install-frontend"
   }
-  
 }

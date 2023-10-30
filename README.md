@@ -15,10 +15,8 @@ WanderLust is your ultimate travel blog, built with the power of MERN stack. Imm
 4. Set up your MongoDB database:
    - Open MongoDB Compass and run MongoDB locally at `mongodb://localhost:27017`.
    - Import sample posts data from `backend/data/sample_posts.json`.
-6. Rename the `.env.sample` file to `.env`.
-7. Navigate to the `frontend` directory, run `cd frontend`
-8. Rename the `.env.sample` file to `.env.local`.
-9. Launch the development server with `npm run start` in the root directory of the repository.
+6. Rename the the `.env.sample` file in backend and frontend folders to `.env`.
+7. Launch the development server with `npm start` in the root directory of the repository.
 
 ## ⭐ Show Your Support
 
