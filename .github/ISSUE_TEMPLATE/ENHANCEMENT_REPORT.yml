@@ -7,8 +7,8 @@ body:
   attributes:
     label: Description
     description: Please provide a detailed description of the enhancement or improvement you'd like to request.
-    validations:
-      required: true
+  validations:
+    required: true
 - type: textarea
   attributes:
     label: Current Behavior
