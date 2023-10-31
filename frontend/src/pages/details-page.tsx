@@ -17,10 +17,10 @@ const DetailsPage = () => {
         />
 
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
-        <div className="top-16 pl-10 md:top-24 md:pl-32 w-full justify-start lg:px-64 text-lg md:text-xl lg:text-2xl text-white absolute cursor-pointer">
+        <div className="top-16 px-4 md:px-8 lg:px-16 md:top-24 w-full justify-start  text-lg md:text-xl lg:text-2xl text-white absolute cursor-pointer">
           <FiArrowLeft onClick={() => navigate(-1)} />
         </div>
-        <div className=" md:px-32 lg:px-64 px-8 w-full absolute bottom-4 md:bottom-8 p-4 lg:bottom-16  text-white">
+        <div className=" px-4 md:px-8 lg:px-16 w-full absolute bottom-4 md:bottom-8  lg:bottom-16  text-white">
           <div className="flex space-x-2 mb-6">
             {post.categories.map((category, index) => (
               <div key={index} className="bg-gray-500 text-white rounded-full px-3 py-1 text-sm">
@@ -31,7 +31,7 @@ const DetailsPage = () => {
           <h1 className="text-lg md:text-2xl lg:text-4xl font-semibold ">{post.title}</h1>
         </div>
       </div>
-      <div className="md:pl-32 lg:px-64  text-left w-full p-6">
+      <div className="px-4 md:px-8 lg:px-16 pt-4 md:pt-8 lg:pt-16  text-left w-full">
         <div className="mt-4">
           <p className=" text-gray-700 ">{post.description}</p>
         </div>
