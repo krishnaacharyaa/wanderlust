@@ -31,11 +31,11 @@ const DetailsPage = () => {
           <h1 className="text-lg md:text-2xl lg:text-4xl font-semibold ">{post.title}</h1>
         </div>
       </div>
-      <div className="px-4 md:px-8 lg:px-16 pt-4 md:pt-8 lg:pt-16  text-left w-full">
-        <div className="mt-4">
+      <div className="px-4 md:px-8 lg:px-16 pt-4 md:pt-8 lg:pt-16  text-left w-full flex flex-col gap-y-4">
+        <div>
           <p className=" text-gray-700 ">{post.description}</p>
         </div>
-        <div className="mt-4 ">
+        <div className="">
           <p className=" font-semibold text-gray-600">By {post.authorName}</p>
           <p className="text-sm">{formatPostTime(post.timeOfPost)}</p>
         </div>
