@@ -21,7 +21,7 @@ function HomePage() {
   const navigate = useNavigate();
   return (
     <div className="font-[Poppins] w-full">
-      <div className="relative h-[460px] bg-cover mt-[-8px] bg-fixed bg-center bg-[url('https://get.wallhere.com/photo/landscape-sea-beach-hotel-swimming-pool-resort-tropical-lagoon-Caribbean-vacation-estate-leisure-villa-225624.jpg')]">
+      <div className="relative h-[460px] bg-cover mt-[-8px] bg-fixed bg-center bg-[url('https://i.ibb.co/Pm4ScWL/wanderlust-bg.webp')]">
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col px-16 py-8 text-white">
           <div className="flex justify-between w-full ">
