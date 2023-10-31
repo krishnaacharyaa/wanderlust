@@ -20,7 +20,7 @@ const DetailsPage = () => {
         <div className="top-16 pl-10 md:top-24 md:pl-32 w-full justify-start lg:px-64 text-lg md:text-xl lg:text-2xl text-white absolute cursor-pointer">
           <FiArrowLeft onClick={() => navigate(-1)} />
         </div>
-        <div className="md:px-32 lg:px-64 px-8 w-full absolute bottom-16 md:bottom-40 p-4 lg:bottom-16  text-white">
+        <div className=" md:px-32 lg:px-64 px-8 w-full absolute bottom-10 md:bottom-24 p-4 lg:bottom-16  text-white">
           <div className="flex space-x-2 mb-6">
             {post.categories.map((category, index) => (
               <div key={index} className="bg-gray-500 text-white rounded-full px-3 py-1 text-sm">
