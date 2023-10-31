@@ -1,7 +1,7 @@
 name: 🛠 Enhancement Request
 description: Request an enhancement or improvement to an existing feature
 title: "[ENHANCEMENT] <title>"
-labels: ["Enhancement Request"]
+labels: ["enhancement"]
 body:
 - type: textarea
   attributes:
