@@ -63,13 +63,13 @@ To contribute to this project, you need to create a fork of the repository and t
     ```sh
     # Using HTTPS
     git remote add fork https://github.com/YOUR-USERNAME/wanderlust.git
-    git remote add upstream https://github.com/stevemao/wanderlust.git
+    git remote add upstream https://github.com/krishnaacharyaa/wanderlust.git
     ```
     
     ```sh
     # Using SSH
     git remote add fork git@github.com:YOUR-USERNAME/wanderlust.git
-    git remote add upstream git@github.com:stevemao/wanderlust.git
+    git remote add upstream git@github.com:krishnaacharyaa/wanderlust.git
     ```
 
 4. Verify that you have your two git remotes:
