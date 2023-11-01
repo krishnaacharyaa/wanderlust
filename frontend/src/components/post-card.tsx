@@ -20,9 +20,9 @@ export default function PostCard({ post }: { post: Post }) {
           <div className="text-gray-500 text-xs mb-2">
             {post.authorName} • {formatPostTime(post.timeOfPost)}
           </div>
-          <h2 className="text-xl font-semibold mb-2 line-clamp-1">{post.title}</h2>
-          <p className="text-gray-600 line-clamp-2">{post.description}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <h2 className="text-xl font-semibold mb-2 line-clamp-1 dark:text-black">{post.title}</h2>
+          <p className="text-gray-600 line-clamp-2 dark:text-black">{post.description}</p>
+          <div className="mt-4 flex flex-wrap gap-2 dark:text-black">
             {post.categories.map((category, index) => (
               <span key={index} className={categoryProps(category)}>
                 {category}

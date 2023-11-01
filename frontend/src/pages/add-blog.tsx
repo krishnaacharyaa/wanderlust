@@ -89,95 +89,99 @@ function AddBlog() {
   };
   const navigate = useNavigate();
   return (
-    <div className="font-[Poppins] p-4 px-16 bg-white ">
-      <div className="flex justify-start items-center mb-4">
-        <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl">
-          <FiArrowLeft onClick={() => navigate(-1)} />
-        </div>
-        <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
-            value={formData.title}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="authorName"
-            placeholder="Author Name"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
-            value={formData.authorName}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="imageLink"
-            placeholder="Image URL"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
-            value={formData.imageLink}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mt-4 mb-4 ">
-          <textarea
-            name="description"
-            placeholder="Description"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
-            value={formData.description}
-            onChange={handleInputChange}
-          />
+    <div className="dark:dark w-full min-h-screen">
+      <div className="font-[Poppins] p-4 px-16 bg-white dark:dark ">
+        <div className="flex justify-start items-center mb-4">
+          <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl dark:text-white">
+            <FiArrowLeft onClick={() => navigate(-1)} />
+          </div>
+          <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
         </div>
 
-        <div className="mb-4 flex items-center flex-col md:flex-row ">
-          <label className="block font-semibold mb-2 w-full md:w-fit  md:mr-8">Categories</label>
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((category) => (
-              <span
-                key={category}
-                className={`cursor-pointer
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+              value={formData.title}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              name="authorName"
+              placeholder="Author Name"
+              className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+              value={formData.authorName}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              name="imageLink"
+              placeholder="Image URL"
+              className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+              value={formData.imageLink}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mt-4 mb-4 ">
+            <textarea
+              name="description"
+              placeholder="Description"
+              className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+              value={formData.description}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="mb-4 flex items-center flex-col md:flex-row ">
+            <label className="block font-semibold mb-2 w-full md:w-fit  md:mr-8">Categories</label>
+            <div className="flex flex-wrap gap-2 dark:text-black">
+              {CATEGORIES.map((category) => (
+                <span
+                  key={category}
+                  className={`cursor-pointer
 									${
                     formData.categories.includes(category)
                       ? categoryProps(category, true)
                       : categoryProps(category, false)
                   }`}
-                onClick={() => handleCategoryClick(category)}
-              >
-                {category}
-              </span>
-            ))}
+                  onClick={() => handleCategoryClick(category)}
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="mb-4 flex items-center">
-          <label className="flex items-center">
-            <span className="text-gray-800 text-base font-medium">Featured Post</span>
-            <input
-              type="checkbox"
-              name="isFeaturedPost"
-              className="ml-2 h-5 w-5 text-indigo-600 border rounded focus:ring-indigo-400"
-              checked={formData.isFeaturedPost}
-              onChange={handleCheckboxChange}
-            />
-          </label>
-        </div>
+          <div className="mb-4 flex items-center">
+            <label className="flex items-center">
+              <span className="text-gray-800 text-base font-medium dark:text-white">
+                Featured Post
+              </span>
+              <input
+                type="checkbox"
+                name="isFeaturedPost"
+                className="ml-2 h-5 w-5 text-indigo-600 border rounded focus:ring-indigo-400  "
+                checked={formData.isFeaturedPost}
+                onChange={handleCheckboxChange}
+              />
+            </label>
+          </div>
 
-        <button
-          type="submit"
-          className="bg-black text-white flex items-center justify-center text-base md:text-lg lg:text-xl p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
-        >
-          Create Blog
-        </button>
-      </form>
+          <button
+            type="submit"
+            className=" dark:border-2 dark:border-white dark:bg-orange-400 bg-black text-white flex items-center justify-center text-base md:text-lg lg:text-xl p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+          >
+            Create Blog
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
