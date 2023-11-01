@@ -1,6 +1,11 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { CATEGORIES } from '../constants/categories';
+import { categoryProps } from '../utils/category-props';
 type FormData = {
   title: string;
   authorName: string;
@@ -9,11 +14,6 @@ type FormData = {
   description: string;
   isFeaturedPost: boolean;
 };
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { FiArrowLeft } from 'react-icons/fi';
-import { categoryProps } from '../utils/category-props';
-import axios from 'axios';
 function AddBlog() {
   const [formData, setFormData] = useState<FormData>({
     title: '',
@@ -173,7 +173,7 @@ function AddBlog() {
 
         <button
           type="submit"
-          className="bg-black text-white flex items-center justify-center text-base md:text-lg lg:text-xl p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+          className="bg-black text-white flex items-center justify-center text-base p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
         >
           Create Blog
         </button>
