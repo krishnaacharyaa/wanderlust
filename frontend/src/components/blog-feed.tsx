@@ -37,7 +37,7 @@ export default function BlogFeed() {
   }, []);
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto py-6 ">
       <div className="flex flex-wrap -mx-4">
         <div className="w-full md:w-2/3 p-4">
           <h1 className="text-2xl font-semibold mb-4">
@@ -55,7 +55,7 @@ export default function BlogFeed() {
           <div className="mb-6">
             <div className="text-gray-500">Discover by topic</div>
             <h2 className="text-2xl font-semibold mb-4">Categories</h2>
-            <div className="flex flex-wrap gap-2 ">
+            <div className="flex flex-wrap gap-2 dark:text-black">
               {CATEGORIES.map((category) => (
                 <button
                   key={category}

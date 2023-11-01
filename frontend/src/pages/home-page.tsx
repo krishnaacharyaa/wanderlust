@@ -20,7 +20,7 @@ function HomePage() {
   }, []);
   const navigate = useNavigate();
   return (
-    <div className="font-[Poppins] w-full">
+    <div className="font-[Poppins] w-full dark:bg-slate-700 dark:text-white">
       <div className="relative h-[460px] bg-cover mt-[-8px] bg-fixed bg-center bg-[url('https://i.ibb.co/Pm4ScWL/wanderlust-bg.webp')]">
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col px-16 py-8 text-white">
