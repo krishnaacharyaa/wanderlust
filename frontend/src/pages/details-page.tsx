@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import formatPostTime from '../utils/format-post-time';
 import Post from '../types/post-type';
-import { FiArrowLeft } from 'react-icons/fi';
+import leftarrow from '../assets/left-arrow.png'
 
 const DetailsPage = () => {
   const { state } = useLocation();
@@ -18,7 +18,7 @@ const DetailsPage = () => {
 
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
         <div className="top-16 px-4 md:px-8 lg:px-16 md:top-24 w-full justify-start  text-lg md:text-xl lg:text-2xl text-white absolute cursor-pointer">
-          <FiArrowLeft onClick={() => navigate(-1)} />
+          <img src={leftarrow}  style={{height:20, width:40}}onClick={() => navigate(-1)} />
         </div>
         <div className=" px-4 md:px-8 lg:px-16 w-full absolute bottom-4 md:bottom-8  lg:bottom-16  text-white">
           <div className="flex space-x-2 mb-6">
