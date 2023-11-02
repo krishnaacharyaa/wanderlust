@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import Post from '../types/post-type';
-import { FiArrowUpRight } from 'react-icons/fi';
 import formatPostTime from '../utils/format-post-time';
 import { categoryProps } from '../utils/category-props';
-
+import uprightarrow from '../assets/up-right-arrow.png'
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
@@ -19,7 +18,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
             </span>
           ))}
         </div>
-        <FiArrowUpRight className="mt-1" />
+        <img src={uprightarrow}  style={{height:12, width:12}}onClick={() => navigate(-1)} />
       </div>
       <div className="text-xl font-semibold mb-2 line-clamp-2">{post.title}</div>
       <div className="text-gray-500 text-xs ">
