@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BlogFeed from '../components/blog-feed';
 import PostCard from '../components/post-card';
 import Post from '../types/post-type';
-
+import bg from '../assets/wanderlustbg.webp'
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -21,7 +21,8 @@ function HomePage() {
   const navigate = useNavigate();
   return (
     <div className="font-[Poppins] w-full">
-      <div className="relative h-[460px] bg-cover mt-[-8px] bg-fixed bg-center bg-[url('https://i.ibb.co/Pm4ScWL/wanderlust-bg.webp')]">
+      {/* <img src={bg} alt="" /> */}
+      <div style={{backgroundImage: `url(${bg})`}} className="relative h-[460px] bg-cover mt-[-8px] bg-fixed bg-center" >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col px-16 py-8 text-white">
           <div className="flex justify-between w-full ">
