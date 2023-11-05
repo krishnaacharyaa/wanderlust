@@ -5,7 +5,7 @@
   "scripts": {
     "start-frontend": "cd frontend && npm run dev",
     "start-backend": "cd backend && npm start",
-    "start": "concurrently -n \"BACKEND,FRONTEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start-frontend\" \"npm run start-backend\"",
+    "start": "concurrently -n \"FRONTEND,BACKEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start-frontend\" \"npm run start-backend\"",
     "install-frontend": "cd frontend && npm ci",
     "install-backend": "cd backend && npm ci",
     "installer": "npm ci && npm run install-backend && npm run install-frontend"
