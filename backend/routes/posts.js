@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 });
 
 // Route to get featured posts
-router.get('/featured-posts', async (req, res) => {
+router.get('/featured', async (req, res) => {
   try {
     const featuredPosts = await Post.find({ isFeaturedPost: true });
     res.json(featuredPosts);
@@ -34,7 +34,7 @@ router.get('/featured-posts', async (req, res) => {
 });
 
 // Route to get posts by category
-router.get('/category/:category', async (req, res) => {
+router.get('/categories/:category', async (req, res) => {
   const category = req.params.category;
   try {
     const categoryPosts = await Post.find({ categories: category });
@@ -45,7 +45,7 @@ router.get('/category/:category', async (req, res) => {
 });
 
 // Route for fetching the latest posts
-router.get('/latestposts', async (req, res) => {
+router.get('/latest', async (req, res) => {
   try {
     const latestPosts = await Post.find().sort({ timeOfPost: -1 });
     res.json(latestPosts);
