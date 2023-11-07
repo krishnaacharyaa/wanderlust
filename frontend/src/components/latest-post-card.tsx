@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import linkIcon from '../assets/svg/link.svg';
 import Post from '../types/post-type';
-import formatPostTime from '../utils/format-post-time';
 import { categoryProps } from '../utils/category-props';
-import uprightarrow from '../assets/up-right-arrow.png'
+import formatPostTime from '../utils/format-post-time';
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
@@ -18,7 +18,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
             </span>
           ))}
         </div>
-        <img src={uprightarrow}  style={{height:12, width:12}}onClick={() => navigate(-1)} />
+        <img src={linkIcon} style={{ height: 12, width: 12 }} onClick={() => navigate(-1)} />
       </div>
       <div className="text-xl font-semibold mb-2 line-clamp-2">{post.title}</div>
       <div className="text-gray-500 text-xs ">

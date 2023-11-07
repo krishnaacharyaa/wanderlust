@@ -3,9 +3,9 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import navigateBackBlackIcon from '../assets/svg/navigate-back-black.svg';
 import { CATEGORIES } from '../constants/categories';
 import { categoryProps } from '../utils/category-props';
-import blackleftarrow from '../assets/black-left-arrow.png'
 type FormData = {
   title: string;
   authorName: string;
@@ -92,7 +92,11 @@ function AddBlog() {
     <div className="font-[Poppins] p-4 px-16 bg-white ">
       <div className="flex justify-start items-center mb-4">
         <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl">
-        <img src={blackleftarrow}  style={{height:20, width:40}}onClick={() => navigate(-1)} />
+          <img
+            src={navigateBackBlackIcon}
+            style={{ height: 20, width: 40 }}
+            onClick={() => navigate(-1)}
+          />
         </div>
         <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
       </div>
