@@ -14,6 +14,26 @@ At its core, this project embodies two important aims:
 
 _I'd love for you to make the most of this project - it's all about learning, helping, and growing in the open-source world._
 
+## Setting up the project locally
+### Setting up the Backend
+1. Fork and clone the repository
+2. Navigate to the `backend` directory, run `cd backend`
+3. Run `npm ci` to install the required dependencies.
+4. Set up your MongoDB database:
+   - Open MongoDB Compass and run MongoDB locally at `mongodb://localhost:27017`.
+5. Rename the `.env.sample` file to `.env`.
+6. Start the backend server with `npm start`
+7. Import sample posts by copying the content from
+    - `backend/data/sample_posts.json` and insert it as a document in the
+    - `wanderlust/posts` collection in your local MongoDB database.
+
+### Setting up the Frontend
+1. Open a new terminal
+2. Navigate to the `frontend` directory, run `cd frontend`
+3. Run `npm ci` to install the necessary frontend dependencies.
+4. Rename the `.env.sample` file to `.env.local`.
+5. Launch the development server with `npm run dev`.
+
 ## 🌟 Ready to Contribute?
 
 Kindly go through [CONTRIBUTING.md](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) to understand everything from setup to contributing guidelines.

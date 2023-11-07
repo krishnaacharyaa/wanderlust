@@ -63,13 +63,13 @@ To contribute to this project, you need to create a fork of the repository and t
     ```sh
     # Using HTTPS
     git remote add fork https://github.com/YOUR-USERNAME/wanderlust.git
-    git remote add upstream https://github.com/stevemao/wanderlust.git
+    git remote add upstream https://github.com/krishnaacharyaa/wanderlust.git
     ```
     
     ```sh
     # Using SSH
     git remote add fork git@github.com:YOUR-USERNAME/wanderlust.git
-    git remote add upstream git@github.com:stevemao/wanderlust.git
+    git remote add upstream git@github.com:krishnaacharyaa/wanderlust.git
     ```
 
 4. Verify that you have your two git remotes:
@@ -78,24 +78,25 @@ To contribute to this project, you need to create a fork of the repository and t
     git remote -v
     ```
 
-5. To stay up to date with the central repository:
+5. **For every individual PR follow these 2 steps:**
+    -  To stay up to date with the central repository:
 
-    ```sh
-    git pull upstream master
-    ```
+       ```sh
+       git pull upstream main
+       ```
 
-6. Checkout a private from your main Branch
+    - Checkout a private from your main Branch
 
-    ```sh
-    # Switch to the main branch
-    git switch main
-    
-    # Pull down any upstream changes
-    git pull
-    
-    # Create a new branch to work on
-    git switch --create bugfix/1234-name-of-the-issue
-    ```
+       ```sh
+       # Switch to the main branch
+       git switch main
+       
+       # Pull down any upstream changes
+       git pull
+       
+       # Create a new branch to work on
+       git switch --create bugfix/1234-name-of-the-issue
+       ```
 
 Commit your changes, then push the branch to your fork with `git push -u fork` and open a pull request on [the Wanderlust repository](https://github.com/krishnaacharyaa/wanderlust) following the template provided.
 
