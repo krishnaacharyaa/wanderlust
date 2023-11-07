@@ -7,7 +7,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-white rounded-lg  h-48 flex gap-4 cursor-pointer dark:bg-slate-500 dark:text-white"
+      className="bg-white rounded-lg  h-48 flex gap-4 cursor-pointer dark:bg-dark-card dark:text-white"
       onClick={() => navigate('/details-page', { state: { post } })}
     >
       <div className="w-1/3">
@@ -18,7 +18,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
         />
       </div>
       <div className="w-2/3 flex flex-col gap-2 h-full ">
-        <div className="text-xl font-semibold dark:text-black">{post.title}</div>
+        <div className="text-xl font-semibold dark:text-white">{post.title}</div>
         <div className="flex flex-wrap gap-2 dark:text-black">
           {post.categories.map((category, index) => (
             <span key={index} className={categoryProps(category)}>

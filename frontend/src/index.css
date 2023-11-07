@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .dark {
-    @apply bg-black text-white;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-dark: #10172a;
+    --bg-dark-field: #1d293c;
+    --bg-dark-card: #1d293c;
+    --text-dark: #b4b4b4;
   }
 }

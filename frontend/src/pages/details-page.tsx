@@ -8,7 +8,7 @@ const DetailsPage = () => {
   const post: Post = state?.post;
   const navigate = useNavigate();
   return (
-    <div className="dark:bg-slate-700 dark:text-white w-full min-h-screen">
+    <div className="dark:bg-dark-bg dark:text-dark-text w-full min-h-screen">
       <div className="w-full font-[Poppins]">
         <div className="relative flex flex-col">
           <img

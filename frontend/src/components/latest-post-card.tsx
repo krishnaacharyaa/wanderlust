@@ -8,7 +8,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-white rounded-lg py-2 shadow-sm cursor-pointer p-2 dark:bg-gray-500 dark:text-white"
+      className="bg-white rounded-lg py-2 shadow-sm cursor-pointer p-2 dark:bg-dark-card dark:text-white"
       onClick={() => navigate('/details-page', { state: { post } })}
     >
       <div className="flex">
@@ -21,7 +21,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
         </div>
         <FiArrowUpRight className="mt-1" />
       </div>
-      <div className="text-xl font-semibold mb-2 line-clamp-2 dark:text-black">{post.title}</div>
+      <div className="text-xl font-semibold mb-2 line-clamp-2 dark:text-white">{post.title}</div>
       <div className="text-gray-500 text-xs ">
         {post.authorName} • {formatPostTime(post.timeOfPost)}
       </div>

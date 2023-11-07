@@ -10,7 +10,7 @@ export default function PostCard({ post }: { post: Post }) {
       className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 cursor-pointer "
       onClick={() => navigate('/details-page', { state: { post } })}
     >
-      <div className="bg-white rounded-lg shadow-md dark:bg-slate-500 dark:text-white">
+      <div className="bg-white rounded-lg shadow-md dark:bg-dark-card dark:text-white">
         <img
           src={post.imageLink}
           alt={post.title}
@@ -20,8 +20,8 @@ export default function PostCard({ post }: { post: Post }) {
           <div className="text-gray-500 text-xs mb-2">
             {post.authorName} • {formatPostTime(post.timeOfPost)}
           </div>
-          <h2 className="text-xl font-semibold mb-2 line-clamp-1 dark:text-black">{post.title}</h2>
-          <p className="text-gray-600 line-clamp-2 dark:text-black">{post.description}</p>
+          <h2 className="text-xl font-semibold mb-2 line-clamp-1 dark:text-white">{post.title}</h2>
+          <p className="text-gray-600 line-clamp-2 dark:text-white">{post.description}</p>
           <div className="mt-4 flex flex-wrap gap-2 dark:text-black">
             {post.categories.map((category, index) => (
               <span key={index} className={categoryProps(category)}>

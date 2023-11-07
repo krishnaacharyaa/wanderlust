@@ -89,14 +89,16 @@ function AddBlog() {
   };
   const navigate = useNavigate();
   return (
-    <div className="dark:bg-slate-700 dark:text-white w-full min-h-screen">
-      <div className="w-full min-h-screen">
-        <div className="font-[Poppins] p-4 px-16 bg-white dark:bg-slate-700 dark:text-white">
+    <div className=" w-full min-h-screen bg-dark-bg">
+      <div className="w-full min-h-screen ">
+        <div className="font-[Poppins] p-4 px-16 bg-white dark:bg-dark-bg ">
           <div className="flex justify-start items-center mb-4">
             <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl dark:text-white">
               <FiArrowLeft onClick={() => navigate(-1)} />
             </div>
-            <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
+            <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4 dark:text-white">
+              Create Post
+            </h2>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -105,7 +107,7 @@ function AddBlog() {
                 type="text"
                 name="title"
                 placeholder="Title"
-                className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800"
+                className="w-full p-2 rounded-lg bg-gray-50 dark:bg-dark-field dark:placeholder:text-dark-text placeholder:text-gray-800"
                 value={formData.title}
                 onChange={handleInputChange}
               />
@@ -115,7 +117,7 @@ function AddBlog() {
                 type="text"
                 name="authorName"
                 placeholder="Author Name"
-                className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+                className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 dark:bg-dark-field dark:placeholder:text-dark-text "
                 value={formData.authorName}
                 onChange={handleInputChange}
               />
@@ -125,7 +127,7 @@ function AddBlog() {
                 type="text"
                 name="imageLink"
                 placeholder="Image URL"
-                className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+                className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 dark:bg-dark-field dark:placeholder:text-dark-text "
                 value={formData.imageLink}
                 onChange={handleInputChange}
               />
@@ -134,17 +136,17 @@ function AddBlog() {
               <textarea
                 name="description"
                 placeholder="Description"
-                className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+                className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 dark:bg-dark-field dark:placeholder:text-dark-text "
                 value={formData.description}
                 onChange={handleInputChange}
               />
             </div>
 
             <div className="mb-4 flex items-center flex-col md:flex-row ">
-              <label className="block font-semibold mb-2 w-full md:w-fit  md:mr-8">
+              <label className="block font-semibold mb-2 w-full md:w-fit  md:mr-8 dark:text-white">
                 Categories
               </label>
-              <div className="flex flex-wrap gap-2 dark:text-black">
+              <div className="flex flex-wrap gap-2 ">
                 {CATEGORIES.map((category) => (
                   <span
                     key={category}
@@ -179,7 +181,7 @@ function AddBlog() {
 
             <button
               type="submit"
-              className="dark:bg-white dark:text-black bg-black text-white flex items-center justify-center text-xs md:text-sm lg:text-base p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+              className="dark:bg-white dark:text-dark-bg  bg-black text-white flex items-center justify-center text-xs md:text-sm lg:text-base p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
             >
               Create Blog
             </button>
