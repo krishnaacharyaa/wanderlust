@@ -3,18 +3,10 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import navigateBackBlackIcon from '../assets/svg/navigate-back-black.svg';
 import { CATEGORIES } from '../constants/categories';
 import { categoryProps } from '../utils/category-props';
-import blackleftarrow from '../assets/black-left-arrow.png';
-const imageUrls = [
-  'https://i.ibb.co/3z72vmc/clean-lake-mountains-range-trees-nature-4k.webp',
-  'https://i.ibb.co/y8vQnDc/c4fedab1-4041-4db5-9245-97439472cf2c.webp',
-  'https://i.ibb.co/BNjv5Nn/London-Skyline-125508655.webp',
-  'https://i.ibb.co/d0g42nr/FPO-BOR-100-800x600.webp',
-  'https://i.ibb.co/52mk2Yq/sunset-pier.webp',
-  'https://i.ibb.co/KLwfZzG/Maldives-1024x767.webp',
-  'https://i.ibb.co/qxFMj1H/sunset-horizon-clean-sky-nature.webp',
-];
+import blackleftarrow from '../assets/black-left-arrow.png'
 type FormData = {
   title: string;
   authorName: string;
@@ -97,11 +89,7 @@ function AddBlog() {
     <div className="font-[Poppins] p-4 px-16 bg-white ">
       <div className="flex justify-start items-center mb-4">
         <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl">
-          <img
-            src={blackleftarrow}
-            style={{ height: 20, width: 40 }}
-            onClick={() => navigate(-1)}
-          />
+        <img src={blackleftarrow}  style={{height:20, width:40}}onClick={() => navigate(-1)} />
         </div>
         <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
       </div>
