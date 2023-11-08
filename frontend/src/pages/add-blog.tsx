@@ -5,7 +5,16 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CATEGORIES } from '../constants/categories';
 import { categoryProps } from '../utils/category-props';
-import blackleftarrow from '../assets/black-left-arrow.png'
+import blackleftarrow from '../assets/black-left-arrow.png';
+const imageUrls = [
+  'https://i.ibb.co/3z72vmc/clean-lake-mountains-range-trees-nature-4k.webp',
+  'https://i.ibb.co/y8vQnDc/c4fedab1-4041-4db5-9245-97439472cf2c.webp',
+  'https://i.ibb.co/BNjv5Nn/London-Skyline-125508655.webp',
+  'https://i.ibb.co/d0g42nr/FPO-BOR-100-800x600.webp',
+  'https://i.ibb.co/52mk2Yq/sunset-pier.webp',
+  'https://i.ibb.co/KLwfZzG/Maldives-1024x767.webp',
+  'https://i.ibb.co/qxFMj1H/sunset-horizon-clean-sky-nature.webp',
+];
 type FormData = {
   title: string;
   authorName: string;
@@ -15,6 +24,13 @@ type FormData = {
   isFeaturedPost: boolean;
 };
 function AddBlog() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const handleImageSelect = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const [modal, setmodal] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
     authorName: '',
@@ -57,17 +73,6 @@ function AddBlog() {
       toast.error('All fields must be filled out.');
       return false;
     }
-
-    const imageLinkRegex = /\.(jpg|jpeg|png)$/i;
-    if (!imageLinkRegex.test(formData.imageLink)) {
-      toast.error('Image URL must end with .jpg, .jpeg, or .png');
-      return false;
-    }
-    if (formData.categories.length > 3) {
-      toast.error('Select up to three categories.');
-      return false;
-    }
-
     return true;
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -92,7 +97,11 @@ function AddBlog() {
     <div className="font-[Poppins] p-4 px-16 bg-white ">
       <div className="flex justify-start items-center mb-4">
         <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl">
-        <img src={blackleftarrow}  style={{height:20, width:40}}onClick={() => navigate(-1)} />
+          <img
+            src={blackleftarrow}
+            style={{ height: 20, width: 40 }}
+            onClick={() => navigate(-1)}
+          />
         </div>
         <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
       </div>
@@ -118,16 +127,15 @@ function AddBlog() {
             onChange={handleInputChange}
           />
         </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="imageLink"
-            placeholder="Image URL"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
-            value={formData.imageLink}
-            onChange={handleInputChange}
-          />
-        </div>
+        <button
+          type="button"
+          className="bg-black text-white flex items-center justify-center text-base p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+          onClick={() => {
+            setmodal(true);
+          }}
+        >
+          Pick Image
+        </button>
         <div className="mt-4 mb-4 ">
           <textarea
             name="description"
@@ -178,6 +186,80 @@ function AddBlog() {
           Create Blog
         </button>
       </form>
+      {modal && ( //MODAL STARTS
+        <div
+          className="relative z-10"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="false"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                      <h3
+                        className="text-base font-semibold leading-6 text-gray-900"
+                        id="modal-title"
+                      >
+                        Select Post Image
+                      </h3>
+                      <div className="mt-2">
+                        <div className="grid grid-cols-3 gap-4">
+                          {imageUrls.map((imageUrl) => (
+                            <div
+                              key={imageUrl}
+                              className={`cursor-pointer p-2 border ${
+                                selectedImage === imageUrl ? 'border-blue-500' : 'border-gray-300'
+                              } rounded-md`}
+                              onClick={() => handleImageSelect(imageUrl)}
+                            >
+                              <img
+                                src={imageUrl}
+                                alt={`Image ${imageUrl}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    name="imageLink"
+                    className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
+                    onClick={() => {
+                      const url = selectedImage;
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        imageLink: url,
+                      }));
+                      setmodal(false);
+                    }}
+                  >
+                    Select
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    onClick={() => {
+                      setmodal(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> //MODAL ENDS
+      )}
     </div>
   );
 }
