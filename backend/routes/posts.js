@@ -1,88 +1,37 @@
 import { Router } from 'express';
 const router = Router();
-import Post from '../models/post.js';
+import {
+  createPostHandler,
+  getAllPostsHandler,
+  getFeaturedPostsHandler,
+  getPostByCategoryHandler,
+  getLatestPostsHandler,
+  getPostByIdHandler,
+  updatePostHandler,
+  deletePostByIdHandler,
+} from '../controllers/posts-controller.js';
 
 // Create a new post
-router.post('/', async (req, res) => {
-  try {
-    const post = new Post(req.body);
-    const savedPost = await post.save();
-    res.json(savedPost);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
+router.post('/', createPostHandler);
 
 // Get all posts
-router.get('/', async (req, res) => {
-  try {
-    const posts = await Post.find();
-    res.json(posts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+router.get('/', getAllPostsHandler);
 
 // Route to get featured posts
-router.get('/featured', async (req, res) => {
-  try {
-    const featuredPosts = await Post.find({ isFeaturedPost: true });
-    res.json(featuredPosts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+router.get('/featured', getFeaturedPostsHandler);
 
 // Route to get posts by category
-router.get('/categories/:category', async (req, res) => {
-  const category = req.params.category;
-  try {
-    const categoryPosts = await Post.find({ categories: category });
-    res.json(categoryPosts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+router.get('/categories/:category', getPostByCategoryHandler);
 
 // Route for fetching the latest posts
-router.get('/latest', async (req, res) => {
-  try {
-    const latestPosts = await Post.find().sort({ timeOfPost: -1 });
-    res.json(latestPosts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+router.get('/latest', getLatestPostsHandler);
 // Get a specific post by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    res.json(post);
-  } catch (err) {
-    res.status(404).json({ message: 'Post not found' });
-  }
-});
+router.get('/:id', getPostByIdHandler);
 
 // Update a post by ID
-router.patch('/:id', async (req, res) => {
-  try {
-    const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.json(updatedPost);
-  } catch (err) {
-    res.status(404).json({ message: 'Post not found' });
-  }
-});
+router.patch('/:id', updatePostHandler);
 
 // Delete a post by ID
-router.delete('/:id', async (req, res) => {
-  try {
-    await Post.findByIdAndRemove(req.params.id);
-    res.json({ message: 'Post deleted' });
-  } catch (err) {
-    res.status(404).json({ message: 'Post not found' });
-  }
-});
+router.delete('/:id', deletePostByIdHandler);
 
 export default router;
