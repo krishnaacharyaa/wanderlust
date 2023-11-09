@@ -6,9 +6,11 @@
   },
   "extends": ["eslint:recommended", "prettier"],
   "env": {
+    "jest": true,
     "es2021": true,
     "node": true
   },
+  "plugins": ["babel", "jest"],
   "rules": {
     "no-console": "off"
   }
