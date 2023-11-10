@@ -1,4 +1,4 @@
-const validCategories = [
+export const validCategories = [
     'Travel',
     'Nature',
     'City',
@@ -7,7 +7,3 @@ const validCategories = [
     'Landmarks',
     'Mountains',
 ];
-
-module.exports = {
-    validCategories,
-};
