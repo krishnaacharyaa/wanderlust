@@ -21,17 +21,29 @@ const res = {
   status: jest.fn().mockReturnThis(),
 };
 
+const createPostObject = (options = {}) => {
+  return {
+    title: options.title || 'Test Post',
+    authorName: options.authorName || 'Test Author',
+    imageLink: options.imageLink || 'https://www.forTestingPurposeOnly/my-image.jpg',
+    categories: options.categories || [validCategories[0]],
+    description: options.description || 'This is a test post.',
+    isFeaturedPost: options.isFeaturedPost || false,
+    ...options,
+  };
+};
+
+const createRequestObject = (options = {}) => {
+  return {
+    body: options.body || {},
+    params: options.params || {},
+  };
+};
+
 describe('createPostHandler', () => {
   it('should create a new post', async () => {
-    const postObject = {
-      title: 'Test Post',
-      authorName: 'Test Author',
-      imageLink: 'https://www.forTestingPurposeOnly/my-image.jpg',
-      categories: [validCategories[0]],
-      description: 'This is a test post.',
-      isFeaturedPost: false,
-    };
-    const req = { body: postObject };
+    const postObject = createPostObject();
+    const req = createRequestObject({ body: postObject });
 
     Post.mockImplementationOnce(() => ({
       save: jest.fn().mockResolvedValueOnce(postObject),
@@ -46,31 +58,25 @@ describe('createPostHandler', () => {
   });
 
   it('should handle errors - Invalid Image URL', async () => {
-    const postObject = {
-      title: 'Test Post',
-      authorName: 'Test Author',
-      // Invalid extension
-      imageLink: 'https://www.forTestingPurposeOnly/my-image.gif',
-      categories: [validCategories[0]],
-      description: 'This is a test post.',
-      isFeaturedPost: false,
-    };
-    const req = { body: postObject };
+    const postObject = createPostObject({
+      imageLink: 'https://www.forTestingPurposeOnly/my-image.gif', // Invalid image URL
+    });
+    const req = createRequestObject({ body: postObject });
 
     await createPostHandler(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Image URL must end with .jpg, .jpeg, or .png' });
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Image URL must end with .jpg, .jpeg, or .png',
+    });
   });
 
   it('should handle errors - Missing Form Fields', async () => {
-    const postObject = {
-      title: 'Test Post',
-      authorName: 'Test Author',
-      // Missing imageLink, categories, and description
-      isFeaturedPost: false,
-    };
-    const req = { body: postObject };
+    const postObject = createPostObject();
+    delete postObject.title;
+    delete postObject.authorName;
+
+    const req = createRequestObject({ body: postObject });
 
     await createPostHandler(req, res);
 
@@ -79,32 +85,22 @@ describe('createPostHandler', () => {
   });
 
   it('should handle errors - Too Many Categories', async () => {
-    const postObject = {
-      title: 'Test Post',
-      authorName: 'Test Author',
-      imageLink: 'https://www.forTestingPurposeOnly/my-image.jpg',
-      categories: [validCategories[0], validCategories[1], validCategories[2], validCategories[3]], // More than 3 categories
-      description: 'This is a test post.',
-      isFeaturedPost: false,
-    };
-    const req = { body: postObject };
+    const postObject = createPostObject({
+      categories: [validCategories[0], validCategories[1], validCategories[2], validCategories[3]], // 4 categories
+    });
+    const req = createRequestObject({ body: postObject });
 
     await createPostHandler(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Please select up to three categories only.' });
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Please select up to three categories only.',
+    });
   });
 
   it('should handle errors - Internal Server Error', async () => {
-    const postObject = {
-      title: 'Test Post',
-      authorName: 'Test Author',
-      imageLink: 'https://www.forTestingPurposeOnly.my-image.jpg',
-      categories: [validCategories[0]],
-      description: 'This is a test post.',
-      isFeaturedPost: false,
-    };
-    const req = { body: postObject };
+    const postObject = createPostObject();
+    const req = createRequestObject({ body: postObject });
 
     const errorMessage = 'Internal Server Error';
     Post.mockImplementationOnce(() => ({
@@ -113,33 +109,21 @@ describe('createPostHandler', () => {
 
     await createPostHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
 
 describe('getAllPostsHandler', () => {
   it('should get all posts', async () => {
-    const req = {};
+    const req = createRequestObject();
 
     const mockPosts = [
-      {
-        title: 'Test Post - 1',
-        authorName: 'Test Author - 1',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-1.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: false,
-      },
-      {
-        title: 'Test Post - 2',
-        authorName: 'Test Author - 2',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-2.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: false,
-      }
+      createPostObject({ title: 'Test Post - 1' }),
+      createPostObject({ title: 'Test Post - 2', isFeaturedPost: true }),
+      createPostObject({ title: 'Test Post - 3' }),
     ];
+
     Post.find = jest.fn().mockResolvedValueOnce(mockPosts);
 
     await getAllPostsHandler(req, res);
@@ -148,8 +132,8 @@ describe('getAllPostsHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
-  it('should handle errors', async () => {
-    const req = {};
+  it('should handle errors - Internal Server Error', async () => {
+    const req = createRequestObject();
 
     const errorMessage = 'Internal Server Error';
     Post.find = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
@@ -163,25 +147,12 @@ describe('getAllPostsHandler', () => {
 
 describe('getFeaturedPostsHandler', () => {
   it('should get featured posts', async () => {
-    const req = {};
+    const req = createRequestObject();
 
     const mockFeaturedPosts = [
-      {
-        title: 'Test Post - 1',
-        authorName: 'Test Author - 1',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-1.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: true,
-      },
-      {
-        title: 'Test Post - 2',
-        authorName: 'Test Author - 2',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-2.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: true,
-      }
+      createPostObject({ title: 'Test Post - 1', isFeaturedPost: true }),
+      createPostObject({ title: 'Test Post - 2', isFeaturedPost: true }),
+      createPostObject({ title: 'Test Post - 3', isFeaturedPost: true }),
     ];
 
     Post.find = jest.fn().mockResolvedValueOnce(mockFeaturedPosts);
@@ -192,8 +163,8 @@ describe('getFeaturedPostsHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockFeaturedPosts);
   });
 
-  it('should handle errors', async () => {
-    const req = {};
+  it('should handle errors - Internal Server Error', async () => {
+    const req = createRequestObject();
 
     const errorMessage = 'Internal Server Error';
     Post.find = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
@@ -207,33 +178,12 @@ describe('getFeaturedPostsHandler', () => {
 
 describe('getPostByCategoryHandler', () => {
   it('should get posts by category', async () => {
-    const req = { params: { category: validCategories[0] } };
+    const req = createRequestObject({ params: { category: validCategories[1] } });
 
     const mockPosts = [
-      {
-        title: 'Test Post - 1',
-        authorName: 'Test Author - 1',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-1.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: false,
-      },
-      {
-        title: 'Test Post - 2',
-        authorName: 'Test Author - 2',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-2.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: false,
-      },
-      {
-        title: 'Test Post - 3',
-        authorName: 'Test Author - 3',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-3.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: true,
-      }
+      createPostObject({ title: 'Test Post - 1', categories: [validCategories[1]] }),
+      createPostObject({ title: 'Test Post - 2', categories: [validCategories[1]] }),
+      createPostObject({ title: 'Test Post - 3', categories: [validCategories[1]] }),
     ];
 
     Post.find = jest.fn().mockResolvedValueOnce(mockPosts);
@@ -245,7 +195,7 @@ describe('getPostByCategoryHandler', () => {
   });
 
   it('should handle errors - Invalid Category', async () => {
-    const req = { params: { category: 'Invalid Category' } };
+    const req = createRequestObject({ params: { category: 'Invalid Category' } });
 
     await getPostByCategoryHandler(req, res);
 
@@ -253,8 +203,8 @@ describe('getPostByCategoryHandler', () => {
     expect(res.json).toHaveBeenCalledWith({ message: 'Invalid category' });
   });
 
-  it('should handle errors', async () => {
-    const req = { params: { category: 'Travel' } };
+  it('should handle errors - Internal Server Error', async () => {
+    const req = createRequestObject({ params: { category: validCategories[1] } });
 
     const errorMessage = 'Internal Server Error';
     Post.find = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
@@ -268,25 +218,12 @@ describe('getPostByCategoryHandler', () => {
 
 describe('getLatestPostsHandler', () => {
   it('should get latest posts', async () => {
-    const req = {};
+    const req = createRequestObject();
 
     const mockPosts = [
-      {
-        title: 'Test Post - 1',
-        authorName: 'Test Author - 1',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-1.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: false,
-      },
-      {
-        title: 'Test Post - 2',
-        authorName: 'Test Author - 2',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-2.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: false,
-      }
+      createPostObject({ title: 'Test Post - 1' }),
+      createPostObject({ title: 'Test Post - 2' }),
+      createPostObject({ title: 'Test Post - 3' }),
     ];
 
     Post.find.mockReturnValueOnce({
@@ -299,8 +236,8 @@ describe('getLatestPostsHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
-  it('should handle errors', async () => {
-    const req = {};
+  it('should handle errors - Internal Server Error', async () => {
+    const req = createRequestObject();
 
     const errorMessage = 'Internal Server Error';
     Post.find.mockReturnValueOnce({
@@ -316,17 +253,9 @@ describe('getLatestPostsHandler', () => {
 
 describe('getPostByIdHandler', () => {
   it('should get post by id', async () => {
-    const req = { params: { id: '6910293383' } };
+    const req = createRequestObject({ params: { id: '6910293383' } });
 
-    const mockPost = {
-        title: 'Test Post - 1',
-        authorName: 'Test Author - 1',
-        imageLink: 'https://www.forTestingPurposeOnly.my-image-2.jpg',
-        categories: [validCategories[0]],
-        description: 'This is a test post.',
-        isFeaturedPost: false,
-        _id: '6910293383',
-    };
+    const mockPost = createPostObject({ _id: '6910293383' });
 
     Post.findById = jest.fn().mockResolvedValueOnce(mockPost);
 
@@ -336,30 +265,39 @@ describe('getPostByIdHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPost);
   });
 
-  it('should handle errors', async () => {
-    const req = { params: { id: '6910293383' } };
+  it('should handle errors - Post not found', async () => {
+    const req = createRequestObject({ params: { id: '6910293383' } });
 
     const errorMessage = 'Post not found';
-    Post.findById = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
+    Post.findById = jest.fn().mockResolvedValueOnce(null);
 
     await getPostByIdHandler(req, res);
 
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
+
+  it('should handle errors - Internal Server Error', async () => {
+    const req = createRequestObject({ params: { id: '6910293383' } });
+
+    const errorMessage = 'Internal Server Error';
+    Post.findById = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
+
+    await getPostByIdHandler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
+  });
 });
 
 describe('updatePostHandler', () => {
   it('should update post', async () => {
-    const req = {
+    const req = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
-    };
+    });
 
-    const mockPost = {
-      title: 'Updated Post',
-      _id: '6910293383',
-    }
+    const mockPost = createPostObject({ _id: '6910293383', title: 'Updated Post' });
 
     // Mock the behavior of Post.findByIdAndUpdate
     Post.findByIdAndUpdate = jest.fn().mockResolvedValueOnce(mockPost);
@@ -370,32 +308,46 @@ describe('updatePostHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPost);
   });
 
-  it('should handle errors', async () => {
-    const req = {
+  it('should handle errors - Post not found', async () => {
+    const req = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
-    };
+    });
 
     const errorMessage = 'Post not found';
 
     // Mock the behavior of Post.findByIdAndUpdate
-    Post.findByIdAndUpdate = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
+    Post.findByIdAndUpdate = jest.fn().mockResolvedValueOnce(null);
 
     await updatePostHandler(req, res);
 
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
+
+  it('should handle errors - Internal Server Error', async () => {
+    const req = createRequestObject({
+      params: { id: '6910293383' },
+      body: { title: 'Updated Post' },
+    });
+
+    const errorMessage = 'Internal Server Error';
+
+    // Mock the behavior of Post.findByIdAndUpdate
+    Post.findByIdAndUpdate = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
+
+    await updatePostHandler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
+  });
 });
 
 describe('deletePostByIdHandler', () => {
   it('should delete post', async () => {
-    const req = { params: { id: '6910293383' } };
+    const req = createRequestObject({ params: { id: '6910293383' } });
 
-    const mockPost = {
-      title: 'Test Post',
-      _id: '6910293383',
-    };
+    const mockPost = createPostObject({ _id: '6910293383' });
 
     // Mock the behavior of Post.findByIdAndRemove
     Post.findByIdAndRemove = jest.fn().mockResolvedValueOnce(mockPost);
@@ -408,17 +360,31 @@ describe('deletePostByIdHandler', () => {
     });
   });
 
-  it('should handle errors', async () => {
-    const req = { params: { id: '6910293383' } };
+  it('should handle errors - Post not found', async () => {
+    const req = createRequestObject({ params: { id: '6910293383' } });
 
     const errorMessage = 'Post not found';
+
+    // Mock the behavior of Post.findByIdAndRemove
+    Post.findByIdAndRemove = jest.fn().mockResolvedValueOnce(null);
+
+    await deletePostByIdHandler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
+  });
+
+  it('should handle errors - Internal Server Error', async () => {
+    const req = createRequestObject({ params: { id: '6910293383' } });
+
+    const errorMessage = 'Internal Server Error';
 
     // Mock the behavior of Post.findByIdAndRemove
     Post.findByIdAndRemove = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
 
     await deletePostByIdHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
