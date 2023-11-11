@@ -13,7 +13,7 @@ export const createPostHandler = async (req, res) => {
     } = req.body;
 
     // Validation - check if all fields are filled
-    if(!title || !authorName || !imageLink || !description || !categories) {
+    if (!title || !authorName || !imageLink || !description || !categories) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -24,7 +24,7 @@ export const createPostHandler = async (req, res) => {
     }
 
     // Validation - check if categories array has more than 3 items
-    if(categories.length > 3) {
+    if (categories.length > 3) {
       return res.status(400).json({ message: 'Please select up to three categories only.' });
     }
 
@@ -34,13 +34,13 @@ export const createPostHandler = async (req, res) => {
       imageLink,
       description,
       categories,
-      isFeaturedPost
+      isFeaturedPost,
     });
 
     const savedPost = await post.save();
     res.status(200).json(savedPost);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -66,7 +66,7 @@ export const getPostByCategoryHandler = async (req, res) => {
   const category = req.params.category;
   try {
     // Validation - check if category is valid
-    if(!validCategories.includes(category)) {
+    if (!validCategories.includes(category)) {
       return res.status(400).json({ message: 'Invalid category' });
     }
 
@@ -91,13 +91,13 @@ export const getPostByIdHandler = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     // Validation - check if post exists
-    if(!post) {
-      throw new Error("Post not found");
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
     }
 
     res.status(200).json(post);
   } catch (err) {
-    res.status(404).json({ message: err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -108,13 +108,13 @@ export const updatePostHandler = async (req, res) => {
     });
 
     // Validation - check if post exists
-    if(!updatedPost) {
-      throw new Error("Post not found");
+    if (!updatedPost) {
+      return res.status(404).json({ message: 'Post not found' });
     }
 
     res.status(200).json(updatedPost);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -123,12 +123,12 @@ export const deletePostByIdHandler = async (req, res) => {
     const post = await Post.findByIdAndRemove(req.params.id);
 
     // Validation - check if post exists
-    if(!post) {
-      throw new Error("Post not found");
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
     }
 
     res.status(200).json({ message: 'Post deleted' });
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
