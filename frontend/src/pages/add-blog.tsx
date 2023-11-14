@@ -102,16 +102,16 @@ function AddBlog() {
   };
   const navigate = useNavigate();
   return (
-    <div className="font-[Poppins] p-4 px-16 bg-white ">
-      <div className="flex justify-start items-center mb-4">
-        <div className=" text-black cursor-pointer w-fit  text-base md:text-lg lg:text-2xl">
+    <div className="bg-white p-4 px-16 font-[Poppins]">
+      <div className="mb-4 flex items-center justify-start">
+        <div className="w-fit cursor-pointer text-base text-black md:text-lg lg:text-2xl">
           <img
             src={navigateBackBlackIcon}
             style={{ height: 20, width: 40 }}
             onClick={() => navigate(-1)}
           />
         </div>
-        <h2 className="text-sm md:text-lg  lg:text-2xl font-bold ml-4">Create Post</h2>
+        <h2 className="ml-4 text-sm font-bold md:text-lg lg:text-2xl">Create Post</h2>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -120,7 +120,7 @@ function AddBlog() {
             type="text"
             name="title"
             placeholder="Title"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800"
             value={formData.title}
             onChange={handleInputChange}
           />
@@ -130,7 +130,7 @@ function AddBlog() {
             type="text"
             name="authorName"
             placeholder="Author Name"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800"
             value={formData.authorName}
             onChange={handleInputChange}
           />
@@ -142,14 +142,14 @@ function AddBlog() {
               id="imgtext"
               name="imageLink"
               placeholder="Image URL"
-              className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+              className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800"
               value={formData.imageLink}
               onChange={handleInputChange}
             />
           </div>
           <button
             type="button"
-            className="bg-black text-white  rounded-lg hover:bg-gray-800 px-3"
+            className="rounded-lg bg-black px-3 text-white hover:bg-gray-800"
             onClick={() => {
               setmodal(true);
             }}
@@ -157,18 +157,18 @@ function AddBlog() {
             Pick Image
           </button>
         </div>
-        <div className="mt-4 mb-4 ">
+        <div className="mb-4 mt-4">
           <textarea
             name="description"
             placeholder="Description"
-            className="w-full p-2 rounded-lg bg-gray-50 placeholder:text-gray-800 "
+            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800"
             value={formData.description}
             onChange={handleInputChange}
           />
         </div>
 
-        <div className="mb-4 flex items-center flex-col md:flex-row ">
-          <label className="block font-semibold mb-2 w-full md:w-fit  md:mr-8">Categories</label>
+        <div className="mb-4 flex flex-col items-center md:flex-row">
+          <label className="mb-2 block w-full font-semibold md:mr-8 md:w-fit">Categories</label>
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((category) => (
               <span
@@ -189,11 +189,11 @@ function AddBlog() {
 
         <div className="mb-4 flex items-center">
           <label className="flex items-center">
-            <span className="text-gray-800 text-base font-medium">Featured Post</span>
+            <span className="text-base font-medium text-gray-800">Featured Post</span>
             <input
               type="checkbox"
               name="isFeaturedPost"
-              className="ml-2 h-5 w-5 text-indigo-600 border rounded focus:ring-indigo-400"
+              className="ml-2 h-5 w-5 rounded border text-indigo-600 focus:ring-indigo-400"
               checked={formData.isFeaturedPost}
               onChange={handleCheckboxChange}
             />
@@ -202,7 +202,7 @@ function AddBlog() {
 
         <button
           type="submit"
-          className="bg-black text-white flex items-center justify-center text-base p-2 rounded-lg hover:bg-gray-800 w-full md:w-fit"
+          className="flex w-full items-center justify-center rounded-lg bg-black p-2 text-base text-white hover:bg-gray-800 md:w-fit"
         >
           Create Blog
         </button>

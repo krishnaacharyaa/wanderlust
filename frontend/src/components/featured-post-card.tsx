@@ -7,17 +7,17 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-white rounded-lg  h-48 flex gap-4 cursor-pointer"
+      className="flex h-48 cursor-pointer gap-4 rounded-lg bg-white"
       onClick={() => navigate('/details-page', { state: { post } })}
     >
       <div className="w-1/3">
         <img
           src={post.imageLink}
           alt={post.title}
-          className="w-full h-full object-cover rounded-lg"
+          className="h-full w-full rounded-lg object-cover"
         />
       </div>
-      <div className="w-2/3 flex flex-col gap-2 h-full ">
+      <div className="flex h-full w-2/3 flex-col gap-2">
         <div className="text-xl font-semibold">{post.title}</div>
         <div className="flex flex-wrap gap-2">
           {post.categories.map((category, index) => (
@@ -26,10 +26,10 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
             </span>
           ))}
         </div>
-        <div className=" text-gray-600  line-clamp-2  ">
+        <div className="line-clamp-2 text-gray-600">
           <p className="overflow-ellipsis">{post.description}</p>
         </div>
-        <div className=" text-gray-500 text-xs mb-1 flex-1 flex items-end  ">
+        <div className="mb-1 flex flex-1 items-end text-xs text-gray-500">
           {post.authorName} • {formatPostTime(post.timeOfPost)}
         </div>
       </div>

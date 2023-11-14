@@ -20,17 +20,17 @@ function HomePage() {
   }, []);
   const navigate = useNavigate();
   return (
-    <div className="font-[Poppins] w-full">
+    <div className="w-full font-[Poppins]">
       <div
         style={{ backgroundImage: `url(${bg})` }}
-        className="relative h-[460px] bg-cover mt-[-8px] bg-fixed bg-center"
+        className="relative mt-[-8px] h-[460px] bg-cover bg-fixed bg-center"
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col px-16 py-8 text-white">
-          <div className="flex justify-between w-full ">
+          <div className="flex w-full justify-between">
             <div className="text-2xl font-semibold">WanderLust</div>
             <button
-              className="border border-white rounded px-4 py-2"
+              className="rounded border border-white px-4 py-2"
               onClick={() => {
                 navigate('/add-blog');
               }}
@@ -38,20 +38,20 @@ function HomePage() {
               Create post
             </button>
           </div>
-          <div className="flex flex-1 flex-col justify-end pb-8 max-w-5xl">
+          <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8">
             <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>
-            <p className="text-xl my-4">
+            <p className="my-4 text-xl">
               Dive into the World of Travel with Stories That Transport You to Far-Off Lands.
               Adventure awaits around every corner. It's time to explore the world!
             </p>
-            <div className="   text-xl font-semibold">Let's Go !!!</div>
+            <div className="text-xl font-semibold">Let's Go !!!</div>
           </div>
         </div>
       </div>
       <div className="px-16">
         <BlogFeed />
-        <h1 className="text-2xl font-semibold ">All Blog Posts</h1>
-        <div className="flex flex-wrap -mx-4">
+        <h1 className="text-2xl font-semibold">All Blog Posts</h1>
+        <div className="-mx-4 flex flex-wrap">
           {posts.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}

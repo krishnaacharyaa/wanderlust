@@ -43,7 +43,7 @@ const ModalComponent: React.FC<ModalProps> = ({
                           {imageUrls.map((imageUrl) => (
                             <div
                               key={imageUrl}
-                              className={`cursor-pointer p-2 border ${
+                              className={`cursor-pointer border p-2 ${
                                 selectedImage === imageUrl ? 'border-blue-500' : 'border-gray-300'
                               } rounded-md`}
                               onClick={() => handleImageSelect(imageUrl)}
@@ -51,7 +51,7 @@ const ModalComponent: React.FC<ModalProps> = ({
                               <img
                                 src={imageUrl}
                                 alt={`Image ${imageUrl}`}
-                                className="w-full h-full object-cover"
+                                className="h-full w-full object-cover"
                               />
                             </div>
                           ))}
