@@ -41,7 +41,7 @@ const createRequestObject = (options = {}) => {
 };
 
 describe('createPostHandler', () => {
-  it('should create a new post', async () => {
+  it('Post creation: Success - All fields are valid', async () => {
     const postObject = createPostObject();
     const req = createRequestObject({ body: postObject });
 
@@ -57,7 +57,7 @@ describe('createPostHandler', () => {
     expect(res.json).toHaveBeenCalledWith(postObject);
   });
 
-  it('should handle errors - Invalid Image URL', async () => {
+  it('Post creation: Failure - Invalid image url', async () => {
     const postObject = createPostObject({
       imageLink: 'https://www.forTestingPurposeOnly/my-image.gif', // Invalid image URL
     });
@@ -71,7 +71,7 @@ describe('createPostHandler', () => {
     });
   });
 
-  it('should handle errors - Missing Form Fields', async () => {
+  it('Post creation: Failure - Some fields are missing', async () => {
     const postObject = createPostObject();
     delete postObject.title;
     delete postObject.authorName;
@@ -84,7 +84,7 @@ describe('createPostHandler', () => {
     expect(res.json).toHaveBeenCalledWith({ message: 'All fields are required.' });
   });
 
-  it('should handle errors - Too Many Categories', async () => {
+  it('Post creation: Failure - Too Many Categories', async () => {
     const postObject = createPostObject({
       categories: [validCategories[0], validCategories[1], validCategories[2], validCategories[3]], // 4 categories
     });
@@ -98,7 +98,7 @@ describe('createPostHandler', () => {
     });
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Post creation: Failure - Internal server error', async () => {
     const postObject = createPostObject();
     const req = createRequestObject({ body: postObject });
 
@@ -115,7 +115,7 @@ describe('createPostHandler', () => {
 });
 
 describe('getAllPostsHandler', () => {
-  it('should get all posts', async () => {
+  it('Get all posts: Success - Retrieving all posts list', async () => {
     const req = createRequestObject();
 
     const mockPosts = [
@@ -132,7 +132,7 @@ describe('getAllPostsHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Get all posts: Failure - Internal Server Error', async () => {
     const req = createRequestObject();
 
     const errorMessage = 'Internal Server Error';
@@ -146,7 +146,7 @@ describe('getAllPostsHandler', () => {
 });
 
 describe('getFeaturedPostsHandler', () => {
-  it('should get featured posts', async () => {
+  it('Get featured posts: Success - Retrieving all featured posts list', async () => {
     const req = createRequestObject();
 
     const mockFeaturedPosts = [
@@ -163,7 +163,7 @@ describe('getFeaturedPostsHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockFeaturedPosts);
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Get featured posts: Failure - Internal Server Error', async () => {
     const req = createRequestObject();
 
     const errorMessage = 'Internal Server Error';
@@ -177,7 +177,7 @@ describe('getFeaturedPostsHandler', () => {
 });
 
 describe('getPostByCategoryHandler', () => {
-  it('should get posts by category', async () => {
+  it('Get posts by category: Success - Retrieving posts list of specified category', async () => {
     const req = createRequestObject({ params: { category: validCategories[1] } });
 
     const mockPosts = [
@@ -194,7 +194,7 @@ describe('getPostByCategoryHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
-  it('should handle errors - Invalid Category', async () => {
+  it('Get posts by category: Failure - Invalid category', async () => {
     const req = createRequestObject({ params: { category: 'Invalid Category' } });
 
     await getPostByCategoryHandler(req, res);
@@ -203,7 +203,7 @@ describe('getPostByCategoryHandler', () => {
     expect(res.json).toHaveBeenCalledWith({ message: 'Invalid category' });
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Get posts by category: Failure - Internal Server Error', async () => {
     const req = createRequestObject({ params: { category: validCategories[1] } });
 
     const errorMessage = 'Internal Server Error';
@@ -217,7 +217,7 @@ describe('getPostByCategoryHandler', () => {
 });
 
 describe('getLatestPostsHandler', () => {
-  it('should get latest posts', async () => {
+  it('Get latest posts: Success - Retrieving most recent posts list', async () => {
     const req = createRequestObject();
 
     const mockPosts = [
@@ -236,7 +236,7 @@ describe('getLatestPostsHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Get latest posts: Failure - Internal Server Error', async () => {
     const req = createRequestObject();
 
     const errorMessage = 'Internal Server Error';
@@ -252,7 +252,7 @@ describe('getLatestPostsHandler', () => {
 });
 
 describe('getPostByIdHandler', () => {
-  it('should get post by id', async () => {
+  it('Get post by ID: Success - Retrieving Specific Post', async () => {
     const req = createRequestObject({ params: { id: '6910293383' } });
 
     const mockPost = createPostObject({ _id: '6910293383' });
@@ -265,7 +265,7 @@ describe('getPostByIdHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPost);
   });
 
-  it('should handle errors - Post not found', async () => {
+  it('Get post by ID: Failure - Post not found (Specified post ID is invalid)', async () => {
     const req = createRequestObject({ params: { id: '6910293383' } });
 
     const errorMessage = 'Post not found';
@@ -277,7 +277,7 @@ describe('getPostByIdHandler', () => {
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Get post by ID: Failure - Internal Server Error', async () => {
     const req = createRequestObject({ params: { id: '6910293383' } });
 
     const errorMessage = 'Internal Server Error';
@@ -291,7 +291,7 @@ describe('getPostByIdHandler', () => {
 });
 
 describe('updatePostHandler', () => {
-  it('should update post', async () => {
+  it('Update post: Success - Modifying post content', async () => {
     const req = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
@@ -308,7 +308,7 @@ describe('updatePostHandler', () => {
     expect(res.json).toHaveBeenCalledWith(mockPost);
   });
 
-  it('should handle errors - Post not found', async () => {
+  it('Update post: Failure - Post not found (Specified post ID is invalid)', async () => {
     const req = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
@@ -325,7 +325,7 @@ describe('updatePostHandler', () => {
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Update post: Failure - Internal Server Error', async () => {
     const req = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
@@ -344,7 +344,7 @@ describe('updatePostHandler', () => {
 });
 
 describe('deletePostByIdHandler', () => {
-  it('should delete post', async () => {
+  it('Delete Post: Success - Removing Post with specified ID', async () => {
     const req = createRequestObject({ params: { id: '6910293383' } });
 
     const mockPost = createPostObject({ _id: '6910293383' });
@@ -360,7 +360,7 @@ describe('deletePostByIdHandler', () => {
     });
   });
 
-  it('should handle errors - Post not found', async () => {
+  it('Delete Post: Failure - Post not found (Specified post ID is invalid)', async () => {
     const req = createRequestObject({ params: { id: '6910293383' } });
 
     const errorMessage = 'Post not found';
@@ -374,7 +374,7 @@ describe('deletePostByIdHandler', () => {
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 
-  it('should handle errors - Internal Server Error', async () => {
+  it('Delete Post: Failure - Internal Server Error', async () => {
     const req = createRequestObject({ params: { id: '6910293383' } });
 
     const errorMessage = 'Internal Server Error';
