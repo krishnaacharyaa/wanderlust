@@ -1,8 +1,11 @@
 # Contributing
+
 Welcome to the project! I'm really excited to have you on board, and before we dive into the guidelines, let me share the essence of why this project was created.
 
 ## Intention behind building this project
+
 At its core, this project embodies two important aims:
+
 1. **Start Your Open Source Journey**: It's aimed to kickstart your open-source journey. Here, you'll learn the basics of Git and get a solid grip on the MERN stack and I strongly believe that learning and building should go hand in hand.
 2. **Diving into React**: Once you've got the basics down, a whole new adventure begins of mastering React. This project covers everything, from simple form validation to advanced performance enhancements. And I've planned much more cool stuff to add in the near future if the project hits more number of contributors.
 
@@ -16,6 +19,7 @@ I'd love for you to make the most of this project - it's all about learning, hel
 4. [Guidelines to follow](#guidelines-to-follow)
 
 <a name="code-of-conduct"></a>
+
 ## Code of Conduct
 
 In our project, we believe in creating an open and inclusive space for everyone. To ensure a respectful and positive community, follow these key guidelines:
@@ -28,9 +32,10 @@ In our project, we believe in creating an open and inclusive space for everyone.
 We're committed to maintaining a positive and inclusive community, and your cooperation is crucial for making this a safe and enjoyable space for everyone.
 
 <a name="setting-up-the-project"></a>
+
 ## Setting up the Project
 
-To setup the project locally follow the steps: 
+To setup the project locally follow the steps:
 
 1. Fork and Star the project.
 2. Clone your forked repository.
@@ -38,10 +43,11 @@ To setup the project locally follow the steps:
 4. Set up your MongoDB database:
    - Open MongoDB Compass and run MongoDB locally at `mongodb://localhost:27017`.
    - Import sample posts data from `backend/data/sample_posts.json`.
-6. Rename the `.env.sample` file in the backend and frontend folders to `.env`.
-7. Launch the development server with `npm start` in the root directory of the repository.
+5. Rename the `.env.sample` file in the backend and frontend folders to `.env`.
+6. Launch the development server with `npm start` in the root directory of the repository.
 
 <a name="request-for-changes-pull-requests"></a>
+
 ## Request for Changes/Pull Requests
 
 To contribute to this project, you need to create a fork of the repository and then commit your changes to it. Follow these steps:
@@ -49,54 +55,56 @@ To contribute to this project, you need to create a fork of the repository and t
 1. Fork the repository if haven't done already from [wanderlust](https://github.com/krishnaacharyaa/wanderlust/)
 2. Add your fork as a local project:
 
-    ```sh
-    # Using HTTPS
-    git clone https://github.com/YOUR-USERNAME/wanderlust.git
-    ```
-    ```sh
-    # Using SSH
-    git clone git@github.com:YOUR-USERNAME/wanderlust.git
-    ```
+   ```sh
+   # Using HTTPS
+   git clone https://github.com/YOUR-USERNAME/wanderlust.git
+   ```
+
+   ```sh
+   # Using SSH
+   git clone git@github.com:YOUR-USERNAME/wanderlust.git
+   ```
 
 3. Add git remote controls:
 
-    ```sh
-    # Using HTTPS
-    git remote add fork https://github.com/YOUR-USERNAME/wanderlust.git
-    git remote add upstream https://github.com/krishnaacharyaa/wanderlust.git
-    ```
-    
-    ```sh
-    # Using SSH
-    git remote add fork git@github.com:YOUR-USERNAME/wanderlust.git
-    git remote add upstream git@github.com:krishnaacharyaa/wanderlust.git
-    ```
+   ```sh
+   # Using HTTPS
+   git remote add fork https://github.com/YOUR-USERNAME/wanderlust.git
+   git remote add upstream https://github.com/krishnaacharyaa/wanderlust.git
+   ```
+
+   ```sh
+   # Using SSH
+   git remote add fork git@github.com:YOUR-USERNAME/wanderlust.git
+   git remote add upstream git@github.com:krishnaacharyaa/wanderlust.git
+   ```
 
 4. Verify that you have your two git remotes:
 
-    ```sh
-    git remote -v
-    ```
+   ```sh
+   git remote -v
+   ```
 
 5. **For every individual PR follow these 2 steps:**
-    -  To stay up to date with the central repository:
 
-       ```sh
-       git pull upstream main
-       ```
+   - To stay up to date with the central repository:
 
-    - Checkout a private from your main Branch
+     ```sh
+     git pull upstream main
+     ```
 
-       ```sh
-       # Switch to the main branch
-       git switch main
-       
-       # Pull down any upstream changes
-       git pull
-       
-       # Create a new branch to work on
-       git switch --create bugfix/1234-name-of-the-issue
-       ```
+   - Checkout a private from your main Branch
+
+     ```sh
+     # Switch to the main branch
+     git switch main
+
+     # Pull down any upstream changes
+     git pull
+
+     # Create a new branch to work on
+     git switch --create bugfix/1234-name-of-the-issue
+     ```
 
 Commit your changes, then push the branch to your fork with `git push -u fork` and open a pull request on [the Wanderlust repository](https://github.com/krishnaacharyaa/wanderlust) following the template provided.
 

@@ -18,7 +18,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
         />
       </div>
       <div className="w-2/3 flex flex-col gap-2 h-full ">
-        <div className="text-xl font-semibold dark:text-white">{post.title}</div>
+        <div className="text-xl font-semibold dark:text-black">{post.title}</div>
         <div className="flex flex-wrap gap-2 dark:text-black">
           {post.categories.map((category, index) => (
             <span key={index} className={categoryProps(category)}>
