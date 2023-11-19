@@ -5,6 +5,7 @@ import bg from '../assets/wanderlustbg.webp';
 import BlogFeed from '../components/blog-feed';
 import PostCard from '../components/post-card';
 import Post from '../types/post-type';
+import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -52,9 +53,11 @@ function HomePage() {
         <BlogFeed />
         <h1 className="text-2xl font-semibold">All Blog Posts</h1>
         <div className="-mx-4 flex flex-wrap">
-          {posts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
+          {posts.length === 0
+            ? Array(8)
+                .fill(0)
+                .map((_, index) => <PostCardSkeleton key={index} />)
+            : posts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>
     </div>
