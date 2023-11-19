@@ -4,6 +4,9 @@ import FeaturedPostCard from '../components/featured-post-card';
 import LatestPostCard from '../components/latest-post-card';
 import { CATEGORIES } from '../constants/categories';
 import { categoryProps } from '../utils/category-props';
+import { FeaturedPostCardSkeleton } from './skeletons/featured-post-card-skeleton';
+import { LatestPostCardSkeleton } from './skeletons/latest-post-card-skeleton';
+
 export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');
   const [posts, setPosts] = useState([]);
@@ -46,9 +49,11 @@ export default function BlogFeed() {
               : `Posts related to "${selectedCategory}"`}
           </h1>
           <div className="flex flex-col gap-4">
-            {posts.slice(0, 5).map((post) => (
-              <FeaturedPostCard post={post} />
-            ))}
+            {posts.length === 0
+              ? Array(5)
+                  .fill(0)
+                  .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
+              : posts.slice(0, 5).map((post, index) => <FeaturedPostCard key={index} post={post} />)}
           </div>
         </div>
         <div className="w-full p-4 md:w-1/3">
@@ -77,9 +82,11 @@ export default function BlogFeed() {
             <div className="text-gray-500">What's new ?</div>
             <h2 className="mb-4 text-2xl font-semibold">Latest Posts</h2>
             <div className="flex flex-col gap-2">
-              {latestPosts.slice(0, 5).map((post) => (
-                <LatestPostCard post={post} />
-              ))}
+              {latestPosts.length === 0
+                ? Array(5)
+                    .fill(0)
+                    .map((_, index) => <LatestPostCardSkeleton key={index} />)
+                : latestPosts.slice(0, 5).map((post, index) => <LatestPostCard key={index} post={post} />)}
             </div>
           </div>
         </div>
