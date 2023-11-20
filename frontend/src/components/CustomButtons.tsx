@@ -1,4 +1,3 @@
-
 import { customButtonProps } from "../types/custombuttonTypes"
 
 const CustomButtons = ({title, btnType, onClick, containerStyle} : customButtonProps) => {

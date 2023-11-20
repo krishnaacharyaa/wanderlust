@@ -31,13 +31,13 @@ function HomePage() {
         className="relative mt-[-8px] h-[460px] bg-cover bg-fixed bg-center"
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col min-[460px]:px-16 px-10 py-8 text-white">
+        <div className="absolute inset-0 flex flex-col min-[460px]:px-16 px-3 py-8 text-white">
           <div className="flex w-full justify-between items-center gap-5">
             <div className="text-2xl font-semibold">WanderLust</div>
-            <CustomButtons title="Create Post"  onClick={handleCreatePostClick} containerStyle="border-solid border-2 text-white rounded-full"/>
+            <CustomButtons title="Create Post"  onClick={handleCreatePostClick} containerStyle="border-solid border-2 text-white rounded-xl"/>
           </div>
           <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8">
-            <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>
+            <h1 className="text-2xl min-[480px]:text-4xl font-bold">Journey Beyond Horizons</h1>
             <p className="my-4 text-xl">
               Dive into the World of Travel with Stories That Transport You to Far-Off Lands.
               Adventure awaits around every corner. It's time to explore the world!
@@ -46,7 +46,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <div className="px-16">
+      <div className="min-[460px]:px-16 px-3">
         <BlogFeed />
         <h1 className="text-2xl font-semibold">All Blog Posts</h1>
         <div className="-mx-4 flex flex-wrap">
