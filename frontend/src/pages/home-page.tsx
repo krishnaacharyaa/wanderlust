@@ -5,6 +5,7 @@ import bg from '../assets/wanderlustbg.webp';
 import BlogFeed from '../components/blog-feed';
 import PostCard from '../components/post-card';
 import Post from '../types/post-type';
+import CustomButtons from '../components/CustomButtons';
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -19,6 +20,10 @@ function HomePage() {
       });
   }, []);
   const navigate = useNavigate();
+
+  const handleCreatePostClick = () => {
+    navigate('/add-blog');
+  };
   return (
     <div className="w-full font-[Poppins]">
       <div
@@ -26,17 +31,10 @@ function HomePage() {
         className="relative mt-[-8px] h-[460px] bg-cover bg-fixed bg-center"
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col px-16 py-8 text-white">
-          <div className="flex w-full justify-between">
+        <div className="absolute inset-0 flex flex-col min-[460px]:px-16 px-10 py-8 text-white">
+          <div className="flex w-full justify-between items-center gap-5">
             <div className="text-2xl font-semibold">WanderLust</div>
-            <button
-              className="rounded border border-white px-4 py-2"
-              onClick={() => {
-                navigate('/add-blog');
-              }}
-            >
-              Create post
-            </button>
+            <CustomButtons title="Create Post"  onClick={handleCreatePostClick} containerStyle="border-solid border-2 text-white rounded-full"/>
           </div>
           <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8">
             <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>

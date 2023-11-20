@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-btn {
+  @apply flex flex-row relative justify-center items-center py-2 px-6 outline-none ;
+}
