@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bg from '../assets/wanderlustbg.webp';
-import BlogFeed from '../components/blog-feed';
-import PostCard from '../components/post-card';
-import Post from '../types/post-type';
+import bg from '@/assets/wanderlustbg.webp';
+import BlogFeed from '@/components/blog-feed';
+import PostCard from '@/components/post-card';
+import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);

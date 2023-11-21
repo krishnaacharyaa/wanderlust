@@ -1,5 +1,5 @@
 import React from 'react';
-import { imageUrls } from '../constants/images';
+import { imageUrls } from '@/constants/images';
 interface ModalProps {
   selectedImage: string;
   modal: boolean;
