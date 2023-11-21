@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import linkIcon from '../assets/svg/link.svg';
-import Post from '../types/post-type';
-import { categoryProps } from '../utils/category-props';
-import formatPostTime from '../utils/format-post-time';
+import linkIcon from '@/assets/svg/link.svg';
+import Post from '@/types/post-type';
+import { categoryProps } from '@/utils/category-props';
+import formatPostTime from '@/utils/format-post-time';
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (

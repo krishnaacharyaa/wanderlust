@@ -3,10 +3,10 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import navigateBackBlackIcon from '../assets/svg/navigate-back-black.svg';
-import { CATEGORIES } from '../constants/categories';
-import { categoryProps } from '../utils/category-props';
-import ModalComponent from '../components/modal';
+import navigateBackBlackIcon from '@/assets/svg/navigate-back-black.svg';
+import { CATEGORIES } from '@/constants/categories';
+import { categoryProps } from '@/utils/category-props';
+import ModalComponent from '@/components/modal';
 type FormData = {
   title: string;
   authorName: string;

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import FeaturedPostCard from '../components/featured-post-card';
-import LatestPostCard from '../components/latest-post-card';
-import { CATEGORIES } from '../constants/categories';
-import { categoryProps } from '../utils/category-props';
-import { FeaturedPostCardSkeleton } from './skeletons/featured-post-card-skeleton';
-import { LatestPostCardSkeleton } from './skeletons/latest-post-card-skeleton';
+import FeaturedPostCard from '@/components/featured-post-card';
+import LatestPostCard from '@/components/latest-post-card';
+import { CATEGORIES } from '@/constants/categories';
+import { categoryProps } from '@/utils/category-props';
+import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';
+import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';
 
 export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');

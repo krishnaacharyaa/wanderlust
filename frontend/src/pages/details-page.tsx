@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import navigateBackWhiteIcon from '../assets/svg/navigate-back-white.svg';
-import Post from '../types/post-type';
-import formatPostTime from '../utils/format-post-time';
+import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
+import Post from '@/types/post-type';
+import formatPostTime from '@/utils/format-post-time';
 
 const DetailsPage = () => {
   const { state } = useLocation();

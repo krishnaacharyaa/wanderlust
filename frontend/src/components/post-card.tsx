@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import Post from '../types/post-type';
-import formatPostTime from '../utils/format-post-time';
-import { categoryProps } from '../utils/category-props';
+import Post from '@/types/post-type';
+import formatPostTime from '@/utils/format-post-time';
+import { categoryProps } from '@/utils/category-props';
 
 export default function PostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
