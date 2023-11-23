@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-dark-background: #10172a;
+    --color-dark-textfield-card: #1d293c;
+  }
+}
