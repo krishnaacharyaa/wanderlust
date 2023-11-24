@@ -6,8 +6,12 @@ export default {
     extend: {
       colors: {
         dark: {
-          background: 'var(--color-dark-background)',
-          background_card_textfield: 'var(--color-dark-textfield-card)',
+          background: {
+            DEFAULT: 'var(--color-dark-background)',
+            card: {
+              textfield: 'var(--color-dark-textfield-card)',
+            },
+          },
         },
       },
     },

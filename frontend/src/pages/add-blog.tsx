@@ -144,7 +144,7 @@ function AddBlog() {
             type="text"
             name="title"
             placeholder="Title"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background_card_textfield dark:text-white dark:placeholder:text-white"
+            className="dark:bg-dark-background-card-textfield w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:text-white dark:placeholder:text-white"
             value={formData.title}
             onChange={handleInputChange}
           />
@@ -154,7 +154,7 @@ function AddBlog() {
             type="text"
             name="authorName"
             placeholder="Author Name"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background_card_textfield dark:text-white dark:placeholder:text-white"
+            className="dark:bg-dark-background-card-textfield w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:text-white dark:placeholder:text-white"
             value={formData.authorName}
             onChange={handleInputChange}
           />
@@ -166,7 +166,7 @@ function AddBlog() {
               id="imgtext"
               name="imageLink"
               placeholder="Image URL"
-              className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background_card_textfield dark:text-white dark:placeholder:text-white"
+              className="dark:bg-dark-background-card-textfield w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:text-white dark:placeholder:text-white"
               value={formData.imageLink}
               onChange={handleInputChange}
             />
@@ -185,7 +185,7 @@ function AddBlog() {
           <textarea
             name="description"
             placeholder="Description"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background_card_textfield dark:text-white dark:placeholder:text-white"
+            className="dark:bg-dark-background-card-textfield w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:text-white dark:placeholder:text-white"
             value={formData.description}
             onChange={handleInputChange}
           />
