@@ -8,9 +8,7 @@ export default {
         dark: {
           background: {
             DEFAULT: 'var(--color-dark-background)',
-            card: {
-              textfield: 'var(--color-dark-textfield-card)',
-            },
+            textfield: 'var(--color-dark-textfield-card)',
           },
         },
       },

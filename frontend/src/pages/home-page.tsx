@@ -21,7 +21,7 @@ function HomePage() {
   }, []);
   const navigate = useNavigate();
   return (
-    <div className="dark:bg-dark-background w-full font-[Poppins]">
+    <div className="w-full font-[Poppins] dark:bg-dark-background">
       <div
         style={{ backgroundImage: `url(${bg})` }}
         className="relative mt-[-8px] h-[460px] bg-cover bg-fixed bg-center"
@@ -39,9 +39,9 @@ function HomePage() {
               Create post
             </button>
           </div>
-          <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8">
-            <h1 className="text-4xl font-bold dark:text-white">Journey Beyond Horizons</h1>
-            <p className="my-4 text-xl dark:text-white">
+          <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8 dark:text-white">
+            <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>
+            <p className="my-4 text-xl">
               Dive into the World of Travel with Stories That Transport You to Far-Off Lands.
               Adventure awaits around every corner. It's time to explore the world!
             </p>

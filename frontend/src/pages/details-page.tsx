@@ -8,22 +8,14 @@ const DetailsPage = () => {
   const post: Post = state?.post;
   const navigate = useNavigate();
   return (
-    <div className="dark:bg-dark-background min-h-screen">
-      <div className="dark:bg-dark-background min-h-min w-full font-[Poppins]">
+    <div className="min-h-screen dark:bg-dark-background">
+      <div className="min-h-min w-full font-[Poppins] dark:bg-dark-background">
         <div className="relative flex flex-col">
-          <img
-            src={post.imageLink}
-            alt={post.title}
-            className="h-[360px] w-full object-cover md:h-[460px]"
-          />
+          <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover md:h-96" />
 
           <div className="absolute left-0 top-0 h-full w-full bg-black opacity-50"></div>
           <div className="absolute top-16 w-full cursor-pointer justify-start px-4 text-lg text-white md:top-24 md:px-8 md:text-xl lg:px-16 lg:text-2xl">
-            <img
-              src={navigateBackWhiteIcon}
-              style={{ height: 20, width: 40 }}
-              onClick={() => navigate(-1)}
-            />
+            <img src={navigateBackWhiteIcon} className="h-5 w-10" onClick={() => navigate(-1)} />
           </div>
           <div className="absolute bottom-4 w-full px-4 text-white md:bottom-8 md:px-8 lg:bottom-16 lg:px-16">
             <div className="mb-6 flex space-x-2">
