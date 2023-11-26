@@ -8,8 +8,8 @@ const DetailsPage = () => {
   const post: Post = state?.post;
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen dark:bg-dark-background">
-      <div className="min-h-min w-full font-[Poppins] dark:bg-dark-background">
+    <div className="min-h-screen dark:bg-dark">
+      <div className="min-h-min w-full font-[Poppins] dark:bg-dark">
         <div className="relative flex flex-col">
           <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover md:h-96" />
 

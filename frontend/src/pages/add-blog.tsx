@@ -123,14 +123,13 @@ function AddBlog() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white p-4 px-16 font-[Poppins] dark:bg-dark-background">
+    <div className="min-h-screen bg-white p-4 px-16 font-[Poppins] dark:bg-dark">
       <div className="mb-4 flex items-center justify-start">
         <div className="w-fit cursor-pointer text-base text-black  md:text-lg lg:text-2xl">
           <img
             src={isDarkMode ? navigateBackWhiteIcon : navigateBackBlackIcon}
-            style={{ height: 20, width: 40 }}
             onClick={() => navigate(-1)}
-            className="dark:text-white"
+            className="h-5 w-10"
           />
         </div>
         <h2 className="ml-4 text-sm font-bold dark:text-white md:text-lg lg:text-2xl">
@@ -144,7 +143,7 @@ function AddBlog() {
             type="text"
             name="title"
             placeholder="Title"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background-textfield dark:text-white dark:placeholder:text-white"
+            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
             value={formData.title}
             onChange={handleInputChange}
           />
@@ -154,7 +153,7 @@ function AddBlog() {
             type="text"
             name="authorName"
             placeholder="Author Name"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background-textfield dark:text-white dark:placeholder:text-white"
+            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
             value={formData.authorName}
             onChange={handleInputChange}
           />
@@ -166,7 +165,7 @@ function AddBlog() {
               id="imgtext"
               name="imageLink"
               placeholder="Image URL"
-              className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background-textfield dark:text-white dark:placeholder:text-white"
+              className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
               value={formData.imageLink}
               onChange={handleInputChange}
             />
@@ -185,7 +184,7 @@ function AddBlog() {
           <textarea
             name="description"
             placeholder="Description"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-background-textfield dark:text-white dark:placeholder:text-white"
+            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
             value={formData.description}
             onChange={handleInputChange}
           />

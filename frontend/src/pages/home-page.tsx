@@ -21,7 +21,7 @@ function HomePage() {
   }, []);
   const navigate = useNavigate();
   return (
-    <div className="w-full font-[Poppins] dark:bg-dark-background">
+    <div className="w-full font-[Poppins] dark:bg-dark">
       <div
         style={{ backgroundImage: `url(${bg})` }}
         className="relative mt-[-8px] h-[460px] bg-cover bg-fixed bg-center"
