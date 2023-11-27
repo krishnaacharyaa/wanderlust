@@ -191,7 +191,7 @@ function AddBlog() {
         </div>
 
         <div className="mb-4 flex flex-col items-center md:flex-row">
-          <label className="mb-2 block w-full font-semibold  dark:text-white md:mr-8 md:w-fit">
+          <label className="mb-2 block w-full font-semibold dark:text-white md:mr-8 md:w-fit">
             Categories
           </label>
           <div className="flex flex-wrap gap-2">
@@ -214,7 +214,7 @@ function AddBlog() {
 
         <div className="mb-4 flex items-center">
           <label className="flex items-center">
-            <span className="text-base font-medium text-gray-800  dark:text-white">
+            <span className="text-base font-medium text-gray-800 dark:text-white">
               Featured Post
             </span>
             <input

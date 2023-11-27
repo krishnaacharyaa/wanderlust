@@ -45,7 +45,7 @@ function HomePage() {
               Dive into the World of Travel with Stories That Transport You to Far-Off Lands.
               Adventure awaits around every corner. It's time to explore the world!
             </p>
-            <div className="text-xl font-semibold dark:text-white">Let's Go !!!</div>
+            <div className="text-xl font-semibold">Let's Go !!!</div>
           </div>
         </div>
       </div>
