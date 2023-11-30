@@ -43,7 +43,7 @@ export default function BlogFeed() {
     <div className="container mx-auto py-6">
       <div className="-mx-4 flex flex-wrap">
         <div className="w-full p-4 md:w-2/3">
-          <h1 className="mb-4 text-2xl font-semibold">
+          <h1 className="mb-4 text-2xl font-semibold dark:text-white">
             {selectedCategory === 'featured'
               ? 'Featured Posts'
               : `Posts related to "${selectedCategory}"`}
@@ -53,13 +53,15 @@ export default function BlogFeed() {
               ? Array(5)
                   .fill(0)
                   .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
-              : posts.slice(0, 5).map((post, index) => <FeaturedPostCard key={index} post={post} />)}
+              : posts
+                  .slice(0, 5)
+                  .map((post, index) => <FeaturedPostCard key={index} post={post} />)}
           </div>
         </div>
         <div className="w-full p-4 md:w-1/3">
           <div className="mb-6">
-            <div className="text-gray-500">Discover by topic</div>
-            <h2 className="mb-4 text-2xl font-semibold">Categories</h2>
+            <div className="text-gray-500 dark:text-white">Discover by topic</div>
+            <h2 className="mb-4 text-2xl font-semibold dark:text-white">Categories</h2>
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((category) => (
                 <button
@@ -79,14 +81,16 @@ export default function BlogFeed() {
             </div>
           </div>
           <div>
-            <div className="text-gray-500">What's new ?</div>
-            <h2 className="mb-4 text-2xl font-semibold">Latest Posts</h2>
+            <div className="text-gray-500 dark:text-white">What's new ?</div>
+            <h2 className="mb-4 text-2xl font-semibold dark:text-white">Latest Posts</h2>
             <div className="flex flex-col gap-2">
               {latestPosts.length === 0
                 ? Array(5)
                     .fill(0)
                     .map((_, index) => <LatestPostCardSkeleton key={index} />)
-                : latestPosts.slice(0, 5).map((post, index) => <LatestPostCard key={index} post={post} />)}
+                : latestPosts
+                    .slice(0, 5)
+                    .map((post, index) => <LatestPostCard key={index} post={post} />)}
             </div>
           </div>
         </div>
