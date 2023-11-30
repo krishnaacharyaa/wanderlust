@@ -48,21 +48,21 @@ export default function BlogFeed() {
               ? 'Featured Posts'
               : `Posts related to "${selectedCategory}"`}
           </h1>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             {posts.length === 0
               ? Array(5)
-                  .fill(0)
-                  .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
+                .fill(0)
+                .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
               : posts
-                  .slice(0, 5)
-                  .map((post, index) => <FeaturedPostCard key={index} post={post} />)}
+                .slice(0, 5)
+                .map((post, index) => <FeaturedPostCard key={index} post={post} />)}
           </div>
         </div>
         <div className="w-full p-4 md:w-1/3">
           <div className="mb-6">
-            <div className="text-gray-500 dark:text-white">Discover by topic</div>
-            <h2 className="mb-4 text-2xl font-semibold dark:text-white">Categories</h2>
-            <div className="flex flex-wrap gap-2">
+            <div className="-mb-1 tracking-wide text-slate-500 dark:text-dark-tertiary">Discover by topic</div>
+            <h2 className="mb-2 text-2xl font-semibold dark:text-dark-primary">Categories</h2>
+            <div className="flex flex-wrap gap-3 dark:bg-dark-card dark:p-3 dark:rounded-lg">
               {CATEGORIES.map((category) => (
                 <button
                   key={category}
@@ -81,16 +81,16 @@ export default function BlogFeed() {
             </div>
           </div>
           <div>
-            <div className="text-gray-500 dark:text-white">What's new ?</div>
-            <h2 className="mb-4 text-2xl font-semibold dark:text-white">Latest Posts</h2>
-            <div className="flex flex-col gap-2">
+            <div className="-mb-1 tracking-wide text-slate-500 dark:text-dark-tertiary">What's new?</div>
+            <h2 className="mb-2 text-2xl font-semibold dark:text-dark-primary">Latest Posts</h2>
+            <div className="flex flex-col gap-4">
               {latestPosts.length === 0
                 ? Array(5)
-                    .fill(0)
-                    .map((_, index) => <LatestPostCardSkeleton key={index} />)
+                  .fill(0)
+                  .map((_, index) => <LatestPostCardSkeleton key={index} />)
                 : latestPosts
-                    .slice(0, 5)
-                    .map((post, index) => <LatestPostCard key={index} post={post} />)}
+                  .slice(0, 5)
+                  .map((post, index) => <LatestPostCard key={index} post={post} />)}
             </div>
           </div>
         </div>
