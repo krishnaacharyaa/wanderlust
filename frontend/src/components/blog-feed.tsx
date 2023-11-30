@@ -43,7 +43,7 @@ export default function BlogFeed() {
     <div className="container mx-auto py-6">
       <div className="-mx-4 flex flex-wrap">
         <div className="w-full p-4 md:w-2/3">
-          <h1 className="mb-4 text-2xl font-semibold dark:text-white">
+          <h1 className="mb-4 text-2xl font-semibold dark:text-dark-primary">
             {selectedCategory === 'featured'
               ? 'Featured Posts'
               : `Posts related to "${selectedCategory}"`}

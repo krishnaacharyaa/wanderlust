@@ -1,5 +1,6 @@
-import { useLocation} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
+import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
