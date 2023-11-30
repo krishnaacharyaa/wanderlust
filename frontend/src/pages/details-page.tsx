@@ -20,7 +20,7 @@ const DetailsPage = () => {
           <div className="absolute bottom-4 w-full px-4 text-white md:bottom-8 md:px-8 lg:bottom-16 lg:px-16">
             <div className="mb-6 flex space-x-2">
               {post.categories.map((category, index) => (
-                <div key={index} className="rounded-full bg-gray-500 px-3 py-1 text-sm text-white">
+                <div key={index} className="rounded-full bg-slate-500 px-3 py-1 text-sm text-white">
                   {category}
                 </div>
               ))}
@@ -28,12 +28,12 @@ const DetailsPage = () => {
             <h1 className="text-lg font-semibold md:text-2xl lg:text-4xl">{post.title}</h1>
           </div>
         </div>
-        <div className="flex w-full flex-col gap-y-4 px-4 pt-4 text-left dark:text-white md:px-8 md:pt-8 lg:px-16 lg:pt-16">
+        <div className="flex w-full flex-col gap-y-4 px-4 pt-4 text-left dark:text-slate-50 md:px-8 md:pt-8 lg:px-16 lg:pt-16">
           <div>
-            <p className="text-gray-700 dark:text-white">{post.description}</p>
+            <p className="text-slate-700 dark:text-slate-50">{post.description}</p>
           </div>
           <div className="">
-            <p className="font-semibold text-gray-600 dark:text-white">By {post.authorName}</p>
+            <p className="font-semibold text-slate-600 dark:text-slate-50">By {post.authorName}</p>
             <p className="text-sm">{formatPostTime(post.timeOfPost)}</p>
           </div>
         </div>
