@@ -7,7 +7,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
     <div
-      className="cursor-pointer rounded-lg bg-slate-50 p-3 border border-slate-200 dark:bg-dark-card"
+      className="cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card"
       onClick={() => navigate('/details-page', { state: { post } })}
     >
       <div className="flex">
