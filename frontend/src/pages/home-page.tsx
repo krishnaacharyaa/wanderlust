@@ -41,12 +41,12 @@ function HomePage() {
             </button>
           </div>
           <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8 text-slate-50">
-            <h1 className="text-4xl font-bold tracking-wide">Journey Beyond Horizons</h1>
+            <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>
             <p className="my-4 text-xl">
               Dive into the world of travel with stories that transport you to far-off lands.
               Adventure awaits around every corner. It's time to explore the world!
             </p>
-            <div className="text-xl font-semibold tracking-wide">Let's go!</div>
+            <div className="text-xl font-semibold">Let's go!</div>
           </div>
         </div>
       </div>
