@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import linkIcon from '@/assets/svg/link.svg';
 import Post from '@/types/post-type';
-import { categoryProps } from '@/utils/category-props';
 import formatPostTime from '@/utils/format-post-time';
+import CategoryPill from '@/components/category-pill';
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
@@ -13,9 +13,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
       <div className="flex">
         <div className="mb-2 flex flex-1 flex-wrap gap-2">
           {post.categories.map((category, index) => (
-            <span key={index} className={categoryProps(category)}>
-              {category}
-            </span>
+            <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
         <img src={linkIcon} className="h-3 w-3" onClick={() => navigate(-1)} />

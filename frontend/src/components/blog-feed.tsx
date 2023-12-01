@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import FeaturedPostCard from '@/components/featured-post-card';
 import LatestPostCard from '@/components/latest-post-card';
 import { CATEGORIES } from '@/constants/categories';
-import { categoryProps } from '@/utils/category-props';
 import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';
 import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';
+import CategoryPill from '@/components/category-pill';
 
 export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');
@@ -70,13 +70,8 @@ export default function BlogFeed() {
                   onClick={() =>
                     setSelectedCategory(selectedCategory === category ? 'featured' : category)
                   }
-                  className={
-                    selectedCategory === category
-                      ? categoryProps(category, true)
-                      : categoryProps(category)
-                  }
                 >
-                  {category}
+                  <CategoryPill category={category} selected={selectedCategory === category} />
                 </button>
               ))}
             </div>

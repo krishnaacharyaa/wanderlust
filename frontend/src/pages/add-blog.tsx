@@ -6,8 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import navigateBackBlackIcon from '@/assets/svg/navigate-back-black.svg';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import { CATEGORIES } from '@/constants/categories';
-import { categoryProps } from '@/utils/category-props';
 import ModalComponent from '@/components/modal';
+import CategoryPill from '@/components/category-pill';
 
 type FormData = {
   title: string;
@@ -235,18 +235,12 @@ function AddBlog() {
               Categories <Asterisk />
             </label>
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
-              {CATEGORIES.map((category) => (
-                <span
-                  key={category}
-                  className={`cursor-pointer
-									${
-                    formData.categories.includes(category)
-                      ? categoryProps(category, true)
-                      : categoryProps(category, false)
-                  }`}
-                  onClick={() => handleCategoryClick(category)}
-                >
-                  {category}
+              {CATEGORIES.map((category, index) => (
+                  <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
+                    <CategoryPill
+                      category={category}
+                      selected={formData.categories.includes(category)}
+                    />
                 </span>
               ))}
             </div>
