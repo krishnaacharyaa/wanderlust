@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const FeaturedPostCardSkeleton = () => {
   return (
-    <div className="bg-light flex rounded-lg dark:bg-dark-card">
+    <div className="flex rounded-lg bg-light dark:bg-dark-card">
       {/* for image */}
       <div className="w-1/3">
         <Skeleton className="h-full w-full rounded-lg bg-slate-200 dark:bg-slate-700" />
