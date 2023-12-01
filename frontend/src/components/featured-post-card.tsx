@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
-import { categoryProps } from '@/utils/category-props';
+import CategoryPill from '@/components/category-pill';
 
 export default function FeaturedPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
@@ -21,9 +21,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
         <div className="text-xl font-semibold text-light-title dark:text-dark-title">{post.title}</div>
         <div className="flex flex-wrap gap-2">
           {post.categories.map((category, index) => (
-            <span key={index} className={categoryProps(category)}>
-              {category}
-            </span>
+            <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
         <div className="line-clamp-2">
