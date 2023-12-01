@@ -7,7 +7,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   return (
     <div
-      className="cursor-pointer rounded-lg bg-slate-50 p-3 shadow-sm dark:bg-dark-card"
+      className="cursor-pointer rounded-lg bg-slate-50 p-3 border border-slate-200 dark:bg-dark-card"
       onClick={() => navigate('/details-page', { state: { post } })}
     >
       <div className="flex">
@@ -20,8 +20,8 @@ export default function LatestPostCard({ post }: { post: Post }) {
         </div>
         <img src={linkIcon} className="h-3 w-3" onClick={() => navigate(-1)} />
       </div>
-      <div className="mb-2 line-clamp-2 font-semibold dark:text-dark-title">{post.title}</div>
-      <div className="text-xs text-slate-500 dark:text-dark-info">
+      <div className="mb-2 line-clamp-2 font-semibold text-light-title dark:text-dark-title">{post.title}</div>
+      <div className="text-xs text-light-info dark:text-dark-info">
         {post.authorName} • {formatPostTime(post.timeOfPost)}
       </div>
     </div>

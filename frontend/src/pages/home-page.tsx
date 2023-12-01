@@ -52,7 +52,7 @@ function HomePage() {
       </div>
       <div className="mx-4 md:mx-8 lg:mx-16">
         <BlogFeed />
-        <h1 className="text-2xl font-semibold dark:text-slate-50">All Posts</h1>
+        <h1 className="text-2xl font-semibold dark:text-dark-primary">All Posts</h1>
         <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
