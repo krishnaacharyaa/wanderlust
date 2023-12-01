@@ -28,7 +28,7 @@ function HomePage() {
         className="relative -mt-2 h-[460px] bg-cover bg-fixed bg-center"
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col px-16 py-8 text-slate-50">
+        <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 md:px-16">
           <div className="flex w-full justify-between">
             <div className="text-2xl font-semibold">WanderLust</div>
             <button
@@ -40,9 +40,9 @@ function HomePage() {
               Create post
             </button>
           </div>
-          <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8 text-slate-50">
-            <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>
-            <p className="my-4 text-xl">
+          <div className="mb-8 flex max-w-3xl flex-1 flex-col justify-end text-slate-50">
+            <h1 className="text-2xl font-bold md:text-4xl">Journey Beyond Horizons</h1>
+            <p className="my-4 md:text-xl">
               Dive into the world of travel with stories that transport you to far-off lands.
               Adventure awaits around every corner. It's time to explore the world!
             </p>
@@ -50,14 +50,14 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <div className="mx-16">
+      <div className="mx-4 md:mx-8 lg:mx-16">
         <BlogFeed />
-        <h1 className="text-2xl font-semibold dark:text-slate-50">All posts</h1>
-        <div className="-mx-4 flex flex-wrap">
+        <h1 className="text-2xl font-semibold dark:text-slate-50">All Posts</h1>
+        <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
-              .fill(0)
-              .map((_, index) => <PostCardSkeleton key={index} />)
+                .fill(0)
+                .map((_, index) => <PostCardSkeleton key={index} />)
             : posts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>
