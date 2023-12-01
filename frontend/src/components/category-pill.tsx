@@ -7,22 +7,29 @@ interface CategoryPillProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export default function CategoryPill({ category, selected = false }: CategoryPillProps) {
   const categoryColors: any = {
-    Travel: 'pink',
-    Nature: 'green',
-    City: 'yellow',
-    Adventure: 'blue',
-    Beaches: 'purple',
-    Landmarks: 'red',
-    Mountains: 'teal',
+    Travel: 'bg-pink-200 dark:bg-pink-900',
+    Nature: 'bg-green-200 dark:bg-green-900',
+    City: 'bg-yellow-200 dark:bg-yellow-900',
+    Adventure: 'bg-blue-200 dark:bg-blue-900',
+    Beaches: 'bg-purple-200 dark:bg-purple-900',
+    Landmarks: 'bg-red-200 dark:bg-red-900',
+    Mountains: 'bg-teal-200 dark:bg-teal-900',
+  };
+  const categorySelectedColors: any = {
+    Travel: 'bg-pink-500/80',
+    Nature: 'bg-green-500/80',
+    City: 'bg-yellow-500/80',
+    Adventure: 'bg-blue-500/80',
+    Beaches: 'bg-purple-500/80',
+    Landmarks: 'bg-red-500/80',
+    Mountains: 'bg-teal-500/80',
   };
 
   const selectedColor =
-    category in categoryColors ? `bg-${categoryColors[category]}-500/80` : 'bg-cyan-500/80';
+    category in categorySelectedColors ? categorySelectedColors[category] : 'bg-cyan-500/80';
 
   const normalColor =
-    category in categoryColors
-      ? `bg-${categoryColors[category]}-200 dark:bg-${categoryColors[category]}-900`
-      : 'bg-cyan-200 dark:bg-cyan-900';
+    category in categoryColors ? categoryColors[category] : 'bg-cyan-200 dark:bg-cyan-900';
 
   return (
     <span
