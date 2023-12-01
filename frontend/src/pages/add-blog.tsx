@@ -236,11 +236,11 @@ function AddBlog() {
             </label>
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
               {CATEGORIES.map((category, index) => (
-                  <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
-                    <CategoryPill
-                      category={category}
-                      selected={formData.categories.includes(category)}
-                    />
+                <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
+                  <CategoryPill
+                    category={category}
+                    selected={formData.categories.includes(category)}
+                  />
                 </span>
               ))}
             </div>

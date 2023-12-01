@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const LatestPostCardSkeleton = () => {
   return (
-    <div className="bg-light rounded-lg p-3 dark:bg-dark-card">
+    <div className="rounded-lg bg-light p-3 dark:bg-dark-card">
       <div className="flex">
         <div className="mb-2 flex flex-1 flex-wrap gap-2">
           {Array(3)
