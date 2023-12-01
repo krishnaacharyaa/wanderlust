@@ -18,14 +18,18 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
         />
       </div>
       <div className="flex h-full w-2/3 flex-col gap-2 p-2">
-        <div className="text-xl font-semibold text-light-title dark:text-dark-title">{post.title}</div>
+        <div className="text-xl font-semibold text-light-title dark:text-dark-title">
+          {post.title}
+        </div>
         <div className="flex flex-wrap gap-2">
           {post.categories.map((category, index) => (
             <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
         <div className="line-clamp-2">
-          <p className="overflow-ellipsis text-light-description dark:text-dark-description">{post.description}</p>
+          <p className="overflow-ellipsis text-light-description dark:text-dark-description">
+            {post.description}
+          </p>
         </div>
         <div className="flex flex-1 items-end text-xs text-light-info dark:text-dark-info">
           {post.authorName} • {formatPostTime(post.timeOfPost)}
