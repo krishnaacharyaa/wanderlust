@@ -22,7 +22,7 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="w-full cursor-default bg-slate-50 font-[Poppins] dark:bg-dark">
+    <div className="w-full cursor-default bg-light dark:bg-dark">
       <div
         style={{ backgroundImage: `url(${bg})` }}
         className="relative -mt-2 h-[460px] bg-cover bg-fixed bg-center"

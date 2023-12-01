@@ -127,7 +127,7 @@ function AddBlog() {
   }
 
   return (
-    <div className="min-h-screen cursor-default bg-slate-50 px-16 py-8 font-[Poppins] dark:bg-dark">
+    <div className="min-h-screen cursor-default bg-slate-50 px-16 py-8 dark:bg-dark">
       <div className="mb-4 flex items-center justify-start">
         <div className="w-fit cursor-pointer text-base md:text-lg lg:text-2xl">
           <img
