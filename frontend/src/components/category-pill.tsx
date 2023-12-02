@@ -6,7 +6,7 @@ interface CategoryPillProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 export default function CategoryPill({ category, selected = false }: CategoryPillProps) {
-  const categoryColors: any = {
+  const categoryDefaultColors: any = {
     Travel: 'bg-pink-200 dark:bg-pink-900',
     Nature: 'bg-green-200 dark:bg-green-900',
     City: 'bg-yellow-200 dark:bg-yellow-900',
@@ -28,14 +28,14 @@ export default function CategoryPill({ category, selected = false }: CategoryPil
   const selectedColor =
     category in categorySelectedColors ? categorySelectedColors[category] : 'bg-cyan-500/80';
 
-  const normalColor =
-    category in categoryColors ? categoryColors[category] : 'bg-cyan-200 dark:bg-cyan-900';
+  const defaultColor =
+    category in categoryDefaultColors ? categoryDefaultColors[category] : 'bg-cyan-200 dark:bg-cyan-900';
 
   return (
     <span
       className={twMerge(
         'cursor-pointer rounded-3xl px-3 py-1 text-xs font-medium text-light-primary/80 dark:text-dark-primary/80',
-        selected ? selectedColor : normalColor
+        selected ? selectedColor : defaultColor
       )}
     >
       {category}
