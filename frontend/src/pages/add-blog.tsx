@@ -127,21 +127,21 @@ function AddBlog() {
   }
 
   return (
-    <div className="min-h-screen cursor-default bg-slate-50 px-16 py-8 dark:bg-dark">
+    <div className="min-h-screen cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
       <div className="mb-4 flex items-center justify-start">
-        <div className="w-fit cursor-pointer text-base md:text-lg lg:text-2xl">
+        <div className="w-fit cursor-pointer">
           <img
             src={isDarkMode ? navigateBackWhiteIcon : navigateBackBlackIcon}
             onClick={() => navigate(-1)}
             className="h-5 w-10"
           />
         </div>
-        <h2 className="ml-4 text-sm font-bold dark:text-dark-primary md:text-lg lg:text-2xl">
-          Create Blog
-        </h2>
       </div>
       <div className="flex justify-center">
-        <form onSubmit={handleSubmit} className="md:w-2/3">
+        <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
+          <h2 className="mb-4 ml-2 text-lg font-semibold text-light-primary dark:text-dark-primary md:mb-6 md:text-xl lg:mb-8 lg:text-2xl">
+            Create Blog
+          </h2>
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
@@ -207,22 +207,20 @@ function AddBlog() {
             </span>
             <Asterisk />
           </div>
-          <div className="mb-4 flex justify-between gap-4">
-            <div className="w-10/12">
-              <input
-                type="url"
-                id="imagelink"
-                name="imageLink"
-                placeholder="https://&hellip;"
-                autoComplete="off"
-                className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-                value={formData.imageLink}
-                onChange={handleInputChange}
-              />
-            </div>
+          <div className="mb-4 flex justify-between gap-2 md:gap-4">
+            <input
+              type="url"
+              id="imagelink"
+              name="imageLink"
+              placeholder="https://&hellip;"
+              autoComplete="off"
+              className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
+              value={formData.imageLink}
+              onChange={handleInputChange}
+            />
             <button
               type="button"
-              className="w-2/12 rounded-lg bg-light-primary px-4 py-3 text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80"
+              className="lg:text-md w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:text-sm lg:w-2/12 lg:px-4 lg:py-3"
               onClick={() => {
                 setmodal(true);
               }}
