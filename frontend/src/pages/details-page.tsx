@@ -2,12 +2,37 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
+import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import axios from "axios";
+import {Simulate} from "react-dom/test-utils";
+import load = Simulate.load;
 
 const DetailsPage = () => {
   const { state } = useLocation();
-  const post: Post = state?.post;
-  const navigate = useNavigate();
-  return (
+  const [post,setPost] = useState(state?.post);
+  const initalVal = post === undefined; 
+  const [loading, setIsLoading] = useState(initalVal);
+  const {postId} = useParams();
+
+
+  useEffect(()=>{
+    const getPostById = async() =>{
+      try{
+        await axios.get(import.meta.env.VITE_API_PATH + `/api/posts/${postId}`).then((response)=>{
+          console.log(response.data);
+          setIsLoading(false);
+          setPost(response.data);
+        })
+      }catch (error){
+        console.log(error);
+      }
+    }
+    if(post===undefined){getPostById();}
+  },[post])
+
+
+  if(!loading)return (
     <div className="min-h-screen dark:bg-dark">
       <div className="min-h-min w-full font-[Poppins] dark:bg-dark">
         <div className="relative flex flex-col">
@@ -40,6 +65,7 @@ const DetailsPage = () => {
       </div>
     </div>
   );
+  else return (<h1>Loading...</h1>)
 };
 
 export default DetailsPage;

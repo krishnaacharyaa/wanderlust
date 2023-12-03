@@ -5,10 +5,14 @@ import { categoryProps } from '@/utils/category-props';
 
 export default function PostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
+  function createSlug(title) {
+    return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+  }
+  const slug = createSlug(post.title);
   return (
     <div
       className="w-full cursor-pointer p-4 md:w-1/2 lg:w-1/3 xl:w-1/4"
-      onClick={() => navigate('/details-page', { state: { post } })}
+      onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
     >
       <div className="rounded-lg bg-white shadow-md dark:bg-dark-textfield">
         <img

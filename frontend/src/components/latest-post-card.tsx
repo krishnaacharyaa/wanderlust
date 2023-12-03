@@ -5,10 +5,14 @@ import { categoryProps } from '@/utils/category-props';
 import formatPostTime from '@/utils/format-post-time';
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
+  function createSlug(title) {
+    return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+  }
+  const slug = createSlug(post.title);
   return (
     <div
       className="cursor-pointer rounded-lg bg-white p-2 py-2 shadow-sm dark:bg-dark-textfield"
-      onClick={() => navigate('/details-page', { state: { post } })}
+      onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
     >
       <div className="flex">
         <div className="mb-2 flex flex-1 flex-wrap gap-2 ">

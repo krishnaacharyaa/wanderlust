@@ -13,6 +13,7 @@ function HomePage() {
     axios
       .get(import.meta.env.VITE_API_PATH + '/api/posts')
       .then((response) => {
+        console.log(response.data);
         setPosts(response.data);
       })
       .catch((error) => {

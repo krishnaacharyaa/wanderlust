@@ -1,6 +1,7 @@
 import Post from '../models/post.js';
 import { validCategories } from '../utils/constants.js';
 
+
 export const createPostHandler = async (req, res) => {
   try {
     const {
@@ -27,6 +28,8 @@ export const createPostHandler = async (req, res) => {
     if (categories.length > 3) {
       return res.status(400).json({ message: 'Please select up to three categories only.' });
     }
+
+
 
     const post = new Post({
       title,
