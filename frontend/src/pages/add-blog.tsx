@@ -40,17 +40,15 @@ function AddBlog() {
   };
 
   const handleCategoryClick = (category: string) => {
-    if (formData.categories.includes(category)) {
+    if (formData.categories.length <= 2 || formData.categories.includes(category)) {
       setFormData({
         ...formData,
-        categories: formData.categories.filter((cat) => cat !== category),
+        categories: formData.categories.includes(category) ? formData.categories.filter((cat) => cat !== category) : [...formData.categories, category],
       });
-    } else {
-      setFormData({
-        ...formData,
-        categories: [...formData.categories, category],
-      });
+      return;
     }
+    toast.error('Select up to three categories.');
+    return;
   };
   const handleselector = () => {
     setFormData({
@@ -199,10 +197,9 @@ function AddBlog() {
               <span
                 key={category}
                 className={`cursor-pointer
-									${
-                    formData.categories.includes(category)
-                      ? categoryProps(category, true)
-                      : categoryProps(category, false)
+									${formData.categories.includes(category)
+                    ? categoryProps(category, true)
+                    : categoryProps(category, false)
                   }`}
                 onClick={() => handleCategoryClick(category)}
               >
