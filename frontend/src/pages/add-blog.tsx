@@ -47,8 +47,6 @@ function AddBlog() {
       });
       return;
     }
-    toast.error('Select up to three categories.');
-    return;
   };
   const handleselector = () => {
     setFormData({
@@ -197,7 +195,7 @@ function AddBlog() {
             {CATEGORIES.map((category) => (
               <span
                 key={category}
-                className={`${isDisable && !formData.categories.includes(category) ? "cursor-default" : "cursor-pointer"}
+                className={`${isDisable && !formData.categories.includes(category) ? "cursor-not-allowed" : "cursor-pointer"}
 									${formData.categories.includes(category)
                     ? categoryProps(category, true, isDisable ? true : false)
                     : categoryProps(category, false, isDisable ? true : false)
