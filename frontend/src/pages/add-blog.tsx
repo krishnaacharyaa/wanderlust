@@ -119,6 +119,7 @@ function AddBlog() {
       mediaQuery.removeListener(handleThemeChange);
     };
   }, []);
+  const isDisable = formData.categories.length === 3;
 
   return (
     <div className="min-h-screen bg-white p-4 px-16 font-[Poppins] dark:bg-dark">
@@ -196,10 +197,10 @@ function AddBlog() {
             {CATEGORIES.map((category) => (
               <span
                 key={category}
-                className={`cursor-pointer
+                className={`${isDisable && !formData.categories.includes(category) ? "cursor-default" : "cursor-pointer"}
 									${formData.categories.includes(category)
-                    ? categoryProps(category, true)
-                    : categoryProps(category, false)
+                    ? categoryProps(category, true, isDisable ? true : false)
+                    : categoryProps(category, false, isDisable ? true : false)
                   }`}
                 onClick={() => handleCategoryClick(category)}
               >
