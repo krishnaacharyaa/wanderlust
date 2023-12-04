@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import navigateBackBlackIcon from '@/assets/svg/navigate-back-black.svg';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
-import { CATEGORIES } from '@/constants/categories';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
+import { categories } from '@/utils/category-colors';
 
 type FormData = {
   title: string;
@@ -233,7 +233,7 @@ function AddBlog() {
               Categories <Asterisk />
             </label>
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
-              {CATEGORIES.map((category, index) => (
+              {categories.map((category, index) => (
                 <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
                   <CategoryPill
                     category={category}
