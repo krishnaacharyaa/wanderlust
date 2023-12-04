@@ -3,6 +3,7 @@ import postsRouter from './routes/posts.js';
 import connectDB from './config/db.js';
 import cors from 'cors';
 import compression from 'compression';
+import { ErrorMiddleware } from './middleware/ErrorMiddleWare.js';
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -24,5 +25,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+app.use(ErrorMiddleware)
 
 export default app;
