@@ -128,20 +128,22 @@ function AddBlog() {
 
   return (
     <div className="min-h-screen cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
-      <div className="mb-4 flex items-center justify-start">
-        <div className="w-fit cursor-pointer">
-          <img
-            src={isDarkMode ? navigateBackWhiteIcon : navigateBackBlackIcon}
-            onClick={() => navigate(-1)}
-            className="h-5 w-10"
-          />
-        </div>
-      </div>
-      <div className="flex justify-center">
-        <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
-          <h2 className="mb-4 ml-2 text-lg font-semibold text-light-primary dark:text-dark-primary md:mb-6 md:text-xl lg:mb-8 lg:text-2xl">
+      <div className="mb-4 flex justify-center">
+        <div className="w-[32rem] md:w-5/6 lg:w-4/6 flex items-center justify-start space-x-4 ">
+          <div className="w-fit cursor-pointer">
+            <img
+              src={isDarkMode ? navigateBackWhiteIcon : navigateBackBlackIcon}
+              onClick={() => navigate(-1)}
+              className="h-5 w-10"
+            />
+          </div>
+          <h2 className="text-lg font-semibold text-light-primary dark:text-dark-primary md:text-xl lg:text-2xl">
             Create Blog
           </h2>
+        </div>
+      </div>
+      <div className="flex justify-center ">
+        <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
