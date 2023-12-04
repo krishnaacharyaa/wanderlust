@@ -2,10 +2,10 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import FeaturedPostCard from '@/components/featured-post-card';
 import LatestPostCard from '@/components/latest-post-card';
-import { CATEGORIES } from '@/constants/categories';
 import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';
 import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';
 import CategoryPill from '@/components/category-pill';
+import { categories } from '@/utils/category-colors';
 
 export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');
@@ -68,7 +68,7 @@ export default function BlogFeed() {
             </div>
             <h2 className="mb-2 text-2xl font-semibold dark:text-dark-primary">Categories</h2>
             <div className="flex flex-wrap gap-3 dark:rounded-lg dark:bg-dark-card dark:p-3">
-              {CATEGORIES.map((category) => (
+              {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() =>
