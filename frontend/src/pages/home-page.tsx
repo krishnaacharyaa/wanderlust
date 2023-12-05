@@ -7,6 +7,7 @@ import PostCard from '@/components/post-card';
 import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 function HomePage() {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -19,19 +20,19 @@ function HomePage() {
         console.error(error);
       });
   }, []);
-  const navigate = useNavigate();
+
   return (
-    <div className="w-full font-[Poppins] dark:bg-dark">
+    <div className="w-full cursor-default bg-light dark:bg-dark">
       <div
         style={{ backgroundImage: `url(${bg})` }}
-        className="relative mt-[-8px] h-[460px] bg-cover bg-fixed bg-center"
+        className="relative -mt-2 h-[460px] bg-cover bg-fixed bg-center"
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col px-16 py-8 text-white">
+        <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 md:px-16">
           <div className="flex w-full justify-between">
             <div className="text-2xl font-semibold">WanderLust</div>
             <button
-              className="rounded border border-white px-4 py-2"
+              className="rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25"
               onClick={() => {
                 navigate('/add-blog');
               }}
@@ -39,20 +40,20 @@ function HomePage() {
               Create post
             </button>
           </div>
-          <div className="flex max-w-5xl flex-1 flex-col justify-end pb-8 dark:text-white">
-            <h1 className="text-4xl font-bold">Journey Beyond Horizons</h1>
-            <p className="my-4 text-xl">
-              Dive into the World of Travel with Stories That Transport You to Far-Off Lands.
+          <div className="mb-8 flex max-w-3xl flex-1 flex-col justify-end text-slate-50">
+            <h1 className="text-2xl font-bold md:text-4xl">Journey Beyond Horizons</h1>
+            <p className="my-4 md:text-xl">
+              Dive into the world of travel with stories that transport you to far-off lands.
               Adventure awaits around every corner. It's time to explore the world!
             </p>
-            <div className="text-xl font-semibold">Let's Go !!!</div>
+            <div className="text-xl font-semibold">Let's go!</div>
           </div>
         </div>
       </div>
-      <div className="px-16">
+      <div className="mx-4 md:mx-8 lg:mx-16">
         <BlogFeed />
-        <h1 className="text-2xl font-semibold dark:text-white">All Blog Posts</h1>
-        <div className="-mx-4 flex flex-wrap">
+        <h1 className="text-2xl font-semibold dark:text-dark-primary">All Posts</h1>
+        <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
                 .fill(0)
