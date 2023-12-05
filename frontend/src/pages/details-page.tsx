@@ -1,18 +1,16 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
-import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import {Simulate} from "react-dom/test-utils";
-import load = Simulate.load;
+// import {Simulate} from "react-dom/test-utils";
 
 const DetailsPage = () => {
   const { state } = useLocation();
   const [post,setPost] = useState(state?.post);
-  const initalVal = post === undefined; 
-  const [loading, setIsLoading] = useState(initalVal);
+  const initialVal = post === undefined;
+  const [loading, setIsLoading] = useState(initialVal);
   const {postId} = useParams();
 
 
@@ -20,7 +18,7 @@ const DetailsPage = () => {
     const getPostById = async() =>{
       try{
         await axios.get(import.meta.env.VITE_API_PATH + `/api/posts/${postId}`).then((response)=>{
-          console.log(response.data);
+          // console.log(response.data);
           setIsLoading(false);
           setPost(response.data);
         })
@@ -40,11 +38,11 @@ const DetailsPage = () => {
 
           <div className="absolute left-0 top-0 h-full w-full bg-black opacity-50"></div>
           <div className="absolute top-16 w-full cursor-pointer justify-start px-4 text-lg text-white md:top-24 md:px-8 md:text-xl lg:px-16 lg:text-2xl">
-            <img src={navigateBackWhiteIcon} className="h-5 w-10" onClick={() => navigate(-1)} />
+            <img src={navigateBackWhiteIcon} className="h-5 w-10" onClick={() => navigator} />
           </div>
           <div className="absolute bottom-4 w-full px-4 text-white md:bottom-8 md:px-8 lg:bottom-16 lg:px-16">
             <div className="mb-6 flex space-x-2">
-              {post.categories.map((category, index) => (
+              {post.categories.map((category: string, index: number) => (
                 <div key={index} className="rounded-full bg-gray-500 px-3 py-1 text-sm text-white">
                   {category}
                 </div>
