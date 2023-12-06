@@ -5,7 +5,7 @@ import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
-  function createSlug(title: string): string{
+  function createSlug(title:string): string {
     return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
   }
   const slug = createSlug(post.title);
