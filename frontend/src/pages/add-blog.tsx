@@ -40,15 +40,10 @@ function AddBlog() {
   };
 
   const handleCategoryClick = (category: string) => {
-    if (formData.categories.includes(category)) {
+    if (formData.categories.length <= 2 || formData.categories.includes(category)) {
       setFormData({
         ...formData,
-        categories: formData.categories.filter((cat) => cat !== category),
-      });
-    } else {
-      setFormData({
-        ...formData,
-        categories: [...formData.categories, category],
+        categories: formData.categories.includes(category) ? formData.categories.filter((cat) => cat !== category) : [...formData.categories, category]
       });
     }
   };
@@ -125,6 +120,8 @@ function AddBlog() {
   function Asterisk() {
     return <span className="dark:text-dark-tertiary">*</span>;
   }
+
+  const isValidCategory = (category: string) => !formData.categories.includes(category) && formData.categories.length === 3
 
   return (
     <div className="min-h-screen cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
@@ -238,6 +235,7 @@ function AddBlog() {
               {categories.map((category, index) => (
                 <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
                   <CategoryPill
+                    disabled={isValidCategory(category)}
                     category={category}
                     selected={formData.categories.includes(category)}
                   />
