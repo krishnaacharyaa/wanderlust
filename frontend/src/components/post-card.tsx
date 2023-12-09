@@ -5,11 +5,15 @@ import CategoryPill from '@/components/category-pill';
 
 export default function PostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
+  function createSlug(title:string): string {
+    return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+  }
+  const slug = createSlug(post.title);
   return (
     <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
       <div
         className="m-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card"
-        onClick={() => navigate('/details-page', { state: { post } })}
+        onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       >
         <img
           src={post.imageLink}

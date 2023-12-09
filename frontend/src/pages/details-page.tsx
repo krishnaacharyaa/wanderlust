@@ -1,14 +1,35 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
-import Post from '@/types/post-type';
+// import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 export default function DetailsPage() {
   const { state } = useLocation();
-  const post: Post = state?.post;
+  const [post,setPost] = useState(state?.post);
+  const initialVal = post === undefined;
+  const [loading, setIsLoading] = useState(initialVal);
+  const {postId} = useParams();
   const navigate = useNavigate();
-  return (
+
+  useEffect(()=>{
+    const getPostById = async() =>{
+      try{
+        await axios.get(import.meta.env.VITE_API_PATH + `/api/posts/${postId}`).then((response)=>{
+          console.log(response.data);
+          setIsLoading(false);
+          setPost(response.data);
+        })
+      }catch (error){
+        console.log(error);
+      }
+    }
+    if(post===undefined){getPostById();}
+  },[post])
+
+  if(!loading)return (
     <div className="min-h-screen bg-light dark:bg-dark">
       <div className="relative flex flex-col">
         <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover md:h-96" />
@@ -18,7 +39,7 @@ export default function DetailsPage() {
         </div>
         <div className="absolute bottom-6 w-full max-w-xl px-4 text-slate-50 md:bottom-8 md:max-w-3xl md:px-8 lg:bottom-12 lg:max-w-5xl lg:px-12">
           <div className="mb-4 flex space-x-2">
-            {post.categories.map((category) => (
+            {post.categories.map((category:string) => (
               <CategoryPill category={category} />
             ))}
           </div>
@@ -38,4 +59,5 @@ export default function DetailsPage() {
       </div>
     </div>
   );
+  else return(<h1>Loading...</h1>);
 }
