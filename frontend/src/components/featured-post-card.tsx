@@ -2,12 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
+import { createSlug } from '@/utils/slug-generator';
 
 export default function FeaturedPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
-  function createSlug(title:string): string {
-    return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-  }
   const slug = createSlug(post.title);
   return (
     <div

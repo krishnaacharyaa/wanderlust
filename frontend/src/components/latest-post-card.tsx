@@ -3,11 +3,10 @@ import linkIcon from '@/assets/svg/link.svg';
 import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
+import { createSlug } from '@/utils/slug-generator';
+
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
-  function createSlug(title:string): string {
-    return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-  }
   const slug = createSlug(post.title);
   return (
     <div
