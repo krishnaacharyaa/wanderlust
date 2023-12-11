@@ -2,13 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
+import { createSlug } from '@/utils/slug-generator';
 
 export default function FeaturedPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
+  const slug = createSlug(post.title);
   return (
     <div
       className="flex h-48 cursor-pointer gap-2 rounded-lg bg-light dark:bg-dark-card"
-      onClick={() => navigate('/details-page', { state: { post } })}
+      onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
     >
       <div className="w-1/3">
         <img
