@@ -25,7 +25,7 @@ const createPostObject = (options = {}) => {
   return {
     title: options.title || 'Test Post',
     authorName: options.authorName || 'Test Author',
-    imageLink: options.imageLink || 'https://www.forTestingPurposeOnly/my-image.jpg',
+    imageLink: options.imageLink || 'https://www.forTestingPurposeOnly/my-image.webp',
     categories: options.categories || [validCategories[0]],
     description: options.description || 'This is a test post.',
     isFeaturedPost: options.isFeaturedPost || false,
@@ -67,7 +67,7 @@ describe('createPostHandler', () => {
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      message: 'Image URL must end with .jpg, .jpeg, or .png',
+      message: 'Image URL must end with .jpg, .jpeg, .webp, or .png',
     });
   });
 

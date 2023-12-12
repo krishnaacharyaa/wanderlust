@@ -18,9 +18,9 @@ export const createPostHandler = async (req, res) => {
     }
 
     // Validation - check if imageLink is a valid URL
-    const imageLinkRegex = /\.(jpg|jpeg|png)$/i;
+    const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
     if (!imageLinkRegex.test(imageLink)) {
-      return res.status(400).json({ message: 'Image URL must end with .jpg, .jpeg, or .png' });
+      return res.status(400).json({ message: 'Image URL must end with .jpg, .jpeg, .webp, or .png' });
     }
 
     // Validation - check if categories array has more than 3 items
