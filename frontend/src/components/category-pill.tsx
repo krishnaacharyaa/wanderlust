@@ -4,15 +4,22 @@ import { twMerge } from 'tailwind-merge';
 interface CategoryPillProps extends React.HTMLAttributes<HTMLSpanElement> {
   category: string;
   selected?: boolean;
+  categories: string[];
 }
 
-export default function CategoryPill({ category, selected = false }: CategoryPillProps) {
+export default function CategoryPill({
+  category,
+  categories = [],
+  selected = false,
+}: CategoryPillProps) {
   const [defaultColor, selectedColor]: [string, string] = getCategoryColors(category);
 
   return (
     <span
       className={twMerge(
-        'cursor-pointer rounded-3xl px-3 py-1 text-xs font-medium text-light-primary/80 dark:text-dark-primary/80',
+        `cursor-pointer rounded-3xl px-3 py-1 text-xs font-medium text-light-primary/80 dark:text-dark-primary/80 ${
+          categories.length >= 3 && !categories.includes(category) ? 'opacity-50 cursor-not-allowed' : ''
+        }`,
         selected ? selectedColor : defaultColor
       )}
     >

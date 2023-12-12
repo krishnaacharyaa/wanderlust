@@ -40,6 +40,11 @@ function AddBlog() {
   };
 
   const handleCategoryClick = (category: string) => {
+    if(formData.categories.length === 3 && !formData.categories.includes(category)){
+      toast.error('Select up to three categories.');
+      return;
+    }
+
     if (formData.categories.includes(category)) {
       setFormData({
         ...formData,
@@ -52,6 +57,7 @@ function AddBlog() {
       });
     }
   };
+
   const handleselector = () => {
     setFormData({
       ...formData,
@@ -235,14 +241,18 @@ function AddBlog() {
               Categories <Asterisk />
             </label>
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
-              {categories.map((category, index) => (
-                <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
-                  <CategoryPill
-                    category={category}
-                    selected={formData.categories.includes(category)}
-                  />
-                </span>
-              ))}
+              {categories.map((category, index) => {
+                
+                return (
+                  <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
+                    <CategoryPill
+                      category={category}
+                      selected={formData.categories.includes(category)}
+                      categories={formData.categories}
+                    />
+                  </span>
+                );
+              })}
             </div>
           </div>
 
