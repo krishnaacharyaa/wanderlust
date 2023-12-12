@@ -67,7 +67,7 @@ describe('createPostHandler', () => {
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      message: 'Image URL must end with .jpg, .jpeg, or .png',
+      message: 'Image URL must end with .jpg, .jpeg, .webp, or .png',
     });
   });
 
