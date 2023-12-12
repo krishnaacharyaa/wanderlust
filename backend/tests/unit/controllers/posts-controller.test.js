@@ -71,6 +71,23 @@ describe('createPostHandler', () => {
     });
   });
 
+  it('Post creation: Success - Valid Image URL (.webp format)', async () => {
+    const postObject = createPostObject({
+      imageLink: 'https://www.forTestingPurposeOnly/my-image.webp', // Valid image URL
+    });
+    
+    Post.mockImplementationOnce(() => ({
+      save: jest.fn().mockResolvedValueOnce(postObject),
+    }));
+
+    const req = createRequestObject({ body: postObject });
+  
+    await createPostHandler(req, res);
+    expect(Post).toHaveBeenCalledTimes(2);
+    expect(Post).toHaveBeenCalledWith(postObject);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(postObject);
+  });
   it('Post creation: Failure - Some fields are missing', async () => {
     const postObject = createPostObject();
     delete postObject.title;
