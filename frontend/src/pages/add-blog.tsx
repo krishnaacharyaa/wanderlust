@@ -34,12 +34,19 @@ function AddBlog() {
     isFeaturedPost: false,
   });
 
+  //checks the length of the categories array and if the category is already selected
+  const isValidCategory = (category: string): boolean => {
+    return formData.categories.length >= 3 && !formData.categories.includes(category);
+  };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleCategoryClick = (category: string) => {
+    if (isValidCategory(category)) return;
+
     if (formData.categories.includes(category)) {
       setFormData({
         ...formData,
@@ -52,6 +59,7 @@ function AddBlog() {
       });
     }
   };
+
   const handleselector = () => {
     setFormData({
       ...formData,
@@ -232,7 +240,11 @@ function AddBlog() {
           </div>
           <div className="mb-4 flex flex-col">
             <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary md:mr-4 md:w-fit">
-              Categories <Asterisk />
+              Categories
+              <span className="text-xs tracking-wide text-dark-tertiary">
+                &nbsp;(max 3 categories)&nbsp;
+              </span>
+              <Asterisk />
             </label>
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
               {categories.map((category, index) => (
@@ -240,6 +252,7 @@ function AddBlog() {
                   <CategoryPill
                     category={category}
                     selected={formData.categories.includes(category)}
+                    disabled={isValidCategory(category)}
                   />
                 </span>
               ))}
