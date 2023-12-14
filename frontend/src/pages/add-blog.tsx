@@ -34,6 +34,11 @@ function AddBlog() {
     isFeaturedPost: false,
   });
 
+  //checks the length of the categories array and if the category is already selected
+  const isValidCategory = (category: string): boolean => {
+    return formData.categories.length >= 3 && !formData.categories.includes(category);
+  };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -250,7 +255,7 @@ function AddBlog() {
                   <CategoryPill
                     category={category}
                     selected={formData.categories.includes(category)}
-                    categories={formData.categories}
+                    disabled={isValidCategory(category)}
                   />
                 </span>
               ))}
