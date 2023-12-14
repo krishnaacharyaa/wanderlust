@@ -45,10 +45,7 @@ function AddBlog() {
   };
 
   const handleCategoryClick = (category: string) => {
-    if (formData.categories.length === 3 && !formData.categories.includes(category)) {
-      toast.error('Select up to three categories.');
-      return;
-    }
+    if (isValidCategory(category)) return;
 
     if (formData.categories.includes(category)) {
       setFormData({
