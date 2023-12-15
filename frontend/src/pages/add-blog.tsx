@@ -1,3 +1,4 @@
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,85 +10,60 @@ import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
 
-type FormData = {
-  title: string;
-  authorName: string;
-  imageLink: string;
-  categories: string[];
-  description: string;
-  isFeaturedPost: boolean;
-};
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { FormDataSchema, TFormData } from '@/lib/blog.zod';
+
 function AddBlog() {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm<TFormData>({
+    resolver: zodResolver(FormDataSchema),
+  });
+
   const [selectedImage, setSelectedImage] = useState<string>('');
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
+    setValue('imageLink', imageUrl);
   };
 
   const [modal, setmodal] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
-    title: '',
-    authorName: '',
-    imageLink: '',
-    categories: [],
-    description: '',
-    isFeaturedPost: false,
-  });
+  // const [isFormValid, setIsFormValid] = useState(false); // New state to track form validity
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // useEffect(() => {
+  //   // Update the isFormValid state whenever the form validity changes
+  //   setIsFormValid(isValid);
+  // }, [isValid]);
 
   const handleCategoryClick = (category: string) => {
-    if (formData.categories.includes(category)) {
-      setFormData({
-        ...formData,
-        categories: formData.categories.filter((cat) => cat !== category),
-      });
+    const currentCategories = getValues('categories') || [];
+
+    if (currentCategories.includes(category)) {
+      setValue(
+        'categories',
+        currentCategories.filter((cat: string) => cat !== category)
+      );
     } else {
-      setFormData({
-        ...formData,
-        categories: [...formData.categories, category],
-      });
+      setValue('categories', [...currentCategories, category]);
     }
   };
+
   const handleselector = () => {
-    setFormData({
-      ...formData,
-      imageLink: selectedImage,
-    });
+    setValue('imageLink', selectedImage);
     setmodal(false);
   };
-  const handleCheckboxChange = () => {
-    setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
-  };
-  const validateFormData = () => {
-    if (
-      !formData.title ||
-      !formData.authorName ||
-      !formData.imageLink ||
-      !formData.description ||
-      formData.categories.length === 0
-    ) {
-      toast.error('All fields must be filled out.');
-      return false;
-    }
-    const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
-    if (!imageLinkRegex.test(formData.imageLink)) {
-      toast.error('Image URL must end with .jpg, .jpeg, .webp or .png');
-      return false;
-    }
-    if (formData.categories.length > 3) {
-      toast.error('Select up to three categories.');
-      return false;
-    }
 
-    return true;
-  };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (validateFormData()) {
+  const formSubmit = async (formData: TFormData) => {
+    console.log('error', errors);
+
+    console.log('From adad', formData);
+
+    if (isValid) {
       try {
         const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
 
@@ -97,11 +73,12 @@ function AddBlog() {
         } else {
           toast.error('Error: ' + response.data.message);
         }
-      } catch (err: any) {
-        toast.error('Error: ' + err.message);
+      } catch (error: any) {
+        toast.error('Error: ' + error.message);
       }
     }
   };
+
   const navigate = useNavigate();
 
   const [isDarkMode, setIsDarkMode] = useState(
@@ -143,18 +120,17 @@ function AddBlog() {
         </div>
       </div>
       <div className="flex justify-center ">
-        <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
+        <form onSubmit={handleSubmit(formSubmit)} className="md:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
                 Is this a featured blog?
               </span>
               <input
+                {...register('isFeaturedPost')}
                 type="checkbox"
                 name="isFeaturedPost"
                 className="ml-2 h-5 w-5 rounded-full accent-purple-400 "
-                checked={formData.isFeaturedPost}
-                onChange={handleCheckboxChange}
               />
             </label>
           </div>
@@ -164,14 +140,14 @@ function AddBlog() {
               Blog title <Asterisk />
             </div>
             <input
+              {...register('title')}
               type="text"
               name="title"
               placeholder="Travel Bucket List for this Year"
               autoComplete="off"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.title}
-              onChange={handleInputChange}
             />
+            {errors.title ? <p className="mt-2 text-red-500">{`${errors.title.message}`}</p> : null}
           </div>
 
           <div className="mb-1">
@@ -179,12 +155,11 @@ function AddBlog() {
               Blog content <Asterisk />
             </div>
             <textarea
+              {...register('description')}
               name="description"
               placeholder="Start writing here&hellip;"
               rows={5}
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.description}
-              onChange={handleInputChange}
             />
           </div>
 
@@ -193,13 +168,15 @@ function AddBlog() {
               Author name <Asterisk />
             </div>
             <input
+              {...register('authorName')}
               type="text"
               name="authorName"
               placeholder="Shree Sharma"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.authorName}
-              onChange={handleInputChange}
             />
+            {errors.authorName ? (
+              <p className="mt-2 text-red-500">{`${errors.authorName.message}`}</p>
+            ) : null}
           </div>
 
           <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
@@ -211,14 +188,13 @@ function AddBlog() {
           </div>
           <div className="mb-4 flex justify-between gap-2 md:gap-4">
             <input
+              {...register('imageLink')}
               type="url"
               id="imagelink"
               name="imageLink"
               placeholder="https://&hellip;"
               autoComplete="off"
               className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
-              value={formData.imageLink}
-              onChange={handleInputChange}
             />
             <button
               type="button"
@@ -230,20 +206,27 @@ function AddBlog() {
               Pick image
             </button>
           </div>
+          <div className="block">
+            {errors.imageLink ? (
+              <p className="mb-1 mt-2 text-red-500">{`${errors.imageLink.message}`}</p>
+            ) : null}
+          </div>
           <div className="mb-4 flex flex-col">
             <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary md:mr-4 md:w-fit">
               Categories <Asterisk />
             </label>
+
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
               {categories.map((category, index) => (
                 <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
                   <CategoryPill
                     category={category}
-                    selected={formData.categories.includes(category)}
+                    selected={getValues('categories')?.includes(category)}
                   />
                 </span>
               ))}
             </div>
+            {errors.categories ? <p className="mt-2 text-red-500">Select up to 3 tags</p> : null}
           </div>
 
           <button
