@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   rootDir: 'src',
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
