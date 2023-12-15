@@ -6,13 +6,6 @@ const isValidImageLink = (value: string) => {
   return imageLinkRegex.test(value);
 };
 
-const isValidAuthorName = (value: string) => {
-  const trimmedLength = value.trim().length;
-
-  // Add conditions to check the length
-  return trimmedLength >= 3 && trimmedLength <= 15;
-};
-
 export const FormDataSchema = z.object({
   title: z.string().refine((value) => value.trim().split(/\s+/).length >= 3, {
     message: 'Oops! Title needs more spice. Give it at least 3 words.',
