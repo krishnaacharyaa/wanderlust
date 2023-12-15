@@ -33,12 +33,6 @@ function AddBlog() {
   };
 
   const [modal, setmodal] = useState(false);
-  // const [isFormValid, setIsFormValid] = useState(false); // New state to track form validity
-
-  // useEffect(() => {
-  //   // Update the isFormValid state whenever the form validity changes
-  //   setIsFormValid(isValid);
-  // }, [isValid]);
 
   const handleCategoryClick = (category: string) => {
     const currentCategories = getValues('categories') || [];
