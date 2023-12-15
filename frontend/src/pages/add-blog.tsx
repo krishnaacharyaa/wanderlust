@@ -15,6 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormDataSchema, TFormData } from '@/lib/blog.zod';
 
 function AddBlog() {
+  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [modal, setmodal] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -25,18 +28,13 @@ function AddBlog() {
     resolver: zodResolver(FormDataSchema),
   });
 
-  const [selectedImage, setSelectedImage] = useState<string>('');
-
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
     setValue('imageLink', imageUrl);
   };
 
-  const [modal, setmodal] = useState(false);
-
   const handleCategoryClick = (category: string) => {
     const currentCategories = getValues('categories') || [];
-
     if (currentCategories.includes(category)) {
       setValue(
         'categories',
@@ -60,7 +58,6 @@ function AddBlog() {
     if (isValid) {
       try {
         const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
-
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
           navigate('/');
@@ -89,7 +86,7 @@ function AddBlog() {
     mediaQuery.addListener(handleThemeChange);
 
     return () => {
-      mediaQuery.removeListener(handleThemeChange);
+      -mediaQuery.removeListener(handleThemeChange);
     };
   }, []);
 
