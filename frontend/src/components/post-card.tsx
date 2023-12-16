@@ -10,7 +10,7 @@ export default function PostCard({ post }: { post: Post }) {
   return (
     <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
       <div
-        className="m-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card"
+        className="mr-8 mt-4 mb-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card"
         onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       >
         <img
