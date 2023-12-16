@@ -19,7 +19,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
             <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
-        <img src={linkIcon} className="h-3 w-3" onClick={() => navigate(-1)} />
+        <img src={linkIcon} className="h-3 w-3" />
       </div>
       <div className="mb-2 line-clamp-2 font-semibold text-light-title dark:text-dark-title">
         {post.title}
