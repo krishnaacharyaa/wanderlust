@@ -53,7 +53,7 @@ function HomePage() {
       <div className="mx-4 md:mx-8 lg:mx-16">
         <BlogFeed />
         <h1 className="text-2xl font-semibold dark:text-dark-primary">All Posts</h1>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap" style={{ marginLeft: '-15px' }}>
           {posts.length === 0
             ? Array(8)
                 .fill(0)
