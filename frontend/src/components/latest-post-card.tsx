@@ -8,6 +8,10 @@ import { createSlug } from '@/utils/slug-generator';
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   const slug = createSlug(post.title);
+  const openInNewTab= (url:string):void =>{
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
   return (
     <div
       className="cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card"
@@ -19,7 +23,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
             <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
-        <img src={linkIcon} className="h-3 w-3" onClick={() => navigate(-1)} />
+        <img src={linkIcon} className="h-3 w-3" onClick={(e) =>{e.stopPropagation(); openInNewTab(`/details-page/${slug}/${post._id}`)}} />
       </div>
       <div className="mb-2 line-clamp-2 font-semibold text-light-title dark:text-dark-title">
         {post.title}
