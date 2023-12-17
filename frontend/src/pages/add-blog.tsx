@@ -16,6 +16,7 @@ import { FormDataSchema, TFormData } from '@/lib/blog.zod';
 
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [modal, setmodal] = useState(false);
 
   const {
@@ -35,14 +36,13 @@ function AddBlog() {
 
   const handleCategoryClick = (category: string) => {
     const currentCategories = getValues('categories') || [];
-    if (currentCategories.includes(category)) {
-      setValue(
-        'categories',
-        currentCategories.filter((cat: string) => cat !== category)
-      );
-    } else {
-      setValue('categories', [...currentCategories, category]);
-    }
+    const updateCategories = currentCategories.includes(category)
+      ? currentCategories.filter((cat: string) => cat !== category)
+      : [...currentCategories, category];
+
+    setValue('categories', updateCategories);
+
+    setSelectedCategories(updateCategories);
   };
 
   const handleselector = () => {
@@ -180,7 +180,6 @@ function AddBlog() {
           <div className="mb-4 flex justify-between gap-2 md:gap-4">
             <input
               {...register('imageLink')}
-              type="url"
               id="imagelink"
               name="imageLink"
               placeholder="https://&hellip;"
@@ -212,7 +211,7 @@ function AddBlog() {
                 <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
                   <CategoryPill
                     category={category}
-                    selected={getValues('categories')?.includes(category)}
+                    selected={selectedCategories.includes(category)}
                   />
                 </span>
               ))}

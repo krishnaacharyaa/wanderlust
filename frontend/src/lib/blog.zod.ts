@@ -21,7 +21,7 @@ export const FormDataSchema = z.object({
   imageLink: z.string().refine((value) => isValidImageLink(value), {
     message: 'Hmm... Image link should end with .jpg, .jpeg, .webp, or .png.',
   }),
-  categories: z.array(z.string()).refine((value) => value.length <= 3, {
+  categories: z.array(z.string()).refine((value) => value.length >= 3, {
     message: 'Easy there! Select up to 3 categories.',
   }),
   description: z.string(),
