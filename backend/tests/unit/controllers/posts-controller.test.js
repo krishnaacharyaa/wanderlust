@@ -10,35 +10,12 @@ import {
 } from '../../../controllers/posts-controller.js';
 import Post from '../../../models/post.js';
 import { validCategories } from '../../../utils/constants.js';
+import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';
 
 jest.mock('../../../models/post.js', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
-
-const res = {
-  json: jest.fn(),
-  status: jest.fn().mockReturnThis(),
-};
-
-const createPostObject = (options = {}) => {
-  return {
-    title: options.title || 'Test Post',
-    authorName: options.authorName || 'Test Author',
-    imageLink: options.imageLink || 'https://www.forTestingPurposeOnly/my-image.jpg',
-    categories: options.categories || [validCategories[0]],
-    description: options.description || 'This is a test post.',
-    isFeaturedPost: options.isFeaturedPost || false,
-    ...options,
-  };
-};
-
-const createRequestObject = (options = {}) => {
-  return {
-    body: options.body || {},
-    params: options.params || {},
-  };
-};
 
 describe('createPostHandler', () => {
   it('Post creation: Success - All fields are valid', async () => {
