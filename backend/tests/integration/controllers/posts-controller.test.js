@@ -3,21 +3,12 @@ import request from 'supertest';
 import Post from '../../../models/post.js';
 import server from '../../../server.js';
 import { validCategories } from '../../../utils/constants.js';
+import { createPostObject } from '../../utils/helper-objects.js';
 
-const createPostObject = (options = {}) => {
-  return {
-    title: options.title || 'Test Post',
-    authorName: options.authorName || 'Test Author',
-    imageLink: options.imageLink || 'https://www.forTestingPurposeOnly/my-image.jpg',
-    categories: options.categories || [validCategories[0]],
-    description: options.description || 'This is a test post.',
-    isFeaturedPost: options.isFeaturedPost || false,
-    ...options,
-  };
-};
 afterAll(async () => {
   await mongoose.disconnect();
 });
+
 let postId;
 const invalidPostId = '609c16c69405b14574c99999';
 describe('Integration Tests: Post creation', () => {
