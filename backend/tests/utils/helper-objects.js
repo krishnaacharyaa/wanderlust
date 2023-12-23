@@ -1,3 +1,5 @@
+import { validCategories } from '../../utils/constants';
+
 export const res = {
   json: jest.fn(),
   status: jest.fn().mockReturnThis(),
