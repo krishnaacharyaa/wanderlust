@@ -9,7 +9,7 @@
     "nodemon": "^3.0.1"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
     "start": "nodemon server.js",
     "check": "prettier --check .",
     "format": "prettier --write .",
