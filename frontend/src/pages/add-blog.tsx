@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import navigateBackBlackIcon from '@/assets/svg/navigate-back-black.svg';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
-import { CATEGORIES } from '@/constants/categories';
-import { categoryProps } from '@/utils/category-props';
 import ModalComponent from '@/components/modal';
+import CategoryPill from '@/components/category-pill';
+import { categories } from '@/utils/category-colors';
 
 type FormData = {
   title: string;
@@ -34,12 +34,19 @@ function AddBlog() {
     isFeaturedPost: false,
   });
 
+  //checks the length of the categories array and if the category is already selected
+  const isValidCategory = (category: string): boolean => {
+    return formData.categories.length >= 3 && !formData.categories.includes(category);
+  };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleCategoryClick = (category: string) => {
+    if (isValidCategory(category)) return;
+
     if (formData.categories.includes(category)) {
       setFormData({
         ...formData,
@@ -52,6 +59,7 @@ function AddBlog() {
       });
     }
   };
+
   const handleselector = () => {
     setFormData({
       ...formData,
@@ -122,125 +130,150 @@ function AddBlog() {
     };
   }, []);
 
-  return (
-    <div className="min-h-screen bg-white p-4 px-16 font-[Poppins] dark:bg-dark">
-      <div className="mb-4 flex items-center justify-start">
-        <div className="w-fit cursor-pointer text-base text-black  md:text-lg lg:text-2xl">
-          <img
-            src={isDarkMode ? navigateBackWhiteIcon : navigateBackBlackIcon}
-            onClick={() => navigate(-1)}
-            className="h-5 w-10"
-          />
-        </div>
-        <h2 className="ml-4 text-sm font-bold dark:text-white md:text-lg lg:text-2xl">
-          Create Post
-        </h2>
-      </div>
+  function Asterisk() {
+    return <span className="dark:text-dark-tertiary">*</span>;
+  }
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
-            value={formData.title}
-            onChange={handleInputChange}
-          />
+  return (
+    <div className="min-h-screen cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
+      <div className="mb-4 flex justify-center">
+        <div className="flex w-[32rem] items-center justify-start space-x-4 md:w-5/6 lg:w-4/6 ">
+          <div className="w-fit cursor-pointer">
+            <img
+              src={isDarkMode ? navigateBackWhiteIcon : navigateBackBlackIcon}
+              onClick={() => navigate(-1)}
+              className="h-5 w-10"
+            />
+          </div>
+          <h2 className="text-lg font-semibold text-light-primary dark:text-dark-primary md:text-xl lg:text-2xl">
+            Create Blog
+          </h2>
         </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="authorName"
-            placeholder="Author Name"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
-            value={formData.authorName}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="flex justify-between">
-          <div className="flex w-8/12">
+      </div>
+      <div className="flex justify-center ">
+        <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
+          <div className="mb-2 flex items-center">
+            <label className="flex items-center">
+              <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
+                Is this a featured blog?
+              </span>
+              <input
+                type="checkbox"
+                name="isFeaturedPost"
+                className="ml-2 h-5 w-5 rounded-full accent-purple-400 "
+                checked={formData.isFeaturedPost}
+                onChange={handleCheckboxChange}
+              />
+            </label>
+          </div>
+
+          <div className="mb-2">
+            <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
+              Blog title <Asterisk />
+            </div>
             <input
               type="text"
-              id="imgtext"
-              name="imageLink"
-              placeholder="Image URL"
-              className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
-              value={formData.imageLink}
+              name="title"
+              placeholder="Travel Bucket List for this Year"
+              autoComplete="off"
+              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              value={formData.title}
               onChange={handleInputChange}
             />
           </div>
-          <button
-            type="button"
-            className="rounded-lg bg-black px-3 text-white hover:bg-gray-800 dark:bg-white dark:text-black"
-            onClick={() => {
-              setmodal(true);
-            }}
-          >
-            Pick Image
-          </button>
-        </div>
-        <div className="mb-4 mt-4">
-          <textarea
-            name="description"
-            placeholder="Description"
-            className="w-full rounded-lg bg-gray-50 p-2 placeholder:text-gray-800 dark:bg-dark-textfield dark:text-white dark:placeholder:text-white"
-            value={formData.description}
-            onChange={handleInputChange}
-          />
-        </div>
 
-        <div className="mb-4 flex flex-col items-center md:flex-row">
-          <label className="mb-2 block w-full font-semibold dark:text-white md:mr-8 md:w-fit">
-            Categories
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((category) => (
-              <span
-                key={category}
-                className={`cursor-pointer
-									${
-                    formData.categories.includes(category)
-                      ? categoryProps(category, true)
-                      : categoryProps(category, false)
-                  }`}
-                onClick={() => handleCategoryClick(category)}
-              >
-                {category}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-4 flex items-center">
-          <label className="flex items-center">
-            <span className="text-base font-medium text-gray-800 dark:text-white">
-              Featured Post
-            </span>
-            <input
-              type="checkbox"
-              name="isFeaturedPost"
-              className="ml-2 h-5 w-5 rounded border text-indigo-600 focus:ring-indigo-400"
-              checked={formData.isFeaturedPost}
-              onChange={handleCheckboxChange}
+          <div className="mb-1">
+            <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
+              Blog content <Asterisk />
+            </div>
+            <textarea
+              name="description"
+              placeholder="Start writing here&hellip;"
+              rows={5}
+              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              value={formData.description}
+              onChange={handleInputChange}
             />
-          </label>
-        </div>
+          </div>
 
-        <button
-          type="submit"
-          className="flex w-full items-center justify-center rounded-lg bg-black p-2 text-base text-white hover:bg-gray-800 dark:bg-white dark:text-black md:w-fit"
-        >
-          Create Blog
-        </button>
-      </form>
-      <ModalComponent
-        selectedImage={selectedImage}
-        handleImageSelect={handleImageSelect}
-        handleSelector={handleselector}
-        setModal={setmodal}
-        modal={modal}
-      />
+          <div className="mb-2">
+            <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
+              Author name <Asterisk />
+            </div>
+            <input
+              type="text"
+              name="authorName"
+              placeholder="Shree Sharma"
+              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              value={formData.authorName}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
+            Blog cover image
+            <span className="text-xs tracking-wide text-dark-tertiary">
+              &nbsp;(jpg/png/webp)&nbsp;
+            </span>
+            <Asterisk />
+          </div>
+          <div className="mb-4 flex justify-between gap-2 md:gap-4">
+            <input
+              type="url"
+              id="imagelink"
+              name="imageLink"
+              placeholder="https://&hellip;"
+              autoComplete="off"
+              className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
+              value={formData.imageLink}
+              onChange={handleInputChange}
+            />
+            <button
+              type="button"
+              className="lg:text-md w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:text-sm lg:w-2/12 lg:px-4 lg:py-3"
+              onClick={() => {
+                setmodal(true);
+              }}
+            >
+              Pick image
+            </button>
+          </div>
+          <div className="mb-4 flex flex-col">
+            <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary md:mr-4 md:w-fit">
+              Categories
+              <span className="text-xs tracking-wide text-dark-tertiary">
+                &nbsp;(max 3 categories)&nbsp;
+              </span>
+              <Asterisk />
+            </label>
+            <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
+              {categories.map((category, index) => (
+                <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
+                  <CategoryPill
+                    category={category}
+                    selected={formData.categories.includes(category)}
+                    disabled={isValidCategory(category)}
+                  />
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="flex w-full items-center justify-center rounded-lg bg-light-primary px-12 py-3 text-base font-semibold text-light hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:mx-1 md:w-fit"
+          >
+            Post blog
+          </button>
+        </form>
+        <ModalComponent
+          selectedImage={selectedImage}
+          handleImageSelect={handleImageSelect}
+          handleSelector={handleselector}
+          setModal={setmodal}
+          modal={modal}
+        />
+      </div>
     </div>
   );
 }

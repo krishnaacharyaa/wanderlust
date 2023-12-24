@@ -9,7 +9,7 @@ function App() {
         <Route path="/">
           <Route index element={<HomePage />} />
           <Route path="add-blog" element={<AddBlog />} />
-          <Route path="details-page" element={<DetailsPage />} />
+          <Route path="details-page/:title/:postId" element={<DetailsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

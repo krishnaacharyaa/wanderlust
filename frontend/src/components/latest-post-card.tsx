@@ -1,27 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 import linkIcon from '@/assets/svg/link.svg';
 import Post from '@/types/post-type';
-import { categoryProps } from '@/utils/category-props';
 import formatPostTime from '@/utils/format-post-time';
+import CategoryPill from '@/components/category-pill';
+import { createSlug } from '@/utils/slug-generator';
+
 export default function LatestPostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
+  const slug = createSlug(post.title);
   return (
     <div
-      className="cursor-pointer rounded-lg bg-white p-2 py-2 shadow-sm dark:bg-dark-textfield"
-      onClick={() => navigate('/details-page', { state: { post } })}
+      className="cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card"
+      onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
     >
       <div className="flex">
-        <div className="mb-2 flex flex-1 flex-wrap gap-2 ">
+        <div className="mb-2 flex flex-1 flex-wrap gap-2">
           {post.categories.map((category, index) => (
-            <span key={index} className={categoryProps(category)}>
-              {category}
-            </span>
+            <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
-        <img src={linkIcon} className="h-3 w-3" onClick={() => navigate(-1)} />
+        <img src={linkIcon} className="h-3 w-3" />
       </div>
-      <div className="mb-2 line-clamp-2 text-xl font-semibold dark:text-white">{post.title}</div>
-      <div className="text-xs text-gray-500 dark:text-white">
+      <div className="mb-2 line-clamp-2 font-semibold text-light-title dark:text-dark-title">
+        {post.title}
+      </div>
+      <div className="text-xs text-light-info dark:text-dark-info">
         {post.authorName} • {formatPostTime(post.timeOfPost)}
       </div>
     </div>
