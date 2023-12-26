@@ -97,22 +97,16 @@ describe('Integration Tests: Get all posts by category', () => {
 describe('Integration Tests: Get all featured posts', () => {
   it('Get all featured posts: Success', async () => {
     const responseFeatured = await request(server).get('/api/posts/featured');
-    const responseLatest = await request(server).get('/api/posts/latest');
 
     expect(responseFeatured.status).toBe(200);
-    expect(responseLatest.status).toBe(200);
     expect(responseFeatured.body).toBeInstanceOf(Array);
-    expect(responseLatest.body).toBeInstanceOf(Array);
   });
 });
 describe('Integration Tests: Get all latest posts', () => {
   it('Get all latest posts: Success', async () => {
-    const responseFeatured = await request(server).get('/api/posts/featured');
     const responseLatest = await request(server).get('/api/posts/latest');
 
-    expect(responseFeatured.status).toBe(200);
     expect(responseLatest.status).toBe(200);
-    expect(responseFeatured.body).toBeInstanceOf(Array);
     expect(responseLatest.body).toBeInstanceOf(Array);
   });
 });
