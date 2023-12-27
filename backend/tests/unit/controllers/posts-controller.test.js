@@ -1,44 +1,21 @@
 import {
   createPostHandler,
+  deletePostByIdHandler,
   getAllPostsHandler,
   getFeaturedPostsHandler,
-  getPostByCategoryHandler,
   getLatestPostsHandler,
+  getPostByCategoryHandler,
   getPostByIdHandler,
   updatePostHandler,
-  deletePostByIdHandler,
 } from '../../../controllers/posts-controller.js';
 import Post from '../../../models/post.js';
 import { validCategories } from '../../../utils/constants.js';
+import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';
 
 jest.mock('../../../models/post.js', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
-
-const res = {
-  json: jest.fn(),
-  status: jest.fn().mockReturnThis(),
-};
-
-const createPostObject = (options = {}) => {
-  return {
-    title: options.title || 'Test Post',
-    authorName: options.authorName || 'Test Author',
-    imageLink: options.imageLink || 'https://www.forTestingPurposeOnly/my-image.webp',
-    categories: options.categories || [validCategories[0]],
-    description: options.description || 'This is a test post.',
-    isFeaturedPost: options.isFeaturedPost || false,
-    ...options,
-  };
-};
-
-const createRequestObject = (options = {}) => {
-  return {
-    body: options.body || {},
-    params: options.params || {},
-  };
-};
 
 describe('createPostHandler', () => {
   it('Post creation: Success - All fields are valid', async () => {
@@ -350,7 +327,7 @@ describe('deletePostByIdHandler', () => {
     const mockPost = createPostObject({ _id: '6910293383' });
 
     // Mock the behavior of Post.findByIdAndRemove
-    Post.findByIdAndRemove = jest.fn().mockResolvedValueOnce(mockPost);
+    Post.findByIdAndDelete = jest.fn().mockResolvedValueOnce(mockPost);
 
     await deletePostByIdHandler(req, res);
 
@@ -366,7 +343,7 @@ describe('deletePostByIdHandler', () => {
     const errorMessage = 'Post not found';
 
     // Mock the behavior of Post.findByIdAndRemove
-    Post.findByIdAndRemove = jest.fn().mockResolvedValueOnce(null);
+    Post.findByIdAndDelete = jest.fn().mockResolvedValueOnce(null);
 
     await deletePostByIdHandler(req, res);
 
@@ -380,7 +357,7 @@ describe('deletePostByIdHandler', () => {
     const errorMessage = 'Internal Server Error';
 
     // Mock the behavior of Post.findByIdAndRemove
-    Post.findByIdAndRemove = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
+    Post.findByIdAndDelete = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
 
     await deletePostByIdHandler(req, res);
 

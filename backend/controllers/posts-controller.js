@@ -120,7 +120,7 @@ export const updatePostHandler = async (req, res) => {
 
 export const deletePostByIdHandler = async (req, res) => {
   try {
-    const post = await Post.findByIdAndRemove(req.params.id);
+    const post = await Post.findByIdAndDelete(req.params.id);
 
     // Validation - check if post exists
     if (!post) {
