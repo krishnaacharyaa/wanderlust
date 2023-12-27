@@ -14,11 +14,11 @@ const invalidPostId = '609c16c69405b14574c99999';
 describe('Integration Tests: Post creation', () => {
   it('Post creation: Success - All fields are valid', async () => {
     const response = await request(server).post('/api/posts').send(createPostObject());
+    postId = response.body._id;
+    const fetchedPost = await Post.findById(postId);
+
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('_id');
-    postId = response.body._id;
-
-    const fetchedPost = await Post.findById(postId);
     expect(fetchedPost).not.toBeNull();
     expect(fetchedPost.title).toBe(createPostObject().title);
   });
@@ -51,7 +51,7 @@ describe('Integration Tests: Post creation', () => {
     const response = await request(server).post('/api/posts').send(postObject);
 
     expect(JSON.parse(response.text)).toEqual({
-      message: 'Image URL must end with .jpg, .jpeg, or .png',
+      message: 'Image URL must end with .jpg, .jpeg, .webp, or .png',
     });
     expect(response.status).toBe(400);
   });
@@ -99,7 +99,7 @@ describe('Integration Tests: Get all featured posts', () => {
     const responseFeatured = await request(server).get('/api/posts/featured');
 
     expect(responseFeatured.status).toBe(200);
-    expect(responseFeatured.body).toBeInstanceOf(Array);
+    expect(responseFeatured.body.length).toBeGreaterThan(1);
   });
 });
 describe('Integration Tests: Get all latest posts', () => {
@@ -107,18 +107,19 @@ describe('Integration Tests: Get all latest posts', () => {
     const responseLatest = await request(server).get('/api/posts/latest');
 
     expect(responseLatest.status).toBe(200);
-    expect(responseLatest.body).toBeInstanceOf(Array);
+    expect(responseLatest.body.length).toBeGreaterThan(1);
   });
 });
 describe('Integration Tests: Update Post', () => {
   it('Update Post: Success - Update Post of existing ID', async () => {
+    let updatedPost;
+
     const response = await request(server)
       .patch(`/api/posts/${postId}`)
       .send(createPostObject({ title: 'Updated Post' }));
+    updatedPost = await Post.findById(postId);
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('_id', postId);
-    const updatedPost = await Post.findById(postId);
     expect(updatedPost).not.toBeNull();
     expect(updatedPost.title).toBe('Updated Post');
   });
@@ -136,11 +137,14 @@ describe('Integration Tests: Update Post', () => {
 });
 describe('Integration Tests: Delete Post', () => {
   it('Delete Post: Success - Removing Post with specific ID', async () => {
+    let deletedPost;
+
     const response = await request(server).delete(`/api/posts/${postId}`);
+
+    deletedPost = await Post.findById(postId);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('message', 'Post deleted');
-    const deletedPost = await Post.findById(postId);
     expect(deletedPost).toBeNull();
   });
 
