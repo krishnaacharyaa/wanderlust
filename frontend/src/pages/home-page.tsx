@@ -36,6 +36,7 @@ function HomePage() {
               onClick={() => {
                 navigate('/add-blog');
               }}
+              aria-label="Create post"
             >
               Create post
             </button>

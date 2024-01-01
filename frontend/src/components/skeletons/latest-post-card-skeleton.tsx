@@ -1,8 +1,12 @@
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const LatestPostCardSkeleton = () => {
+export const LatestPostCardSkeleton = ({
+  testId = 'latestpostcardskeleton',
+}: {
+  testId?: string;
+}) => {
   return (
-    <div className="rounded-lg bg-light p-3 dark:bg-dark-card">
+    <div className="rounded-lg bg-light p-3 dark:bg-dark-card" data-testid={testId}>
       <div className="flex">
         <div className="mb-2 flex flex-1 flex-wrap gap-2">
           {Array(3)
