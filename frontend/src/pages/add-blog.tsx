@@ -111,24 +111,31 @@ function AddBlog() {
     }
   };
   const navigate = useNavigate();
-
-  const [isDarkMode, setIsDarkMode] = useState(
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  );
-
+  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null)
+    //  window.matchMedia('(prefers-color-scheme: dark)').matches
+  ;
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    // Check if the user has set a theme preference in local storage
+    const storedTheme = localStorage.getItem('theme');
+    //const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    const handleThemeChange = (event: MediaQueryListEvent) => {
-      setIsDarkMode(event.matches);
-    };
-
-    mediaQuery.addListener(handleThemeChange);
-
-    return () => {
-      mediaQuery.removeListener(handleThemeChange);
-    };
+    // Set initial theme based on local storage or system preference
+    setIsDarkMode(storedTheme === 'dark');
   }, []);
+  // useEffect(() => {
+  //   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+  //   const handleThemeChange = (event: MediaQueryListEvent) => {
+  //     setIsDarkMode(event.matches);
+  //   };
+
+  //   mediaQuery.addListener(handleThemeChange);
+
+  //   return () => {
+  //     mediaQuery.removeListener(handleThemeChange);
+  //   };
+  // }, []);
+  // if(storedTheme === 'dark') setIsDarkMode(true);
 
   function Asterisk() {
     return <span className="dark:text-dark-tertiary">*</span>;
