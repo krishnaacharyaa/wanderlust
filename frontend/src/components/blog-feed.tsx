@@ -74,6 +74,8 @@ export default function BlogFeed() {
                   onClick={() =>
                     setSelectedCategory(selectedCategory === category ? 'featured' : category)
                   }
+                  aria-label={category}
+                  type="button"
                 >
                   <CategoryPill category={category} selected={selectedCategory === category} />
                 </button>
