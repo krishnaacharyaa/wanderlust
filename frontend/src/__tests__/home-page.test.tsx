@@ -19,7 +19,13 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedUseNavigate,
 }));
 
-// using localbackend to run and pass test cases, not mocking for somemoretime.
+afterEach(() => mockedUseNavigate.mockRestore());
+
+/**
+ * INFO:
+  - Using localbackend to run and pass test cases, not mocking for somemoretime.
+  -To not use hardcoded numbers, we have to mock api or use testing endpoints
+ */
 describe('Integration Test: Home Route', () => {
   test('renders home page', async () => {
     //ARRANGE
@@ -63,8 +69,6 @@ describe('Integration Test: Home Route', () => {
 
     //ASSERT
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    mockedUseNavigate.mockRestore();
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
   });
   test('renders home page with BlogFeed', async () => {
     //ARRANGE
@@ -91,11 +95,47 @@ describe('Integration Test: Home Route', () => {
     ).toBeInTheDocument();
     expect(await screen.findAllByTestId('featuredPostCard')).toHaveLength(3);
   });
-  test.skip('on featured post click navigates to /details-page/:title/:id page', () => {});
+  test('on featured post click navigates to /details-page/:title/:id page', async () => {
+    //ARRANGE
+    render(
+      <BrowserRouter>
+        <HomePage />
+      </BrowserRouter>
+    );
+    //ACT
+    //ASSERT
+    const featuredPostCard = await screen.findAllByTestId('featuredPostCard');
+    expect(featuredPostCard).toHaveLength(5);
+    await userEvent.click(featuredPostCard[0]);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+  });
   // TODO: below test can only be tested either by e2e broken api or mocking api
   test.skip('failed to display home page with BlogFeed', () => {});
-  test.skip('renders home page with all post', () => {});
-  test.skip('on all-post post click navigates to /details-page/:title/:id page', () => {});
+  test('renders home page with all post', async () => {
+    //ARRANGE
+    render(
+      <BrowserRouter>
+        <HomePage />
+      </BrowserRouter>
+    );
+    //ACT
+    //ASSERT
+    expect(await screen.findAllByTestId('postcard')).toHaveLength(10);
+  });
+  test('on all-post post click navigates to /details-page/:title/:id page', async () => {
+    //ARRANGE
+    render(
+      <BrowserRouter>
+        <HomePage />
+      </BrowserRouter>
+    );
+    //ACT
+    //ASSERT
+    const allPostCard = await screen.findAllByTestId('postcard');
+    expect(allPostCard).toHaveLength(10);
+    await userEvent.click(allPostCard[0]);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+  });
   // TODO: below test can only be tested either by e2e broken api or mocking api
   test.skip('failed to display home page with all post', () => {});
 });
