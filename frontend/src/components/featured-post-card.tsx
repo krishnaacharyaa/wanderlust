@@ -20,7 +20,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
         />
       </div>
       <div className="flex flex-col h-full w-full sm:w-2/3 gap-2 p-2">
-        <div className="text-xl font-semibold text-light-title dark:text-dark-title">
+        <div className="text-xl line-clamp-1 font-semibold text-light-title dark:text-dark-title">
           {post.title}
         </div>
         <div className="flex flex-wrap gap-2">

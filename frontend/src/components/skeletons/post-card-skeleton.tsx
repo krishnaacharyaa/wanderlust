@@ -10,16 +10,8 @@ export const PostCardSkeleton = () => {
           <Skeleton className="mb-2 h-6 w-full sm:w-4/5 bg-slate-200 dark:bg-slate-700" />
           <Skeleton className="h-16 w-full sm:w-11/12 bg-slate-200 dark:bg-slate-700" />
           <div className="mt-2 flex flex-wrap gap-2">
-            <Skeleton
-              className={`h-6 w-full sm:w-16 rounded-full ${
-                'sm:mr-8 sm:mt-4'
-              } sm:mb-4 bg-slate-200 dark:bg-slate-700`}
-            />
-            <Skeleton
-              className={`h-6 w-full sm:w-16 rounded-full ${
-                'sm:mr-8 sm:mt-4'
-              } sm:mb-4 bg-slate-200 dark:bg-slate-700`}
-            />
+            <Skeleton className={`h-6 w-full sm:w-16 rounded-full ${'sm:mr-8 sm:mt-4 sm:mb-4'} bg-slate-200 dark:bg-slate-700`} />
+            <Skeleton className={`h-6 w-full sm:w-16 rounded-full ${'sm:mr-8 sm:mt-4 sm:mb-4'} bg-slate-200 dark:bg-slate-700`} />
           </div>
         </div>
       </div>
