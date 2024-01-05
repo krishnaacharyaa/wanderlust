@@ -1,8 +1,12 @@
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const FeaturedPostCardSkeleton = () => {
+export const FeaturedPostCardSkeleton = ({
+  testId = 'featurepostcardskeleton',
+}: {
+  testId?: string;
+}) => {
   return (
-    <div className="flex rounded-lg bg-light dark:bg-dark-card">
+    <div className="flex rounded-lg bg-light dark:bg-dark-card" data-testid={testId}>
       {/* for image */}
       <div className="w-1/3">
         <Skeleton className="h-full w-full rounded-lg bg-slate-200 dark:bg-slate-700" />
