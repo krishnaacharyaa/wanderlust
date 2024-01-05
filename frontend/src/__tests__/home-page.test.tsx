@@ -4,15 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 
 const mockedUseNavigate = jest.fn();
-const featuredPost = {
-  authorName: 'Ella Davis',
-  title: 'Serenity in Nature: Finding Peace Amidst Scenic Beauty',
-  imageLink: 'https://i.ibb.co/d0g42nr/FPO-BOR-100-800x600.webp',
-  categories: ['Nature', 'Scenic', 'Tranquil'],
-  description:
-    "Find solace and serenity in the heart of nature's most scenic landscapes. This journey takes you to tranquil forests, serene lakes, and picturesque countryside. Immerse yourself in the beauty of the natural world and experience true peace.",
-  isFeaturedPost: true,
-};
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, any>),
@@ -21,11 +12,6 @@ jest.mock('react-router-dom', () => ({
 
 afterEach(() => mockedUseNavigate.mockRestore());
 
-/**
- * INFO:
-  - Using localbackend to run and pass test cases, not mocking for somemoretime.
-  -To not use hardcoded numbers, we have to mock api or use testing endpoints
- */
 describe('Integration Test: Home Route', () => {
   test('renders home page', async () => {
     //ARRANGE
@@ -85,13 +71,11 @@ describe('Integration Test: Home Route', () => {
     const featuredPostCard = await screen.findAllByTestId('featuredPostCard');
     expect(featuredPostCard).toHaveLength(5);
     const natureCategoryPill = screen.getByRole('button', {
-      name: featuredPost.categories[0],
+      name: 'Nature',
     });
     expect(natureCategoryPill).toBeInTheDocument();
     await userEvent.click(natureCategoryPill);
-    expect(
-      await screen.findByText(`Posts related to "${featuredPost.categories[0]}"`)
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Posts related to "Nature"')).toBeInTheDocument();
     // Strange test got passed api response is 3 over local backend
     expect(await screen.findAllByTestId('featuredPostCard')).toHaveLength(5);
   });
@@ -109,8 +93,6 @@ describe('Integration Test: Home Route', () => {
     await userEvent.click(featuredPostCard[0]);
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
   });
-  // TODO: below test can only be tested either by e2e broken api or mocking api
-  test.skip('failed to display home page with BlogFeed', () => {});
   test('renders home page with all post', async () => {
     //ARRANGE
     render(
@@ -146,6 +128,4 @@ describe('Integration Test: Home Route', () => {
     await userEvent.click(img);
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
   });
-  // TODO: below test can only be tested either by e2e broken api or mocking api
-  test.skip('failed to display home page with all post', () => {});
 });
