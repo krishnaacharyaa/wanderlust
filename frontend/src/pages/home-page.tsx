@@ -6,8 +6,8 @@ import BlogFeed from '@/components/blog-feed';
 import PostCard from '@/components/post-card';
 import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
-import sun from "../assets/svg/yellow-sun.svg";
-import moon from "../assets/svg/dark-moon.svg";
+import ThemeToggle from '@/components/theme-toggle';
+
 function HomePage() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -23,30 +23,6 @@ function HomePage() {
       });
   }, []);
 
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean | null>(null);
-  const toggleTheme = () => {
-    // Toggle between dark and light themes
-    setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
-  };
-  useEffect(() => {
-    // Check if the user has set a theme preference in local storage
-    const storedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    // Set initial theme based on local storage or system preference
-    setIsDarkTheme(storedTheme === 'dark' || (!storedTheme && prefersDark) || null);
-  }, []);
-
-  useEffect(() => {
-    // Apply dark or light theme based on isDarkTheme state
-    if (isDarkTheme !== null) {
-      document.documentElement.classList.toggle('dark', isDarkTheme);
-      
-      // Save the user's theme preference to local storage
-      localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
-    }
-  }, [isDarkTheme]);
-
   return (
     <div className="w-full cursor-default bg-light dark:bg-dark">
       <div
@@ -56,27 +32,26 @@ function HomePage() {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 md:px-16">
           <div className="flex w-full justify-between">
-            <div className="text-2xl font-semibold">WanderLust</div>
+            <div className="text-2xl font-semibold flex justify-between items-center">WanderLust</div>
             <div className='flex justify-between px-2'>
-            <div className="flex justify-end py-2 px-20">
-              <button onClick={toggleTheme} className="btn btn-square btn-ghost ">
-                <label className="swap swap-rotate w-12 h-12">
-                    <img
-                      src={isDarkTheme ? sun : moon} // Use moon for dark theme and sun for light theme
-                      alt={isDarkTheme ? 'light' : 'dark'} // Alt text can also change based on the theme
-                      className={`w-12 h-12 ${isDarkTheme ? 'swap-off' : 'swap-on'} rounded-full border p-2 ${isDarkTheme ? 'border-yellow-500' : 'border-black'}` }
-                      style={{ fill: isDarkTheme ? '' : 'yellow' }} 
-                    />
-                </label>
-              </button>
+            <div className="flex justify-end py-2 px-2 md:px-20">
+              <ThemeToggle />
             </div>
             <button
-              className="rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25"
+              className="hidden md:inline-block rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25"
               onClick={() => {
                 navigate('/add-blog');
               }}
             >
               Create post
+            </button>
+            <button
+              className="md:hidden px-2 py-2 hover:bg-slate-500/25"
+              onClick={() => {
+                navigate('/add-blog');
+              }}
+            >
+             <svg className="h-8 w-8 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />  <line x1="12" y1="8" x2="12" y2="16" />  <line x1="8" y1="12" x2="16" y2="12" /></svg>
             </button>
             </div>
           </div>
