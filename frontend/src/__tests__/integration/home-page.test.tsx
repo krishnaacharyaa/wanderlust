@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
 afterEach(() => mockedUseNavigate.mockRestore());
 
 describe('Integration Test: Home Route', () => {
-  test('Integration Test: renders home page', async () => {
+  test('Home Route: renders home page', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -36,7 +36,7 @@ describe('Integration Test: Home Route', () => {
     expect(screen.getByText(/All Posts/)).toBeInTheDocument();
     expect(screen.getAllByTestId('postcardskeleton')).toHaveLength(8);
   });
-  test('Integration Test: calls the mockedUseNavigate function', async () => {
+  test('Home Route: calls the mockedUseNavigate function', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -56,7 +56,7 @@ describe('Integration Test: Home Route', () => {
     //ASSERT
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
   });
-  test('Integration Test: renders home page with BlogFeed', async () => {
+  test('Home Route: renders home page with BlogFeed', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -79,7 +79,7 @@ describe('Integration Test: Home Route', () => {
     // Strange test got passed api response is 3 over local backend
     expect(await screen.findAllByTestId('featuredPostCard')).toHaveLength(5);
   });
-  test('Integration Test: on featured post click navigates to /details-page/:title/:id page', async () => {
+  test('Home Route: on featured post click navigates to /details-page/:title/:id page', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -104,7 +104,7 @@ describe('Integration Test: Home Route', () => {
     //ASSERT
     expect(await screen.findAllByTestId('postcard')).toHaveLength(10);
   });
-  test('Integration Test: on all-post post click navigates to /details-page/:title/:id page', async () => {
+  test('Home Route: on all-post post click navigates to /details-page/:title/:id page', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
