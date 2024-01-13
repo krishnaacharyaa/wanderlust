@@ -27,6 +27,10 @@ export default {
           description: colors.slate[700],
           info: colors.slate[500],
         },
+        'light-theme-background': '#fae9b1',
+        'light-theme-foreground': '#f1c237',
+        'dark-theme-background': '#092e40',
+        'dark-theme-foreground': '#25a5e3',
       },
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
