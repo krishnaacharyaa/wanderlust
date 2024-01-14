@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import Post from '../../../models/post.js';
 import server from '../../../server.js';
-import { validCategories } from '../../../utils/constants.js';
+import { validCategories, HTTP_STATUS } from '../../../utils/constants.js';
 import { createPostObject } from '../../utils/helper-objects.js';
 
 afterAll(async () => {
@@ -17,7 +17,7 @@ describe('Integration Tests: Post creation', () => {
     postId = response.body._id;
     const fetchedPost = await Post.findById(postId);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(HTTP_STATUS.OK);
     expect(response.body).toHaveProperty('_id');
     expect(fetchedPost).not.toBeNull();
     expect(fetchedPost.title).toBe(createPostObject().title);
@@ -29,7 +29,7 @@ describe('Integration Tests: Post creation', () => {
     const response = await request(server).post('/api/posts').send(postObject);
 
     expect(JSON.parse(response.text)).toEqual({ message: 'All fields are required.' });
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
   });
 
   it('Post creation: Failure - Invalid category count', async () => {
@@ -41,7 +41,7 @@ describe('Integration Tests: Post creation', () => {
     expect(JSON.parse(response.text)).toEqual({
       message: 'Please select up to three categories only.',
     });
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
   });
 
   it('Post creation: Failure - Invalid image URL format', async () => {
@@ -53,7 +53,7 @@ describe('Integration Tests: Post creation', () => {
     expect(JSON.parse(response.text)).toEqual({
       message: 'Image URL must end with .jpg, .jpeg, .webp, or .png',
     });
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
   });
 
   it('Post creation: Failure - Internal server error', async () => {
@@ -63,7 +63,7 @@ describe('Integration Tests: Post creation', () => {
     const postObject = createPostObject();
     const response = await request(server).post('/api/posts').send(postObject);
 
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(JSON.parse(response.text)).toEqual({ message: 'Internal Server Error' });
   });
 });
@@ -71,7 +71,7 @@ describe('Integration Tests: Get all posts', () => {
   it('Get all posts: Success', async () => {
     const response = await request(server).get('/api/posts');
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(HTTP_STATUS.OK);
     expect(response.body).toBeInstanceOf(Array);
   });
 });
@@ -80,7 +80,7 @@ describe('Integration Tests: Get all posts by category', () => {
     const category = validCategories[0];
     const response = await request(server).get(`/api/posts/categories/${category}`);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(HTTP_STATUS.OK);
     expect(response.body).toBeInstanceOf(Array);
   });
 
@@ -88,7 +88,7 @@ describe('Integration Tests: Get all posts by category', () => {
     const category = 'invalid-category';
     const response = await request(server).get(`/api/posts/categories/${category}`);
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
     expect(JSON.parse(response.text)).toEqual({
       message: 'Invalid category',
     });
@@ -98,7 +98,7 @@ describe('Integration Tests: Get all featured posts', () => {
   it('Get all featured posts: Success', async () => {
     const responseFeatured = await request(server).get('/api/posts/featured');
 
-    expect(responseFeatured.status).toBe(200);
+    expect(responseFeatured.status).toBe(HTTP_STATUS.OK);
     expect(responseFeatured.body.length).toBeGreaterThan(1);
   });
 });
@@ -106,7 +106,7 @@ describe('Integration Tests: Get all latest posts', () => {
   it('Get all latest posts: Success', async () => {
     const responseLatest = await request(server).get('/api/posts/latest');
 
-    expect(responseLatest.status).toBe(200);
+    expect(responseLatest.status).toBe(HTTP_STATUS.OK);
     expect(responseLatest.body.length).toBeGreaterThan(1);
   });
 });
@@ -119,7 +119,7 @@ describe('Integration Tests: Update Post', () => {
       .send(createPostObject({ title: 'Updated Post' }));
     updatedPost = await Post.findById(postId);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(HTTP_STATUS.OK);
     expect(updatedPost).not.toBeNull();
     expect(updatedPost.title).toBe('Updated Post');
   });
@@ -129,7 +129,7 @@ describe('Integration Tests: Update Post', () => {
       .patch(`/api/posts/${invalidPostId}`)
       .send(createPostObject({ title: 'Updated Post' }));
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
     expect(JSON.parse(response.text)).toEqual({
       message: 'Post not found',
     });
@@ -143,7 +143,7 @@ describe('Integration Tests: Delete Post', () => {
 
     deletedPost = await Post.findById(postId);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(HTTP_STATUS.OK);
     expect(response.body).toHaveProperty('message', 'Post deleted');
     expect(deletedPost).toBeNull();
   });
@@ -151,7 +151,7 @@ describe('Integration Tests: Delete Post', () => {
   it('Delete Post: Failure - Invalid post ID', async () => {
     const response = await request(server).delete(`/api/posts/${invalidPostId}`);
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
     expect(JSON.parse(response.text)).toEqual({
       message: 'Post not found',
     });

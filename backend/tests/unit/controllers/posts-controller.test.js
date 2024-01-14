@@ -9,7 +9,7 @@ import {
   updatePostHandler,
 } from '../../../controllers/posts-controller.js';
 import Post from '../../../models/post.js';
-import { validCategories } from '../../../utils/constants.js';
+import { validCategories, HTTP_STATUS} from '../../../utils/constants.js';
 import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';
 
 jest.mock('../../../models/post.js', () => ({
@@ -30,7 +30,7 @@ describe('createPostHandler', () => {
 
     expect(Post).toHaveBeenCalledTimes(1);
     expect(Post).toHaveBeenCalledWith(postObject);
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith(postObject);
   });
 
@@ -42,7 +42,7 @@ describe('createPostHandler', () => {
 
     await createPostHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
     expect(res.json).toHaveBeenCalledWith({
       message: 'Image URL must end with .jpg, .jpeg, .webp, or .png',
     });
@@ -57,7 +57,7 @@ describe('createPostHandler', () => {
 
     await createPostHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
     expect(res.json).toHaveBeenCalledWith({ message: 'All fields are required.' });
   });
 
@@ -69,7 +69,7 @@ describe('createPostHandler', () => {
 
     await createPostHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
     expect(res.json).toHaveBeenCalledWith({
       message: 'Please select up to three categories only.',
     });
@@ -86,7 +86,7 @@ describe('createPostHandler', () => {
 
     await createPostHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
@@ -105,7 +105,7 @@ describe('getAllPostsHandler', () => {
 
     await getAllPostsHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
@@ -117,7 +117,7 @@ describe('getAllPostsHandler', () => {
 
     await getAllPostsHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
@@ -136,7 +136,7 @@ describe('getFeaturedPostsHandler', () => {
 
     await getFeaturedPostsHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith(mockFeaturedPosts);
   });
 
@@ -148,7 +148,7 @@ describe('getFeaturedPostsHandler', () => {
 
     await getFeaturedPostsHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
@@ -167,7 +167,7 @@ describe('getPostByCategoryHandler', () => {
 
     await getPostByCategoryHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
@@ -176,7 +176,7 @@ describe('getPostByCategoryHandler', () => {
 
     await getPostByCategoryHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
     expect(res.json).toHaveBeenCalledWith({ message: 'Invalid category' });
   });
 
@@ -188,7 +188,7 @@ describe('getPostByCategoryHandler', () => {
 
     await getPostByCategoryHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
@@ -209,7 +209,7 @@ describe('getLatestPostsHandler', () => {
 
     await getLatestPostsHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith(mockPosts);
   });
 
@@ -223,7 +223,7 @@ describe('getLatestPostsHandler', () => {
 
     await getLatestPostsHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
@@ -238,7 +238,7 @@ describe('getPostByIdHandler', () => {
 
     await getPostByIdHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith(mockPost);
   });
 
@@ -262,7 +262,7 @@ describe('getPostByIdHandler', () => {
 
     await getPostByIdHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
@@ -281,7 +281,7 @@ describe('updatePostHandler', () => {
 
     await updatePostHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith(mockPost);
   });
 
@@ -315,7 +315,7 @@ describe('updatePostHandler', () => {
 
     await updatePostHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
@@ -331,7 +331,7 @@ describe('deletePostByIdHandler', () => {
 
     await deletePostByIdHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith({
       message: 'Post deleted',
     });
@@ -361,7 +361,7 @@ describe('deletePostByIdHandler', () => {
 
     await deletePostByIdHandler(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
   });
 });
