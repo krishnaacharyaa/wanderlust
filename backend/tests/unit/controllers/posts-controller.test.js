@@ -9,8 +9,7 @@ import {
   updatePostHandler,
 } from '../../../controllers/posts-controller.js';
 import Post from '../../../models/post.js';
-import { validCategories, HTTP_STATUS} from '../../../utils/constants.js';
-import { RESPONSE_MESSAGES } from '../../../utils/messages.js';
+import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';
 import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';
 
 jest.mock('../../../models/post.js', () => ({

@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import Post from '../../../models/post.js';
 import server from '../../../server.js';
-import { validCategories, HTTP_STATUS } from '../../../utils/constants.js';
-import { RESPONSE_MESSAGES } from '../../../utils/messages.js';
+import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';
 import { createPostObject } from '../../utils/helper-objects.js';
 
 afterAll(async () => {

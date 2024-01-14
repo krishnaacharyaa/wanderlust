@@ -1,6 +1,5 @@
 import Post from '../models/post.js';
-import { validCategories, HTTP_STATUS } from '../utils/constants.js';
-import { RESPONSE_MESSAGES } from '../utils/messages.js';
+import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 export const createPostHandler = async (req, res) => {
   try {
     const {
