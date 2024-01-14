@@ -6,6 +6,9 @@ import BlogFeed from '@/components/blog-feed';
 import PostCard from '@/components/post-card';
 import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
+import ThemeToggle from '@/components/theme-toggle-button';
+import AddIcon from '@/assets/svg/add-icon-white.svg';
+
 function HomePage() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -30,15 +33,30 @@ function HomePage() {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 md:px-16">
           <div className="flex w-full justify-between">
-            <div className="text-2xl font-semibold">WanderLust</div>
-            <button
-              className="rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25"
-              onClick={() => {
-                navigate('/add-blog');
-              }}
-            >
-              Create post
-            </button>
+            <div className="flex items-center justify-between text-2xl font-semibold">
+              WanderLust
+            </div>
+            <div className="flex justify-between px-2">
+              <div className="flex items-center justify-end px-2 py-2 md:px-20">
+                <ThemeToggle />
+              </div>
+              <button
+                className="hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                onClick={() => {
+                  navigate('/add-blog');
+                }}
+              >
+                Create post
+              </button>
+              <button
+                className="px-2 py-2 hover:bg-slate-500/25 md:hidden"
+                onClick={() => {
+                  navigate('/add-blog');
+                }}
+              >
+                <img className="h-10 w-10" src={AddIcon} />
+              </button>
+            </div>
           </div>
           <div className="mb-8 flex max-w-3xl flex-1 flex-col justify-end text-slate-50">
             <h1 className="text-2xl font-bold md:text-4xl">Journey Beyond Horizons</h1>

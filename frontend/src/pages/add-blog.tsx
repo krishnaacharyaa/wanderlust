@@ -111,23 +111,10 @@ function AddBlog() {
     }
   };
   const navigate = useNavigate();
-
-  const [isDarkMode, setIsDarkMode] = useState(
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  );
-
+  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const handleThemeChange = (event: MediaQueryListEvent) => {
-      setIsDarkMode(event.matches);
-    };
-
-    mediaQuery.addListener(handleThemeChange);
-
-    return () => {
-      mediaQuery.removeListener(handleThemeChange);
-    };
+    const storedTheme = localStorage.getItem('theme');
+    setIsDarkMode(storedTheme === 'dark');
   }, []);
 
   function Asterisk() {
