@@ -1,6 +1,5 @@
 import Post from '../models/post.js';
-import { validCategories } from '../utils/constants.js';
-
+import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 export const createPostHandler = async (req, res) => {
   try {
     const {
@@ -14,18 +13,18 @@ export const createPostHandler = async (req, res) => {
 
     // Validation - check if all fields are filled
     if (!title || !authorName || !imageLink || !description || !categories) {
-      return res.status(400).json({ message: 'All fields are required.' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.COMMON.REQUIRED_FIELDS });
     }
 
     // Validation - check if imageLink is a valid URL
     const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
     if (!imageLinkRegex.test(imageLink)) {
-      return res.status(400).json({ message: 'Image URL must end with .jpg, .jpeg, .webp, or .png' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.POSTS.INVALID_IMAGE_URL });
     }
 
     // Validation - check if categories array has more than 3 items
     if (categories.length > 3) {
-      return res.status(400).json({ message: 'Please select up to three categories only.' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.POSTS.MAX_CATEGORIES });
     }
 
     const post = new Post({
@@ -38,27 +37,27 @@ export const createPostHandler = async (req, res) => {
     });
 
     const savedPost = await post.save();
-    res.status(200).json(savedPost);
+    res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
 export const getAllPostsHandler = async (req, res) => {
   try {
     const posts = await Post.find();
-    res.status(200).status(200).json(posts);
+    res.status(HTTP_STATUS.OK).json(posts);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
 export const getFeaturedPostsHandler = async (req, res) => {
   try {
     const featuredPosts = await Post.find({ isFeaturedPost: true });
-    res.status(200).json(featuredPosts);
+    res.status(HTTP_STATUS.OK).json(featuredPosts);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
@@ -67,22 +66,22 @@ export const getPostByCategoryHandler = async (req, res) => {
   try {
     // Validation - check if category is valid
     if (!validCategories.includes(category)) {
-      return res.status(400).json({ message: 'Invalid category' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.POSTS.INVALID_CATEGORY });
     }
 
     const categoryPosts = await Post.find({ categories: category });
-    res.status(200).json(categoryPosts);
+    res.status(HTTP_STATUS.OK).json(categoryPosts);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
 export const getLatestPostsHandler = async (req, res) => {
   try {
     const latestPosts = await Post.find().sort({ timeOfPost: -1 });
-    res.status(200).json(latestPosts);
+    res.status(HTTP_STATUS.OK).json(latestPosts);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
@@ -92,12 +91,12 @@ export const getPostByIdHandler = async (req, res) => {
 
     // Validation - check if post exists
     if (!post) {
-      return res.status(404).json({ message: 'Post not found' });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
 
-    res.status(200).json(post);
+    res.status(HTTP_STATUS.OK).json(post);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
@@ -109,12 +108,12 @@ export const updatePostHandler = async (req, res) => {
 
     // Validation - check if post exists
     if (!updatedPost) {
-      return res.status(404).json({ message: 'Post not found' });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
 
-    res.status(200).json(updatedPost);
+    res.status(HTTP_STATUS.OK).json(updatedPost);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
@@ -124,11 +123,11 @@ export const deletePostByIdHandler = async (req, res) => {
 
     // Validation - check if post exists
     if (!post) {
-      return res.status(404).json({ message: 'Post not found' });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
 
-    res.status(200).json({ message: 'Post deleted' });
+    res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
