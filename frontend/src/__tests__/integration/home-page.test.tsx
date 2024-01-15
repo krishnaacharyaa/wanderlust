@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
 afterEach(() => mockedUseNavigate.mockRestore());
 
 describe('Integration Test: Home Route', () => {
-  test('Home Route: renders home page', async () => {
+  test('Home Route: Renders home page,', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -36,7 +36,7 @@ describe('Integration Test: Home Route', () => {
     expect(screen.getByText(/All Posts/)).toBeInTheDocument();
     expect(screen.getAllByTestId('postcardskeleton')).toHaveLength(8);
   });
-  test('Home Route: calls the mockedUseNavigate function', async () => {
+  test('Home Route: Verify navigation on create post button click', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -56,7 +56,7 @@ describe('Integration Test: Home Route', () => {
     //ASSERT
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
   });
-  test('Home Route: renders home page with BlogFeed', async () => {
+  test('Home Route: Verify filtered posts render on category button click', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -79,7 +79,7 @@ describe('Integration Test: Home Route', () => {
     // Strange test got passed api response is 3 over local backend
     expect(await screen.findAllByTestId('featuredPostCard')).toHaveLength(5);
   });
-  test('Home Route: on featured post click navigates to /details-page/:title/:id page', async () => {
+  test('Home Route: Verify navigation on post card click under Featured Posts section', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -93,7 +93,7 @@ describe('Integration Test: Home Route', () => {
     await userEvent.click(featuredPostCard[0]);
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
   });
-  test('renders home page with all post', async () => {
+  test('Home Route: Verify render of post card under All Post section', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
@@ -104,7 +104,7 @@ describe('Integration Test: Home Route', () => {
     //ASSERT
     expect(await screen.findAllByTestId('postcard')).toHaveLength(10);
   });
-  test('Home Route: on all-post post click navigates to /details-page/:title/:id page', async () => {
+  test('Home Route: Verify navigation on post card click under All Posts section', async () => {
     //ARRANGE
     render(
       <BrowserRouter>
