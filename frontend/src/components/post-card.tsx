@@ -8,15 +8,17 @@ export default function PostCard({ post }: { post: Post }) {
   const navigate = useNavigate();
   const slug = createSlug(post.title);
   return (
-    <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+    <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4">
       <div
-        className="mb-4 mr-8 mt-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card"
+        className={`cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card mb-4 ${
+          'md:mr-8 md:mt-4'
+        }`}
         onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       >
         <img
           src={post.imageLink}
           alt={post.title}
-          className="h-48 w-full rounded-t-lg object-cover"
+          className="h-48 sm:h-64 w-full rounded-t-lg object-cover"
         />
         <div className="p-4">
           <div className="mb-1 text-xs text-light-info dark:text-dark-info">
