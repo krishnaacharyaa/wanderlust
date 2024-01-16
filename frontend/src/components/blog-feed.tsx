@@ -71,6 +71,8 @@ export default function BlogFeed() {
               {categories.map((category) => (
                 <button
                   key={category}
+                  aria-label={category}
+                  type="button"
                   onClick={() =>
                     setSelectedCategory(selectedCategory === category ? 'featured' : category)
                   }

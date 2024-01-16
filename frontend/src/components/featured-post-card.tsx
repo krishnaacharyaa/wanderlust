@@ -7,7 +7,7 @@ import { TestProps } from '@/types';
 
 export default function FeaturedPostCard({
   post,
-  testId = 'featurepostcards',
+  testId = 'featuredPostCard',
 }: { post: Post } & TestProps) {
   const navigate = useNavigate();
   const slug = createSlug(post.title);

@@ -3,12 +3,13 @@ import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { createSlug } from '@/utils/slug-generator';
+import { TestProps } from '@/types';
 
-export default function PostCard({ post }: { post: Post }) {
+export default function PostCard({ post, testId = 'postcard' }: { post: Post } & TestProps) {
   const navigate = useNavigate();
   const slug = createSlug(post.title);
   return (
-    <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4">
+    <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4" data-testid={testId}>
       <div
         className={`cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card mb-4 ${
           'md:mr-8 md:mt-4'
