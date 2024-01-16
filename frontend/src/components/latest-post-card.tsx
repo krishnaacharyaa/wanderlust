@@ -4,14 +4,19 @@ import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { createSlug } from '@/utils/slug-generator';
+import { TestProps } from '@/types';
 
-export default function LatestPostCard({ post }: { post: Post }) {
+export default function LatestPostCard({
+  post,
+  testId = 'latestpostcards',
+}: { post: Post } & TestProps) {
   const navigate = useNavigate();
   const slug = createSlug(post.title);
   return (
     <div
       className="cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card"
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
+      data-testid={testId}
     >
       <div className="flex">
         <div className="mb-2 flex flex-1 flex-wrap gap-2">
@@ -19,7 +24,7 @@ export default function LatestPostCard({ post }: { post: Post }) {
             <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
-        <img src={linkIcon} className="h-3 w-3" />
+        <img src={linkIcon} alt={post.title} className="h-3 w-3" />
       </div>
       <div className="mb-2 line-clamp-1 font-semibold text-light-title dark:text-dark-title">
         {post.title}
