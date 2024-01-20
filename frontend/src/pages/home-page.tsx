@@ -31,7 +31,7 @@ function HomePage() {
         className="relative -mt-2 h-[460px] bg-cover bg-fixed bg-center"
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 md:px-16">
+        <div className="absolute inset-0 flex flex-col px-4 py-8 text-slate-50 md:px-16">
           <div className="flex w-full justify-between">
             <div className="flex items-center justify-between text-2xl font-semibold">
               WanderLust
@@ -59,18 +59,18 @@ function HomePage() {
             </div>
           </div>
           <div className="mb-8 flex max-w-3xl flex-1 flex-col justify-end text-slate-50">
-            <h1 className="text-2xl font-bold md:text-4xl">Journey Beyond Horizons</h1>
-            <p className="my-4 md:text-xl">
+            <h1 className="text-xl font-bold md:text-4xl">Journey Beyond Horizons</h1>
+            <p className="my-4 text-base md:text-lg">
               Dive into the world of travel with stories that transport you to far-off lands.
               Adventure awaits around every corner. It's time to explore the world!
             </p>
-            <div className="text-xl font-semibold">Let's go!</div>
+            <div className="text-sm md:text-xl font-semibold">Let's go!</div>
           </div>
         </div>
       </div>
       <div className="mx-4 md:mx-8 lg:mx-16">
         <BlogFeed />
-        <h1 className="text-2xl font-semibold dark:text-dark-primary">All Posts</h1>
+        <h1 className="text-xl sm:pb-0 pb-4 font-semibold dark:text-dark-primary">All Posts</h1>
         <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
