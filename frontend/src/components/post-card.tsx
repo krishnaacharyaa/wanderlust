@@ -24,7 +24,7 @@ export default function PostCard({ post }: { post: Post }) {
           <div className="mb-1 text-xs text-light-info dark:text-dark-info">
             {post.authorName} • {formatPostTime(post.timeOfPost)}
           </div>
-          <h2 className="mb-2 line-clamp-1 text-lg font-semibold text-light-title dark:text-dark-title">
+          <h2 className="mb-2 line-clamp-1 text-base font-semibold text-light-title dark:text-dark-title">
             {post.title}
           </h2>
           <p className="line-clamp-2 text-sm text-light-description dark:text-dark-description">
