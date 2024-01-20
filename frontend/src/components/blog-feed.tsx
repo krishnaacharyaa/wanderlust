@@ -43,10 +43,10 @@ export default function BlogFeed() {
     <div className="mx-auto my-6">
       <div className="-mx-4 flex flex-wrap">
         <div className="w-full p-4 md:w-2/3">
-          <div className="-mb-1 tracking-wide text-slate-500 dark:text-dark-tertiary">
+          <div className="-mb-1 text-xs tracking-wide text-slate-500 dark:text-dark-tertiary">
             What's hot?
           </div>
-          <h1 className="mb-2 text-2xl font-semibold dark:text-dark-primary">
+          <h1 className="mb-2 text-base font-semibold dark:text-dark-primary">
             {selectedCategory === 'featured'
               ? 'Featured Posts'
               : `Posts related to "${selectedCategory}"`}
@@ -63,10 +63,10 @@ export default function BlogFeed() {
         </div>
         <div className="w-full p-4 md:w-1/3">
           <div className="mb-6">
-            <div className="-mb-1 tracking-wide text-light-tertiary dark:text-dark-tertiary">
+            <div className="-mb-1 text-xs tracking-wide text-light-tertiary dark:text-dark-tertiary">
               Discover by topic
             </div>
-            <h2 className="mb-2 text-2xl font-semibold dark:text-dark-primary">Categories</h2>
+            <h2 className="mb-2 text-base font-semibold dark:text-dark-primary">Categories</h2>
             <div className="flex flex-wrap gap-3 dark:rounded-lg dark:bg-dark-card dark:p-3">
               {categories.map((category) => (
                 <button
@@ -81,10 +81,10 @@ export default function BlogFeed() {
             </div>
           </div>
           <div>
-            <div className="-mb-1 tracking-wide text-slate-500 dark:text-dark-tertiary">
+            <div className="-mb-1 text-xs tracking-wide text-slate-500 dark:text-dark-tertiary">
               What's new?
             </div>
-            <h2 className="mb-2 text-2xl font-semibold dark:text-dark-primary">Latest Posts</h2>
+            <h2 className="mb-2 text-base font-semibold dark:text-dark-primary">Latest Posts</h2>
             <div className="flex flex-col gap-4">
               {latestPosts.length === 0
                 ? Array(5)
