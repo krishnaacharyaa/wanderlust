@@ -19,7 +19,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
           className="h-48 sm:h-full w-full rounded-lg object-cover shadow-lg"
         />
       </div>
-      <div className="flex flex-col h-full w-full sm:w-2/3 gap-2 p-2">
+      <div className="flex flex-col h-full w-full sm:w-2/3 gap-2 p-3">
         <div className="text-base line-clamp-1 font-semibold text-light-title dark:text-dark-title">
           {post.title}
         </div>
@@ -28,7 +28,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
             <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
-        <div className="line-clamp-2">
+        <div className="line-clamp-2 sm:line-clamp-3">
           <p className="overflow-ellipsis text-light-description dark:text-dark-description">
             {post.description}
           </p>

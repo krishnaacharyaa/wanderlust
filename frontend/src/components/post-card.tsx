@@ -20,7 +20,7 @@ export default function PostCard({ post }: { post: Post }) {
           alt={post.title}
           className="h-48 sm:h-64 w-full rounded-t-lg object-cover"
         />
-        <div className="p-4">
+        <div className="p-3">
           <div className="mb-1 text-xs text-light-info dark:text-dark-info">
             {post.authorName} • {formatPostTime(post.timeOfPost)}
           </div>
