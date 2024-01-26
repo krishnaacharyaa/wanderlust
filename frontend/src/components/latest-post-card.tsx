@@ -4,7 +4,7 @@ import Post from '@/types/post-type';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { createSlug } from '@/utils/slug-generator';
-import { TestProps } from '@/types';
+import { TestProps } from '@/types/test-props';
 
 export default function LatestPostCard({
   post,
