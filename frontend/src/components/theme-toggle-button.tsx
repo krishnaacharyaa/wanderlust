@@ -8,7 +8,7 @@ function ThemeToggle() {
   };
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
     setIsDarkTheme(storedTheme === 'dark' || (!storedTheme && prefersDark) || null);
     if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
       document.documentElement.classList.add('dark');
