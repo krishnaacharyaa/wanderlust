@@ -45,7 +45,7 @@ export const createPostHandler = async (req, res) => {
 
 export const getAllPostsHandler = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ timeOfPost: -1 });
     res.status(HTTP_STATUS.OK).json(posts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
