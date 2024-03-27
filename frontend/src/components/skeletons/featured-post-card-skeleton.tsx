@@ -32,7 +32,7 @@ export const FeaturedPostCardSkeleton = () => {
         </div>
 
         {/* Description */}
-        <Skeleton className="mb-4 h-16 w-full bg-slate-200 dark:bg-slate-700" />
+        <Skeleton className="mb-4 h-10 sm:h-16 lg:h-16 w-full bg-slate-200 dark:bg-slate-700" />
 
         {/* Author and Time */}
         <div className="flex items-end">
