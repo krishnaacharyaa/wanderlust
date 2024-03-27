@@ -6,19 +6,15 @@ export const PostCardSkeleton = () => {
       <div className="mb-4 mr-8 mt-4 rounded-lg bg-light shadow-md dark:bg-dark-card">
         <Skeleton className="h-48 w-full rounded-lg bg-slate-200 dark:bg-slate-700" />
         <div className="p-4">
-          <Skeleton className="mb-2 h-3 w-full sm:w-2/3 bg-slate-200 dark:bg-slate-700" />
-          <Skeleton className="mb-2 h-6 w-full sm:w-4/5 bg-slate-200 dark:bg-slate-700" />
-          <Skeleton className="h-16 w-full sm:w-11/12 bg-slate-200 dark:bg-slate-700" />
+          <Skeleton className="mb-2 h-3 w-full bg-slate-200 dark:bg-slate-700 sm:w-2/3" />
+          <Skeleton className="mb-2 h-6 w-full bg-slate-200 dark:bg-slate-700 sm:w-4/5" />
+          <Skeleton className="h-16 w-full bg-slate-200 dark:bg-slate-700 sm:w-11/12" />
           <div className="mt-2 flex flex-wrap gap-2">
             <Skeleton
-              className={`h-6 w-full sm:w-16 rounded-full ${
-                'sm:mr-8 sm:mt-4'
-              } sm:mb-4 bg-slate-200 dark:bg-slate-700`}
+              className={`h-6 w-full rounded-full sm:w-16 ${'sm:mr-8 sm:mt-4'} bg-slate-200 dark:bg-slate-700 sm:mb-4`}
             />
             <Skeleton
-              className={`h-6 w-full sm:w-16 rounded-full ${
-                'sm:mr-8 sm:mt-4'
-              } sm:mb-4 bg-slate-200 dark:bg-slate-700`}
+              className={`h-6 w-full rounded-full sm:w-16 ${'sm:mr-8 sm:mt-4'} bg-slate-200 dark:bg-slate-700 sm:mb-4`}
             />
           </div>
         </div>
