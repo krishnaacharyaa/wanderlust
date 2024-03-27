@@ -11,7 +11,7 @@ export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');
   const [posts, setPosts] = useState([]);
   const [latestPosts, setLatestPosts] = useState([]);
-  const [loading,setLoading]=useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let categoryEndpoint =
@@ -19,12 +19,12 @@ export default function BlogFeed() {
         ? '/api/posts/featured'
         : `/api/posts/categories/${selectedCategory}`;
 
-      setLoading(true)
+    setLoading(true);
     axios
       .get(import.meta.env.VITE_API_PATH + categoryEndpoint)
       .then((response) => {
-          setPosts(response.data);
-          setLoading(false)
+        setPosts(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -55,7 +55,7 @@ export default function BlogFeed() {
               : `Posts related to "${selectedCategory}"`}
           </h1>
           <div className="flex flex-col gap-6">
-            {posts.length === 0 || loading==true
+            {posts.length === 0 || loading == true
               ? Array(5)
                   .fill(0)
                   .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
