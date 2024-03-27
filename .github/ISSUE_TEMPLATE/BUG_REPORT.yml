@@ -22,14 +22,6 @@ body:
       description: A concise description of what you expected to happen.
     validations:
       required: false
-  - type: input
-    id: reprod-url
-    attributes:
-      label: "Reproduction URL"
-      description: Please enter your GitHub URL to provide a reproduction of the issue
-      placeholder: ex. https://github.com/USERNAME/REPO-NAME
-    validations:
-      required: true
   - type: textarea
     id: reprod
     attributes:
