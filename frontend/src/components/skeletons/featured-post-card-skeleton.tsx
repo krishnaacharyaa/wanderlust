@@ -42,3 +42,4 @@ export const FeaturedPostCardSkeleton = () => {
     </div>
   );
 };
+
