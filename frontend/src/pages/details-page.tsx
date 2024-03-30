@@ -4,7 +4,6 @@ import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Footer from '@/layouts/footer-layout';
 
 export default function DetailsPage() {
   const { state } = useLocation();
@@ -33,7 +32,6 @@ export default function DetailsPage() {
 
   if (!loading)
     return (
-  <Footer>
       <div className="min-h-screen bg-light dark:bg-dark">
         <div className="relative flex flex-col">
           <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover md:h-96" />
@@ -43,8 +41,8 @@ export default function DetailsPage() {
           </div>
           <div className="absolute bottom-6 w-full max-w-xl px-4 text-slate-50 md:bottom-8 md:max-w-3xl md:px-8 lg:bottom-12 lg:max-w-5xl lg:px-12">
             <div className="mb-4 flex space-x-2">
-              {post.categories.map((category: string) => (
-                <CategoryPill category={category} />
+              {post.categories.map((category: string, idx: number) => (
+                <CategoryPill key={idx} category={category} />
               ))}
             </div>
             <h1 className="mb-4 text-xl font-semibold md:text-2xl lg:text-3xl">{post.title}</h1>
@@ -64,7 +62,6 @@ export default function DetailsPage() {
           </div>
         </div>
       </div>
-      </Footer>
     );
   else return <h1>Loading...</h1>;
 }
