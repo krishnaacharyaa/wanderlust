@@ -26,6 +26,7 @@ function HomePage() {
   }, []);
 
   return (
+    <Footer>
     <div className="w-full cursor-default bg-light dark:bg-dark">
       <div
         style={{ backgroundImage: `url(${bg})` }}
@@ -80,8 +81,9 @@ function HomePage() {
             : posts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>
-      <Footer />
+      
     </div>
+    </Footer>
   );
 }
 
