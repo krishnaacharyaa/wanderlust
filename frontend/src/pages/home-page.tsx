@@ -8,6 +8,7 @@ import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
+import Footer from '@/layouts/footer-layout';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -79,6 +80,7 @@ function HomePage() {
             : posts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
