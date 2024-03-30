@@ -3,7 +3,7 @@ import HomePage from '@/pages/home-page';
 import AddBlog from '@/pages/add-blog';
 import DetailsPage from '@/pages/details-page';
 import ScrollToTop from '@/components/scroll-to-top';
-import Footer from './layouts/footer-layout';
+import Footer from '@/layouts/footer-layout';
 
 function App() {
   return (
