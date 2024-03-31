@@ -56,7 +56,7 @@ export default function DetailsPage() {
         </div>
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-y-4 px-4 py-10">
           <div>
-            <p className="leading-7 text-light-secondary dark:text-dark-secondary md:text-lg">
+            <p className="leading-7 text-light-secondary dark:text-dark-secondary md:text-lg mb-[1rem]">
               {post.description}
             </p>
           </div>

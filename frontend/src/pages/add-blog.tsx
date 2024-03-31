@@ -137,7 +137,7 @@ function AddBlog() {
           </h2>
         </div>
       </div>
-      <div className="flex justify-center ">
+      <div className="flex justify-center mb-[1.5rem]">
         <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
