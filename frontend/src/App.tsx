@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className='min-h-screen flex flex-col'>
+      <div className='min-h-screen flex flex-col relative'>
       <Routes>
         <Route path="/">
           <Route index element={<HomePage />} />
