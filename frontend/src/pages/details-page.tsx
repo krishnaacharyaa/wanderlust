@@ -32,7 +32,7 @@ export default function DetailsPage() {
 
   if (!loading)
     return (
-      <div className="min-h-screen bg-light dark:bg-dark">
+      <div className="min-h-[93vh] bg-light dark:bg-dark">
         <div className="relative flex flex-col">
           <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover md:h-96" />
           <div className="absolute left-0 top-0 h-full w-full bg-slate-950/60"></div>
@@ -56,7 +56,7 @@ export default function DetailsPage() {
         </div>
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-y-4 px-4 py-10">
           <div>
-            <p className="leading-7 text-light-secondary dark:text-dark-secondary md:text-lg mb-[1rem]">
+            <p className="leading-7 text-light-secondary dark:text-dark-secondary md:text-lg">
               {post.description}
             </p>
           </div>

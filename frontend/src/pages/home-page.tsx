@@ -71,7 +71,7 @@ function HomePage() {
       <div className="mx-4 md:mx-8 lg:mx-16">
         <BlogFeed />
         <h1 className="pb-4 text-xl font-semibold dark:text-dark-primary sm:pb-0">All Posts</h1>
-        <div className="flex flex-wrap mb-[2.8rem]">
+        <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
                 .fill(0)
