@@ -3,11 +3,11 @@ function footer() {
   const year = newDate.getFullYear();
 
   return (
-    <footer className="mt-auto w-full text-center self-end relative bottom-0 min-h-[7vh] sm:h-[7vh] flex flex-col sm:flex-row items-center justify-between py-3 sm:px-4 md:px-8 lg:px-16 text-white bg-footer-background">
-          <section className="text-base">
+    <footer className="flex flex-col items-center sm:flex-row min-h-[6vh] sm:justify-between py-2 sm:py-3 bg-footer-background text-white text-center">
+          <section className="text-base sm:pl-4 md:pl-8 lg:pl-16">
                 WanderLust
           </section>
-          <section className="text-base">
+          <section className="text-base sm:pr-4 md:pr-16 lg:pr-24">
                 <span className="mr-2">&copy;</span>{year} All Rights Reserved
           </section>
       </footer>
