@@ -3,7 +3,7 @@ function footer() {
   const year = newDate.getFullYear();
 
   return (
-      <footer className="mt-auto w-full text-center self-end relative bottom-0 min-h-[7vh] sm:h-[7vh] flex flex-col sm:flex-row items-center justify-between py-3 sm:px-4 md:px-8 lg:px-16 text-white bg-dark-footer-background">
+    <footer className="mt-auto w-full text-center self-end relative bottom-0 min-h-[7vh] sm:h-[7vh] flex flex-col sm:flex-row items-center justify-between py-3 sm:px-4 md:px-8 lg:px-16 text-white bg-footer-background">
           <section className="text-base">
                 WanderLust
           </section>
