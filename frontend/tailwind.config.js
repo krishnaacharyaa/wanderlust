@@ -7,9 +7,6 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      backgroundImage: {
-        'hero-pattern': "url('./src/assets/wanderlustbg.webp')",
-      },
       colors: {
         dark: {
           DEFAULT: colors.slate[900],

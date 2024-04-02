@@ -7,7 +7,7 @@ function header() {
 
     return (
     <div
-        className="relative -mt-2 h-[460px] bg-cover bg-fixed bg-center bg-hero-pattern"
+        className="relative -mt-2 h-[460px] bg-cover bg-fixed bg-center bg-[url('./assets/wanderlustbg.webp')]"
     >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col px-4 py-8 text-slate-50 md:px-16">
