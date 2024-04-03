@@ -4,6 +4,7 @@ import AddBlog from '@/pages/add-blog';
 import DetailsPage from '@/pages/details-page';
 import ScrollToTop from '@/components/scroll-to-top';
 import Footer from '@/layouts/footer-layout';
+import Signin from './pages/signin-page';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="add-blog" element={<AddBlog />} />
             <Route path="details-page/:title/:postId" element={<DetailsPage />} />
+            <Route path="/user-auth" element={<Signin/>} />
           </Route>
         </Routes>
         <Footer />
