@@ -16,14 +16,14 @@ function signin() {
         reset
       } = useForm<TSignInSchema>({resolver: zodResolver(signInSchema)});
 
-  const onSubmit = async (data: FieldValues) => {
+  // const onSubmit = async (data: FieldValues) => {
     
-    // TODO: Server-side validation
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  //   // TODO: Server-side validation
+  //   await new Promise((resolve) => setTimeout(resolve, 1000));
     
-    reset();
-    navigate("/");
-  }
+  //   reset();
+  //   navigate("/");
+  // }
 
   return (
     <div className="min-h-screen cursor-default bg-white px-5 py-8 mt-10">
