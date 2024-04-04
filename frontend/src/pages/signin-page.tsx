@@ -32,16 +32,16 @@ function signin() {
   }
 
   return (
-    <div className="min-h-screen cursor-default bg-white px-5 py-8 mt-10">
+    <div className="flex-grow cursor-default bg-white px-5 py-9 mt-1">
       <div className="mb-4 flex justify-center">
-        <div className="flex w-[32rem] items-center justify-center space-x-4 md:w-5/6 lg:w-4/6 ">
-          <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-black  ">
+        <div className="flex items-center justify-center space-x-4 w-5/6 md:w-5/6 lg:w-2/5">
+          <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-black w-3/4">
             Sign in to WanderLust
           </h2>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center mt-14 gap-4">
-        <form onSubmit={handleSubmit(onSubmit)} className=" w-3/4 md:w-5/6 lg:w-2/4">
+      <div className="flex flex-col justify-center items-center mt-12 gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-3/4 md:w-5/6 lg:w-2/5">
 
           <div className="mb-4">
             <input
@@ -80,23 +80,23 @@ function signin() {
             type="submit"
             className="flex disabled:bg-[#3C3C3C] w-full items-center justify-center rounded-lg bg-login-background p-3 text-base font-semibold text-light md:fit"
           >
-            Log in
+            Log In
           </button>
         </form>
         <div className='flex flex-col items-center justify-center gap-4 text-center'>
         <p className='w-3/4 sm:w-full'> Don't have an account? 
-          <Link to={'/register'} className="text-blue-600 hover:text-blue-500"> Sign up now</Link>
+          <Link to={'/signup'} className="text-blue-600 hover:text-blue-500"> Sign up now</Link>
         </p>
 
         <span>OR</span>
         </div>
 
-        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-gray-300 w-3/4 md:w-5/6 lg:w-2/4 hover:bg-light-white text-center'>
+        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
               <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGoogleIcon}/>
               <span className='font-bold'>Continue with Google</span>
         </Link>
 
-        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-gray-300 w-3/4 md:w-5/6 lg:w-2/4 hover:bg-light-white text-center'>
+        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
               <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGithubIcon}/>
               <span className='font-bold'>Continue with Github</span>
         </Link>
