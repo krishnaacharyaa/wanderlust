@@ -32,7 +32,7 @@ export default function DetailsPage() {
 
   if (!loading)
     return (
-      <div className="min-h-screen bg-light dark:bg-dark">
+      <div className="flex-grow bg-light dark:bg-dark">
         <div className="relative flex flex-col">
           <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover md:h-96" />
           <div className="absolute left-0 top-0 h-full w-full bg-slate-950/60"></div>
