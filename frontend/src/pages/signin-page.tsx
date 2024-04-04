@@ -91,12 +91,12 @@ function signin() {
         <span>OR</span>
         </div>
 
-        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
+        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4  border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
               <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGoogleIcon}/>
               <span className='font-bold'>Continue with Google</span>
         </Link>
 
-        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
+        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4 border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
               <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGithubIcon}/>
               <span className='font-bold'>Continue with Github</span>
         </Link>
