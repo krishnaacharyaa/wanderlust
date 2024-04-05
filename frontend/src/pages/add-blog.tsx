@@ -122,7 +122,7 @@ function AddBlog() {
   }
 
   return (
-    <div className="min-h-screen cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
+    <div className="flex-grow cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
       <div className="mb-4 flex justify-center">
         <div className="flex w-[32rem] items-center justify-start space-x-4 md:w-5/6 lg:w-4/6 ">
           <div className="w-fit cursor-pointer">
