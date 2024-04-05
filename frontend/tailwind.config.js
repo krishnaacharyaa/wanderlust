@@ -36,6 +36,7 @@ export default {
         'input-background': '#F8F8F8',
         'light-gray': '#686868',
         'light-white': '#f9fafb',
+        'disabled-gray': '#3C3C3C',
       },
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
