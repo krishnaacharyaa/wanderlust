@@ -34,14 +34,14 @@ function signin() {
   return (
     <div className="flex-grow cursor-default bg-white px-5 py-9 mt-1">
       <div className="mb-4 flex justify-center">
-        <div className="flex items-center justify-center space-x-4 w-5/6 md:w-5/6 lg:w-2/5">
-          <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-black w-3/4">
+        <div className="flex items-center justify-center space-x-4 w-5/6">
+          <h2 className="text-center text-[22px] sm:text-3xl font-bold text-black w-3/4">
             Sign in to WanderLust
           </h2>
         </div>
       </div>
       <div className="flex flex-col justify-center items-center mt-12 gap-4">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-3/4 md:w-5/6 lg:w-2/5">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-3/4 lg:w-2/5">
 
           <div className="mb-4">
             <input
@@ -49,8 +49,6 @@ function signin() {
               type="email"
               placeholder="Email"
               className="w-full rounded-lg font-semibold bg-input-background p-3 placeholder:text-sm placeholder:text-light-gray"
-              // value={formData.title}
-              // onChange={handleInputChange}
             />
             {errors.email && (
               <p className="text-red-500 text-xs p-2">
@@ -65,8 +63,6 @@ function signin() {
               type="password"
               placeholder="Password"
               className="w-full rounded-lg font-semibold bg-input-background p-3 placeholder:text-sm placeholder:text-light-gray"
-              // value={formData.description}
-              // onChange={handleInputChange}
             />
             {errors.password && (
               <p className="text-red-500 text-xs p-2">
@@ -78,7 +74,7 @@ function signin() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="flex disabled:bg-[#3C3C3C] w-full items-center justify-center rounded-lg bg-login-background p-3 text-base font-semibold text-light md:fit"
+            className="flex disabled:bg-disabled-gray w-full items-center justify-center rounded-lg bg-login-background p-3 text-base font-semibold text-light"
           >
             Log In
           </button>
@@ -91,14 +87,14 @@ function signin() {
         <span>OR</span>
         </div>
 
-        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4  border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
+        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4  border-gray-300 w-3/4 lg:w-2/5 hover:bg-light-white text-center'>
               <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGoogleIcon}/>
-              <span className='font-bold'>Continue with Google</span>
+              <span className='font-semibold'>Continue with Google</span>
         </Link>
 
-        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4 border-gray-300 w-3/4 md:w-5/6 lg:w-2/5 hover:bg-light-white text-center'>
+        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4 border-gray-300 w-3/4 lg:w-2/5 hover:bg-light-white text-center'>
               <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGithubIcon}/>
-              <span className='font-bold'>Continue with Github</span>
+              <span className='font-semibold'>Continue with Github</span>
         </Link>
 
       </div>
