@@ -10,6 +10,9 @@ export default {
       fontSize: {
         '22': '22px',
       },
+      screens: {
+        'custom': '258px',
+      },
       colors: {
         dark: {
           DEFAULT: colors.slate[900],
