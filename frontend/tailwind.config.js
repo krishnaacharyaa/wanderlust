@@ -34,12 +34,6 @@ export default {
         'light-theme-foreground': '#f1c237',
         'dark-theme-background': '#092e40',
         'dark-theme-foreground': '#25a5e3',
-        'footer-background': '#181818',
-        'login-background': '#232323',
-        'input-background': '#F8F8F8',
-        'light-gray': '#686868',
-        'light-white': '#f9fafb',
-        'disabled-gray': '#3C3C3C',
       },
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
