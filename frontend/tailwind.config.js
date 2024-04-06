@@ -7,9 +7,6 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      screens: {
-        custom: '258px',
-      },
       colors: {
         dark: {
           DEFAULT: colors.slate[900],
