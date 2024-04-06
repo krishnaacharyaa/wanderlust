@@ -50,7 +50,7 @@ function signin() {
               className="w-full rounded-lg font-normal bg-input-background p-3 placeholder:text-sm placeholder:text-light-gray"
             />
             {errors.email && (
-              <p className="text-red-500 text-xs p-2">
+              <p className="text-red-500 text-xs p-3">
                 {`${errors.email.message}`}
               </p>
             )}
