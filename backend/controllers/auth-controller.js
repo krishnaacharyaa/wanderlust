@@ -84,6 +84,8 @@ export const signInWithEmail = async (req, res, next) => {
         name: isUserExists.name,
         _id: isUserExists._id,
       },
+      accessToken,
+      refreshToken,
       message: RESPONSE_MESSAGES.USERS.SIGNED_IN,
     });
   } catch (error) {
@@ -101,6 +103,7 @@ export const openGoogleAuthWindow = (req, res, next) => {
   const params = new URLSearchParams({
     client_id: process.env.GAUTH_CLIENT_ID,
     redirect_uri: process.env.REDIRECTION_URL,
+    state: 'google-auth-provider',
     scope: 'profile email',
     response_type: 'code',
   });
@@ -238,6 +241,7 @@ export const openGithubAuthWindow = (req, res, next) => {
   const params = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID,
     redirect_uri: process.env.REDIRECTION_URL,
+    state: 'github-auth-provider',
     scope: 'user:read user:email',
     response_type: 'code',
   });
