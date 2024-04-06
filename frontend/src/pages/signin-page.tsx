@@ -47,7 +47,7 @@ function signin() {
               {...register('email')}
               type="email"
               placeholder="Email"
-              className="w-full rounded-lg bg-input-background p-3 font-normal placeholder:text-sm placeholder:text-light-gray"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
             {errors.email && (
               <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
@@ -59,7 +59,7 @@ function signin() {
               {...register('password')}
               type="password"
               placeholder="Password"
-              className="w-full rounded-lg bg-input-background p-3 font-normal placeholder:text-sm placeholder:text-light-gray"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
@@ -69,7 +69,7 @@ function signin() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="flex w-full items-center justify-center rounded-lg bg-login-background p-3 text-base font-medium text-light disabled:bg-disabled-gray sm:text-lg sm:font-semibold"
+            className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600 sm:text-lg sm:font-semibold"
           >
             Log In
           </button>
@@ -89,7 +89,7 @@ function signin() {
 
         <Link
           to={'/google-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-light-white md:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
           <span className="text-sm custom:hidden">Google</span>
@@ -98,7 +98,7 @@ function signin() {
 
         <Link
           to={'/github-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-light-white md:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm custom:hidden">Github</span>
