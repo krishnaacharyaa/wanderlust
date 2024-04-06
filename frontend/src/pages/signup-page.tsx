@@ -3,7 +3,7 @@ import AddGoogleIcon from '@/assets/svg/google-color-icon.svg';
 import AddGithubIcon from '@/assets/svg/github-icon.svg';
 import { useForm } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
-import { TSignInSchema, signInSchema } from '@/lib/types';
+import { TSignUpSchema, signUpSchema } from '@/lib/types';
 import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
@@ -16,7 +16,7 @@ function signin() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
+  } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
     if (data.email === 'abc@gamil.com') {
@@ -36,12 +36,24 @@ function signin() {
       <div className="mb-4 flex justify-center">
         <div className="flex w-full items-center justify-center">
           <h2 className="w-3/4 text-center text-lg font-bold text-black sm:text-xl">
-            Sign in to WanderLust
+            Sign up to WanderLust
           </h2>
         </div>
       </div>
       <div className="m-2 mt-8 flex flex-col items-center justify-center gap-2">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-3/4 lg:w-2/5">
+          <div className="mb-2">
+            <input
+              {...register('username')}
+              type="text"
+              placeholder="Username"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
+            />
+            {errors.username && (
+              <p className="p-3 text-xs text-red-500">{`${errors.username.message}`}</p>
+            )}
+          </div>
+
           <div className="mb-2">
             <input
               {...register('email')}
@@ -54,7 +66,7 @@ function signin() {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-2">
             <input
               {...register('password')}
               type="password"
@@ -66,20 +78,32 @@ function signin() {
             )}
           </div>
 
+          <div className="mb-4">
+            <input
+              {...register('confirmPassword')}
+              type="password"
+              placeholder="Confirm Password"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
+            />
+            {errors.confirmPassword && (
+              <p className="p-3 text-xs text-red-500">{`${errors.confirmPassword.message}`}</p>
+            )}
+          </div>
+
           <button
             disabled={isSubmitting}
             type="submit"
             className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600 sm:text-lg sm:font-semibold"
           >
-            Log In
+            Sign Up
           </button>
         </form>
         <div className="mt-2 flex w-5/6 flex-col items-center justify-center gap-4 text-center text-sm font-normal sm:text-base">
           <p>
-            Don't have an account?
-            <Link to={'/signup'} className="text-blue-600 hover:text-blue-500">
+            Already have an account?
+            <Link to={'/user-auth'} className="text-blue-600 hover:text-blue-500">
               {' '}
-              Sign up now
+              Log in now
             </Link>
           </p>
 
