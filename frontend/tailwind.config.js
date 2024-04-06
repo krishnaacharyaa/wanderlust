@@ -7,11 +7,8 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      fontSize: {
-        '22': '22px',
-      },
       screens: {
-        'custom': '258px',
+        custom: '258px',
       },
       colors: {
         dark: {
