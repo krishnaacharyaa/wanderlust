@@ -32,22 +32,22 @@ function signin() {
   }
 
   return (
-    <div className="flex-grow cursor-default bg-white px-5 py-9 mt-1">
+    <div className="flex-grow cursor-default bg-white m-4 py-4">
       <div className="mb-4 flex justify-center">
-        <div className="flex items-center justify-center space-x-4 w-5/6">
-          <h2 className="text-center text-22 sm:text-3xl font-bold text-black w-3/4">
+        <div className="flex items-center justify-center w-full">
+          <h2 className="text-center text-22 sm:text-2xl font-bold text-black w-3/4">
             Sign in to WanderLust
           </h2>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center mt-12 gap-4">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-3/4 lg:w-2/5">
-          <div className="mb-4">
+      <div className="flex flex-col justify-center items-center mt-8 gap-2 m-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-3/4 lg:w-2/5">
+          <div className="mb-2">
             <input
               {...register('email')}
               type="email"
               placeholder="Email"
-              className="w-full rounded-lg font-semibold bg-input-background p-3 placeholder:text-sm placeholder:text-light-gray"
+              className="w-full rounded-lg font-normal bg-input-background p-3 placeholder:text-sm placeholder:text-light-gray"
             />
             {errors.email && (
               <p className="text-red-500 text-xs p-2">
@@ -61,10 +61,10 @@ function signin() {
               {...register('password')}
               type="password"
               placeholder="Password"
-              className="w-full rounded-lg font-semibold bg-input-background p-3 placeholder:text-sm placeholder:text-light-gray"
+              className="w-full rounded-lg font-normal bg-input-background p-3 placeholder:text-sm placeholder:text-light-gray"
             />
             {errors.password && (
-              <p className="text-red-500 text-xs p-2">
+              <p className="text-red-500 text-xs p-3">
                 {`${errors.password.message}`}
               </p>
             )}
@@ -73,27 +73,29 @@ function signin() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="flex disabled:bg-disabled-gray w-full items-center justify-center rounded-lg bg-login-background p-3 text-base font-semibold text-light"
+            className="flex disabled:bg-disabled-gray w-full items-center justify-center rounded-lg bg-login-background p-3 text-base sm:text-lg font-medium sm:font-semibold text-light"
           >
             Log In
           </button>
         </form>
-        <div className='flex flex-col items-center justify-center gap-4 text-center'>
-        <p className='w-3/4 sm:w-full'> Don't have an account? 
+        <div className='flex flex-col items-center justify-center gap-4 text-center text-sm sm:text-base w-5/6 font-normal mt-2'>
+        <p> Don't have an account? 
           <Link to={'/signup'} className="text-blue-600 hover:text-blue-500"> Sign up now</Link>
         </p>
 
         <span>OR</span>
         </div>
 
-        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4  border-gray-300 w-3/4 lg:w-2/5 hover:bg-light-white text-center'>
-              <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGoogleIcon}/>
-              <span className='font-semibold'>Continue with Google</span>
+        <Link to={'/google-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4  border-gray-300 w-full md:w-3/4 lg:w-2/5 hover:bg-light-white text-center'>
+              <img className='h-4 w-6 sm:h-5 sm:w-10 pl-1' src={AddGoogleIcon}/>
+              <span className='text-sm custom:hidden'>Google</span>
+              <span className='text-sm sm:text-base hidden custom:block '>Continue with Google</span>
         </Link>
 
-        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4 border-gray-300 w-3/4 lg:w-2/5 hover:bg-light-white text-center'>
+        <Link to={'/github-auth'} className='flex items-center justify-center p-3 space-x-2 rounded-lg border-2 border-b-4 border-gray-300 w-full md:w-3/4 lg:w-2/5 hover:bg-light-white text-center'>
               <img className='h-4 w-6 sm:h-5 sm:w-10' src={AddGithubIcon}/>
-              <span className='font-semibold'>Continue with Github</span>
+              <span className='text-sm custom:hidden'>Github</span>
+              <span className='text-sm sm:text-base hidden custom:block '>Continue with Github</span>
         </Link>
 
       </div>
