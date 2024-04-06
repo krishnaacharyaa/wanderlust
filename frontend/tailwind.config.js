@@ -7,6 +7,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontSize: {
+        '22': '22px',
+      },
       colors: {
         dark: {
           DEFAULT: colors.slate[900],

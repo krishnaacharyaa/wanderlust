@@ -35,14 +35,13 @@ function signin() {
     <div className="flex-grow cursor-default bg-white px-5 py-9 mt-1">
       <div className="mb-4 flex justify-center">
         <div className="flex items-center justify-center space-x-4 w-5/6">
-          <h2 className="text-center text-[22px] sm:text-3xl font-bold text-black w-3/4">
+          <h2 className="text-center text-22 sm:text-3xl font-bold text-black w-3/4">
             Sign in to WanderLust
           </h2>
         </div>
       </div>
       <div className="flex flex-col justify-center items-center mt-12 gap-4">
         <form onSubmit={handleSubmit(onSubmit)} className="w-3/4 lg:w-2/5">
-
           <div className="mb-4">
             <input
               {...register('email')}
