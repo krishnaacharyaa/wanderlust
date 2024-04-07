@@ -58,15 +58,17 @@ export const signInWithEmail = async (req, res, next) => {
     if (!isUserExists) {
       throw new Error('Email does not exist');
     }
+    let accessToken;
+    let refreshToken;
     if (isUserExists && compareSync(password, isUserExists.password)) {
-      const accessToken = sign(
+      accessToken = sign(
         { name: isUserExists.name, _id: isUserExists._id },
         process.env.JWT_SECRET,
         {
           expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
         }
       );
-      const refreshToken = sign(
+      refreshToken = sign(
         { name: isUserExists.name, _id: isUserExists._id },
         process.env.JWT_SECRET,
         {
