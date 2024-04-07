@@ -101,7 +101,7 @@ function signin() {
         <div className="mt-2 flex w-5/6 flex-col items-center justify-center gap-4 text-center text-sm font-normal sm:text-base">
           <p>
             Already have an account?
-            <Link to={'/user-auth'} className="text-blue-600 hover:text-blue-500">
+            <Link to={'/signin'} className="text-blue-600 hover:text-blue-500">
               {' '}
               Log in now
             </Link>
