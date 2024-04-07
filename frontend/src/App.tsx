@@ -17,7 +17,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="add-blog" element={<AddBlog />} />
             <Route path="details-page/:title/:postId" element={<DetailsPage />} />
-            <Route path="user-auth" element={<SignIn />} />
+            <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
           </Route>
         </Routes>
