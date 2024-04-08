@@ -14,7 +14,7 @@ export default function LatestPostCard({
   const slug = createSlug(post.title);
   return (
     <div
-      className="cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card"
+      className="cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card md:active:scale-95"
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       data-testid={testId}
     >
