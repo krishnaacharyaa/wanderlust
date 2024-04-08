@@ -13,15 +13,15 @@ export default function FeaturedPostCard({
   const slug = createSlug(post.title);
   return (
     <div
-      className="flex h-auto cursor-pointer flex-col gap-2 rounded-lg bg-light dark:bg-dark-card sm:h-48 sm:flex-row"
+      className="group flex h-auto cursor-pointer flex-col gap-2 rounded-lg bg-light active:scale-95 dark:bg-dark-card sm:h-48 sm:flex-row"
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       data-testid={testId}
     >
-      <div className="w-full sm:w-1/3">
+      <div className="w-full overflow-hidden sm:w-1/3">
         <img
           src={post.imageLink}
           alt={post.title}
-          className="h-48 w-full rounded-lg object-cover shadow-lg sm:h-full"
+          className="h-48 w-full rounded-lg object-cover shadow-lg transition-transform duration-300 ease-in-out sm:h-full md:group-hover:scale-125"
         />
       </div>
       <div className="flex h-full w-full flex-col gap-2 p-3 sm:w-2/3">
