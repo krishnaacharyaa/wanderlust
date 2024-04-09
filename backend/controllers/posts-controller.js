@@ -1,5 +1,6 @@
 import Post from '../models/post.js';
-import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
+import { getKeyFromCache, invalidateKeyInCache, setKeyInCache } from '../utils/cache-posts.js';
+import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants.js';
 export const createPostHandler = async (req, res) => {
   try {
     const {
@@ -13,18 +14,24 @@ export const createPostHandler = async (req, res) => {
 
     // Validation - check if all fields are filled
     if (!title || !authorName || !imageLink || !description || !categories) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.COMMON.REQUIRED_FIELDS });
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ message: RESPONSE_MESSAGES.COMMON.REQUIRED_FIELDS });
     }
 
     // Validation - check if imageLink is a valid URL
     const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
     if (!imageLinkRegex.test(imageLink)) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.POSTS.INVALID_IMAGE_URL });
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ message: RESPONSE_MESSAGES.POSTS.INVALID_IMAGE_URL });
     }
 
     // Validation - check if categories array has more than 3 items
     if (categories.length > 3) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.POSTS.MAX_CATEGORIES });
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ message: RESPONSE_MESSAGES.POSTS.MAX_CATEGORIES });
     }
 
     const post = new Post({
@@ -37,6 +44,9 @@ export const createPostHandler = async (req, res) => {
     });
 
     const savedPost = await post.save();
+    await invalidateKeyInCache(REDIS_KEYS.ALL_POSTS);
+    await invalidateKeyInCache(REDIS_KEYS.FEATURED_POSTS);
+    await invalidateKeyInCache(REDIS_KEYS.LATEST_POSTS);
     res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
@@ -45,8 +55,13 @@ export const createPostHandler = async (req, res) => {
 
 export const getAllPostsHandler = async (req, res) => {
   try {
-    const posts = await Post.find().sort({ timeOfPost: -1 });
-    res.status(HTTP_STATUS.OK).json(posts);
+    const cachedPosts = await getKeyFromCache(REDIS_KEYS.ALL_POSTS);
+    if (cachedPosts) {
+      return res.status(HTTP_STATUS.OK).json(cachedPosts);
+    }
+    const posts = await Post.find();
+    await setKeyInCache(REDIS_KEYS.ALL_POSTS, posts);
+    return res.status(HTTP_STATUS.OK).json(posts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
@@ -54,7 +69,12 @@ export const getAllPostsHandler = async (req, res) => {
 
 export const getFeaturedPostsHandler = async (req, res) => {
   try {
+    const cachedPosts = await getKeyFromCache(REDIS_KEYS.FEATURED_POSTS);
+    if (cachedPosts) {
+      return res.status(HTTP_STATUS.OK).json(cachedPosts);
+    }
     const featuredPosts = await Post.find({ isFeaturedPost: true });
+    await setKeyInCache(REDIS_KEYS.FEATURED_POSTS, featuredPosts);
     res.status(HTTP_STATUS.OK).json(featuredPosts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
@@ -66,7 +86,9 @@ export const getPostByCategoryHandler = async (req, res) => {
   try {
     // Validation - check if category is valid
     if (!validCategories.includes(category)) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: RESPONSE_MESSAGES.POSTS.INVALID_CATEGORY });
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ message: RESPONSE_MESSAGES.POSTS.INVALID_CATEGORY });
     }
 
     const categoryPosts = await Post.find({ categories: category });
@@ -78,7 +100,12 @@ export const getPostByCategoryHandler = async (req, res) => {
 
 export const getLatestPostsHandler = async (req, res) => {
   try {
+    const cachedPosts = await getKeyFromCache(REDIS_KEYS.LATEST_POSTS);
+    if (cachedPosts) {
+      return res.status(HTTP_STATUS.OK).json(cachedPosts);
+    }
     const latestPosts = await Post.find().sort({ timeOfPost: -1 });
+    await setKeyInCache(REDIS_KEYS.LATEST_POSTS, latestPosts);
     res.status(HTTP_STATUS.OK).json(latestPosts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
