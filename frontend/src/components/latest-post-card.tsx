@@ -5,7 +5,6 @@ import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { createSlug } from '@/utils/slug-generator';
 import { TestProps } from '@/types/test-props';
-import { ScalingValues } from '@/utils/scaling-animation';
 
 export default function LatestPostCard({
   post,
@@ -15,7 +14,7 @@ export default function LatestPostCard({
   const slug = createSlug(post.title);
   return (
     <div
-      className={`cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 ${ScalingValues.ElementClickScale} dark:border-none dark:bg-dark-card`}
+      className={`scale-click cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card`}
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       data-testid={testId}
     >
