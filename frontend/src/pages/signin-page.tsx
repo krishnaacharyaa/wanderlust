@@ -7,10 +7,10 @@ import { TSignInSchema, signInSchema } from '@/lib/types';
 import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
+import axios, { isAxiosError } from 'axios';
 
 function signin() {
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -19,16 +19,20 @@ function signin() {
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = async (data: FieldValues) => {
-    if (data.email === 'abc@gamil.com') {
-      toast.error('Submitting form is failed');
-      return;
+    try {
+      const { email, password } = data;
+      //Change url accordingly
+      const response = await axios.post('http://localhost:5000/api/auth/email-password/signin', {
+        email,
+        password,
+      });
+      // console.log(response.data)
+      toast.success(response.data.message);
+      reset();
+      navigate('/');
+    } catch (error) {
+      if (isAxiosError(error)) toast.error(error?.response?.data.message);
     }
-
-    // TODO: Server-side validation
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    reset();
-    navigate('/');
   };
 
   return (
@@ -86,21 +90,21 @@ function signin() {
           <span>OR</span>
         </div>
 
-        <Link
-          to={'/google-auth'}
+        <a
+          href={`http://localhost:5000/api/auth/google/?task=sign-in`}
           className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
           <span className="text-sm sm:text-base">Continue with Google</span>
-        </Link>
+        </a>
 
-        <Link
-          to={'/github-auth'}
+        <a
+          href={'http://localhost:5000/api/auth/github/?task=sign-in'}
           className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm sm:text-base">Continue with Github</span>
-        </Link>
+        </a>
       </div>
     </div>
   );

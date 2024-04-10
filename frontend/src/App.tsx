@@ -6,6 +6,7 @@ import ScrollToTop from '@/components/scroll-to-top';
 import Footer from '@/layouts/footer-layout';
 import SignIn from '@/pages/signin-page';
 import SignUp from '@/pages/signup-page';
+import Intermediate from './pages/auth-intermediate';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="details-page/:title/:postId" element={<DetailsPage />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
+            <Route path="loading-auth" element={<Intermediate />} />
           </Route>
         </Routes>
         <Footer />

@@ -56,7 +56,7 @@ export const signInWithEmail = async (req, res, next) => {
     }
     const isUserExists = await User.findOne({ email });
     if (!isUserExists) {
-      throw new Error('Email does not exist');
+      throw new Error(RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS);
     }
     let accessToken;
     let refreshToken;
@@ -101,11 +101,12 @@ export const signInWithEmail = async (req, res, next) => {
 //GOOGLE STRTEGY
 //1.Open google auth window
 export const openGoogleAuthWindow = (req, res, next) => {
+  const { task } = req.query;
   const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth?';
   const params = new URLSearchParams({
     client_id: process.env.GAUTH_CLIENT_ID,
     redirect_uri: process.env.REDIRECTION_URL,
-    state: 'google-auth-provider',
+    state: `google-${task}`,
     scope: 'profile email',
     response_type: 'code',
   });
@@ -180,10 +181,7 @@ export const signUpWithGoogle = async (req, res, next) => {
 export const signInWithGoogle = async (req, res, next) => {
   const code = req.query.code;
   if (!code) {
-    res.status(HTTP_STATUS.BAD_REQUEST).json({
-      success: false,
-      message: RESPONSE_MESSAGES.USERS.CODE_NOT_FOUND,
-    });
+    throw new Error('Google authorization failed.Try again.')
   }
   const tokenUrl = process.env.GAUTH_TOKEN_URL;
   try {
@@ -239,11 +237,12 @@ export const signInWithGoogle = async (req, res, next) => {
 //GITHUB STRATEGY
 //1.Open Github auth window
 export const openGithubAuthWindow = (req, res, next) => {
+  const { task } = req.query;
   const githubAuthUrl = 'https://github.com/login/oauth/authorize?';
   const params = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID,
     redirect_uri: process.env.REDIRECTION_URL,
-    state: 'github-auth-provider',
+    state: `github-${task}`,
     scope: 'user:read user:email',
     response_type: 'code',
   });
