@@ -14,7 +14,7 @@ const Intermediate = () => {
   const baseURl = 'http://localhost:5000/api/auth';//Change accordingly
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [user, setUser] = useState<UserType | null>(null);
+  const [_, setUser] = useState<UserType | null>(null);
   const [params] = useSearchParams();
   const state = params.get('state');
   const code = params.get('code');
