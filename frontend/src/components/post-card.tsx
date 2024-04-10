@@ -4,13 +4,14 @@ import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { createSlug } from '@/utils/slug-generator';
 import { TestProps } from '@/types/test-props';
+import { ScalingValues } from '@/utils/scaling-animation';
 
 export default function PostCard({ post, testId = 'postcard' }: { post: Post } & TestProps) {
   const navigate = useNavigate();
   const slug = createSlug(post.title);
   return (
     <div
-      className="group w-full md:w-1/2 md:active:scale-95 lg:w-1/3 xl:w-1/4"
+      className={`group w-full md:w-1/2 ${ScalingValues.ElementClickScale} lg:w-1/3 xl:w-1/4`}
       data-testid={testId}
     >
       <div
@@ -21,7 +22,7 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
           <img
             src={post.imageLink}
             alt={post.title}
-            className="h-full w-full rounded-t-lg object-cover transition-transform duration-300 ease-in-out md:group-hover:scale-105"
+            className={`h-full w-full rounded-t-lg object-cover transition-transform ease-in-out ${ScalingValues.ImageHoverScale}`}
           />
         </div>
         <div className="p-3">

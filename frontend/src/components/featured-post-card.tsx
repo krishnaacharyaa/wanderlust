@@ -4,6 +4,7 @@ import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { createSlug } from '@/utils/slug-generator';
 import { TestProps } from '@/types/test-props';
+import { ScalingValues } from '@/utils/scaling-animation';
 
 export default function FeaturedPostCard({
   post,
@@ -13,7 +14,7 @@ export default function FeaturedPostCard({
   const slug = createSlug(post.title);
   return (
     <div
-      className="group flex h-auto cursor-pointer flex-col gap-2 rounded-lg bg-light active:scale-95 dark:bg-dark-card sm:h-48 sm:flex-row"
+      className={`group flex h-auto cursor-pointer flex-col gap-2 rounded-lg bg-light ${ScalingValues.ElementClickScale} dark:bg-dark-card sm:h-48 sm:flex-row`}
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       data-testid={testId}
     >
@@ -21,7 +22,7 @@ export default function FeaturedPostCard({
         <img
           src={post.imageLink}
           alt={post.title}
-          className="h-48 w-full rounded-lg object-cover shadow-lg transition-transform duration-300 ease-in-out sm:h-full md:group-hover:scale-105"
+          className={`h-48 w-full rounded-lg object-cover shadow-lg transition-transform ease-in-out sm:h-full ${ScalingValues.ImageHoverScale}`}
         />
       </div>
       <div className="flex h-full w-full flex-col gap-2 p-3 sm:w-2/3">
