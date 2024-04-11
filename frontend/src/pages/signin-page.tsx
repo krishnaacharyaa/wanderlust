@@ -22,7 +22,7 @@ function signin() {
     try {
       const { email, password } = data;
       //Change url accordingly
-      const response = await axios.post('http://localhost:5000/api/auth/email-password/signin', {
+      const response = await axios.post(import.meta.env.VITE_API_PATH+'api/auth/email-password/signin', {
         email,
         password,
       });
@@ -91,7 +91,7 @@ function signin() {
         </div>
 
         <a
-          href={`http://localhost:5000/api/auth/google/?task=sign-in`}
+          href={`${import.meta.env.VITE_API_PATH}/api/auth/google/?task=sign-in`}
           className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
@@ -99,7 +99,7 @@ function signin() {
         </a>
 
         <a
-          href={'http://localhost:5000/api/auth/github/?task=sign-in'}
+          href={`${import.meta.env.VITE_API_PATH}/api/auth/github/?task=sign-in`}
           className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />

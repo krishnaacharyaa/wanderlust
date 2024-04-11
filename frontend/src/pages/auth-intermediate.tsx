@@ -11,7 +11,6 @@ type UserType = {
 
 //This is the intermediate page where the user redirected with authorized code
 const Intermediate = () => {
-  const baseURl = 'http://localhost:5000/api/auth';//Change accordingly
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [_, setUser] = useState<UserType | null>(null);
@@ -23,7 +22,9 @@ const Intermediate = () => {
       setIsLoading(true);
       try {
         if (state === 'google-sign-up') {
-          const response = await axios.get(`${baseURl}/google/signup/callback/?code=${code}`);
+          const response = await axios.get(
+            import.meta.env.VITE_API_PATH + `/api/auth/google/signup/callback/?code=${code}`
+          );
           // console.log(response.data);
           setUser(response.data.user);
           toast.success(response.data.message);
@@ -31,7 +32,9 @@ const Intermediate = () => {
           navigate('/');
         }
         if (state === 'google-sign-in') {
-          const response = await axios.get(`${baseURl}/google/signin/callback/?code=${code}`);
+          const response = await axios.get(
+            import.meta.env.VITE_API_PATH + `/api/auth/google/signin/callback/?code=${code}`
+          );
           // console.log(response.data);
           setUser(response.data.user);
           toast.success(response.data.message);
@@ -39,7 +42,9 @@ const Intermediate = () => {
           navigate('/');
         }
         if (state === 'github-sign-up') {
-          const response = await axios.get(`${baseURl}/github/signup/callback/?code=${code}`);
+          const response = await axios.get(
+            import.meta.env.VITE_API_PATH + `/api/auth/github/signup/callback/?code=${code}`
+          );
           // console.log(response.data);
           setUser(response.data.user);
           toast.success(response.data.message);
@@ -47,7 +52,9 @@ const Intermediate = () => {
           navigate('/');
         }
         if (state === 'github-sign-in') {
-          const response = await axios.get(`${baseURl}/github/signin/callback/?code=${code}`);
+          const response = await axios.get(
+            import.meta.env.VITE_API_PATH + `/api/auth/github/signin/callback/?code=${code}`
+          );
           // console.log(response.data);
           setUser(response.data.user);
           toast.success(response.data.message);
@@ -64,7 +71,7 @@ const Intermediate = () => {
   }, [state]);
   return (
     <div className="flex h-[100vh] w-[100vw] flex-col items-center justify-center">
-      {isLoading && <Spinner className="w-28` h-28 fill-green-800" />}
+      {isLoading && <Spinner className="h-28 w-28" />}
     </div>
   );
 };
