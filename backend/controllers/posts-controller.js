@@ -43,10 +43,13 @@ export const createPostHandler = async (req, res) => {
       isFeaturedPost,
     });
 
-    const savedPost = await post.save();
-    await invalidateKeyInCache(REDIS_KEYS.ALL_POSTS);
-    await invalidateKeyInCache(REDIS_KEYS.FEATURED_POSTS);
-    await invalidateKeyInCache(REDIS_KEYS.LATEST_POSTS);
+    const [savedPost] = await Promise.all([
+      post.save(), // Save the post
+      invalidateKeyInCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
+      invalidateKeyInCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
+      invalidateKeyInCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
+    ]);
+
     res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
