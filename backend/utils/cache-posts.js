@@ -1,6 +1,5 @@
 import { redis } from '../config/redis.js';
-
-const REDIS_PREFIX = 'post-cache';
+import { REDIS_PREFIX } from './constants.js';
 
 export async function getKeyFromCache(key) {
   const cacheKey = `${REDIS_PREFIX}:${key}`;
@@ -17,5 +16,6 @@ export async function setKeyInCache(key, data) {
 }
 
 export async function invalidateKeyInCache(key) {
-  await redis.del(key);
+  const cacheKey = `${REDIS_PREFIX}:${key}`;
+  await redis.del(cacheKey);
 }

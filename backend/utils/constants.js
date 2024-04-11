@@ -44,3 +44,5 @@ export const REDIS_KEYS = {
   FEATURED_POSTS: 'featured-posts',
   LATEST_POSTS: 'latest-posts',
 };
+
+export const REDIS_PREFIX = 'post-cache';
