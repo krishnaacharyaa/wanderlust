@@ -1,16 +1,20 @@
 import dotenv from 'dotenv';
-import { Redis } from 'ioredis';
+import { createClient } from 'redis';
 dotenv.config();
-function connectRedis() {
-  if (process.env.REDIS_URL) {
-    console.log('Redis Connected');
-    return process.env.REDIS_URL;
-  }
-  throw new Error('REDIS_URL is not defined');
-}
 
-export const redis = new Redis(connectRedis(), {
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
+let redis;
+if (process.env.REDIS_URL) {
+  try {
+    redis = await createClient({
+      url: process.env.REDIS_URL,
+      disableOfflineQueue: true,
+    }).connect();
+    console.log('Redis Connected: ' + process.env.REDIS_URL);
+  } catch (error) {
+    console.error('Error connecting to Redis:', error.message);
+    redis = null;
+  }
+} else {
+  console.log('Redis not configured, cache disabled.');
+}
+export { redis };
