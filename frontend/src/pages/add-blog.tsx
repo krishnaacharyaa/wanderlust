@@ -8,6 +8,8 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import { GitGraph } from 'lucide-react';
+import { FieldValue, FieldValues, useForm } from 'react-hook-form';
 
 type FormData = {
   title: string;
@@ -19,96 +21,30 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
+  const [modal, setmodal] = useState(false);
+  const [imageLink, setImageLink] = useState<string>(''); // Define imageLink state
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>(); // Initialize React Hook Form
+
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
+
+    setImageLink('');
+    reset();
+  };
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
   };
 
-  const [modal, setmodal] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
-    title: '',
-    authorName: '',
-    imageLink: '',
-    categories: [],
-    description: '',
-    isFeaturedPost: false,
-  });
-
-  //checks the length of the categories array and if the category is already selected
-  const isValidCategory = (category: string): boolean => {
-    return formData.categories.length >= 3 && !formData.categories.includes(category);
-  };
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleCategoryClick = (category: string) => {
-    if (isValidCategory(category)) return;
-
-    if (formData.categories.includes(category)) {
-      setFormData({
-        ...formData,
-        categories: formData.categories.filter((cat) => cat !== category),
-      });
-    } else {
-      setFormData({
-        ...formData,
-        categories: [...formData.categories, category],
-      });
-    }
-  };
-
   const handleselector = () => {
-    setFormData({
-      ...formData,
-      imageLink: selectedImage,
-    });
+    setImageLink(selectedImage);
     setmodal(false);
-  };
-  const handleCheckboxChange = () => {
-    setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
-  };
-  const validateFormData = () => {
-    if (
-      !formData.title ||
-      !formData.authorName ||
-      !formData.imageLink ||
-      !formData.description ||
-      formData.categories.length === 0
-    ) {
-      toast.error('All fields must be filled out.');
-      return false;
-    }
-    const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
-    if (!imageLinkRegex.test(formData.imageLink)) {
-      toast.error('Image URL must end with .jpg, .jpeg, .webp or .png');
-      return false;
-    }
-    if (formData.categories.length > 3) {
-      toast.error('Select up to three categories.');
-      return false;
-    }
-
-    return true;
-  };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (validateFormData()) {
-      try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
-
-        if (response.status === 200) {
-          toast.success('Blog post successfully created!');
-          navigate('/');
-        } else {
-          toast.error('Error: ' + response.data.message);
-        }
-      } catch (err: any) {
-        toast.error('Error: ' + err.message);
-      }
-    }
   };
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
@@ -116,6 +52,23 @@ function AddBlog() {
     const storedTheme = localStorage.getItem('theme');
     setIsDarkMode(storedTheme === 'dark');
   }, []);
+
+  const handleCategoryClick = (category: string) => {
+    if (selectedCategories.length >= 3 && !selectedCategories.includes(category)) {
+      toast.error('You can only select up to three categories.');
+      return;
+    }
+
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  const isValidCategory = (category: string): boolean => {
+    return selectedCategories.length >= 3 && !selectedCategories.includes(category);
+  };
 
   function Asterisk() {
     return <span className="dark:text-dark-tertiary">*</span>;
@@ -138,7 +91,7 @@ function AddBlog() {
         </div>
       </div>
       <div className="flex justify-center ">
-        <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
+        <form onSubmit={handleSubmit(onSubmit)} className="md:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
@@ -148,8 +101,6 @@ function AddBlog() {
                 type="checkbox"
                 name="isFeaturedPost"
                 className="ml-2 h-5 w-5 rounded-full accent-purple-400 "
-                checked={formData.isFeaturedPost}
-                onChange={handleCheckboxChange}
               />
             </label>
           </div>
@@ -160,13 +111,12 @@ function AddBlog() {
             </div>
             <input
               type="text"
-              name="title"
+              {...register('title', { required: true })}
               placeholder="Travel Bucket List for this Year"
               autoComplete="off"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.title}
-              onChange={handleInputChange}
             />
+            {errors.title && <span className="text-red-600">Title is required.</span>}
           </div>
 
           <div className="mb-1">
@@ -174,13 +124,12 @@ function AddBlog() {
               Blog content <Asterisk />
             </div>
             <textarea
-              name="description"
+              {...register('description', { required: true })}
               placeholder="Start writing here&hellip;"
               rows={5}
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.description}
-              onChange={handleInputChange}
             />
+            {errors.description && <span className="text-red-600">Description is required</span>}
           </div>
 
           <div className="mb-2">
@@ -189,12 +138,11 @@ function AddBlog() {
             </div>
             <input
               type="text"
-              name="authorName"
+              {...register('authorName', { required: true })}
               placeholder="Shree Sharma"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.authorName}
-              onChange={handleInputChange}
             />
+            {errors.authorName && <span className="text-red-600">authorName is required</span>}
           </div>
 
           <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
@@ -208,13 +156,13 @@ function AddBlog() {
             <input
               type="url"
               id="imagelink"
-              name="imageLink"
+              {...register('imageLink', { required: true })}
               placeholder="https://&hellip;"
               autoComplete="off"
               className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
-              value={formData.imageLink}
-              onChange={handleInputChange}
+              value={imageLink}
             />
+
             <button
               type="button"
               className="lg:text-md w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:text-sm lg:w-2/12 lg:px-4 lg:py-3"
@@ -225,6 +173,7 @@ function AddBlog() {
               Pick image
             </button>
           </div>
+          {/* {imageLink && <span className="mx-2 my-4 text-red-600">Image link is required.</span>} */}
           <div className="mb-4 flex flex-col">
             <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary md:mr-4 md:w-fit">
               Categories
@@ -238,7 +187,7 @@ function AddBlog() {
                 <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
                   <CategoryPill
                     category={category}
-                    selected={formData.categories.includes(category)}
+                    selected={selectedCategories.includes(category)}
                     disabled={isValidCategory(category)}
                   />
                 </span>
@@ -247,6 +196,7 @@ function AddBlog() {
           </div>
 
           <button
+            disabled={isSubmitting}
             type="submit"
             className="flex w-full items-center justify-center rounded-lg bg-light-primary px-12 py-3 text-base font-semibold text-light hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:mx-1 md:w-fit"
           >
