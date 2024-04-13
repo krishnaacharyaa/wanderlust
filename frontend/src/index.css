@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 @layer components {
-  .scale-hover:hover {
+  .scale-hover {
     transform: scale(1.12);
   }
-  .scale-click:active {
+  .scale-click {
     transform: scale(0.95);
   }
 }

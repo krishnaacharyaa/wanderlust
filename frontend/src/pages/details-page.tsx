@@ -37,7 +37,11 @@ export default function DetailsPage() {
           <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover md:h-96" />
           <div className="absolute left-0 top-0 h-full w-full bg-slate-950/60"></div>
           <div className="absolute top-12 w-full cursor-pointer justify-start px-2 text-lg text-slate-50 md:top-20 md:px-8 md:text-xl lg:px-12 lg:text-2xl">
-            <img src={navigateBackWhiteIcon} className="h-5 w-10" onClick={() => navigate(-1)} />
+            <img
+              src={navigateBackWhiteIcon}
+              className="active:scale-click h-5 w-10"
+              onClick={() => navigate(-1)}
+            />
           </div>
           <div className="absolute bottom-6 w-full max-w-xl px-4 text-slate-50 md:bottom-8 md:max-w-3xl md:px-8 lg:bottom-12 lg:max-w-5xl lg:px-12">
             <div className="mb-4 flex space-x-2">
