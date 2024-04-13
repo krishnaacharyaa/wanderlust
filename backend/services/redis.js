@@ -1,15 +1,14 @@
-import dotenv from 'dotenv';
 import { createClient } from 'redis';
-dotenv.config();
+import { REDIS_URL } from '../config/utils.js';
 
 let redis;
-if (process.env.REDIS_URL) {
+if (REDIS_URL) {
   try {
     redis = await createClient({
-      url: process.env.REDIS_URL,
+      url: REDIS_URL,
       disableOfflineQueue: true,
     }).connect();
-    console.log('Redis Connected: ' + process.env.REDIS_URL);
+    console.log('Redis Connected: ' + REDIS_URL);
   } catch (error) {
     console.error('Error connecting to Redis:', error.message);
     redis = null;

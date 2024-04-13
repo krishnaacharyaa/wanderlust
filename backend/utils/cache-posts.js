@@ -1,4 +1,4 @@
-import { redis } from '../config/redis.js';
+import { redis } from '../services/redis.js';
 import { REDIS_PREFIX } from './constants.js';
 
 // Helper function to check if Redis is available
