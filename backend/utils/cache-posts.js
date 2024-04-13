@@ -1,16 +1,16 @@
-import { redis } from '../services/redis.js';
+import { getRedisClient } from '../services/redis.js';
 import { REDIS_PREFIX } from './constants.js';
 
 // Helper function to check if Redis is available
 function isRedisEnabled() {
-  return redis !== null;
+  return getRedisClient() !== null;
 }
 
 export async function getKeyFromCache(key) {
   if (!isRedisEnabled()) return null; // Skip cache if Redis is not available
 
   const cacheKey = `${REDIS_PREFIX}:${key}`;
-  const cachedData = await redis.get(cacheKey);
+  const cachedData = await getRedisClient().get(cacheKey);
   if (cachedData) {
     return JSON.parse(cachedData);
   }
@@ -21,12 +21,12 @@ export async function setKeyInCache(key, data) {
   if (!isRedisEnabled()) return; // Skip cache if Redis is not available
 
   const cacheKey = `${REDIS_PREFIX}:${key}`;
-  await redis.set(cacheKey, JSON.stringify(data));
+  await getRedisClient().set(cacheKey, JSON.stringify(data));
 }
 
 export async function invalidateKeyInCache(key) {
   if (!isRedisEnabled()) return; // Skip cache if Redis is not available
 
   const cacheKey = `${REDIS_PREFIX}:${key}`;
-  await redis.del(cacheKey);
+  await getRedisClient().del(cacheKey);
 }

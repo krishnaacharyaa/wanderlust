@@ -1,19 +1,24 @@
 import { createClient } from 'redis';
 import { REDIS_URL } from '../config/utils.js';
 
-let redis;
-if (REDIS_URL) {
+let redis = null;
+
+export async function connectToRedis() {
   try {
-    redis = await createClient({
-      url: REDIS_URL,
-      disableOfflineQueue: true,
-    }).connect();
-    console.log('Redis Connected: ' + REDIS_URL);
+    if (REDIS_URL) {
+      redis = await createClient({
+        url: REDIS_URL,
+        disableOfflineQueue: true,
+      }).connect();
+      console.log('Redis Connected: ' + REDIS_URL);
+    } else {
+      console.log('Redis not configured, cache disabled.');
+    }
   } catch (error) {
     console.error('Error connecting to Redis:', error.message);
-    redis = null;
   }
-} else {
-  console.log('Redis not configured, cache disabled.');
 }
-export { redis };
+
+export function getRedisClient() {
+  return redis;
+}
