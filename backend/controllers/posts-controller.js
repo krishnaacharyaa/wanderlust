@@ -62,11 +62,6 @@ export const createPostHandler = async (req, res) => {
 
 export const getAllPostsHandler = async (req, res) => {
   try {
-    const cachedPosts = await retrieveDataFromCache(REDIS_KEYS.ALL_POSTS);
-    if (cachedPosts) {
-      console.log('Getting cached products: all');
-      return res.status(HTTP_STATUS.OK).json(cachedPosts);
-    }
     const posts = await Post.find();
     await storeDataInCache(REDIS_KEYS.ALL_POSTS, posts);
     return res.status(HTTP_STATUS.OK).json(posts);
@@ -77,11 +72,6 @@ export const getAllPostsHandler = async (req, res) => {
 
 export const getFeaturedPostsHandler = async (req, res) => {
   try {
-    const cachedPosts = await retrieveDataFromCache(REDIS_KEYS.FEATURED_POSTS);
-    if (cachedPosts) {
-      console.log('Getting cached products: featured');
-      return res.status(HTTP_STATUS.OK).json(cachedPosts);
-    }
     const featuredPosts = await Post.find({ isFeaturedPost: true });
     await storeDataInCache(REDIS_KEYS.FEATURED_POSTS, featuredPosts);
     res.status(HTTP_STATUS.OK).json(featuredPosts);
@@ -109,11 +99,6 @@ export const getPostByCategoryHandler = async (req, res) => {
 
 export const getLatestPostsHandler = async (req, res) => {
   try {
-    const cachedPosts = await retrieveDataFromCache(REDIS_KEYS.LATEST_POSTS);
-    if (cachedPosts) {
-      console.log('Getting cached products: latest');
-      return res.status(HTTP_STATUS.OK).json(cachedPosts);
-    }
     const latestPosts = await Post.find().sort({ timeOfPost: -1 });
     await storeDataInCache(REDIS_KEYS.LATEST_POSTS, latestPosts);
     res.status(HTTP_STATUS.OK).json(latestPosts);
