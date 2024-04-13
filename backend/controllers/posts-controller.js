@@ -1,5 +1,9 @@
 import Post from '../models/post.js';
-import { getKeyFromCache, invalidateKeyInCache, setKeyInCache } from '../utils/cache-posts.js';
+import {
+  deleteDataFromCache,
+  retrieveDataFromCache,
+  storeDataInCache,
+} from '../utils/cache-posts.js';
 import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants.js';
 export const createPostHandler = async (req, res) => {
   try {
@@ -45,9 +49,9 @@ export const createPostHandler = async (req, res) => {
 
     const [savedPost] = await Promise.all([
       post.save(), // Save the post
-      invalidateKeyInCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
-      invalidateKeyInCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
-      invalidateKeyInCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
+      deleteDataFromCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
+      deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
+      deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
     ]);
 
     res.status(HTTP_STATUS.OK).json(savedPost);
@@ -58,12 +62,13 @@ export const createPostHandler = async (req, res) => {
 
 export const getAllPostsHandler = async (req, res) => {
   try {
-    const cachedPosts = await getKeyFromCache(REDIS_KEYS.ALL_POSTS);
+    const cachedPosts = await retrieveDataFromCache(REDIS_KEYS.ALL_POSTS);
     if (cachedPosts) {
+      console.log('Getting cached products: all');
       return res.status(HTTP_STATUS.OK).json(cachedPosts);
     }
     const posts = await Post.find();
-    await setKeyInCache(REDIS_KEYS.ALL_POSTS, posts);
+    await storeDataInCache(REDIS_KEYS.ALL_POSTS, posts);
     return res.status(HTTP_STATUS.OK).json(posts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
@@ -72,12 +77,13 @@ export const getAllPostsHandler = async (req, res) => {
 
 export const getFeaturedPostsHandler = async (req, res) => {
   try {
-    const cachedPosts = await getKeyFromCache(REDIS_KEYS.FEATURED_POSTS);
+    const cachedPosts = await retrieveDataFromCache(REDIS_KEYS.FEATURED_POSTS);
     if (cachedPosts) {
+      console.log('Getting cached products: featured');
       return res.status(HTTP_STATUS.OK).json(cachedPosts);
     }
     const featuredPosts = await Post.find({ isFeaturedPost: true });
-    await setKeyInCache(REDIS_KEYS.FEATURED_POSTS, featuredPosts);
+    await storeDataInCache(REDIS_KEYS.FEATURED_POSTS, featuredPosts);
     res.status(HTTP_STATUS.OK).json(featuredPosts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
@@ -103,12 +109,13 @@ export const getPostByCategoryHandler = async (req, res) => {
 
 export const getLatestPostsHandler = async (req, res) => {
   try {
-    const cachedPosts = await getKeyFromCache(REDIS_KEYS.LATEST_POSTS);
+    const cachedPosts = await retrieveDataFromCache(REDIS_KEYS.LATEST_POSTS);
     if (cachedPosts) {
+      console.log('Getting cached products: latest');
       return res.status(HTTP_STATUS.OK).json(cachedPosts);
     }
     const latestPosts = await Post.find().sort({ timeOfPost: -1 });
-    await setKeyInCache(REDIS_KEYS.LATEST_POSTS, latestPosts);
+    await storeDataInCache(REDIS_KEYS.LATEST_POSTS, latestPosts);
     res.status(HTTP_STATUS.OK).json(latestPosts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
