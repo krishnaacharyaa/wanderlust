@@ -1,11 +1,8 @@
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-dotenv.config();
+import { MONGODB_URI } from './utils.js';
 export default function connectDB() {
-  const url = process.env.MONGODB_URI;
-
   try {
-    mongoose.connect(url);
+    mongoose.connect(MONGODB_URI);
   } catch (err) {
     console.error(err.message);
     process.exit(1);
@@ -14,11 +11,11 @@ export default function connectDB() {
   const dbConnection = mongoose.connection;
 
   dbConnection.once('open', () => {
-    console.log(`Database connected: ${url}`);
+    console.log(`Database connected: ${MONGODB_URI}`);
   });
 
   dbConnection.on('error', (err) => {
-    console.error(`connection error: ${err}`);
+    console.error(`connection error: ${MONGODB_URI}`);
   });
   return;
 }
