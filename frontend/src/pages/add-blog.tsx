@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,8 +7,8 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
-import { GitGraph } from 'lucide-react';
-import { FieldValue, FieldValues, useForm } from 'react-hook-form';
+
+import { FieldValues, useForm } from 'react-hook-form';
 
 type FormData = {
   title: string;
