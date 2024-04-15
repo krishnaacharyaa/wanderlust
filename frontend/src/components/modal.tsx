@@ -66,7 +66,7 @@ const ModalComponent: React.FC<ModalProps> = ({
                   <button
                     type="button"
                     name="imageLink"
-                    className="inline-flex w-full justify-center rounded-md bg-light-primary px-3 py-2 text-sm font-semibold text-light shadow-sm hover:bg-light-secondary dark:bg-dark-primary dark:text-dark dark:hover:bg-dark-secondary sm:ml-3 sm:w-auto"
+                    className="active:scale-click inline-flex w-full justify-center rounded-md bg-light-primary px-3 py-2 text-sm font-semibold text-light shadow-sm hover:bg-light-secondary dark:bg-dark-primary dark:text-dark dark:hover:bg-dark-secondary sm:ml-3 sm:w-auto"
                     onClick={handleSelector}
                   >
                     Select
@@ -74,7 +74,7 @@ const ModalComponent: React.FC<ModalProps> = ({
                   <button
                   name="closeModal"
                     type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-light px-3 py-2 text-sm font-semibold text-light-primary shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-200 dark:bg-dark dark:text-dark-primary dark:hover:bg-dark-secondary/25 sm:mt-0 sm:w-auto"
+                    className="active:scale-click mt-3 inline-flex w-full justify-center rounded-md bg-light px-3 py-2 text-sm font-semibold text-light-primary shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-200 dark:bg-dark dark:text-dark-primary dark:hover:bg-dark-secondary/25 sm:mt-0 sm:w-auto"
                     onClick={() => {
                       setModal(false);
                     }}
