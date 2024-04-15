@@ -17,10 +17,12 @@ export default function DetailsPage() {
     const getPostById = async () => {
       try {
         await axios.get(import.meta.env.VITE_API_PATH + `/api/posts/${postId}`).then((response) => {
+          // console.log(response.data);
           setIsLoading(false);
           setPost(response.data);
         });
       } catch (error) {
+        // console.log(error);
       }
     };
     if (post === undefined) {

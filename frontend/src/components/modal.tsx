@@ -51,7 +51,6 @@ const ModalComponent: React.FC<ModalProps> = ({
                               onClick={() => handleImageSelect(imageUrl)}
                             >
                               <img
-                                alt="image"
                                 src={imageUrl}
                                 alt={`Image ${imageUrl}`}
                                 className="h-full w-full object-cover"
