@@ -16,6 +16,7 @@ function header() {
               <ThemeToggle />
             </div>
             <button
+            name="add-blog"
               className="hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
               onClick={() => {
                 navigate('/add-blog');
@@ -24,12 +25,13 @@ function header() {
               Create post
             </button>
             <button
+            name="add-blog-mobile"
               className="px-2 py-2 hover:bg-slate-500/25 md:hidden"
               onClick={() => {
                 navigate('/add-blog');
               }}
             >
-              <img className="h-10 w-10" src={AddIcon} />
+              <img className="h-10 w-10" src={AddIcon} alt="add-blog" />
             </button>
           </div>
         </div>

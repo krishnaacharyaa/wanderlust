@@ -33,9 +33,9 @@ export default {
         'dark-theme-foreground': '#25a5e3',
         'footer-background': '#181818',
       },
-      fontFamily: {
-        sans: ['Poppins', ...defaultTheme.fontFamily.sans],
-      },
+      // fontFamily: {
+      //   sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+      // },
     },
   },
   plugins: [],

@@ -19,6 +19,7 @@ export default function FeaturedPostCard({
     >
       <div className="w-full sm:w-1/3">
         <img
+          alt="blog-img"
           src={post.imageLink}
           alt={post.title}
           className="h-48 w-full rounded-lg object-cover shadow-lg sm:h-full"

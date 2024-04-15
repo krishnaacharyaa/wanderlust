@@ -127,6 +127,7 @@ function AddBlog() {
         <div className="flex w-[32rem] items-center justify-start space-x-4 md:w-5/6 lg:w-4/6 ">
           <div className="w-fit cursor-pointer">
             <img
+              alt="theme"
               src={isDarkMode ? navigateBackWhiteIcon : navigateBackBlackIcon}
               onClick={() => navigate(-1)}
               className="h-5 w-10"
@@ -216,6 +217,7 @@ function AddBlog() {
               onChange={handleInputChange}
             />
             <button
+            name="openModal"
               type="button"
               className="lg:text-md w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:text-sm lg:w-2/12 lg:px-4 lg:py-3"
               onClick={() => {
@@ -247,6 +249,7 @@ function AddBlog() {
           </div>
 
           <button
+            name="post-blog"
             type="submit"
             className="flex w-full items-center justify-center rounded-lg bg-light-primary px-12 py-3 text-base font-semibold text-light hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:mx-1 md:w-fit"
           >
