@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema({
+const userSchema : Schema = new Schema({
   name: {
     type: String,
     required: [true, 'User name is required.'],

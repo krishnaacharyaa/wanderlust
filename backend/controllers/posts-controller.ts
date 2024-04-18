@@ -1,11 +1,11 @@
-import Post from '../models/post.js';
+import { Request, Response } from 'express';
+import Post from '../models/post';
 import {
   deleteDataFromCache,
-  retrieveDataFromCache,
   storeDataInCache,
-} from '../utils/cache-posts.js';
-import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants.js';
-export const createPostHandler = async (req, res) => {
+} from '../utils/cache-posts';
+import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants';
+export const createPostHandler = async (req: Request, res: Response) => {
   try {
     const {
       title,
@@ -55,32 +55,32 @@ export const createPostHandler = async (req, res) => {
     ]);
 
     res.status(HTTP_STATUS.OK).json(savedPost);
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
-export const getAllPostsHandler = async (req, res) => {
+export const getAllPostsHandler = async (req: Request, res: Response) => {
   try {
     const posts = await Post.find();
     await storeDataInCache(REDIS_KEYS.ALL_POSTS, posts);
     return res.status(HTTP_STATUS.OK).json(posts);
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
-export const getFeaturedPostsHandler = async (req, res) => {
+export const getFeaturedPostsHandler = async (req: Request, res: Response) => {
   try {
     const featuredPosts = await Post.find({ isFeaturedPost: true });
     await storeDataInCache(REDIS_KEYS.FEATURED_POSTS, featuredPosts);
     res.status(HTTP_STATUS.OK).json(featuredPosts);
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
-export const getPostByCategoryHandler = async (req, res) => {
+export const getPostByCategoryHandler = async (req: Request, res: Response) => {
   const category = req.params.category;
   try {
     // Validation - check if category is valid
@@ -92,22 +92,22 @@ export const getPostByCategoryHandler = async (req, res) => {
 
     const categoryPosts = await Post.find({ categories: category });
     res.status(HTTP_STATUS.OK).json(categoryPosts);
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
-export const getLatestPostsHandler = async (req, res) => {
+export const getLatestPostsHandler = async (req: Request, res: Response) => {
   try {
     const latestPosts = await Post.find().sort({ timeOfPost: -1 });
     await storeDataInCache(REDIS_KEYS.LATEST_POSTS, latestPosts);
     res.status(HTTP_STATUS.OK).json(latestPosts);
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
-export const getPostByIdHandler = async (req, res) => {
+export const getPostByIdHandler = async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -117,12 +117,12 @@ export const getPostByIdHandler = async (req, res) => {
     }
 
     res.status(HTTP_STATUS.OK).json(post);
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
-export const updatePostHandler = async (req, res) => {
+export const updatePostHandler = async (req: Request, res: Response) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -134,12 +134,12 @@ export const updatePostHandler = async (req, res) => {
     }
 
     res.status(HTTP_STATUS.OK).json(updatedPost);
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
 
-export const deletePostByIdHandler = async (req, res) => {
+export const deletePostByIdHandler = async (req: Request, res: Response) => {
   try {
     const post = await Post.findByIdAndDelete(req.params.id);
 
@@ -149,7 +149,7 @@ export const deletePostByIdHandler = async (req, res) => {
     }
 
     res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
-  } catch (err) {
+  } catch (err: any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };

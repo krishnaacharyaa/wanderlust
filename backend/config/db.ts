@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import { MONGODB_URI } from './utils.js';
+import { MONGODB_URI } from './utils';
 export default function connectDB() {
   try {
-    mongoose.connect(MONGODB_URI);
-  } catch (err) {
+    mongoose.connect(MONGODB_URI || '');
+  } catch (err : any) {
     console.error(err.message);
     process.exit(1);
   }

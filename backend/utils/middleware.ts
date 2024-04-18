@@ -1,7 +1,8 @@
-import { retrieveDataFromCache } from './cache-posts.js';
-import { HTTP_STATUS } from './constants.js';
+import { NextFunction, Request, Response } from 'express';
+import { retrieveDataFromCache } from './cache-posts';
+import { HTTP_STATUS } from './constants';
 
-export const cacheHandler = (key) => async (req, res, next) => {
+export const cacheHandler = (key : string) => async (req : Request, res : Response, next: NextFunction) => {
   try {
     const cachedData = await retrieveDataFromCache(key);
     if (cachedData) {
@@ -9,7 +10,7 @@ export const cacheHandler = (key) => async (req, res, next) => {
       return res.status(HTTP_STATUS.OK).json(cachedData);
     }
     next(); // Proceed to the route handler if data is not cached
-  } catch (err) {
+  } catch (err : any) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };

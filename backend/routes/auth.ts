@@ -10,7 +10,7 @@ import {
   signUpWithGithub,
   signInWithGithub,
   signOutUser,
-} from '../controllers/auth-controller.js';
+} from '../controllers/auth-controller';
 
 //GOOGLE STRATEGY
 router.get('/google', openGoogleAuthWindow);

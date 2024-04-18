@@ -2,11 +2,11 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import connectDB from './config/db.js';
-import { PORT } from './config/utils.js';
-import authRouter from './routes/auth.js';
-import postsRouter from './routes/posts.js';
-import { connectToRedis } from './services/redis.js';
+import connectDB from './config/db';
+import { PORT } from './config/utils';
+import authRouter from './routes/auth';
+import postsRouter from './routes/posts';
+import { connectToRedis } from './services/redis';
 const app = express();
 const port = PORT || 5000;
 

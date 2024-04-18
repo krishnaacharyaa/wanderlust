@@ -8,9 +8,9 @@ import {
   getPostByCategoryHandler,
   getPostByIdHandler,
   updatePostHandler,
-} from '../controllers/posts-controller.js';
-import { REDIS_KEYS } from '../utils/constants.js';
-import { cacheHandler } from '../utils/middleware.js';
+} from '../controllers/posts-controller';
+import { REDIS_KEYS } from '../utils/constants';
+import { cacheHandler } from '../utils/middleware';
 const router = Router();
 
 // Create a new post
