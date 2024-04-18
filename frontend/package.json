@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "test": "jest"
+    "test": "jest --verbose --detectOpenHandles"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
