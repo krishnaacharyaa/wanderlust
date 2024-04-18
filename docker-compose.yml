@@ -12,7 +12,7 @@ services:
     container_name: backend
     build: ./backend
     env_file:
-      - ./backend/.env.sample
+      - ./backend/.env.docker
     ports:
       - "5000:5000"
     depends_on:
@@ -22,7 +22,7 @@ services:
     container_name: frontend
     build: ./frontend
     env_file:
-      - ./frontend/.env.sample
+      - ./frontend/.env.docker
     ports:
       - "5173:5173"
 
