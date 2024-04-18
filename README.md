@@ -103,13 +103,13 @@ _I'd love for you to make the most of this project - it's all about learning, he
     
    ``` bash
     
-    `git clone https://github.com/{your-username}/wanderlust.git` 
+    git clone https://github.com/{your-username}/wanderlust.git
    ``` 
 3.  **Navigate to the Project Directory**
     
     ```bash
     
-    `cd wanderlust` 
+    cd wanderlust
     
     ```
 4.  **Update Environment Variables**  - If you anticipate the IP address of the instance might change, update the `.env.sample` file with the new IP address.
@@ -118,7 +118,7 @@ _I'd love for you to make the most of this project - it's all about learning, he
     
     ```bash
     
-    `docker-compose up` 
+    docker-compose up
     ```
     This command will build the Docker images and start the containers for the backend and frontend, enabling you to access the Wanderlust application.
 
