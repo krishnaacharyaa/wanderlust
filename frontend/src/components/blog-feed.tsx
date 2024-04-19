@@ -75,6 +75,7 @@ export default function BlogFeed() {
             <div className="flex flex-wrap gap-3 dark:rounded-lg dark:bg-dark-card dark:p-3">
               {categories.map((category) => (
                 <button
+                  name="category"
                   key={category}
                   aria-label={category}
                   type="button"

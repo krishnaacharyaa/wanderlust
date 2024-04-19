@@ -38,6 +38,7 @@ export default function DetailsPage() {
           <div className="absolute left-0 top-0 h-full w-full bg-slate-950/60"></div>
           <div className="absolute top-12 w-full cursor-pointer justify-start px-2 text-lg text-slate-50 md:top-20 md:px-8 md:text-xl lg:px-12 lg:text-2xl">
             <img
+              alt="white"
               src={navigateBackWhiteIcon}
               className="active:scale-click h-5 w-10"
               onClick={() => navigate(-1)}
