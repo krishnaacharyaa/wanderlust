@@ -2,8 +2,13 @@ import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
 import { useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
+import UserContext from '@/context/user-context';
+import { useContext } from 'react';
 function header() {
   const navigate = useNavigate();
+
+  const { user }: any = useContext(UserContext);
+  console.log(user);
 
   return (
     <div className="relative -mt-2 h-[460px] bg-[url('./assets/wanderlustbg.webp')] bg-cover bg-fixed bg-center">
@@ -17,7 +22,8 @@ function header() {
             <div className="flex items-center justify-end px-2 py-2 md:px-20">
               <ThemeToggle />
             </div>
-            <button
+            {user ? <div className='flex gap-2'>
+              <button
               className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
               onClick={() => {
                 navigate('/add-blog');
@@ -25,6 +31,22 @@ function header() {
             >
               Create post
             </button>
+            <button
+              className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+              onClick={() => {
+                navigate('/add-blog');
+              }}
+            >
+              Logout
+            </button>
+            </div> : <button
+              className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+              onClick={() => {
+                navigate('/signin');
+              }}
+            >
+              Login
+            </button>}
             <button
               className="px-2 py-2 hover:bg-slate-500/25 md:hidden"
               onClick={() => {

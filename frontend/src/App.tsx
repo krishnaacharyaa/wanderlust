@@ -6,11 +6,13 @@ import ScrollToTop from '@/components/scroll-to-top';
 import Footer from '@/layouts/footer-layout';
 import SignIn from '@/pages/signin-page';
 import SignUp from '@/pages/signup-page';
+import UserContextProvider from '@/context/user-context-provider';
 
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <UserContextProvider>
       <div className="flex min-h-screen flex-col">
         <Routes>
           <Route path="/">
@@ -23,6 +25,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
+      </UserContextProvider>
     </BrowserRouter>
   );
 }

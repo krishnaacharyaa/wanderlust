@@ -8,6 +8,8 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import UserContext from '@/context/user-context';
+import { useContext } from 'react';
 
 type FormData = {
   title: string;
@@ -19,6 +21,8 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
+
+  const { user }: any =  useContext(UserContext);
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -95,9 +99,10 @@ function AddBlog() {
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(user);
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, { headers: { 'x_access_token': 'Bearer '+ user}});
 
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
