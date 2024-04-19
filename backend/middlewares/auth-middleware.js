@@ -20,14 +20,14 @@ export const checkAuth = async (req, res, next) => {
             });
             
         } else {
-            res.status(HTTP_STATUS.NOT_FOUND).json({
+            res.status(HTTP_STATUS.UNAUTHORIZED).json({
                 success: false,
-                message: "JWT Token is missing",
+                message: "Unauthorized",
             });
         }
         
     } catch (error) {
-        res.status(HTTP_STATUS.UNAUTHORIZED).json({
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: error.message,
         });
