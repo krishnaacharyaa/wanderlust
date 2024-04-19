@@ -4,11 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
 import UserContext from '@/context/user-context';
 import { useContext } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 function header() {
   const navigate = useNavigate();
 
-  const { user }: any = useContext(UserContext);
+  const { user, setUser }: any = useContext(UserContext);
   console.log(user);
+
+  const handleLogout = async () => {
+      try{
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/auth/signout');
+
+        if (response.status === 200) {
+          toast.success(response.data.message);
+          setUser(null);
+          navigate('/');
+        } else {
+          toast.error('Error: ' + response.data.message);
+        }
+      } catch (err: any) {
+        toast.error('Error: ' + err.message);
+      }
+  }
 
   return (
     <div className="relative -mt-2 h-[460px] bg-[url('./assets/wanderlustbg.webp')] bg-cover bg-fixed bg-center">
@@ -34,7 +52,7 @@ function header() {
             <button
               className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
               onClick={() => {
-                navigate('/add-blog');
+                handleLogout()
               }}
             >
               Logout
