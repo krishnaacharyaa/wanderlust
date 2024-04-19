@@ -22,7 +22,7 @@ type FormData = {
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
 
-  const { user }: any =  useContext(UserContext);
+  const { user, setUser }: any =  useContext(UserContext);
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -113,6 +113,8 @@ function AddBlog() {
       } catch (err: any) {
         if(err.response.status === 403) {
           toast.error('Error: ' + "Invalid user!");
+          setUser(null);
+          navigate('/');
         } else {
           toast.error('Error: ' + err.message);
         }
