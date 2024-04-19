@@ -7,8 +7,6 @@ export const checkAuth = async (req, res, next) => {
         if(authHeader){
             const token = authHeader.split(" ")[1]; 
 
-            console.log(token);
-
             jwt.verify(token, JWT_SECRET, (error, payload) => {
                 if(error){
                     return res.status(HTTP_STATUS.FORBIDDEN).json({

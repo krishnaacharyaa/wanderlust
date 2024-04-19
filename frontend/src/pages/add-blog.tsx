@@ -111,7 +111,11 @@ function AddBlog() {
           toast.error('Error: ' + response.data.message);
         }
       } catch (err: any) {
-        toast.error('Error: ' + err.message);
+        if(err.response.status === 403) {
+          toast.error('Error: ' + "Invalid user!");
+        } else {
+          toast.error('Error: ' + err.message);
+        }
       }
     }
   };
