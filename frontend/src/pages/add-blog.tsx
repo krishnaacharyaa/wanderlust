@@ -102,7 +102,7 @@ function AddBlog() {
     console.log(user);
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, { headers: { 'x_access_token': 'Bearer '+ user}});
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, { headers: { 'access_token': 'Bearer '+ user}});
 
         if (response.status === 200) {
           toast.success('Blog post successfully created!');

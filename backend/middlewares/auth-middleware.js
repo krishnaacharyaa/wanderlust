@@ -3,7 +3,7 @@ import { HTTP_STATUS } from "../utils/constants.js";
 import jwt from 'jsonwebtoken';
 
 export const checkAuth = async (req, res, next) => {
-        const authHeader = req.headers.x_access_token;
+        const authHeader = req.headers.access_token;
         if(authHeader){
             const token = authHeader.split(" ")[1]; 
 
