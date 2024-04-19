@@ -217,7 +217,7 @@ function AddBlog() {
               onChange={handleInputChange}
             />
             <button
-            name="openModal"
+              name="openModal"
               type="button"
               className="lg:text-md active:scale-click w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:text-sm lg:w-2/12 lg:px-4 lg:py-3"
               onClick={() => {

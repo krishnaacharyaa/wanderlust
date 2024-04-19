@@ -18,7 +18,7 @@ function header() {
               <ThemeToggle />
             </div>
             <button
-            name="add-blog"
+              name="add-blog"
               className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
               onClick={() => {
                 navigate('/add-blog');
@@ -27,7 +27,7 @@ function header() {
               Create post
             </button>
             <button
-            name="add-blog-mobile"
+              name="add-blog-mobile"
               className="px-2 py-2 hover:bg-slate-500/25 md:hidden"
               onClick={() => {
                 navigate('/add-blog');
