@@ -8,8 +8,7 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
-import UserContext from '@/context/user-context';
-import { useContext } from 'react';
+import useUserContext from '@/context/user-context';
 
 type FormData = {
   title: string;
@@ -22,7 +21,7 @@ type FormData = {
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
 
-  const { user, setUser }: any =  useContext(UserContext);
+  const { user, setUser }: any =  useUserContext();
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -114,6 +113,7 @@ function AddBlog() {
         if(err.response.status === 403) {
           toast.error('Error: ' + "Invalid user!");
           setUser(null);
+          localStorage.setItem('isLoggedIn', 'false');
           navigate('/');
         } else {
           toast.error('Error: ' + err.message);

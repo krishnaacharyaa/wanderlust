@@ -1,16 +1,23 @@
 import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
+import AddLogOutIcon from '@/assets/svg/logout.svg';
 import { useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
-import UserContext from '@/context/user-context';
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import useUserContext from '@/context/user-context';
 function header() {
   const navigate = useNavigate();
 
-  const { user, setUser }: any = useContext(UserContext);
-  console.log(user);
+  const { setUser }: any = useUserContext();
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+
+  useEffect(() => {
+    // Retrieve authentication status on page load
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(storedIsLoggedIn);
+  }, []);
 
   const handleLogout = async () => {
       try{
@@ -19,6 +26,8 @@ function header() {
         if (response.status === 200) {
           toast.success(response.data.message);
           setUser(null);
+          setIsLoggedIn(false);
+          localStorage.removeItem('isLoggedIn');
           navigate('/');
         } else {
           toast.error('Error: ' + response.data.message);
@@ -36,11 +45,11 @@ function header() {
           <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
             WanderLust
           </div>
-          <div className="flex justify-between px-2">
+          <div className="flex justify-between">
             <div className="flex items-center justify-end px-2 py-2 md:px-20">
               <ThemeToggle />
             </div>
-            {user ? <div className='flex gap-2'>
+            {isLoggedIn ? <div className='flex gap-2 '>
               <button
               className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
               onClick={() => {
@@ -72,6 +81,14 @@ function header() {
               }}
             >
               <img className="h-10 w-10" src={AddIcon} />
+            </button>
+            <button
+              className="md:px-2 py-2 hover:bg-slate-500/25 md:hidden"
+              onClick={() => {
+                handleLogout()
+              }}
+            >
+              <img className="h-10 w-10" src={AddLogOutIcon} />
             </button>
           </div>
         </div>

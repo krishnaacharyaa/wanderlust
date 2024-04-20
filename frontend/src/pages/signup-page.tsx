@@ -8,13 +8,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import axios, { isAxiosError } from 'axios';
-import UserContext from '@/context/user-context';
-import { useContext } from 'react';
+import useUserContext from '@/context/user-context';
 
 function signin() {
   const navigate = useNavigate();
 
-  const {setUser}: any = useContext(UserContext);
+  const {setUser}: any = useUserContext();
 
   const {
     register,
@@ -37,6 +36,7 @@ function signin() {
       );
 
       setUser(response.data.accessToken);
+      localStorage.setItem('isLoggedIn', 'true');
       toast.success(response.data.message);
 
       reset();

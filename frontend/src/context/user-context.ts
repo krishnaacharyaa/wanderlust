@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 interface User {
     accessToken: string;
@@ -9,6 +9,10 @@ interface UserContextType {
     setUser: React.Dispatch<React.SetStateAction<User | null>>; 
 }
 
-const UserContext = createContext<UserContextType | null>(null);
+export const UserContext = createContext<UserContextType | null>(null);
 
-export default UserContext;
+export const UserContextProvider = UserContext.Provider;
+
+export default function useUserContext() {
+    return useContext(UserContext);
+}
