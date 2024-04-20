@@ -8,6 +8,8 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 type FormData = {
   title: string;
@@ -17,6 +19,7 @@ type FormData = {
   description: string;
   isFeaturedPost: boolean;
 };
+
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
 
@@ -67,9 +70,11 @@ function AddBlog() {
     });
     setmodal(false);
   };
+
   const handleCheckboxChange = () => {
     setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
   };
+
   const validateFormData = () => {
     if (
       !formData.title ||
@@ -81,11 +86,14 @@ function AddBlog() {
       toast.error('All fields must be filled out.');
       return false;
     }
+
     const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
+
     if (!imageLinkRegex.test(formData.imageLink)) {
       toast.error('Image URL must end with .jpg, .jpeg, .webp or .png');
       return false;
     }
+
     if (formData.categories.length > 3) {
       toast.error('Select up to three categories.');
       return false;
@@ -93,8 +101,10 @@ function AddBlog() {
 
     return true;
   };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (validateFormData()) {
       try {
         const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
@@ -110,8 +120,47 @@ function AddBlog() {
       }
     }
   };
+
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'code-block',
+    'script',
+    'font',
+    'align',
+    'color',
+    'background',
+    'direction',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+  ];
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
+      [{ script: 'sub' }, { script: 'super' }],
+      [{ font: [] }],
+      [{ align: [] }],
+      [{ color: [] }, { background: [] }],
+      [{ direction: 'rtl' }],
+      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      ['link', 'image'],
+      ['clean'],
+    ],
+  };
+
   const navigate = useNavigate();
+
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
+
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
     setIsDarkMode(storedTheme === 'dark');
@@ -174,13 +223,13 @@ function AddBlog() {
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
               Blog content <Asterisk />
             </div>
-            <textarea
-              name="description"
+            <ReactQuill
+              modules={modules}
+              formats={formats}
               placeholder="Start writing here&hellip;"
-              rows={5}
-              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              theme="snow"
+              onChange={(value) => setFormData({ ...formData, description: value })}
               value={formData.description}
-              onChange={handleInputChange}
             />
           </div>
 

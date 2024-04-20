@@ -20,6 +20,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.2",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.18.0",
     "react-tag-input": "^6.8.1",
     "react-toastify": "^9.1.3",
