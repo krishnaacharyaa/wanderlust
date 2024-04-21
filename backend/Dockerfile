@@ -7,7 +7,11 @@ WORKDIR /app
 # code
 COPY . .
 
+# packages install
 RUN npm i
+
+# tests
+RUN npm run test
 
 # Stage 2
 FROM node:21-slim
