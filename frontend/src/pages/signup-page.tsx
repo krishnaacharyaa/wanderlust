@@ -13,7 +13,7 @@ import useUserContext from '@/context/user-context';
 function signin() {
   const navigate = useNavigate();
 
-  const {setUser}: any = useUserContext();
+  const { setUser }: any = useUserContext();
 
   const {
     register,

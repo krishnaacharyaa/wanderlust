@@ -21,7 +21,7 @@ type FormData = {
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
 
-  const { user, setUser }: any =  useUserContext();
+  const { user, setUser }: any = useUserContext();
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -101,7 +101,9 @@ function AddBlog() {
     console.log(user);
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, { headers: { 'access_token': 'Bearer '+ user}});
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
+          headers: { access_token: 'Bearer ' + user },
+        });
 
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
@@ -110,8 +112,8 @@ function AddBlog() {
           toast.error('Error: ' + response.data.message);
         }
       } catch (err: any) {
-        if(err.response.status === 403) {
-          toast.error('Error: ' + "Invalid user!");
+        if (err.response.status === 403) {
+          toast.error('Error: ' + 'Invalid user!');
           setUser(null);
           localStorage.setItem('isLoggedIn', 'false');
           navigate('/');
