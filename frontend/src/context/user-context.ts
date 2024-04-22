@@ -1,13 +1,5 @@
 import { createContext, useContext } from 'react';
-
-interface User {
-  accessToken: string;
-}
-
-interface UserContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-}
+import { UserContextType } from '@/types/user-interface';
 
 export const UserContext = createContext<UserContextType | null>(null);
 
