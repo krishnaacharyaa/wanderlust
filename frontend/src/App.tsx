@@ -6,11 +6,17 @@ import ScrollToTop from '@/components/scroll-to-top';
 import Footer from '@/layouts/footer-layout';
 import SignIn from '@/pages/signin-page';
 import SignUp from '@/pages/signup-page';
+import { UserContextProvider } from '@/context/user-context';
+import { UserContextType } from '@/types/user-interface'
+import { useState } from 'react';
 
 function App() {
+  const [user, setUser] = useState(null);
+
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <UserContextProvider value={{ user, setUser } as UserContextType}>
       <div className="flex min-h-screen flex-col">
         <Routes>
           <Route path="/">
@@ -23,6 +29,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
+      </UserContextProvider>
     </BrowserRouter>
   );
 }
