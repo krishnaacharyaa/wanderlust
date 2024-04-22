@@ -8,6 +8,7 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import useUserContext from '@/context/user-context';
 
 type FormData = {
   title: string;
@@ -19,6 +20,8 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
+
+  const { user, setUser }: any = useUserContext();
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -97,7 +100,9 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
+          headers: { access_token: 'Bearer ' + user },
+        });
 
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
@@ -106,7 +111,14 @@ function AddBlog() {
           toast.error('Error: ' + response.data.message);
         }
       } catch (err: any) {
-        toast.error('Error: ' + err.message);
+        if (err.response.status === 403) {
+          toast.error('Error: ' + 'Invalid user!');
+          setUser(null);
+          localStorage.setItem('isLoggedIn', 'false');
+          navigate('/');
+        } else {
+          toast.error('Error: ' + err.message);
+        }
       }
     }
   };
