@@ -11,7 +11,7 @@ export const checkAuth = async (req, res, next) => {
                 if(error){
                     return res.status(HTTP_STATUS.FORBIDDEN).json({
                         success: false,
-                        message: "Token is not valid!",
+                        message: "Token is Invalid or expired!",
                     });
                 }
                 req.user = payload;
@@ -19,7 +19,7 @@ export const checkAuth = async (req, res, next) => {
             });
 
         } else {
-            res.status(HTTP_STATUS.UNAUTHORIZED).json({
+            return res.status(HTTP_STATUS.UNAUTHORIZED).json({
                 success: false,
                 message: "You are not authorized!",
             });
