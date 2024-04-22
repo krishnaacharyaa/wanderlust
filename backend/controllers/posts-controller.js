@@ -1,4 +1,5 @@
 import Post from '../models/post.js';
+import User from '../models/user.js';
 import {
   deleteDataFromCache,
   retrieveDataFromCache,
@@ -15,6 +16,8 @@ export const createPostHandler = async (req, res) => {
       description,
       isFeaturedPost = false,
     } = req.body;
+
+    const userId = req.user._id;
 
     // Validation - check if all fields are filled
     if (!title || !authorName || !imageLink || !description || !categories) {
@@ -54,6 +57,9 @@ export const createPostHandler = async (req, res) => {
       deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
     ]);
 
+        // updating user doc to include the ObjectId of the created post
+        await User.findByIdAndUpdate(userId, { $push: { createdPosts: savedPost._id } });
+        
     res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
