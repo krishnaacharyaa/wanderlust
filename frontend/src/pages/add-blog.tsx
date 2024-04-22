@@ -112,7 +112,7 @@ function AddBlog() {
         }
       } catch (err: any) {
         if (err.response.status === 403) {
-          toast.error('Error: ' + 'Invalid user!');
+          toast.error('Error: ' + 'Your session has expired, please login again!');
           setUser(null);
           localStorage.setItem('isLoggedIn', 'false');
           navigate('/');
