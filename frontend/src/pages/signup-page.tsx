@@ -7,9 +7,13 @@ import { TSignUpSchema, signUpSchema } from '@/lib/types';
 import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
+import axios, { isAxiosError } from 'axios';
+import useUserContext from '@/context/user-context';
 
 function signin() {
   const navigate = useNavigate();
+
+  const { setUser }: any = useUserContext();
 
   const {
     register,
@@ -19,16 +23,27 @@ function signin() {
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
-    if (data.email === 'abc@gamil.com') {
-      toast.error('Submitting form is failed');
-      return;
+    try {
+      const { username, email, password } = data;
+
+      const response = await axios.post(
+        import.meta.env.VITE_API_PATH + '/api/auth/email-password/signup',
+        {
+          name: username,
+          email,
+          password,
+        }
+      );
+      
+      setUser(response.data.accessToken);
+      localStorage.setItem('isLoggedIn', 'true');
+      toast.success(response.data.message);
+
+      reset();
+      navigate('/');
+    } catch (error) {
+      if (isAxiosError(error)) toast.error(error?.response?.data.message);
     }
-
-    // TODO: Server-side validation
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    reset();
-    navigate('/');
   };
 
   return (
