@@ -11,7 +11,7 @@ const AdminSidebar = () => {
   return (
     <>
       <button
-        className=" p-4  md:hidden"
+        className=" p-4  text-light-title dark:text-dark-title md:hidden "
         onClick={() => {
           setIsSidebarOpen(!isSidebarOpen);
         }}
@@ -19,27 +19,27 @@ const AdminSidebar = () => {
         <BarIcons />
       </button>
       <div
-        className={`absolute md:h-auto h-full w-64 origin-left rounded-b-xl rounded-r-xl border border-[#D9D9D9]  bg-white transition-transform md:relative ${
+        className={`absolute h-full w-64 origin-left rounded-b-xl rounded-r-xl border border-[#D9D9D9] bg-light transition-transform   dark:border-gray-700 dark:bg-dark md:relative md:h-auto ${
           isSidebarOpen ? 'scale-x-1' : 'scale-x-0'
         }`}
       >
         <button
-          className=" p-4  md:hidden"
+          className=" p-4  text-light-title dark:text-dark-title md:hidden "
           onClick={() => {
             setIsSidebarOpen(!isSidebarOpen);
           }}
         >
           <CloseIcon />
         </button>
-        <div className="border-b border-[#D9D9D9]  bg-[#FAFAFA] py-3 px-6 md:p-6 ">
-          <h1 className="text-xl font-medium">WanderLust</h1>
+        <div className="border-b border-[#D9D9D9] bg-light  px-6 py-3 dark:border-gray-700 dark:bg-dark md:p-6 ">
+          <h1 className="text-xl font-medium text-light-title dark:text-dark-title">WanderLust</h1>
         </div>
         <div className="flex flex-col gap-2 p-6">
           <NavLink
             to={'/admin/users'}
             className={({ isActive }) =>
-              `flex items-center gap-3 rounded-xl bg-white px-3 py-[10px] text-sm font-medium text-[#5C5E64] ${
-                isActive && '!bg-black text-white'
+              `flex items-center gap-3 rounded-xl bg-light px-3 py-[10px] text-sm font-medium text-light-title dark:bg-dark dark:text-dark-title ${
+                isActive && '!bg-black text-dark-title dark:!bg-dark-card dark:text-dark-title '
               }`
             }
           >
@@ -48,8 +48,8 @@ const AdminSidebar = () => {
           <NavLink
             to={'/admin/blogs'}
             className={({ isActive }) =>
-              `flex items-center gap-3 rounded-xl bg-white px-3 py-[10px] text-sm font-medium text-[#5C5E64] ${
-                isActive && '!bg-black !text-white'
+              `flex items-center gap-3 rounded-xl bg-light px-3 py-[10px] text-sm font-medium text-light-title dark:bg-dark dark:text-dark-title ${
+                isActive && '!bg-black text-dark-title dark:!bg-dark-card dark:text-dark-title '
               }`
             }
           >
