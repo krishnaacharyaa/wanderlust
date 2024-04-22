@@ -1,34 +1,41 @@
-import PenIcon from "@/assets/svg/pen-icon";
-import TrasnIcon from "@/assets/svg/trash-icon";
-import { imageUrls } from "@/constants/images";
+import PenIcon from '@/assets/svg/pen-icon';
+import TrasnIcon from '@/assets/svg/trash-icon';
+import { imageUrls } from '@/constants/images';
 
 const AdminBlogs = () => {
   return (
-
-<div className="p-12 w-full">
-  <h1 className="text-2xl font-bold">Blogs</h1>
-  <div className="mt-12 flex flex-col">
-    <div className="flex flex-col md:flex-row md:items-center justify-between py-2 gap-2 md:gap-7">
-      <img src={imageUrls[1]} className="md:w-28 md:h-24 w-full h-48 object-cover rounded-xl shadow-lg" alt="" />
-      <div className="flex grow flex-col justify-between gap-1"> 
-        <h4 className="font-semibold text-2xl">A Serene Escape to Bali's Hidden Beaches</h4>
-        <p className="text-[#868383]  text-sm ">Explore Bali's tranquil shores and discover the best-hidden beaches the island has to offer. Dive into the crystal-clear water</p>
-        <p className="text-[#6941C6] text-sm font-semibold">Drew Cano • 1 Jan 2023</p>
-      </div>
-      <div className="flex gap-2 ">
-      <button className="h-fit rounded-xl text-xl font-semibold border-0">
-     <PenIcon />
-      </button>
-      <button className="h-fit rounded-xl border-0 text-xl font-semibold ">
-   <TrasnIcon />
-      </button>
+    <div className="w-full p-12">
+      <h1 className="text-2xl font-bold text-light-title dark:text-dark-title">Blogs</h1>
+      <div className="mt-12 flex flex-col">
+        <div className="flex flex-col justify-between gap-2 rounded-lg bg-light px-2 py-2 shadow-md dark:bg-dark-card md:flex-row md:items-center md:gap-7">
+          <img
+            src={imageUrls[1]}
+            className="h-48 w-full rounded-xl object-cover shadow-lg md:h-24 md:w-28"
+            alt=""
+          />
+          <div className="flex grow flex-col justify-between gap-1">
+            <h4 className="text-2xl font-semibold text-light-title dark:text-dark-title">
+              A Serene Escape to Bali's Hidden Beaches
+            </h4>
+            <p className="text-sm  text-light-description dark:text-dark-description">
+              Explore Bali's tranquil shores and discover the best-hidden beaches the island has to
+              offer. Dive into the crystal-clear water
+            </p>
+            <p className="text-sm font-semibold text-[#6941C6] dark:text-dark-secondary">
+              Drew Cano • 1 Jan 2023
+            </p>
+          </div>
+          <div className="flex gap-2 ">
+            <button className="h-fit rounded-xl border-0 text-xl font-semibold text-light-title dark:text-dark-title">
+              <PenIcon />
+            </button>
+            <button className="h-fit rounded-xl border-0 text-xl font-semibold text-light-title dark:text-dark-title ">
+              <TrasnIcon />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-
- 
   );
 };
 
