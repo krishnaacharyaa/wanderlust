@@ -39,7 +39,7 @@ const AdminSidebar = () => {
             to={'/admin/users'}
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl bg-light px-3 py-[10px] text-sm font-medium text-light-title dark:bg-dark dark:text-dark-title ${
-                isActive && '!bg-black text-dark-title dark:!bg-dark-card dark:text-dark-title '
+                isActive && '!bg-black !text-dark-title dark:!bg-dark-card !dark:text-dark-title '
               }`
             }
           >
@@ -49,7 +49,7 @@ const AdminSidebar = () => {
             to={'/admin/blogs'}
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl bg-light px-3 py-[10px] text-sm font-medium text-light-title dark:bg-dark dark:text-dark-title ${
-                isActive && '!bg-black text-dark-title dark:!bg-dark-card dark:text-dark-title '
+                isActive && '!bg-black !text-dark-title dark:!bg-dark-card !dark:text-dark-title '
               }`
             }
           >
