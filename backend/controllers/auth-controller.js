@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import { accessCookieOptions, refreshCookieOptions } from '../utils/cookie_options.js';
+import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';
 const { hash, compareSync } = bcrypt;
 const { sign } = jwt;
 
@@ -21,11 +22,11 @@ export const signUpWithEmail = async (req, res, next) => {
     }
     const hashedPassword = await hash(password, 10);
     const newUser = await User.create({ name, email, password: hashedPassword });
-    const accessToken = sign({ name, _id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
+    const accessToken = sign({ name, _id: newUser._id }, JWT_SECRET, {
+      expiresIn: ACCESS_TOKEN_EXPIRES_IN,
     });
-    const refreshToken = sign({ name, _id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
+    const refreshToken = sign({ name, _id: newUser._id }, JWT_SECRET, {
+      expiresIn: REFRESH_TOKEN_EXPIRES_IN,
     });
     res.cookie('access_token', accessToken, accessCookieOptions);
     res.cookie('refresh_token', refreshToken, refreshCookieOptions);
