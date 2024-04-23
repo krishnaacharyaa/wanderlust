@@ -1,9 +1,9 @@
 const AdminUsers = () => {
   return (
-    <div className="w-full p-12">
+    <div className="w-full p-5 sm:p-12">
       <h1 className="text-2xl font-bold text-light-title dark:text-dark-title">Users</h1>
-      <div className="mt-12">
-        <div className="flex w-full items-center justify-between rounded-lg border-b border-gray-300 bg-light px-3 py-4 shadow-md dark:border-gray-700 dark:bg-dark-card">
+      <div className="mt-7 sm:mt-12">
+        <div className="flex flex-col gap-5 justify-start sm:flex-row w-full sm:items-center items-start  sm:justify-between rounded-lg border-b border-gray-300 bg-light px-3 py-4 shadow-md dark:border-gray-700 dark:bg-dark-card">
           <div className="flex flex-col gap-[10px] ">
             <p className="text-base font-medium text-light-title dark:text-dark-title">Hemant</p>
             <p className="text-base font-medium text-light-description dark:text-dark-description">
