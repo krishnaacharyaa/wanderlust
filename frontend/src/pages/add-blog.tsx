@@ -8,10 +8,10 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import TextEditor from '@/components/text-editor';
 
-type FormData = {
+export type FormData = {
   title: string;
   authorName: string;
   imageLink: string;
@@ -121,42 +121,6 @@ function AddBlog() {
     }
   };
 
-  const formats = [
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'code-block',
-    'script',
-    'font',
-    'align',
-    'color',
-    'background',
-    'direction',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'image',
-  ];
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
-      [{ script: 'sub' }, { script: 'super' }],
-      [{ font: [] }],
-      [{ align: [] }],
-      [{ color: [] }, { background: [] }],
-      [{ direction: 'rtl' }],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-      ['link', 'image'],
-      ['clean'],
-    ],
-  };
-
   const navigate = useNavigate();
 
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
@@ -223,14 +187,7 @@ function AddBlog() {
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
               Blog content <Asterisk />
             </div>
-            <ReactQuill
-              modules={modules}
-              formats={formats}
-              placeholder="Start writing here&hellip;"
-              theme="snow"
-              onChange={(value) => setFormData({ ...formData, description: value })}
-              value={formData.description}
-            />
+            <TextEditor formData={formData} setFormData={setFormData} />
           </div>
 
           <div className="mb-2">
