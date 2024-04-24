@@ -28,7 +28,9 @@ describe('Integration Tests: Post creation', () => {
     delete postObject.title;
     const response = await request(server).post('/api/posts').send(postObject);
 
-    expect(JSON.parse(response.text)).toEqual({ message: RESPONSE_MESSAGES.COMMON.REQUIRED_FIELDS });
+    expect(JSON.parse(response.text)).toEqual({
+      message: RESPONSE_MESSAGES.COMMON.REQUIRED_FIELDS,
+    });
     expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
   });
 
@@ -58,13 +60,17 @@ describe('Integration Tests: Post creation', () => {
 
   it('Post creation: Failure - Internal server error', async () => {
     // Mocking a scenario where the server encounters an internal error during post creation
-    jest.spyOn(Post.prototype, 'save').mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
+    jest
+      .spyOn(Post.prototype, 'save')
+      .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
 
     const postObject = createPostObject();
     const response = await request(server).post('/api/posts').send(postObject);
 
     expect(response.status).toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
-    expect(JSON.parse(response.text)).toEqual({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR });
+    expect(JSON.parse(response.text)).toEqual({
+      message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR,
+    });
   });
 });
 describe('Integration Tests: Get all posts', () => {

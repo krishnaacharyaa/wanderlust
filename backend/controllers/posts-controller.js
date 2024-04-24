@@ -57,9 +57,9 @@ export const createPostHandler = async (req, res) => {
       deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
     ]);
 
-        // updating user doc to include the ObjectId of the created post
-        await User.findByIdAndUpdate(userId, { $push: { createdPosts: savedPost._id } });
-        
+    // updating user doc to include the ObjectId of the created post
+    await User.findByIdAndUpdate(userId, { $push: { createdPosts: savedPost._id } });
+
     res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
