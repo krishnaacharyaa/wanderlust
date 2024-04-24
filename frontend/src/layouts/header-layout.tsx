@@ -33,7 +33,8 @@ function header() {
         toast.error('Error: ' + response.data.message);
       }
     } catch (err: any) {
-      toast.error('Error: ' + err.message);
+      console.log('Error :', err.message);
+      toast.error('Something went wrong. Please try again later.');
     }
   };
   return (

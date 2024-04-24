@@ -117,7 +117,8 @@ function AddBlog() {
           localStorage.setItem('isLoggedIn', 'false');
           navigate('/');
         } else {
-          toast.error('Error: ' + err.message);
+          console.log('Error :', err.message);
+          toast.error('Something went wrong. Please try again later.');
         }
       }
     }
