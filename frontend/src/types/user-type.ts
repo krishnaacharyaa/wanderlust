@@ -1,8 +1,8 @@
-export interface User {
+export type User = {
     accessToken: string;
 }
 
-export interface UserContextType {
+export type UserContextType = {
     user: User | null;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
