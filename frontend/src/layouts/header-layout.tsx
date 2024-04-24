@@ -102,7 +102,7 @@ function header() {
                     navigate('/signin');
                   }}
                 >
-                  <img className="h-8 w-8" src={LogInIcon} />
+                  <img className="h-9 w-9" src={LogInIcon} />
                 </button>
               </div>
             )}
