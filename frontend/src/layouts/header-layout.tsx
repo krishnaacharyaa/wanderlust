@@ -1,6 +1,7 @@
 import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
-import { LogInIcon, LogOutIcon } from 'lucide-react';
+import LogOutIcon from '@/assets/svg/logout.svg';
+import LogInIcon from '@/assets/svg/login.svg';
 import { useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
 import { useEffect, useState } from 'react';
@@ -81,7 +82,7 @@ function header() {
                     handleLogout();
                   }}
                 >
-                  <LogOutIcon />
+                  <img className="h-9 w-9" src={LogOutIcon} />
                 </button>
               </div>
             ) : (
@@ -101,7 +102,7 @@ function header() {
                     navigate('/signin');
                   }}
                 >
-                  <LogInIcon />
+                  <img className="h-8 w-8" src={LogInIcon} />
                 </button>
               </div>
             )}
