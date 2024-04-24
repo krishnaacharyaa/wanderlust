@@ -7,7 +7,6 @@ import Footer from '@/layouts/footer-layout';
 import SignIn from '@/pages/signin-page';
 import SignUp from '@/pages/signup-page';
 import AdminUsers from '@/pages/admin-users';
-import AdminContainer from '@/components/admin-container';
 import AdminBlogs from '@/pages/admin-blogs';
 
 function App() {
@@ -23,22 +22,8 @@ function App() {
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="admin">
-              <Route
-                path="users"
-                element={
-                  <AdminContainer>
-                    <AdminUsers />
-                  </AdminContainer>
-                }
-              />
-              <Route
-                path="blogs"
-                element={
-                  <AdminContainer>
-                    <AdminBlogs />
-                  </AdminContainer>
-                }
-              />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="blogs" element={<AdminBlogs />} />
             </Route>
           </Route>
         </Routes>
