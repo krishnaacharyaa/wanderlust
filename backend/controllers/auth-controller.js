@@ -16,9 +16,15 @@ export const signUpWithEmail = async (req, res, next) => {
     if (!name || !email || !password) {
       throw new Error('All fields are required.');
     }
-    const isExisitsUser = await User.findOne({ email });
-    if (isExisitsUser) {
-      throw new Error('User already exists.');
+    const isExisitsUserName = await User.findOne({ name });
+    
+    if (isExisitsUserName) {
+      throw new Error('Name already exists.');
+    } else {
+      const isExisitsUserEmail = await User.findOne({ email });
+      if (isExisitsUserEmail) {
+        throw new Error('Email already exists.');
+      }
     }
     const hashedPassword = await hash(password, 10);
     const newUser = await User.create({ name, email, password: hashedPassword });
