@@ -7,7 +7,7 @@ import Footer from '@/layouts/footer-layout';
 import SignIn from '@/pages/signin-page';
 import SignUp from '@/pages/signup-page';
 import { UserContextProvider } from '@/context/user-context';
-import { UserContextType } from '@/types/user-interface'
+import { UserContextType } from '@/types/user-type'
 import { useState } from 'react';
 
 function App() {
