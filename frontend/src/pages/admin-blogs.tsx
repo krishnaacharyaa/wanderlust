@@ -1,41 +1,49 @@
 import PenIcon from '@/assets/svg/pen-icon';
 import TrasnIcon from '@/assets/svg/trash-icon';
+import AdminSidebar from '@/components/admin-sidebar';
 import { imageUrls } from '@/constants/images';
 
 const AdminBlogs = () => {
   return (
-    <div className="w-full p-5 sm:p-12">
-      <h1 className="text-2xl font-bold text-light-title dark:text-dark-title">Blogs</h1>
-      <div className="mt-7 sm:mt-12 flex flex-col">
-        <div className="flex flex-col justify-between gap-2 rounded-lg bg-light px-3 py-3 shadow-md dark:bg-dark-card md:flex-row md:items-center md:gap-7">
-          <img
-            src={imageUrls[1]}
-            className="h-48 w-full rounded-xl object-cover shadow-lg md:h-24 md:w-28"
-            alt=""
-          />
-          <div className="flex grow flex-col justify-between gap-2">
-            <h4 className="text-2xl font-semibold text-light-title dark:text-dark-title">
-              A Serene Escape to Bali's Hidden Beaches
-            </h4>
-            <p className="text-sm  text-light-description dark:text-dark-description">
-              Explore Bali's tranquil shores and discover the best-hidden beaches the island has to
-              offer. Dive into the crystal-clear water
-            </p>
-            <p className="text-sm font-semibold text-[#6941C6] dark:text-dark-secondary">
-              Drew Cano • 1 Jan 2023
-            </p>
-          </div>
-          <div className="flex gap-2 mt-2 sm:mt-0 ">
-            <button className="h-fit rounded-xl border-0 text-xl font-semibold text-light-title dark:text-dark-title">
-              <PenIcon />
-            </button>
-            <button className="h-fit rounded-xl border-0 text-xl font-semibold text-light-title dark:text-dark-title ">
-              <TrasnIcon />
-            </button>
+    <>
+      <div className="relative flex flex-grow flex-col bg-light dark:bg-dark md:flex-row">
+        <AdminSidebar />
+        <div className="w-full p-3 px-5 md:p-12">
+          <h1 className="absolute left-16 top-3 text-2xl font-bold text-light-title dark:text-dark-title  md:static">
+            Blogs
+          </h1>
+          <div className="mt-2 flex flex-col md:mt-12">
+            <div className="flex  flex-row items-center justify-between gap-2 rounded-lg bg-light px-3 py-3 shadow-md dark:bg-dark-card sm:gap-5">
+              <img
+                src={imageUrls[1]}
+                className=" h-16 w-16 rounded-xl object-cover shadow-lg sm:h-24 sm:w-24"
+                alt=""
+              />
+              <div className="flex w-12 flex-1 grow flex-col justify-between gap-2">
+                <h4 className="w-full truncate text-base font-semibold text-light-title dark:text-dark-title sm:text-xl">
+                  A Serene Escape to Bali's Hidden Beaches
+                </h4>
+                <p className="hidden w-full truncate text-sm text-light-description dark:text-dark-description sm:inline">
+                  Explore Bali's tranquil shores and discover the best-hidden beaches the island has
+                  to offer. Dive into the crystal-clear water
+                </p>
+                <p className="text-sm font-semibold text-[#6941C6] dark:text-dark-secondary">
+                  Drew Cano • 1 Jan 2023
+                </p>
+              </div>
+              <div className="mt-2 flex flex-col gap-2 sm:mt-0 md:flex-row ">
+                <button className="h-fit rounded-xl border-0 text-base font-semibold text-light-title dark:text-dark-title sm:text-xl">
+                  <PenIcon />
+                </button>
+                <button className="h-fit rounded-xl border-0 text-base font-semibold text-light-title dark:text-dark-title sm:text-xl ">
+                  <TrasnIcon />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

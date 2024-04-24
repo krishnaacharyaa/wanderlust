@@ -19,9 +19,9 @@ const AdminSidebar = () => {
         <BarIcons />
       </button>
       <div
-        className={`absolute h-full w-64 origin-left rounded-b-xl rounded-r-xl border border-[#D9D9D9] bg-light transition-transform   dark:border-gray-700 dark:bg-dark md:relative md:h-auto ${
-          isSidebarOpen ? 'scale-x-1' : 'scale-x-0'
-        }`}
+        className={`absolute z-10 h-full w-64 origin-left rounded-b-xl rounded-r-xl border border-[#D9D9D9] bg-light transition-transform dark:border-gray-700 dark:bg-dark ${
+          isSidebarOpen ? 'scale-x-100' : 'scale-x-0'
+        } md:relative md:h-auto md:scale-x-100`}
       >
         <button
           className=" p-4  text-light-title dark:text-dark-title md:hidden "
@@ -39,7 +39,7 @@ const AdminSidebar = () => {
             to={'/admin/users'}
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl bg-light px-3 py-[10px] text-sm font-medium text-light-title dark:bg-dark dark:text-dark-title ${
-                isActive && '!bg-black !text-dark-title dark:!bg-dark-card !dark:text-dark-title '
+                isActive && '!dark:text-dark-title !bg-black !text-dark-title dark:!bg-dark-card '
               }`
             }
           >
@@ -49,7 +49,7 @@ const AdminSidebar = () => {
             to={'/admin/blogs'}
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl bg-light px-3 py-[10px] text-sm font-medium text-light-title dark:bg-dark dark:text-dark-title ${
-                isActive && '!bg-black !text-dark-title dark:!bg-dark-card !dark:text-dark-title '
+                isActive && '!dark:text-dark-title !bg-black !text-dark-title dark:!bg-dark-card '
               }`
             }
           >
