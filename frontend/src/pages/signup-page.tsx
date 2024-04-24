@@ -9,11 +9,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import axios, { isAxiosError } from 'axios';
 import useUserContext from '@/context/user-context';
+import { useState } from 'react';
 
 function signin() {
   const navigate = useNavigate();
 
   const { setUser }: any = useUserContext();
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
 
   const {
     register,
@@ -34,7 +36,7 @@ function signin() {
           password,
         }
       );
-      
+
       setUser(response.data.accessToken);
       localStorage.setItem('isLoggedIn', 'true');
       toast.success(response.data.message);
@@ -42,7 +44,15 @@ function signin() {
       reset();
       navigate('/');
     } catch (error) {
-      if (isAxiosError(error)) toast.error(error?.response?.data.message);
+      if (isAxiosError(error)) {
+        const responseDataMessage = error?.response?.data?.message;
+
+        if (responseDataMessage.includes('Email already exists.')) {
+          setFieldErrors({ email: responseDataMessage });
+        } else {
+          setFieldErrors({ username: responseDataMessage });
+        }
+      }
     }
   };
 
@@ -67,6 +77,7 @@ function signin() {
             {errors.username && (
               <p className="p-3 text-xs text-red-500">{`${errors.username.message}`}</p>
             )}
+            {fieldErrors.username && <p className="p-3 text-xs text-red-500">{fieldErrors.username}</p>}
           </div>
 
           <div className="mb-2">
@@ -79,6 +90,7 @@ function signin() {
             {errors.email && (
               <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
             )}
+            {fieldErrors.email && <p className="p-3 text-xs text-red-500">{fieldErrors.email}</p>}
           </div>
 
           <div className="mb-2">
