@@ -17,7 +17,7 @@ export const signUpWithEmail = async (req, res, next) => {
       throw new Error('All fields are required.');
     }
     const isExisitsUserName = await User.findOne({ name });
-    
+
     if (isExisitsUserName) {
       throw new Error('Name already exists.');
     } else {
@@ -68,20 +68,12 @@ export const signInWithEmail = async (req, res, next) => {
     let accessToken;
     let refreshToken;
     if (isUserExists && compareSync(password, isUserExists.password)) {
-      accessToken = sign(
-        { name: isUserExists.name, _id: isUserExists._id },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
-        }
-      );
-      refreshToken = sign(
-        { name: isUserExists.name, _id: isUserExists._id },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
-        }
-      );
+      accessToken = sign({ name: isUserExists.name, _id: isUserExists._id }, JWT_SECRET, {
+        expiresIn: ACCESS_TOKEN_EXPIRES_IN,
+      });
+      refreshToken = sign({ name: isUserExists.name, _id: isUserExists._id }, JWT_SECRET, {
+        expiresIn: REFRESH_TOKEN_EXPIRES_IN,
+      });
       res.cookie('access_token', accessToken, accessCookieOptions);
       res.cookie('refresh_token', refreshToken, refreshCookieOptions);
     } else {
@@ -384,8 +376,8 @@ export const signInWithGithub = async (req, res, next) => {
 //Sign Out
 export const signOutUser = async (req, res, next) => {
   try {
-    res.cookie('access_token', '', { maxAge: 1 });
-    res.cookie('refresh_token', '', { maxAge: 1 });
+    res.cookie('access_token', '', { secure: true, maxAge: 0, httpOnly: true });
+    res.cookie('refresh_token', '', { secure: true, maxAge: 0, httpOnly: true });
 
     res.status(200).json({ success: true, message: RESPONSE_MESSAGES.USERS.SIGNED_OUT });
   } catch (error) {
