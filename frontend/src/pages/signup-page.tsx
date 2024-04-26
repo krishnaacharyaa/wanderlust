@@ -8,18 +8,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import axios, { isAxiosError } from 'axios';
-import useUserContext from '@/context/user-context';
 
 function signin() {
   const navigate = useNavigate();
-
-  const { setUser }: any = useUserContext();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setError
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
@@ -35,14 +33,21 @@ function signin() {
         }
       );
       
-      setUser(response.data.accessToken);
       localStorage.setItem('isLoggedIn', 'true');
       toast.success(response.data.message);
 
       reset();
       navigate('/');
     } catch (error) {
-      if (isAxiosError(error)) toast.error(error?.response?.data.message);
+      if (isAxiosError(error)) {
+          const errorMessage = error?.response?.data?.message;
+
+          if(errorMessage.includes('Name')){
+            setError('username', {type: 'manual', message: errorMessage});
+          } else if(errorMessage.includes('Email')) {
+            setError('email', {type: 'manual', message: errorMessage});
+          }
+      }
     }
   };
 

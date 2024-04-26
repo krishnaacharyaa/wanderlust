@@ -7,11 +7,9 @@ import Hero from '@/components/hero';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import useUserContext from '@/context/user-context';
 function header() {
   const navigate = useNavigate();
 
-  const { setUser }: any = useUserContext();
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
 
   useEffect(() => {
@@ -26,7 +24,6 @@ function header() {
 
       if (response.status === 200) {
         toast.success(response.data.message);
-        setUser(null);
         setIsLoggedIn(false);
         localStorage.removeItem('isLoggedIn');
         navigate('/');
