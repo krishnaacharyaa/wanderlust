@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import connectDB from './config/db.js';
-import { PORT } from './config/utils.js';
+import { FRONTEND_URL, PORT } from './config/utils.js';
 import authRouter from './routes/auth.js';
 import postsRouter from './routes/posts.js';
 import { connectToRedis } from './services/redis.js';
@@ -12,7 +12,7 @@ const port = PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({origin: FRONTEND_URL , credentials: true}));
 app.use(cookieParser());
 app.use(compression());
 
