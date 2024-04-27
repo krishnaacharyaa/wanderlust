@@ -376,8 +376,8 @@ export const signInWithGithub = async (req, res, next) => {
 //Sign Out
 export const signOutUser = async (req, res, next) => {
   try {
-    res.cookie('access_token', '', { secure: true, maxAge: 0, httpOnly: true });
-    res.cookie('refresh_token', '', { secure: true, maxAge: 0, httpOnly: true });
+    res.cookie('access_token', '', { maxAge: 0 });
+    res.cookie('refresh_token', '', { maxAge: 0 });
 
     res.status(200).json({ success: true, message: RESPONSE_MESSAGES.USERS.SIGNED_OUT });
   } catch (error) {

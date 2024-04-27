@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import axios, { isAxiosError } from 'axios';
+import userState from '@/utils/user-state';
 
 function signin() {
   const navigate = useNavigate();
@@ -17,11 +18,11 @@ function signin() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setError
+    setError,
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = async (data: FieldValues) => {
-     try {
+    try {
       const { email, password } = data;
 
       const response = await axios.post(
@@ -29,23 +30,24 @@ function signin() {
         {
           email,
           password,
-        }
+        },
+        { withCredentials: true }
       );
 
-      localStorage.setItem('isLoggedIn', 'true');
+      userState.setUser(response?.data?.accessToken);
       toast.success(response.data.message);
 
       reset();
       navigate('/');
     } catch (error) {
       if (isAxiosError(error)) {
-          const errorMessage = error?.response?.data?.message;
+        const errorMessage = error?.response?.data?.message;
 
-          if(errorMessage.includes('Email')){
-            setError('email', {type: 'manual', message: errorMessage});
-          } else {
-            setError('password', {type: 'manual', message: errorMessage});
-          }
+        if (errorMessage.includes('Email')) {
+          setError('email', { type: 'manual', message: errorMessage });
+        } else {
+          setError('password', { type: 'manual', message: errorMessage });
+        }
       }
     }
   };

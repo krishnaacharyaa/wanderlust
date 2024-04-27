@@ -7,16 +7,19 @@ import Hero from '@/components/hero';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import userState from '@/utils/user-state';
 function header() {
   const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+  const [accessToken, setAccessToken] = useState<string | null>(userState.getUser());
 
   useEffect(() => {
-    // Retrieve authentication status on page load
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(storedIsLoggedIn);
-  }, []);
+    const storedAccessToken = userState.getUser();
+
+    if (storedAccessToken) {
+      setAccessToken(storedAccessToken);
+    }
+  }, [accessToken, userState]);
 
   const handleLogout = async () => {
     try {
@@ -24,8 +27,8 @@ function header() {
 
       if (response.status === 200) {
         toast.success(response.data.message);
-        setIsLoggedIn(false);
-        localStorage.removeItem('isLoggedIn');
+        userState.setUser(null);
+        setAccessToken(null);
         navigate('/');
       } else {
         toast.error('Error: ' + response.data.message);
@@ -47,7 +50,7 @@ function header() {
             <div className="flex items-center justify-end px-2 py-2 md:px-20">
               <ThemeToggle />
             </div>
-            {isLoggedIn ? (
+            {accessToken ? (
               <div className="flex gap-2 ">
                 <button
                   className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
