@@ -31,8 +31,7 @@ function signin() {
           name: username,
           email,
           password,
-        },
-        { withCredentials: true }
+        }
       );
 
       userState.setUser(response?.data?.accessToken);
