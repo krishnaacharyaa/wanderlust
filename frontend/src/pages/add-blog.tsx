@@ -8,6 +8,7 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import userState from '@/utils/user-state';
 
 type FormData = {
   title: string;
@@ -19,6 +20,8 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
+
+  const user = userState.getUser();
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -98,7 +101,7 @@ function AddBlog() {
     if (validateFormData()) {
       try {
         const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
-          headers: { access_token: 'Bearer ' + 'token' },
+          headers: { access_token: 'Bearer ' + user },
         });
 
         if (response.status === 200) {
@@ -110,7 +113,10 @@ function AddBlog() {
       } catch (err: any) {
         if (err.response.status === 403) {
           toast.error('Error: ' + 'Your session has expired, please login again!');
-          localStorage.setItem('isLoggedIn', 'false');
+          userState.setUser(null);
+          navigate('/');
+        } else if (err.response.status === 401) {
+          toast.error('Error: ' + 'You are not authorized!');
           navigate('/');
         } else {
           console.log('Error :', err.message);
