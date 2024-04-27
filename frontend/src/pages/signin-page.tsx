@@ -30,8 +30,7 @@ function signin() {
         {
           email,
           password,
-        },
-        { withCredentials: true }
+        }
       );
 
       userState.setUser(response?.data?.accessToken);
