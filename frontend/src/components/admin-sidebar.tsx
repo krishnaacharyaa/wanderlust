@@ -6,7 +6,7 @@ import { useState } from 'react';
 import CloseIcon from '@/assets/svg/close-icon';
 
 const AdminSidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   return (
     <>
