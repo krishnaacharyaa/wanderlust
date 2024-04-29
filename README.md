@@ -32,17 +32,34 @@ _I'd love for you to make the most of this project - it's all about learning, he
    cd backend
    ```
 
-3. **Install Required Dependencies**
+3. **Install Required Dependencies (nodeJS and npm)**
 
    ```bash
+   cd ..  //back to home directory
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+   nvm install 21
+   sudo reboot
+
+   cd backend
    npm i
    ```
 
 4. **Set up your MongoDB Database**
 
+   ```bash
+   sudo apt-get install gnupg curl
+   curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc |    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg    --dearmor
+   echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee            /etc/apt/sources.list.d/mongodb-org-7.0.list
+   sudo apt-get update
+   sudo apt-get install -y mongodb-org
+   sudo systemctl start mongod
+   sudo systemctl status mongod
+   mongosh
+   ```
+     
    - Open MongoDB Compass and connect MongoDB locally at `mongodb://localhost:27017`.
 
-5. **Import sample data**
+6. **Import sample data**
 
    > To populate the database with sample posts, you can copy the content from the `backend/data/sample_posts.json` file and insert it as a document in the `wanderlust/posts` collection in your local MongoDB database using either MongoDB Compass or `mongoimport`.
 
@@ -50,13 +67,13 @@ _I'd love for you to make the most of this project - it's all about learning, he
    mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
    ```
 
-6. **Configure Environment Variables**
+7. **Configure Environment Variables**
 
    ```bash
    cp .env.sample .env
    ```
 
-7. **Start the Backend Server**
+8. **Start the Backend Server**
 
    ```bash
    npm start
@@ -92,7 +109,23 @@ _I'd love for you to make the most of this project - it's all about learning, he
 4. **Launch the Development Server**
 
    ```bash
-   npm run dev
+   npm run dev //for localhost host
+
+   npm run dev -- --host //for outside the localhost
+   ```
+
+4. **Change the IP address in {.env.sample} File**
+
+   VITE_API_PATH="http://{your IP}:5000"
+   
+   ```bash
+   cp .env.sample .env.local
+   ```
+
+4. **Run in the Background**
+
+   ```bash
+   nohup npm run dev -- --host &
    ```
 
 ## 🌟 Ready to Contribute?
