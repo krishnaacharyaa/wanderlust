@@ -9,6 +9,8 @@ export const validCategories = [
 ];
 export const HTTP_STATUS = {
   OK: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -38,6 +40,8 @@ export const RESPONSE_MESSAGES = {
     INVALID_PASSWORD: 'Invalid password.',
     INVALID_TOKEN: 'Token is Invalid or expired!',
     UNAUTHORIZED_USER: 'You are not authorized!',
+    UPDATE: 'User updated Successfully!',
+    DELETED: 'User deleted successfully!',
   },
 };
 

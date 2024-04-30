@@ -67,6 +67,7 @@ export const signInWithEmail = async (req, res, next) => {
     }
     let accessToken;
     let refreshToken;
+
     if (isUserExists && compareSync(password, isUserExists.password)) {
       accessToken = sign({ name: isUserExists.name, _id: isUserExists._id }, JWT_SECRET, {
         expiresIn: ACCESS_TOKEN_EXPIRES_IN,
@@ -93,6 +94,7 @@ export const signInWithEmail = async (req, res, next) => {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: error.message,
+      error,
     });
   }
 };

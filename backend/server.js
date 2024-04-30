@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 import { FRONTEND_URL, PORT } from './config/utils.js';
 import authRouter from './routes/auth.js';
 import postsRouter from './routes/posts.js';
+import userRouter from './routes/user.js';
 import { connectToRedis } from './services/redis.js';
 const app = express();
 const port = PORT || 5000;
@@ -25,6 +26,7 @@ connectToRedis();
 // API route
 app.use('/api/posts', postsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => {
   res.send('Yay!! Backend of wanderlust app is now accessible');
