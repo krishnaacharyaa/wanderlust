@@ -1,6 +1,7 @@
 import { JWT_SECRET } from '../config/utils.js';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import jwt from 'jsonwebtoken';
+import User from '../models/user.js';
 
 export const authenticationHandler = async (req, res, next) => {
   const authHeader = req.headers.access_token;
@@ -21,6 +22,31 @@ export const authenticationHandler = async (req, res, next) => {
     return res.status(HTTP_STATUS.UNAUTHORIZED).json({
       success: false,
       message: RESPONSE_MESSAGES.USERS.UNAUTHORIZED_USER,
+    });
+  }
+};
+
+export const adminHandler = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user)
+      return res.status(HTTP_STATUS.FORBIDDEN).json({
+        success: false,
+        message: RESPONSE_MESSAGES.USERS.INVALID_TOKEN,
+      });
+
+    if (user.role === 'admin') {
+      next();
+    } else {
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
+        success: false,
+        message: RESPONSE_MESSAGES.USERS.UNAUTHORIZED_USER,
+      });
+    }
+  } catch (error) {
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      success: 'fail',
+      message: error.message,
     });
   }
 };

@@ -11,7 +11,7 @@ import {
 } from '../controllers/posts-controller.js';
 import { REDIS_KEYS } from '../utils/constants.js';
 import { cacheHandler } from '../utils/middleware.js';
-import { authenticationHandler } from '../middlewares/auth-middleware.js';
+import { adminHandler, authenticationHandler } from '../middlewares/auth-middleware.js';
 const router = Router();
 
 // Create a new post
@@ -32,9 +32,9 @@ router.get('/latest', cacheHandler(REDIS_KEYS.LATEST_POSTS), getLatestPostsHandl
 router.get('/:id', getPostByIdHandler);
 
 // Update a post by ID
-router.patch('/:id', updatePostHandler);
+router.patch('/:id', authenticationHandler, adminHandler, updatePostHandler);
 
 // Delete a post by ID
-router.delete('/:id', deletePostByIdHandler);
+router.delete('/:id', authenticationHandler, adminHandler, deletePostByIdHandler);
 
 export default router;
