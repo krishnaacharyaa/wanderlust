@@ -29,6 +29,7 @@ export const RESPONSE_MESSAGES = {
     INVALID_CATEGORY: 'Invalid category',
     MAX_CATEGORIES: 'Please select up to three categories only',
     INVALID_IMAGE_URL: 'Image URL must end with .jpg, .jpeg, .webp, or .png',
+    NOT_ALLOWED: 'You are not allowed to perform this action.',
   },
   USERS: {
     SIGNED_UP: 'New user created',
