@@ -69,12 +69,20 @@ export const signInWithEmail = async (req, res, next) => {
     let refreshToken;
 
     if (isUserExists && compareSync(password, isUserExists.password)) {
-      accessToken = sign({ name: isUserExists.name, _id: isUserExists._id }, JWT_SECRET, {
-        expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-      });
-      refreshToken = sign({ name: isUserExists.name, _id: isUserExists._id }, JWT_SECRET, {
-        expiresIn: REFRESH_TOKEN_EXPIRES_IN,
-      });
+      accessToken = sign(
+        { name: isUserExists.name, _id: isUserExists._id, role: isUserExists.role },
+        JWT_SECRET,
+        {
+          expiresIn: ACCESS_TOKEN_EXPIRES_IN,
+        }
+      );
+      refreshToken = sign(
+        { name: isUserExists.name, _id: isUserExists._id, role: isUserExists.role },
+        JWT_SECRET,
+        {
+          expiresIn: REFRESH_TOKEN_EXPIRES_IN,
+        }
+      );
       res.cookie('access_token', accessToken, accessCookieOptions);
       res.cookie('refresh_token', refreshToken, refreshCookieOptions);
     } else {

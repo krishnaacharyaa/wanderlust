@@ -28,21 +28,14 @@ export const authenticationHandler = async (req, res, next) => {
 
 export const adminHandler = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
-    if (!user)
-      return res.status(HTTP_STATUS.FORBIDDEN).json({
-        success: false,
-        message: RESPONSE_MESSAGES.USERS.INVALID_TOKEN,
-      });
-
-    if (user.role === 'admin') {
-      next();
-    } else {
+    const role = req.user.role;
+    if (role !== 'admin') {
       return res.status(HTTP_STATUS.UNAUTHORIZED).json({
         success: false,
         message: RESPONSE_MESSAGES.USERS.UNAUTHORIZED_USER,
       });
     }
+    next();
   } catch (error) {
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
       success: 'fail',
