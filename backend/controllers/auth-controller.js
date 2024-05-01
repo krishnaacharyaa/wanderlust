@@ -28,10 +28,10 @@ export const signUpWithEmail = async (req, res, next) => {
     }
     const hashedPassword = await hash(password, 10);
     const newUser = await User.create({ name, email, password: hashedPassword });
-    const accessToken = sign({ name, _id: newUser._id }, JWT_SECRET, {
+    const accessToken = sign({ name, _id: newUser._id, role: newUser.role }, JWT_SECRET, {
       expiresIn: ACCESS_TOKEN_EXPIRES_IN,
     });
-    const refreshToken = sign({ name, _id: newUser._id }, JWT_SECRET, {
+    const refreshToken = sign({ name, _id: newUser._id, role: newUser.role }, JWT_SECRET, {
       expiresIn: REFRESH_TOKEN_EXPIRES_IN,
     });
     res.cookie('access_token', accessToken, accessCookieOptions);
