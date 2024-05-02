@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { adminHandler, authenticationHandler } from '../middlewares/auth-middleware.js';
+import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware.js';
 import {
   changeUserRoleHandler,
   deleteUserHandler,
@@ -9,12 +9,12 @@ import {
 const router = Router();
 
 // get all users
-router.get('/', authenticationHandler, adminHandler, getAllUserHandler);
+router.get('/', authMiddleware, isAdminMiddleware, getAllUserHandler);
 
 // change user role
-router.patch('/:userId', authenticationHandler, adminHandler, changeUserRoleHandler);
+router.patch('/:userId', authMiddleware, isAdminMiddleware, changeUserRoleHandler);
 
 // delete the user
-router.delete('/:userId', authenticationHandler, adminHandler, deleteUserHandler);
+router.delete('/:userId', authMiddleware, isAdminMiddleware, deleteUserHandler);
 
 export default router;
