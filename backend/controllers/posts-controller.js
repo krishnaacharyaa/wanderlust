@@ -48,6 +48,7 @@ export const createPostHandler = async (req, res) => {
       description,
       categories,
       isFeaturedPost,
+      authorId: req.user._id,
     });
 
     const [savedPost] = await Promise.all([
@@ -58,7 +59,7 @@ export const createPostHandler = async (req, res) => {
     ]);
 
     // updating user doc to include the ObjectId of the created post
-    await User.findByIdAndUpdate(userId, { $push: { createdPosts: savedPost._id } });
+    await User.findByIdAndUpdate(userId, { $push: { posts: savedPost._id } });
 
     res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err) {
@@ -153,6 +154,7 @@ export const deletePostByIdHandler = async (req, res) => {
     if (!post) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
+    await User.findByIdAndUpdate(post.authorId, { $pull: { posts: req.params.id } });
 
     res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
   } catch (err) {

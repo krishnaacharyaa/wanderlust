@@ -2,8 +2,9 @@ import { JWT_SECRET } from '../config/utils.js';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import jwt from 'jsonwebtoken';
 
-export const authenticationHandler = async (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.access_token;
+
   if (authHeader) {
     const token = authHeader.split(' ')[1];
 
@@ -21,6 +22,24 @@ export const authenticationHandler = async (req, res, next) => {
     return res.status(HTTP_STATUS.UNAUTHORIZED).json({
       success: false,
       message: RESPONSE_MESSAGES.USERS.UNAUTHORIZED_USER,
+    });
+  }
+};
+
+export const isAdminMiddleware = async (req, res, next) => {
+  try {
+    const role = req.user.role;
+    if (role !== 'admin') {
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
+        success: false,
+        message: RESPONSE_MESSAGES.USERS.UNAUTHORIZED_USER,
+      });
+    }
+    next();
+  } catch (error) {
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      success: 'fail',
+      message: error.message,
     });
   }
 };
