@@ -48,6 +48,7 @@ export const createPostHandler = async (req, res) => {
       description,
       categories,
       isFeaturedPost,
+      authorId: req.user._id,
     });
 
     const [savedPost] = await Promise.all([
@@ -153,7 +154,7 @@ export const deletePostByIdHandler = async (req, res) => {
     if (!post) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
-    await User.findByIdAndUpdate(req.user._id, { $pull: { posts: req.params.id } });
+    await User.findByIdAndUpdate(post.authorId, { $pull: { posts: req.params.id } });
 
     res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
   } catch (err) {
