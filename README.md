@@ -33,6 +33,15 @@ _I'd love for you to make the most of this project - it's all about learning, he
    ```
 
 3. **Install Required Dependencies**
+   
+# download and install Node.js
+choco install nodejs-lts --version="20.12.2"
+
+# verifies the right Node.js version is in the environment
+node -v # should print `v20.12.2`
+
+# verifies the right NPM version is in the environment
+npm -v # should print `10.5.0`
 
    ```bash
    npm i
