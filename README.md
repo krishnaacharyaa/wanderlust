@@ -41,7 +41,7 @@ choco install nodejs-lts --version="20.12.2"
 node -v # should print `v20.12.2`
 
 # verifies the right NPM version is in the environment
-npm -v # should print `10.5.0`
+  commmand: npm -v # should print `10.5.0`
 
    ```bash
    npm i
