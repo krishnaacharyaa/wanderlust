@@ -80,7 +80,7 @@ function header() {
                   <img className="h-10 w-10" src={AddIcon} />
                 </button>
                 <button
-                  className="py-2 hover:bg-slate-500/25 md:hidden md:px-2"
+                  className="py-2 hover:bg-slate-500/25 md:hidden md:px-2g"
                   onClick={() => {
                     handleLogout();
                   }}
