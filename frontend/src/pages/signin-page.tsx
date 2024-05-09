@@ -31,9 +31,8 @@ function signin() {
           password,
         }
       );
-      userState.setUser(response?.data?.accessToken);
+      userState.setUser(response.data.accessToken);
       toast.success(response.data.message); 
-
       Cookies.set('accessToken',response?.data.accessToken, {
         expires: new Date(new Date().getTime() + 240 * 1000)
       });

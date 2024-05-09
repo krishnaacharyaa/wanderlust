@@ -7,11 +7,12 @@ import Hero from '@/components/hero';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import userState from '@/utils/user-state';
 import { useCookies } from 'react-cookie'
+import userState from '@/utils/user-state';
 function header() {
   const navigate = useNavigate();
   const [allCookies, ,removeCookie] = useCookies(['accessToken']);
+
   const [accessToken, setAccessToken] = useState<string | null>(userState.getUser());
 
    useEffect(() => {
