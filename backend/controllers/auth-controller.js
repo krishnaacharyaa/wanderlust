@@ -83,8 +83,8 @@ export const signInWithEmail = async (req, res, next) => {
           expiresIn: REFRESH_TOKEN_EXPIRES_IN,
         }
       );
-      res.cookie('accessToken', accessToken, accessCookieOptions);
-      res.cookie('refreshToken', refreshToken, refreshCookieOptions);
+      res.cookie('access_token', accessToken, accessCookieOptions);
+      res.cookie('refresh_token', refreshToken, refreshCookieOptions);
     } else {
       throw new Error('Invalid password');
     }
@@ -376,9 +376,7 @@ export const signInWithGithub = async (req, res, next) => {
       refreshToken,
     });
   } catch (error) {
-    if(error === 'TokenExpiredError') {
-      alert('token expiry');
-    }
+
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: error.message,
@@ -390,7 +388,7 @@ export const signInWithGithub = async (req, res, next) => {
 export const signOutUser = async (req, res, next) => {
   try {
     res.cookie('access_token', '', { maxAge: 0 });
-    res.cookie('refresh_oken', '', { maxAge: 0 });
+    res.cookie('refresh_token', '', { maxAge: 0 });
     res.status(200).json({ success: true, message: RESPONSE_MESSAGES.USERS.SIGNED_OUT });
   } catch (error) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({

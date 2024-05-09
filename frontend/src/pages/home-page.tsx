@@ -5,9 +5,10 @@ import PostCard from '@/components/post-card';
 import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import Header from '@/layouts/header-layout';
+import userState from '@/utils/user-state'
+
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
-
   useEffect(() => {
     axios
       .get(import.meta.env.VITE_API_PATH + '/api/posts')
@@ -17,6 +18,7 @@ function HomePage() {
       .catch((error) => {
         console.error(error);
       });
+      userState.getUser();
   }, []);
 
   return (
