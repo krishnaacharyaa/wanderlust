@@ -28,10 +28,10 @@ export const signUpWithEmail = async (req, res, next) => {
     }
     const hashedPassword = await hash(password, 10);
     const newUser = await User.create({ name, email, password: hashedPassword });
-    const accessToken = sign({ name, _id: newUser._id }, JWT_SECRET, {
+    const accessToken = sign({ name, _id: newUser._id, role: newUser.role }, JWT_SECRET, {
       expiresIn: ACCESS_TOKEN_EXPIRES_IN,
     });
-    const refreshToken = sign({ name, _id: newUser._id }, JWT_SECRET, {
+    const refreshToken = sign({ name, _id: newUser._id, role: newUser.role }, JWT_SECRET, {
       expiresIn: REFRESH_TOKEN_EXPIRES_IN,
     });
     res.cookie('access_token', accessToken, accessCookieOptions);
@@ -376,6 +376,7 @@ export const signInWithGithub = async (req, res, next) => {
       refreshToken,
     });
   } catch (error) {
+
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: error.message,
@@ -388,7 +389,6 @@ export const signOutUser = async (req, res, next) => {
   try {
     res.cookie('access_token', '', { maxAge: 0 });
     res.cookie('refresh_token', '', { maxAge: 0 });
-
     res.status(200).json({ success: true, message: RESPONSE_MESSAGES.USERS.SIGNED_OUT });
   } catch (error) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({

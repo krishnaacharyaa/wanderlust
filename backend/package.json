@@ -9,6 +9,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "mongoimport": "^1.0.6",
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1",
     "redis": "^4.6.13"
