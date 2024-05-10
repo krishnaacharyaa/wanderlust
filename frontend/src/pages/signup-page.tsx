@@ -77,13 +77,14 @@ function signin() {
 
           <div className="mb-2">
             <input
+              type='text'
               {...register('email')}
-              type="email"
+            
               placeholder="Email"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
             {errors.email && (
-              <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
+              <p  className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
             )}
           </div>
 
@@ -107,7 +108,7 @@ function signin() {
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
             {errors.confirmPassword && (
-              <p className="p-3 text-xs text-red-500">{`${errors.confirmPassword.message}`}</p>
+              <p  className="p-3 text-xs text-red-500">{`${errors.confirmPassword.message}`}</p>
             )}
           </div>
 

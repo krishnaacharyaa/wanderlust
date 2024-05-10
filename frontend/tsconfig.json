@@ -29,6 +29,6 @@
     //More: https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
     "esModuleInterop": true
   },
-  "include": ["src"],
+  "include": ["src", "testSetup.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
