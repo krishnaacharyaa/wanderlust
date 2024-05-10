@@ -4,38 +4,43 @@ import LogOutIcon from '@/assets/svg/logout-icon.svg';
 import LogInIcon from '@/assets/svg/login-icon.svg';
 import { useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import userState from '@/utils/user-state';
+import axiosInstance from '@/helpers/axiosInstance';
+import Cookies from 'js-cookie';
+
 function header() {
   const navigate = useNavigate();
-
-  const [accessToken, setAccessToken] = useState<string | null>(userState.getUser());
-
-  useEffect(() => {
-    const storedAccessToken = userState.getUser();
-
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    }
-  }, [accessToken, userState]);
-
+  const token = Cookies.get('authToken')
   const handleLogout = async () => {
     try {
-      const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/auth/signout');
-
-      if (response.status === 200) {
-        toast.success(response.data.message);
-        userState.setUser(null);
-        setAccessToken(null);
-        navigate('/');
-      } else {
-        toast.error('Error: ' + response.data.message);
+      const response = axiosInstance.post('/api/auth/signout')
+      toast.promise(response, {
+        pending: 'Wait ...',
+        success: {
+          render({ data }) {
+            userState.setUser('')
+            Cookies.remove('authToken')
+            navigate('/');
+            return data?.data?.message
+          },
+        },
+        error: {
+          render({ data }) {
+            return data?.response?.data?.message || "An error occurred"
+          },
+        },
       }
-    } catch (err: any) {
-      console.log('Error :', err.message);
-      toast.error('Something went wrong. Please try again later.');
+      )
+
+      return (await response).data
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.error(error.response?.data?.message || 'An error occurred');
+      } else {
+        console.error(error);
+      }
     }
   };
   return (
@@ -50,7 +55,7 @@ function header() {
             <div className="flex items-center justify-end px-2 py-2 md:px-20">
               <ThemeToggle />
             </div>
-            {accessToken ? (
+            {token ? (
               <div className="flex gap-2 ">
                 <button
                   className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"

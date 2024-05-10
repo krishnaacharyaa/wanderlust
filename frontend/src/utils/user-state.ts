@@ -1,6 +1,6 @@
 class UserState {
   private static instance: UserState;
-  private user!: string | null;
+  private user!: {} | null;
 
   constructor() {
     if (!UserState.instance) {
@@ -10,11 +10,11 @@ class UserState {
     return UserState.instance;
   }
 
-  setUser(user: string | null): void {
+  setUser(user: {} | null): void {
     this.user = user;
   }
 
-  getUser(): string | null {
+  getUser(): {} | null {
     return this.user;
   }
 }

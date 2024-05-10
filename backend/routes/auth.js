@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import {
   signUpWithEmail,
-  signInWithEmail,
+  signInWithEmailOrUsername,
   openGoogleAuthWindow,
   signUpWithGoogle,
   signInWithGoogle,
@@ -11,6 +11,7 @@ import {
   signInWithGithub,
   signOutUser,
 } from '../controllers/auth-controller.js';
+import { authMiddleware } from '../middlewares/auth-middleware.js';
 
 //GOOGLE STRATEGY
 router.get('/google', openGoogleAuthWindow);
@@ -24,9 +25,9 @@ router.get('/github/signin/callback', signInWithGithub);
 
 //REGULAR EMAIL PASSWORD STRATEGY
 router.post('/email-password/signup', signUpWithEmail);
-router.post('/email-password/signin', signInWithEmail);
+router.post('/email-password/signin', signInWithEmailOrUsername);
 
 //SIGN OUT
-router.post('/signout', signOutUser);
+router.post('/signout', authMiddleware, signOutUser);
 
 export default router;

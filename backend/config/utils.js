@@ -10,6 +10,7 @@ const REFRESH_COOKIE_MAXAGE = process.env.REFRESH_COOKIE_MAXAGE;
 const REFRESH_TOKEN_EXPIRES_IN = process.env.REFRESH_TOKEN_EXPIRES_IN;
 const JWT_SECRET = process.env.JWT_SECRET;
 const FRONTEND_URL = process.env.FRONTEND_URL;
+const NODE_ENV = process.env.NODE_ENV
 
 export {
   MONGODB_URI,
@@ -21,4 +22,5 @@ export {
   REFRESH_TOKEN_EXPIRES_IN,
   JWT_SECRET,
   FRONTEND_URL,
+  NODE_ENV
 };

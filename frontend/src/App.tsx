@@ -9,6 +9,8 @@ import SignUp from '@/pages/signup-page';
 import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import AdminContainer from './components/admin-container';
+import UnprotectedRoute from './components/UnProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -18,13 +20,17 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<HomePage />} />
-            <Route path="add-blog" element={<AddBlog />} />
             <Route path="details-page/:title/:postId" element={<DetailsPage />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="admin" element={<AdminContainer />}>
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="blogs" element={<AdminBlogs />} />
+            <Route element={<UnprotectedRoute />}>
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="add-blog" element={<AddBlog />} />
+              <Route path="admin" element={<AdminContainer />}>
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="blogs" element={<AdminBlogs />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

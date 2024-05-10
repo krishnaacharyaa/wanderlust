@@ -5,18 +5,22 @@ import PostCard from '@/components/post-card';
 import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import Header from '@/layouts/header-layout';
+import axiosInstance from '@/helpers/axiosInstance';
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    axios
-      .get(import.meta.env.VITE_API_PATH + '/api/posts')
-      .then((response) => {
-        setPosts(response.data);
-      })
-      .catch((error) => {
+
+    const fetchData = async () => {
+      try {
+        const res = await axiosInstance.get('/api/posts')
+        setPosts(res.data)
+      } catch (error) {
         console.error(error);
-      });
+      }
+
+    }
+    fetchData()
   }, []);
 
   return (
@@ -30,8 +34,8 @@ function HomePage() {
         <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
-                .fill(0)
-                .map((_, index) => <PostCardSkeleton key={index} />)
+              .fill(0)
+              .map((_, index) => <PostCardSkeleton key={index} />)
             : posts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>

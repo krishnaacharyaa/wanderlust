@@ -7,50 +7,53 @@ import { TSignUpSchema, signUpSchema } from '@/lib/types';
 import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import axios, { isAxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import userState from '@/utils/user-state';
+import axiosInstance from '@/helpers/axiosInstance';
+import Cookies from 'js-cookie'
 
 function signin() {
   const navigate = useNavigate();
-
+  const token = import.meta.env.VITE_ACCESS_TOKEN
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
-    setError,
+    reset
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const { username, email, password } = data;
+      const res = axiosInstance.post('/api/auth/email-password/signup', data)
+      toast.promise(res, {
+        pending: 'Creating account ...',
+        success: {
+          render({ data }) {
+            userState.setUser(data?.data?.data?.user)
+            reset()
+            navigate('/')
+            Cookies.set('authToken', token, { expires: 7 });
+            return data?.data?.message
+          },
+        },
+        error: {
+          render({ data }) {
+            return data?.response?.data?.message || "An error occurred"
+          },
+        },
+      }
+      )
+      return (await res).data
 
-      const response = await axios.post(
-        import.meta.env.VITE_API_PATH + '/api/auth/email-password/signup',
-        {
-          name: username,
-          email,
-          password,
-        }
-      );
-
-      userState.setUser(response?.data?.accessToken);
-      toast.success(response.data.message);
-
-      reset();
-      navigate('/');
     } catch (error) {
       if (isAxiosError(error)) {
-        const errorMessage = error?.response?.data?.message;
-
-        if (errorMessage.includes('Name')) {
-          setError('username', { type: 'manual', message: errorMessage });
-        } else if (errorMessage.includes('Email')) {
-          setError('email', { type: 'manual', message: errorMessage });
-        }
+        console.error(error.response?.data?.message || 'An error occurred');
+      } else {
+        console.error(error);
       }
     }
   };
+
 
   return (
     <div className="m-4 flex-grow cursor-default bg-white py-4">
@@ -63,19 +66,29 @@ function signin() {
       </div>
       <div className="m-2 mt-8 flex flex-col items-center justify-center gap-2">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-3/4 lg:w-2/5">
-          <div className="mb-2">
+          <div className="mb-3">
             <input
-              {...register('username')}
+              {...register('userName')}
               type="text"
               placeholder="Username"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
-            {errors.username && (
-              <p className="p-3 text-xs text-red-500">{`${errors.username.message}`}</p>
+            {errors.userName && (
+              <p className="p-3 text-xs text-red-500">{`${errors.userName.message}`}</p>
             )}
           </div>
-
-          <div className="mb-2">
+          <div className="mb-3">
+            <input
+              {...register('fullName')}
+              type="text"
+              placeholder="Name"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
+            />
+            {errors.fullName && (
+              <p className="p-3 text-xs text-red-500">{`${errors.fullName.message}`}</p>
+            )}
+          </div>
+          <div className="mb-3">
             <input
               {...register('email')}
               type="email"
@@ -86,8 +99,7 @@ function signin() {
               <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
             )}
           </div>
-
-          <div className="mb-2">
+          <div className="mb-3">
             <input
               {...register('password')}
               type="password"
@@ -98,7 +110,6 @@ function signin() {
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
             )}
           </div>
-
           <div className="mb-4">
             <input
               {...register('confirmPassword')}
@@ -110,7 +121,6 @@ function signin() {
               <p className="p-3 text-xs text-red-500">{`${errors.confirmPassword.message}`}</p>
             )}
           </div>
-
           <button
             disabled={isSubmitting}
             type="submit"
