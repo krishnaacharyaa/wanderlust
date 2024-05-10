@@ -9,10 +9,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import axios, { isAxiosError } from 'axios';
 import userState from '@/utils/user-state';
-
-function signin() {
+import Cookies  from 'js-cookie';
+function signin() { 
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -32,10 +31,15 @@ function signin() {
           password,
         }
       );
-
       userState.setUser(response?.data?.accessToken);
-      toast.success(response.data.message);
+      toast.success(response.data.message); 
 
+      Cookies.set('accessToken',response?.data.accessToken, {
+        expires: new Date(new Date().getTime() + 240 * 1000)
+      });
+      Cookies.set('refreshToken', response.data.refreshToken, {
+        expires: new Date(new Date().getTime() + 240 * 1000)
+      });
       reset();
       navigate('/');
     } catch (error) {

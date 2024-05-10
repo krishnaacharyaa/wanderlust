@@ -8,27 +8,30 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import userState from '@/utils/user-state';
+import { useCookies } from 'react-cookie'
 function header() {
   const navigate = useNavigate();
-
+  const [allCookies, ,removeCookie] = useCookies(['accessToken']);
   const [accessToken, setAccessToken] = useState<string | null>(userState.getUser());
 
+  setTimeout(() => {
+    setAccessToken(null);
+  }, 240 * 1000);
+  
   useEffect(() => {
-    const storedAccessToken = userState.getUser();
-
-    if (storedAccessToken) {
+    const storedAccessToken = allCookies.accessToken;
+    if(storedAccessToken) {
       setAccessToken(storedAccessToken);
     }
-  }, [accessToken, userState]);
+  }, []);
 
   const handleLogout = async () => {
     try {
       const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/auth/signout');
-
       if (response.status === 200) {
-        toast.success(response.data.message);
-        userState.setUser(null);
         setAccessToken(null);
+        removeCookie('accessToken');
+        toast.success(response.data.message);
         navigate('/');
       } else {
         toast.error('Error: ' + response.data.message);
