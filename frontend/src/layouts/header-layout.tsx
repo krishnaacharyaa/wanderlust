@@ -13,13 +13,15 @@ function header() {
   const navigate = useNavigate();
   const [allCookies, ,removeCookie] = useCookies(['accessToken']);
   const [accessToken, setAccessToken] = useState<string | null>(userState.getUser());
-
-   useEffect(() => {
-    const storedAccessToken = allCookies.accessToken;
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    }
-  }, []);
+  setTimeout(() => {
+    setAccessToken(null);
+  }, 240 * 1000);
+  useEffect(() => {
+  const storedAccessToken = allCookies.accessToken;
+  if(storedAccessToken) {
+    setAccessToken(storedAccessToken);
+  }
+}, []);
 
   const handleLogout = async () => {
     try {
