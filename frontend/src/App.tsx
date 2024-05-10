@@ -25,12 +25,12 @@ function App() {
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
             </Route>
-            <Route element={<ProtectedRoute />}>
+            <Route element={<ProtectedRoute allowedRole={["ADMIN", "USER"]} />}>
               <Route path="add-blog" element={<AddBlog />} />
-              <Route path="admin" element={<AdminContainer />}>
-                <Route path="users" element={<AdminUsers />} />
-                <Route path="blogs" element={<AdminBlogs />} />
-              </Route>
+            </Route>
+            <Route path='admin' element={<ProtectedRoute allowedRole={["ADMIN"]} />}>
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="blogs" element={<AdminBlogs />} />
             </Route>
           </Route>
         </Routes>
