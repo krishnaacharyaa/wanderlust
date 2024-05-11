@@ -1,30 +1,40 @@
-import { render } from "@testing-library/react"
-import { BrowserRouter } from "react-router-dom"
-import Signup from "@/pages/signup-page"
-import { CONFIRMPASSWORD_PLACEHOLDER, CONFIRMPWD_ERROR_ID, EMAILINPUT_PLACEHOLDER, EMAIL_ERROR_ID, PASSWORDINPUT_PLACEHOLDER, PWD_ERROR_ID, SIGNUPBUTTON_TEXT, USERNAME_ERROR_ID, USERNAME_PLACEHOLDER } from "@/__tests__/Stringconstant"
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import Signup from '@/pages/signup-page';
+import {
+  CONFIRMPASSWORD_PLACEHOLDER,
+  CONFIRMPWD_ERROR_ID,
+  EMAILINPUT_PLACEHOLDER,
+  EMAIL_ERROR_ID,
+  PASSWORDINPUT_PLACEHOLDER,
+  PWD_ERROR_ID,
+  SIGNUPBUTTON_TEXT,
+  USERNAME_ERROR_ID,
+  USERNAME_PLACEHOLDER,
+} from '@/constants/Stringconstant';
 
+export const formSetup = () => {
+  const form = render(
+    <BrowserRouter>
+      <Signup />
+    </BrowserRouter>
+  );
 
-export const formSetup = ()=>{
+  const usernameInput = form.getByPlaceholderText(USERNAME_PLACEHOLDER);
+  const emailInput = form.getByPlaceholderText(EMAILINPUT_PLACEHOLDER);
+  const passwordInput = form.getByPlaceholderText(PASSWORDINPUT_PLACEHOLDER);
+  const confirmpasswordInput = form.getByPlaceholderText(CONFIRMPASSWORD_PLACEHOLDER);
+  const signupbuttonText = form.getByText(SIGNUPBUTTON_TEXT);
 
-    
-    const form = render(
-       <BrowserRouter>
-       <Signup />
-       </BrowserRouter>
-    )
+  if (
+    !(usernameInput instanceof HTMLInputElement) ||
+    !(emailInput instanceof HTMLInputElement) ||
+    !(passwordInput instanceof HTMLInputElement) ||
+    !(confirmpasswordInput instanceof HTMLInputElement) ||
+    !(signupbuttonText instanceof HTMLButtonElement)
+  ) {
+    throw new Error('Issue during test setup, some input elemnts are not rendered');
+  }
 
-    const usernameInput = form.getByPlaceholderText(USERNAME_PLACEHOLDER)
-    const emailInput = form.getByPlaceholderText(EMAILINPUT_PLACEHOLDER)
-    const passwordInput = form.getByPlaceholderText(PASSWORDINPUT_PLACEHOLDER)
-    const confirmpasswordInput = form.getByPlaceholderText(CONFIRMPASSWORD_PLACEHOLDER)
-    const signupbuttonText = form.getByText(SIGNUPBUTTON_TEXT)
-  
-    if(!(usernameInput instanceof HTMLInputElement) || !(emailInput instanceof HTMLInputElement) || !(passwordInput instanceof HTMLInputElement) || !(confirmpasswordInput instanceof HTMLInputElement) || !(signupbuttonText instanceof HTMLButtonElement) ){
-
-    throw new Error("Issue during test setup, some input elemnts are not rendered")
-
-    }
-
-    return {form,usernameInput,emailInput,passwordInput,confirmpasswordInput,signupbuttonText}
-
-}
+  return { form, usernameInput, emailInput, passwordInput, confirmpasswordInput, signupbuttonText };
+};

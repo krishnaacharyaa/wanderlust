@@ -1,3 +1,4 @@
+import { INVALID_CONFIRMPWD_ERRORMESSAGE, INVALID_EMAIL_ERRORMESSAGE, INVALID_PWD_ERRORMESSAGE, INVALID_USERNAME_ERRORMESSAGE } from '@/constants/Stringconstant';
 import { z } from 'zod';
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -16,20 +17,20 @@ export const signUpSchema = z
     email: z
       .string()
       .min(1, { message: 'Email is required' })
-      .regex(emailRegex, 'Invalid email address'),
+      .regex(emailRegex, INVALID_EMAIL_ERRORMESSAGE),
     password: z.string().min(1, { message: 'Password is required' }),
     confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
   })
   .refine((data) => data.username.trim().length >= 5, {
-    message: 'Username must be at least 5 characters long',
+    message: INVALID_USERNAME_ERRORMESSAGE,
     path: ['username'],
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: INVALID_CONFIRMPWD_ERRORMESSAGE,
     path: ['confirmPassword'],
   })
   .refine((data) => data.password.trim().length >= 8, {
-    message: 'Password must be at least 8 characters long',
+    message: INVALID_PWD_ERRORMESSAGE,
     path: ['password'],
   });
 
