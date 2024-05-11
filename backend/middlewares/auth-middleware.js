@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 export const authMiddleware = async (req, res, next) => {
   const token = req.cookies?.access_token
   if (!token) {
-    throw new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.RE_LOGIN)
+    return next(new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.RE_LOGIN))
   }
 
   if (token) {
