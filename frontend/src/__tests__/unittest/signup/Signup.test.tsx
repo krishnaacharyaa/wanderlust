@@ -1,21 +1,13 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { formSetup } from './Client-util';
 import {
-  VALID_EMAIL_INPUT,
-  VALID_USERNAME_INPUT,
-  VALID_CONFIRMPWD_INPUT,
-  VALID_PWD_INPUT,
   INVALID_CONFIRMPWD_ERRORMESSAGE,
-  INVALID_CONFIRMPWD_INPUT,
   INVALID_EMAIL_ERRORMESSAGE,
-  INVALID_EMAIL_INPUT,
   INVALID_PWD_ERRORMESSAGE,
-  INVALID_PWD_INPUT,
   INVALID_USERNAME_ERRORMESSAGE,
-  INVALID_USERNAME_INPUT,
-} from '@/__tests__/Stringconstant';
+} from '@/constants/Stringconstant';
 const mockedUseNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
   const mod = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
@@ -36,10 +28,10 @@ describe('form', async () => {
       confirmpasswordInput,
       signupbuttonText,
     } = await formSetup();
-    await userActions.type(usernameInput, INVALID_USERNAME_INPUT);
-    await userActions.type(emailInput, INVALID_EMAIL_INPUT);
-    await userActions.type(passwordInput, INVALID_PWD_INPUT);
-    await userActions.type(confirmpasswordInput, INVALID_CONFIRMPWD_INPUT);
+    await userActions.type(usernameInput, 'abcd');
+    await userActions.type(emailInput, 'abc@');
+    await userActions.type(passwordInput, '123');
+    await userActions.type(confirmpasswordInput, '1234');
     await userActions.click(signupbuttonText);
     await waitFor(() => {
       expect(form.getByText(INVALID_USERNAME_ERRORMESSAGE));
@@ -60,10 +52,10 @@ describe('form', async () => {
       confirmpasswordInput,
       signupbuttonText,
     } = await formSetup();
-    await userActions.type(usernameInput, VALID_USERNAME_INPUT);
-    await userActions.type(emailInput, VALID_EMAIL_INPUT);
-    await userActions.type(passwordInput, VALID_PWD_INPUT);
-    await userActions.type(confirmpasswordInput, VALID_CONFIRMPWD_INPUT);
+    await userActions.type(usernameInput, 'aryastark');
+    await userActions.type(emailInput, 'arya@gmail.com');
+    await userActions.type(passwordInput, '123456789');
+    await userActions.type(confirmpasswordInput, '123456789');
     await userActions.click(signupbuttonText);
 
     await waitFor(() => {
