@@ -8,11 +8,10 @@ import { isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axiosInstance';
-import Cookies from 'js-cookie';
 
 function header() {
   const navigate = useNavigate();
-  const token = Cookies.get('authToken')
+  const token = document.cookie.includes('access_token');
   const handleLogout = async () => {
     try {
       const response = axiosInstance.post('/api/auth/signout')
@@ -21,14 +20,13 @@ function header() {
         success: {
           render({ data }) {
             userState.setUser('')
-            Cookies.remove('authToken')
             navigate('/');
             return data?.data?.message
           },
         },
         error: {
           render({ data }) {
-            return data?.response?.data?.message || "An error occurred"
+            return data?.response?.data?.message
           },
         },
       }

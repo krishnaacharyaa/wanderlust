@@ -10,11 +10,9 @@ import { toast } from 'react-toastify';
 import { isAxiosError } from 'axios';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axiosInstance';
-import Cookies from 'js-cookie';
 
 function signin() {
   const navigate = useNavigate();
-  const token = import.meta.env.VITE_ACCESS_TOKEN
   const {
     register,
     handleSubmit,
@@ -35,13 +33,12 @@ function signin() {
             userState.setUser(data?.data?.data?.user)
             reset()
             navigate('/')
-            Cookies.set('authToken', token, { expires: 7 });
             return data?.data?.message
           },
         },
         error: {
           render({ data }) {
-            return data?.response?.data?.message || "An error occurred"
+            return data?.response?.data?.message
           },
         },
       }
@@ -50,7 +47,7 @@ function signin() {
       return (await response).data
     } catch (error) {
       if (isAxiosError(error)) {
-        console.error(error.response?.data?.message || 'An error occurred');
+        console.error(error.response?.data?.message);
       } else {
         console.error(error);
       }
