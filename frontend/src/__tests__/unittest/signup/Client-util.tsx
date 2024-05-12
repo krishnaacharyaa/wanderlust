@@ -3,15 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 import Signup from '@/pages/signup-page';
 import {
   CONFIRMPASSWORD_PLACEHOLDER,
-  CONFIRMPWD_ERROR_ID,
   EMAILINPUT_PLACEHOLDER,
-  EMAIL_ERROR_ID,
   PASSWORDINPUT_PLACEHOLDER,
-  PWD_ERROR_ID,
   SIGNUPBUTTON_TEXT,
-  USERNAME_ERROR_ID,
   USERNAME_PLACEHOLDER,
-} from '@/constants/Stringconstant';
+} from '@/constants/images';
 
 export const formSetup = () => {
   const form = render(
