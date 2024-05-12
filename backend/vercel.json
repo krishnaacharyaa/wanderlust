@@ -15,7 +15,7 @@
         },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "*"
+          "value": "https://wanderlust-api.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
