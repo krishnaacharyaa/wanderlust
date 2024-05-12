@@ -1,11 +1,11 @@
 const AdminUsers = () => {
   return (
     <>
-      <div className="w-full p-3 px-5 md:p-12">
-        <h1 className="absolute left-16 top-3 text-2xl font-bold text-light-title dark:text-dark-title  md:static">
+      <div className="w-full p-3 px-5 sm:p-12">
+        <h1 className="absolute left-16 top-3 text-2xl font-bold text-light-title dark:text-dark-title  sm:static">
           Users
         </h1>
-        <div className="mt-2 md:mt-12">
+        <div className="mt-2 sm:mt-12">
           <div className="flex  w-full  flex-row items-center justify-between   gap-5 rounded-lg border-b border-gray-300 bg-light px-3 py-4 shadow-md dark:border-gray-700 dark:bg-dark-card">
             <div className="flex flex-col gap-[10px] ">
               <p className="text-base font-medium text-light-title dark:text-dark-title">Hemant</p>

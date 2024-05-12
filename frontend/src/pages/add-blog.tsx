@@ -139,7 +139,7 @@ function AddBlog() {
   return (
     <div className="flex-grow cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
       <div className="mb-4 flex justify-center">
-        <div className="flex w-[32rem] items-center justify-start space-x-4 md:w-5/6 lg:w-4/6 ">
+        <div className="flex w-[32rem] items-center justify-start space-x-4 sm:w-5/6 lg:w-4/6 ">
           <div className="w-fit cursor-pointer">
             <img
               alt="theme"
@@ -148,13 +148,13 @@ function AddBlog() {
               className="active:scale-click h-5 w-10"
             />
           </div>
-          <h2 className="cursor-text text-lg font-semibold text-light-primary dark:text-dark-primary md:text-xl lg:text-2xl">
+          <h2 className="cursor-text text-lg font-semibold text-light-primary dark:text-dark-primary sm:text-xl lg:text-2xl">
             Create Blog
           </h2>
         </div>
       </div>
       <div className="flex justify-center">
-        <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
+        <form onSubmit={handleSubmit} className="sm:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
@@ -220,7 +220,7 @@ function AddBlog() {
             </span>
             <Asterisk />
           </div>
-          <div className="mb-4 flex justify-between gap-2 md:gap-4">
+          <div className="mb-4 flex justify-between gap-2 sm:gap-4">
             <input
               type="url"
               id="imagelink"
@@ -234,7 +234,7 @@ function AddBlog() {
             <button
               name="openModal"
               type="button"
-              className="lg:text-md active:scale-click w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:text-sm lg:w-2/12 lg:px-4 lg:py-3"
+              className="lg:text-md active:scale-click w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 sm:text-sm lg:w-2/12 lg:px-4 lg:py-3"
               onClick={() => {
                 setmodal(true);
               }}
@@ -243,7 +243,7 @@ function AddBlog() {
             </button>
           </div>
           <div className="mb-4 flex flex-col">
-            <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary md:mr-4 md:w-fit">
+            <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary sm:mr-4 sm:w-fit">
               Categories
               <span className="text-xs tracking-wide text-dark-tertiary">
                 &nbsp;(max 3 categories)&nbsp;
@@ -266,7 +266,7 @@ function AddBlog() {
           <button
             name="post-blog"
             type="submit"
-            className="active:scale-click flex w-full items-center justify-center rounded-lg bg-light-primary px-12 py-3 text-base font-semibold text-light hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:mx-1 md:w-fit"
+            className="active:scale-click flex w-full items-center justify-center rounded-lg bg-light-primary px-12 py-3 text-base font-semibold text-light hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 sm:mx-1 sm:w-fit"
           >
             Post blog
           </button>
