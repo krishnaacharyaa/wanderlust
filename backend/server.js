@@ -5,14 +5,13 @@ import { connectToRedis } from "./services/redis.js";
 
 const port = PORT || 5000
 
+// Connect to redis
+connectToRedis()
+
 //Connect to Mongodb
 connectDB()
   .then(() => {
-    // Connect to redis
-    connectToRedis()
-      .then(() => {
-        app.listen(port, () => {
-          console.log(`Server is running on port ${port}`);
-        });
-      });
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
   });
