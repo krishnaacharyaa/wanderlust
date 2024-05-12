@@ -42,6 +42,7 @@ export const RESPONSE_MESSAGES = {
     AUTH_CODE_NOT_FOUND: 'Something went wrong',
     INVALID_PASSWORD: 'Invalid password.',
     INVALID_TOKEN: 'Token is Invalid or expired!',
+    VALID_TOKEN: 'Token is valid',
     UNAUTHORIZED_USER: 'You are not authorized!',
     RE_LOGIN: 'Please log in again',
     UPDATE: 'User updated Successfully!',

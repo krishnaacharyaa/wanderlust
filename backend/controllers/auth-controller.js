@@ -3,10 +3,11 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import { cookieOptions } from '../utils/cookie_options.js';
-const { sign } = jwt;
+const { sign, verify } = jwt;
 import { ApiError } from '../utils/error.js'
 import { ApiResponse } from '../utils/apiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import { JWT_SECRET } from '../config/utils.js';
 
 //REGULAR EMAIL PASSWORD STRATEGY
 //1.Sign Up
@@ -52,7 +53,6 @@ export const signUpWithEmail = asyncHandler(async (req, res) => {
   res
     .status(HTTP_STATUS.OK)
     .cookie('access_token', accessToken, cookieOptions)
-    .cookie('refresh_token', refreshToken, cookieOptions)
     .json(new ApiResponse(HTTP_STATUS.OK, {
       accessToken,
       refreshToken,
@@ -85,12 +85,12 @@ export const signInWithEmailOrUsername = asyncHandler(async (req, res) => {
   const refreshToken = await user.generateRefreshToken()
 
   user.refreshToken = refreshToken
+  await user.save()
   user.password = undefined
 
   res
     .status(HTTP_STATUS.OK)
     .cookie('access_token', accessToken, cookieOptions)
-    .cookie('refresh_token', refreshToken, cookieOptions)
     .json(new ApiResponse(HTTP_STATUS.OK, {
       accessToken,
       refreshToken,
@@ -389,8 +389,36 @@ export const signOutUser = asyncHandler(async (req, res) => {
   res
     .status(HTTP_STATUS.OK)
     .clearCookie("access_token", cookieOptions)
-    .clearCookie("refresh_token", cookieOptions)
     .json(
       new ApiResponse(HTTP_STATUS.OK, '', RESPONSE_MESSAGES.USERS.SIGNED_OUT)
     )
 });
+
+export const isLoggedIn = asyncHandler(async (req, res) => {
+  const { _id } = req.params
+  const user = await User.findById(_id)
+  if (!user) {
+    return res.status(HTTP_STATUS.NOT_FOUND).json(
+      new ApiResponse(HTTP_STATUS.NOT_FOUND, '', RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS)
+    )
+  }
+
+  const { refreshToken } = user
+
+  if (!refreshToken) {
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json(
+      new ApiResponse(HTTP_STATUS.UNAUTHORIZED, '', RESPONSE_MESSAGES.USERS.INVALID_TOKEN)
+    )
+  }
+
+  try {
+    await verify(refreshToken, JWT_SECRET)
+  } catch (error) {
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json(
+      new ApiResponse(HTTP_STATUS.UNAUTHORIZED, '', RESPONSE_MESSAGES.USERS.INVALID_TOKEN)
+    )
+  }
+  return res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(HTTP_STATUS.OK, refreshToken, RESPONSE_MESSAGES.USERS.VALID_TOKEN)
+  )
+})
