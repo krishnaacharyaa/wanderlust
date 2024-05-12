@@ -77,7 +77,7 @@ function signin() {
 
           <div className="mb-2">
             <input
-              type='text'
+              type='email'
               {...register('email')}
             
               placeholder="Email"
