@@ -10,11 +10,11 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
   const slug = createSlug(post.title);
   return (
     <div
-      className={`active:scale-click group w-full md:w-1/2 lg:w-1/3 xl:w-1/4`}
+      className={`active:scale-click group w-full sm:w-1/2 lg:w-1/3 xl:w-1/4`}
       data-testid={testId}
     >
       <div
-        className={`mb-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card ${'md:mr-8 md:mt-4'}`}
+        className={`mb-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card ${'sm:mr-8 sm:mt-4'}`}
         onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       >
         <div className="h-48 w-full overflow-hidden">

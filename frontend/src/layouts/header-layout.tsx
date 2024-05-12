@@ -41,19 +41,19 @@ function header() {
   return (
     <div className="relative -mt-2 h-[460px] bg-[url('./assets/wanderlustbg.webp')] bg-cover bg-fixed bg-center">
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="absolute inset-0 flex flex-col px-4 py-8 text-slate-50 md:px-16">
+      <div className="absolute inset-0 flex flex-col px-4 py-8 text-slate-50 sm:px-16">
         <div className="flex w-full justify-between">
           <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
             WanderLust
           </div>
           <div className="flex justify-between">
-            <div className="flex items-center justify-end px-2 py-2 md:px-20">
+            <div className="flex items-center justify-end px-2 py-2 sm:px-20">
               <ThemeToggle />
             </div>
             {accessToken ? (
               <div className="flex gap-2 ">
                 <button
-                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 sm:inline-block"
                   onClick={() => {
                     navigate('/add-blog');
                   }}
@@ -61,7 +61,7 @@ function header() {
                   Create post
                 </button>
                 <button
-                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 sm:inline-block"
                   onClick={() => {
                     handleLogout();
                   }}
@@ -69,7 +69,7 @@ function header() {
                   Logout
                 </button>
                 <button
-                  className="px-2 py-2 hover:bg-slate-500/25 md:hidden"
+                  className="px-2 py-2 hover:bg-slate-500/25 sm:hidden"
                   onClick={() => {
                     navigate('/add-blog');
                   }}
@@ -77,7 +77,7 @@ function header() {
                   <img className="h-10 w-10" src={AddIcon} />
                 </button>
                 <button
-                  className="py-2 hover:bg-slate-500/25 md:hidden md:px-2"
+                  className="py-2 hover:bg-slate-500/25 sm:hidden sm:px-2"
                   onClick={() => {
                     handleLogout();
                   }}
@@ -89,7 +89,7 @@ function header() {
               <div className="flex">
                 {' '}
                 <button
-                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 sm:inline-block"
                   onClick={() => {
                     navigate('/signin');
                   }}
@@ -97,7 +97,7 @@ function header() {
                   Login
                 </button>
                 <button
-                  className="py-2 hover:bg-slate-500/25 md:hidden md:px-2"
+                  className="py-2 hover:bg-slate-500/25 sm:hidden sm:px-2"
                   onClick={() => {
                     navigate('/signin');
                   }}
