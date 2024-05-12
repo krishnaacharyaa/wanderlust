@@ -129,7 +129,11 @@ function AddBlog() {
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
-    setIsDarkMode(storedTheme === 'dark');
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+    setIsDarkMode(storedTheme === 'dark' || (!storedTheme && prefersDark) || null);
+    if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+      document.documentElement.classList.add('dark');
+    }
   }, []);
 
   function Asterisk() {
