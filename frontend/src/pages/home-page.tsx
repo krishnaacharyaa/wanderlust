@@ -22,7 +22,7 @@ function HomePage() {
   return (
     <div className="w-full cursor-default bg-light dark:bg-dark">
       <Header />
-      <div className="mx-4 md:mx-8 lg:mx-16">
+      <div className="mx-4 sm:mx-8 lg:mx-16">
         <BlogFeed />
         <h1 className="cursor-text pb-4 text-xl font-semibold dark:text-dark-primary sm:pb-0">
           All Posts

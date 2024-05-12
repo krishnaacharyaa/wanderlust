@@ -11,7 +11,7 @@ const AdminSidebar = () => {
   return (
     <>
       <button
-        className=" p-4  text-light-title dark:text-dark-title md:hidden "
+        className=" p-4  text-light-title dark:text-dark-title sm:hidden "
         onClick={() => {
           setIsSidebarOpen(!isSidebarOpen);
         }}
@@ -21,17 +21,17 @@ const AdminSidebar = () => {
       <div
         className={`absolute z-10 h-full w-64 origin-left rounded-b-xl rounded-r-xl border border-[#D9D9D9] bg-light transition-transform dark:border-gray-700 dark:bg-dark ${
           isSidebarOpen ? 'scale-x-100' : 'scale-x-0'
-        } md:relative md:h-auto md:scale-x-100`}
+        } sm:relative sm:h-auto sm:scale-x-100`}
       >
         <button
-          className=" p-4  text-light-title dark:text-dark-title md:hidden "
+          className=" p-4  text-light-title dark:text-dark-title sm:hidden "
           onClick={() => {
             setIsSidebarOpen(!isSidebarOpen);
           }}
         >
           <CloseIcon />
         </button>
-        <div className="border-b border-[#D9D9D9] bg-light  px-6 py-3 dark:border-gray-700 dark:bg-dark md:p-6 ">
+        <div className="border-b border-[#D9D9D9] bg-light  px-6 py-3 dark:border-gray-700 dark:bg-dark sm:p-6 ">
           <h1 className="text-xl font-medium text-light-title dark:text-dark-title">WanderLust</h1>
         </div>
         <div className="flex flex-col gap-2 p-6">
