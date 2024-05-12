@@ -1,12 +1,43 @@
-import userState from '@/utils/user-state';
+import axiosInstance from '@/helpers/axiosInstance';
+import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom'
 
 function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
-    const { role } = userState.getUser()
-    const token = document.cookie.includes('access_token');
-    return token && allowedRole.find((myRole) => myRole === role) ? (
+    const [data, setData] = useState({
+        _id: localStorage.getItem("userId") || '',
+        role: localStorage.getItem("role") || '',
+        token: '',
+        loading: true
+    })
+
+    useEffect(() => {
+        async function fetchToken() {
+            try {
+                const res = await axiosInstance.get(`/api/auth/check/${data._id}`)
+                console.log(res.data)
+                setData({
+                    ...data,
+                    token: res.data?.data,
+                    loading: false
+                })
+            } catch (error) {
+                setData({
+                    ...data,
+                    token: '',
+                    loading: false
+                })
+            }
+        }
+        fetchToken()
+    }, [])
+
+    if (data.loading) {
+        return <div>Loading...</div>; // Render a loading indicator
+    }
+
+    return data.token && allowedRole.find((myRole) => myRole === data.role) ? (
         <Outlet />
-    ) : <Navigate to={'/login'} />
+    ) : <Navigate to={'/signin'} />
 }
 
 export default RequireAuth

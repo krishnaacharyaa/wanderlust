@@ -31,6 +31,8 @@ function signin() {
         success: {
           render({ data }) {
             userState.setUser(data?.data?.data?.user)
+            localStorage.setItem("userId", data?.data?.data?.user?._id)
+            localStorage.setItem("role", data?.data?.data?.user?.role)
             reset()
             navigate('/')
             return data?.data?.message

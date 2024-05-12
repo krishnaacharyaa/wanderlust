@@ -2,16 +2,23 @@ import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
 import LogOutIcon from '@/assets/svg/logout-icon.svg';
 import LogInIcon from '@/assets/svg/login-icon.svg';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
 import { isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axiosInstance';
+import { useEffect, useState } from 'react';
 
 function header() {
   const navigate = useNavigate();
-  const token = document.cookie.includes('access_token');
+  const location = useLocation()
+  const [data, setData] = useState({
+    _id: localStorage.getItem("userId") || '',
+    token: ''
+  })
+
+
   const handleLogout = async () => {
     try {
       const response = axiosInstance.post('/api/auth/signout')
@@ -20,6 +27,8 @@ function header() {
         success: {
           render({ data }) {
             userState.setUser('')
+            localStorage.removeItem("userId")
+            localStorage.removeItem("role")
             navigate('/');
             return data?.data?.message
           },
@@ -41,6 +50,26 @@ function header() {
       }
     }
   };
+
+  useEffect(() => {
+    async function fetchToken() {
+      try {
+        const res = await axiosInstance.get(`/api/auth/check/${data._id}`)
+        console.log(res.data)
+        setData({
+          ...data,
+          token: res.data?.data
+        })
+      } catch (error) {
+        setData({
+          ...data,
+          token: ''
+        })
+      }
+    }
+    fetchToken()
+  }, [location])
+
   return (
     <div className="relative -mt-2 h-[460px] bg-[url('./assets/wanderlustbg.webp')] bg-cover bg-fixed bg-center">
       <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -53,7 +82,7 @@ function header() {
             <div className="flex items-center justify-end px-2 py-2 md:px-20">
               <ThemeToggle />
             </div>
-            {token ? (
+            {data.token ? (
               <div className="flex gap-2 ">
                 <button
                   className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
