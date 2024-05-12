@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import BlogFeed from '@/components/blog-feed';
 import PostCard from '@/components/post-card';

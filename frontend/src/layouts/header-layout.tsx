@@ -4,7 +4,7 @@ import LogOutIcon from '@/assets/svg/logout-icon.svg';
 import LogInIcon from '@/assets/svg/login-icon.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
-import { isAxiosError } from 'axios';
+import { AxiosError, isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axiosInstance';
@@ -35,7 +35,12 @@ function header() {
         },
         error: {
           render({ data }) {
-            return data?.response?.data?.message
+            if (data instanceof AxiosError) {
+              if (data?.response?.data?.message) {
+                return data?.response?.data?.message;
+              }
+            }
+            return "Signout failed"
           },
         },
       }

@@ -7,7 +7,7 @@ import { TSignUpSchema, signUpSchema } from '@/lib/types';
 import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { isAxiosError } from 'axios';
+import { AxiosError, isAxiosError } from 'axios';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axiosInstance';
 
@@ -37,7 +37,12 @@ function signin() {
         },
         error: {
           render({ data }) {
-            return data?.response?.data?.message
+            if (data instanceof AxiosError) {
+              if (data?.response?.data?.message) {
+                return data?.response?.data?.message;
+              }
+            }
+            return "Signup failed"
           },
         },
       }
