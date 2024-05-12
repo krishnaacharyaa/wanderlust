@@ -1,8 +1,8 @@
 //after each test, the function cleanup is executed to reset jsdom, which is simulating the browser.
-import { afterEach } from 'vitest'
+import { afterAll, afterEach, beforeAll } from 'vitest'
 import { cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import { server } from './src/__tests__/mocks/node'
+import { server } from './src/__tests__/mocks/node-mock'
 
 beforeAll(() => {
   server.listen()
