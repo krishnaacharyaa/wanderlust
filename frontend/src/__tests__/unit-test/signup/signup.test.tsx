@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { formSetup } from './client-util';
+import { formSetup } from './client-utils';
 import {
   CONFIRMPASSWORD_EMPTY_ERRORMESSAGE,
   EMAIL_EMPTY_ERRORMESSAGE,
