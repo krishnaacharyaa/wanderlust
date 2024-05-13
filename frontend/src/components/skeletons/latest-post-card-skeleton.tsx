@@ -17,9 +17,8 @@ export const LatestPostCardSkeleton = () => {
       </div>
       <div className="mb-2">
         <Skeleton className="h-6 w-11/12 bg-slate-200 dark:bg-slate-700" />
-        <Skeleton className="mt-2 h-4 w-2/3 bg-slate-200 dark:bg-slate-700" />
       </div>
-      <Skeleton className="h-3 w-1/3 bg-slate-200 dark:bg-slate-700" />
+      <Skeleton className="h-3 w-2/3 bg-slate-200 dark:bg-slate-700" />
     </div>
   );
 };
