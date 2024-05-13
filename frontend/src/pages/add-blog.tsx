@@ -127,13 +127,10 @@ function AddBlog() {
   };
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
+  
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-    setIsDarkMode(storedTheme === 'dark' || (!storedTheme && prefersDark) || null);
-    if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
-      document.documentElement.classList.add('dark');
-    }
+    setIsDarkMode(storedTheme === 'dark');
   }, []);
 
   function Asterisk() {
