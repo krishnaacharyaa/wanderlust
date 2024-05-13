@@ -8,10 +8,7 @@ function ThemeToggle() {
   };
   useLayoutEffect(() => {
       const storedTheme = localStorage.getItem('theme') ?? '';
-      const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-      const initialTheme = storedTheme === 'dark' || (prefersDark && !storedTheme);
-      setIsDarkTheme(initialTheme);
-      if (initialTheme) document.documentElement.classList.add('dark');    
+      setIsDarkTheme(storedTheme === 'dark');   
   }, []);
   
 
