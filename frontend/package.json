@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "coverage":"vitest run --coverage "
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -42,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "@vitejs/plugin-react-swc": "^3.4.1",
+    "@vitest/coverage-v8": "^1.6.0",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
