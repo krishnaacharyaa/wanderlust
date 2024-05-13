@@ -44,7 +44,7 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
           <h2 className="mb-2 line-clamp-1 text-base font-semibold text-light-title dark:text-dark-title">
             {post.title}
           </h2>
-          <p ref={descriptionRef} className={`${incHeight?"leading-10":""} line-clamp-2  text-sm text-light-description dark:text-dark-description1`}>
+          <p ref={descriptionRef} className={`${incHeight?"leading-10":""} line-clamp-2  text-sm text-light-description dark:text-dark-description`}>
             {post.description}
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
