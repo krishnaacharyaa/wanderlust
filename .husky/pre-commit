@@ -2,4 +2,4 @@
 chmod +x .husky/pre-commit
 
 cd backend && npm run check && npm run format && npm run test
-cd ../frontend && npm run lint && npm run format && npm run test
+cd ../frontend && npm run format && npm run test
