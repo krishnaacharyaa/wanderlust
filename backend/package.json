@@ -18,8 +18,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "check": "prettier --check .",
-    "format": "prettier --write .",
-    "vercel-build": "echo yay"
+    "format": "prettier --write ."
   },
   "jest": {
     "globalTeardown": "./tests/teardown.js",
