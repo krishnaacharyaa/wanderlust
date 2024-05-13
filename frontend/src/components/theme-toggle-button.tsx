@@ -7,23 +7,21 @@ function ThemeToggle() {
     setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
   };
   useLayoutEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-    const initialTheme = storedTheme === 'dark' || (!storedTheme && prefersDark);
-    setIsDarkTheme(initialTheme);
-    if (initialTheme) {
-      document.documentElement.classList.add('dark');
-    }
+      const storedTheme = localStorage.getItem('theme') ?? '';
+      const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+      const initialTheme = storedTheme === 'dark' || (prefersDark && !storedTheme);
+      setIsDarkTheme(initialTheme);
+      if (initialTheme) document.documentElement.classList.add('dark');    
   }, []);
   
 
   useLayoutEffect(() => {
     if (isDarkTheme !== null) {
       document.documentElement.classList.toggle('dark', isDarkTheme);
-
       localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
     }
   }, [isDarkTheme]);
+
   return (
     <div>
       <button
