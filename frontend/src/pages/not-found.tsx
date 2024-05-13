@@ -13,7 +13,7 @@ import ThemeToggle from '@/components/theme-toggle-button';
 function ErrorPage() {
   const navigate = useNavigate();
 
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean | null>(null);
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean | null>(true);
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
   };
