@@ -45,7 +45,7 @@ export default function BlogFeed() {
   return (
     <div className="mx-auto my-6">
       <div className="-mx-4 flex flex-wrap">
-        <div className="w-full p-4 md:w-2/3">
+        <div className="w-full p-4 sm:w-2/3">
           <div className="-mb-1 cursor-text text-base tracking-wide text-slate-500 dark:text-dark-tertiary">
             What's hot?
           </div>
@@ -64,7 +64,7 @@ export default function BlogFeed() {
                   .map((post, index) => <FeaturedPostCard key={index} post={post} />)}
           </div>
         </div>
-        <div className="w-full p-4 md:w-1/3">
+        <div className="w-full p-4 sm:w-1/3">
           <div className="mb-6">
             <div className="-mb-1 cursor-text text-base tracking-wide text-light-tertiary dark:text-dark-tertiary">
               Discover by topic
