@@ -10,14 +10,12 @@ import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import AdminContainer from './components/admin-container';
 import { useEffect } from 'react';
+import useDarkModeClass from './utils/theme-changer';
 
 function App() {
-
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    storedTheme === 'dark' && document.documentElement.classList.add('dark');
+    useDarkModeClass();
   }, []);
-  
   return (
     <BrowserRouter>
       <ScrollToTop />
