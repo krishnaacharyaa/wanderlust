@@ -10,11 +10,11 @@ import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import AdminContainer from './components/admin-container';
 import { useEffect } from 'react';
-import useDarkModeClass from './utils/theme-changer';
+import useThemeClass from './utils/theme-changer';
 
 function App() {
   useEffect(() => {
-    useDarkModeClass();
+    useThemeClass();
   }, []);
   return (
     <BrowserRouter>
