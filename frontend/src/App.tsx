@@ -9,6 +9,7 @@ import SignUp from '@/pages/signup-page';
 import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import AdminContainer from './components/admin-container';
+import NotFound from '@/pages/not-found';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
