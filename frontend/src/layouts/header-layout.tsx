@@ -9,13 +9,14 @@ import { toast } from 'react-toastify';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axiosInstance';
 import { useEffect, useState } from 'react';
-
+import Loader from '@/components/skeletons/Loader';
 function header() {
   const navigate = useNavigate();
   const location = useLocation()
   const [data, setData] = useState({
     _id: localStorage.getItem("userId") || '',
-    token: ''
+    token: '',
+    loading: true
   })
 
 
@@ -62,12 +63,14 @@ function header() {
         const res = await axiosInstance.get(`/api/auth/check/${data._id}`)
         setData({
           ...data,
-          token: res.data?.data
+          token: res.data?.data,
+          loading: false
         })
       } catch (error) {
         setData({
           ...data,
-          token: ''
+          token: '',
+          loading: false
         })
       }
     }
@@ -82,66 +85,70 @@ function header() {
           <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
             WanderLust
           </div>
-          <div className="flex justify-between">
-            <div className="flex items-center justify-end px-2 py-2 md:px-20">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center justify-end md:pr-20">
               <ThemeToggle />
             </div>
-            {data.token ? (
-              <div className="flex gap-2 ">
-                <button
-                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
-                  onClick={() => {
-                    navigate('/add-blog');
-                  }}
-                >
-                  Create post
-                </button>
-                <button
-                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
-                  onClick={() => {
-                    handleLogout();
-                  }}
-                >
-                  Logout
-                </button>
-                <button
-                  className="px-2 py-2 hover:bg-slate-500/25 md:hidden"
-                  onClick={() => {
-                    navigate('/add-blog');
-                  }}
-                >
-                  <img className="h-10 w-10" src={AddIcon} />
-                </button>
-                <button
-                  className="py-2 hover:bg-slate-500/25 md:hidden md:px-2"
-                  onClick={() => {
-                    handleLogout();
-                  }}
-                >
-                  <img className="h-9 w-9" src={LogOutIcon} />
-                </button>
-              </div>
-            ) : (
-              <div className="flex">
-                {' '}
-                <button
-                  className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
-                  onClick={() => {
-                    navigate('/signin');
-                  }}
-                >
-                  Login
-                </button>
-                <button
-                  className="py-2 hover:bg-slate-500/25 md:hidden md:px-2"
-                  onClick={() => {
-                    navigate('/signin');
-                  }}
-                >
-                  <img className="h-9 w-9" src={LogInIcon} />
-                </button>
-              </div>
-            )}
+            <div>
+              {data.loading ? (
+                <Loader />
+              ) : data.token ? (
+                <div className="flex gap-2 ">
+                  <button
+                    className="active:scale-click rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                    onClick={() => {
+                      navigate('/add-blog');
+                    }}
+                  >
+                    Create post
+                  </button>
+                  <button
+                    className="active:scale-click rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    Logout
+                  </button>
+                  <button
+                    className="px-2 py-2 hover:bg-slate-500/25 md:hidden"
+                    onClick={() => {
+                      navigate('/add-blog');
+                    }}
+                  >
+                    <img className="h-10 w-10" src={AddIcon} alt="Add Icon" />
+                  </button>
+                  <button
+                    className="py-2 hover:bg-slate-500/25 md:hidden md:px-2"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    <img className="h-9 w-9" src={LogOutIcon} alt="Logout Icon" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex">
+                  {' '}
+                  <button
+                    className="active:scale-click rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                    onClick={() => {
+                      navigate('/signin');
+                    }}
+                  >
+                    Login
+                  </button>
+                  <button
+                    className="py-2 hover:bg-slate-500/25 md:hidden md:px-2"
+                    onClick={() => {
+                      navigate('/signin');
+                    }}
+                  >
+                    <img className="h-9 w-9" src={LogInIcon} alt="Login Icon" />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <Hero />
