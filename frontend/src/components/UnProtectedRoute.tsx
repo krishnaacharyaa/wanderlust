@@ -13,7 +13,6 @@ function UnprotectedRoute() {
         async function fetchToken() {
             try {
                 const res = await axiosInstance.get(`/api/auth/check/${data._id}`)
-                console.log(res.data)
                 setData({
                     ...data,
                     token: res.data?.data,
