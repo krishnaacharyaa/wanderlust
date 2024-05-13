@@ -1,1 +1,16 @@
 node_modules/
+node_modules/
+yarn.lock
+vercel.json
+README.md
+tsconfig.json
+tsconfig.node.json
+tsconfig.prod.json
+vercel.json
+vite.config.ts
+jest.config.ts
+.eslintrc.cjs
+.eslintignore
+.prettierignore
+.prettierrc
+.package-lock.json
