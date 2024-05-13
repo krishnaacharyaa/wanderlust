@@ -11,6 +11,7 @@ import AdminBlogs from '@/pages/admin-blogs';
 import AdminContainer from './components/admin-container';
 import useThemeClass from './utils/theme-changer';
 import { useLayoutEffect } from 'react';
+import NotFound from '@/pages/not-found';
 
 function App() {
   useLayoutEffect(() => {
@@ -32,6 +33,7 @@ function App() {
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
