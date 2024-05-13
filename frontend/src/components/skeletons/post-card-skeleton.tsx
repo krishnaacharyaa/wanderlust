@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const PostCardSkeleton = () => {
   return (
-    <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4" data-testid="postcardskeleton">
+    <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4" data-testid="postcardskeleton">
       <div className="mb-4 mr-8 mt-4 rounded-lg bg-light shadow-md dark:bg-dark-card">
         <Skeleton className="h-48 w-full rounded-lg bg-slate-200 dark:bg-slate-700" />
         <div className="p-4">
