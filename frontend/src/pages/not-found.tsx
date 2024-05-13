@@ -1,24 +1,14 @@
-import AddIcon from '@/assets/svg/add-icon-white.svg';
-import LogOutIcon from '@/assets/svg/logout-icon.svg';
-import LogInIcon from '@/assets/svg/login-icon.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import userState from '@/utils/user-state';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadFull } from 'tsparticles';
 import ThemeToggle from '@/components/theme-toggle-button';
 
 function ErrorPage() {
-  const navigate = useNavigate();
-
   const [isDarkTheme, setIsDarkTheme] = useState<boolean | null>(true);
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
   };
-
-  const [accessToken, setAccessToken] = useState<string | null>(userState.getUser());
 
   useLayoutEffect(() => {
     if (isDarkTheme !== null) {
@@ -29,34 +19,10 @@ function ErrorPage() {
   }, [isDarkTheme]);
 
   useEffect(() => {
-    const storedAccessToken = userState.getUser();
-
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    }
-
     initParticlesEngine(async (engine) => {
       await loadFull(engine);
     });
-  }, [accessToken, userState]);
-
-  const handleLogout = async () => {
-    try {
-      const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/auth/signout');
-
-      if (response.status === 200) {
-        toast.success(response.data.message);
-        userState.setUser(null);
-        setAccessToken(null);
-        navigate('/');
-      } else {
-        toast.error('Error: ' + response.data.message);
-      }
-    } catch (err: any) {
-      console.log('Error :', err.message);
-      toast.error('Something went wrong. Please try again later.');
-    }
-  };
+  }, []);
 
   return (
     <>
@@ -68,61 +34,6 @@ function ErrorPage() {
           <div className="flex items-center justify-end px-2 py-2 sm:px-20" onClick={toggleTheme}>
             <ThemeToggle />
           </div>
-          {accessToken ? (
-            <div className="flex gap-2 ">
-              <button
-                className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 sm:inline-block"
-                onClick={() => {
-                  navigate('/add-blog');
-                }}
-              >
-                Create post
-              </button>
-              <button
-                className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 sm:inline-block"
-                onClick={() => {
-                  handleLogout();
-                }}
-              >
-                Logout
-              </button>
-              <button
-                className="px-2 py-2 hover:bg-slate-500/25 sm:hidden"
-                onClick={() => {
-                  navigate('/add-blog');
-                }}
-              >
-                <img className="h-10 w-10" src={AddIcon} />
-              </button>
-              <button
-                className="py-2 hover:bg-slate-500/25 sm:hidden sm:px-2"
-                onClick={() => {
-                  handleLogout();
-                }}
-              >
-                <img className="h-9 w-9" src={LogOutIcon} />
-              </button>
-            </div>
-          ) : (
-            <div className="flex">
-              <button
-                className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 sm:inline-block"
-                onClick={() => {
-                  navigate('/signin');
-                }}
-              >
-                Login
-              </button>
-              <button
-                className="py-2 hover:bg-slate-500/25 sm:hidden sm:px-2"
-                onClick={() => {
-                  navigate('/signin');
-                }}
-              >
-                <img className="h-9 w-9" src={LogInIcon} />
-              </button>
-            </div>
-          )}
         </div>
       </div>
       <div className="justify-centerp-5 flex w-full flex-col items-center bg-light text-dark dark:bg-dark dark:text-light ">
