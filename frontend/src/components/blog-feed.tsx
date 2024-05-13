@@ -72,7 +72,7 @@ export default function BlogFeed() {
             <h2 className="mb-2 cursor-text text-xl font-semibold dark:text-dark-primary">
               Categories
             </h2>
-            <div className="flex flex-wrap gap-3 dark:rounded-lg dark:bg-dark-card dark:p-3">
+            <div className="flex flex-wrap gap-3">
               {categories.map((category) => (
                 <button
                   name="category"
