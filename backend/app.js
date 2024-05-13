@@ -6,7 +6,7 @@ import { FRONTEND_URL } from './config/utils.js';
 import authRouter from './routes/auth.js';
 import postsRouter from './routes/posts.js';
 import userRouter from './routes/user.js';
-
+import errorMiddleware from './middlewares/error-middleware.js';
 
 const app = express();
 
@@ -38,5 +38,5 @@ app.all("*", (req, res) => {
     })
 })
 
-
+app.use(errorMiddleware)
 export default app;
