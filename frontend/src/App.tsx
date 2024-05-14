@@ -8,8 +8,9 @@ import SignIn from '@/pages/signin-page';
 import SignUp from '@/pages/signup-page';
 import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
-import AdminContainer from './components/admin-container';
 import NotFound from '@/pages/not-found';
+import UnprotectedRoute from './components/unprotected-route';
+import RequireAuth from './components/require-auth';
 
 function App() {
   return (
@@ -19,11 +20,15 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<HomePage />} />
-            <Route path="add-blog" element={<AddBlog />} />
             <Route path="details-page/:title/:postId" element={<DetailsPage />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="admin" element={<AdminContainer />}>
+            <Route element={<UnprotectedRoute />}>
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
+            </Route>
+            <Route element={<RequireAuth allowedRole={["ADMIN", "USER"]} />}>
+              <Route path="add-blog" element={<AddBlog />} />
+            </Route>
+            <Route path='admin' element={<RequireAuth allowedRole={["ADMIN"]} />}>
               <Route path="users" element={<AdminUsers />} />
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>

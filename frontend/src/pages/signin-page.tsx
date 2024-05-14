@@ -7,46 +7,54 @@ import { TSignInSchema, signInSchema } from '@/lib/types';
 import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import axios, { isAxiosError } from 'axios';
-import userState from '@/utils/user-state';
+import { AxiosError, isAxiosError } from 'axios';
+import axiosInstance from '@/helpers/axios-instance';
 
 function signin() {
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
-    setError,
+    reset
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const { email, password } = data;
-
-      const response = await axios.post(
-        import.meta.env.VITE_API_PATH + '/api/auth/email-password/signin',
-        {
-          email,
-          password,
-        }
+      const response = axiosInstance.post('/api/auth/email-password/signin',
+        data
       );
 
-      userState.setUser(response?.data?.accessToken);
-      toast.success(response.data.message);
+      toast.promise(response, {
+        pending: 'Checking credentials ...',
+        success: {
+          render({ data }) {
+            localStorage.setItem("userId", data?.data?.data?.user?._id)
+            localStorage.setItem("role", data?.data?.data?.user?.role)
+            reset()
+            navigate('/')
+            return data?.data?.message
+          },
+        },
+        error: {
+          render({ data }) {
+            if (data instanceof AxiosError) {
+              if (data?.response?.data?.message) {
+                return data?.response?.data?.message;
+              }
+            }
+            return "Signin failed"
+          },
+        },
+      }
+      )
 
-      reset();
-      navigate('/');
+      return (await response).data
     } catch (error) {
       if (isAxiosError(error)) {
-        const errorMessage = error?.response?.data?.message;
-
-        if (errorMessage.includes('Email')) {
-          setError('email', { type: 'manual', message: errorMessage });
-        } else {
-          setError('password', { type: 'manual', message: errorMessage });
-        }
+        console.error(error.response?.data?.message);
+      } else {
+        console.error(error);
       }
     }
   };
@@ -61,16 +69,16 @@ function signin() {
         </div>
       </div>
       <div className="m-2 mt-8 flex flex-col items-center justify-center gap-2">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full sm:w-3/4 lg:w-2/5">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-3/4 lg:w-2/5">
           <div className="mb-2">
             <input
-              {...register('email')}
-              type="email"
-              placeholder="Email"
+              {...register('userNameOrEmail')}
+              type="text"
+              placeholder="Username or Email"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
-            {errors.email && (
-              <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
+            {errors.userNameOrEmail && (
+              <p className="p-3 text-xs text-red-500">{`${errors.userNameOrEmail.message}`}</p>
             )}
           </div>
 
@@ -108,7 +116,7 @@ function signin() {
 
         <Link
           to={'/google-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 sm:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
           <span className="text-sm sm:text-base">Continue with Google</span>
@@ -116,7 +124,7 @@ function signin() {
 
         <Link
           to={'/github-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 sm:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm sm:text-base">Continue with Github</span>

@@ -1,37 +1,38 @@
-import { INVALID_CONFIRMPWD_ERRORMESSAGE, INVALID_EMAIL_ERRORMESSAGE, INVALID_PWD_ERRORMESSAGE, INVALID_USERNAME_ERRORMESSAGE } from '@/constants/images';
 import { z } from 'zod';
 
-const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
 export const signInSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Email is required' })
-    .regex(emailRegex, 'Invalid email address'),
-  password: z.string().min(1, { message: 'Password is required' }),
+  userNameOrEmail: z.string().min(1, { message: 'username or email is required' }),
+  password: z.string().min(1, 'Password must be at least 1 character'),
 });
 
 export const signUpSchema = z
   .object({
-    username: z.string().min(1, { message: 'Username is required' }),
-    email: z
+    userName: z.string().min(1, { message: 'Username is required' }),
+    fullName: z
       .string()
-      .min(1, { message: 'Email is required' })
-      .regex(emailRegex, INVALID_EMAIL_ERRORMESSAGE),
-    password: z.string().min(1, { message: 'Password is required' }),
-    confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
-  })
-  .refine((data) => data.username.trim().length >= 5, {
-    message: INVALID_USERNAME_ERRORMESSAGE,
-    path: ['username'],
+      .min(3, { message: 'Name must be at least 3 character' })
+      .max(15, { message: 'Name should be less than 15 character' }),
+    email: z.string().email('Enter valid email'),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 character')
+      .regex(
+        passwordRegex,
+        'Password must be contains at least one uppercase and one lowercase and one digit and one special character'
+      ),
+    confirmPassword: z
+      .string()
+      .min(8, 'Password must be at least 8 character')
+      .regex(
+        passwordRegex,
+        'Password must be contains at least one uppercase and one lowercase and one digit and one special character'
+      ),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: INVALID_CONFIRMPWD_ERRORMESSAGE,
+    message: 'Confirm Password do not match',
     path: ['confirmPassword'],
-  })
-  .refine((data) => data.password.trim().length >= 8, {
-    message: INVALID_PWD_ERRORMESSAGE,
-    path: ['password'],
   });
 
 export type TSignInSchema = z.infer<typeof signInSchema>;
