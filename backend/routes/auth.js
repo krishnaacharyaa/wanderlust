@@ -10,6 +10,7 @@ import {
   signUpWithGithub,
   signInWithGithub,
   signOutUser,
+  isLoggedIn,
 } from '../controllers/auth-controller.js';
 
 const router = Router();
@@ -31,5 +32,7 @@ router.post('/email-password/signin', signInWithEmailOrUsername);
 //SIGN OUT
 router.post('/signout', authMiddleware, signOutUser);
 
+//CHECK USER STATUS
+router.get('/check/:_id', isLoggedIn)
 
 export default router;
