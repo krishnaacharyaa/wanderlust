@@ -1,11 +1,9 @@
 import User from '../models/user.js';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import { cookieOptions } from '../utils/cookie_options.js';
-import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';
-const { hash, compareSync } = bcrypt;
+import { JWT_SECRET } from '../config/utils.js';
 const { sign } = jwt;
 import { ApiError } from '../utils/api-error.js';
 import { ApiResponse } from '../utils/api-response.js';
@@ -401,3 +399,33 @@ export const signOutUser = asyncHandler(async (req, res) => {
       new ApiResponse(HTTP_STATUS.OK, '', RESPONSE_MESSAGES.USERS.SIGNED_OUT)
     )
 });
+
+// check user
+export const isLoggedIn = asyncHandler(async (req, res) => {
+  const { _id } = req.params
+  const user = await User.findById(_id)
+  if (!user) {
+    return res.status(HTTP_STATUS.NOT_FOUND).json(
+      new ApiResponse(HTTP_STATUS.NOT_FOUND, '', RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS)
+    )
+  }
+
+  const { refreshToken } = user
+
+  if (!refreshToken) {
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json(
+      new ApiResponse(HTTP_STATUS.UNAUTHORIZED, '', RESPONSE_MESSAGES.USERS.INVALID_TOKEN)
+    )
+  }
+
+  try {
+    await jwt.verify(refreshToken, JWT_SECRET)
+  } catch (error) {
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json(
+      new ApiResponse(HTTP_STATUS.UNAUTHORIZED, '', RESPONSE_MESSAGES.USERS.INVALID_TOKEN)
+    )
+  }
+  return res.status(HTTP_STATUS.OK).json(
+    new ApiResponse(HTTP_STATUS.OK, refreshToken, RESPONSE_MESSAGES.USERS.VALID_TOKEN)
+  )
+})
