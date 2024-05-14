@@ -7,50 +7,55 @@ import { TSignUpSchema, signUpSchema } from '@/lib/types';
 import 'react-toastify/dist/ReactToastify.css';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import axios, { isAxiosError } from 'axios';
-import userState from '@/utils/user-state';
+import { AxiosError, isAxiosError } from 'axios';
+import axiosInstance from '@/helpers/axios-instance';
 
-function signin() {
+function signup() {
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
-    setError,
+    reset
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const { username, email, password } = data;
+      const res = axiosInstance.post('/api/auth/email-password/signup', data)
+      toast.promise(res, {
+        pending: 'Creating account ...',
+        success: {
+          render({ data }) {
+            localStorage.setItem("userId", data?.data?.data?.user?._id)
+            localStorage.setItem("role", data?.data?.data?.user?.role)
+            reset()
+            navigate('/')
+            return data?.data?.message
+          },
+        },
+        error: {
+          render({ data }) {
+            if (data instanceof AxiosError) {
+              if (data?.response?.data?.message) {
+                return data?.response?.data?.message;
+              }
+            }
+            return "Signup failed"
+          },
+        },
+      }
+      )
+      return (await res).data
 
-      const response = await axios.post(
-        import.meta.env.VITE_API_PATH + '/api/auth/email-password/signup',
-        {
-          name: username,
-          email,
-          password,
-        }
-      );
-
-      userState.setUser(response?.data?.accessToken);
-      toast.success(response.data.message);
-
-      reset();
-      navigate('/');
     } catch (error) {
       if (isAxiosError(error)) {
-        const errorMessage = error?.response?.data?.message;
-
-        if (errorMessage.includes('Name')) {
-          setError('username', { type: 'manual', message: errorMessage });
-        } else if (errorMessage.includes('Email')) {
-          setError('email', { type: 'manual', message: errorMessage });
-        }
+        console.error(error.response?.data?.message);
+      } else {
+        console.error(error);
       }
     }
   };
+
 
   return (
     <div className="m-4 flex-grow cursor-default bg-white py-4">
@@ -62,33 +67,41 @@ function signin() {
         </div>
       </div>
       <div className="m-2 mt-8 flex flex-col items-center justify-center gap-2">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full sm:w-3/4 lg:w-2/5">
-          <div className="mb-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-3/4 lg:w-2/5">
+          <div className="mb-3">
             <input
-              {...register('username')}
+              {...register('userName')}
               type="text"
               placeholder="Username"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
-            {errors.username && (
-              <p className="p-3 text-xs text-red-500">{`${errors.username.message}`}</p>
+            {errors.userName && (
+              <p className="p-3 text-xs text-red-500">{`${errors.userName.message}`}</p>
             )}
           </div>
-
-          <div className="mb-2">
+          <div className="mb-3">
             <input
-              type='email'
+              {...register('fullName')}
+              type="text"
+              placeholder="Name"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
+            />
+            {errors.fullName && (
+              <p className="p-3 text-xs text-red-500">{`${errors.fullName.message}`}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <input
               {...register('email')}
-            
+              type="email"
               placeholder="Email"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
             {errors.email && (
-              <p  className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
+              <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
             )}
           </div>
-
-          <div className="mb-2">
+          <div className="mb-3">
             <input
               {...register('password')}
               type="password"
@@ -99,7 +112,6 @@ function signin() {
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
             )}
           </div>
-
           <div className="mb-4">
             <input
               {...register('confirmPassword')}
@@ -108,10 +120,9 @@ function signin() {
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
             {errors.confirmPassword && (
-              <p  className="p-3 text-xs text-red-500">{`${errors.confirmPassword.message}`}</p>
+              <p className="p-3 text-xs text-red-500">{`${errors.confirmPassword.message}`}</p>
             )}
           </div>
-
           <button
             disabled={isSubmitting}
             type="submit"
@@ -134,7 +145,7 @@ function signin() {
 
         <Link
           to={'/google-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 sm:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
           <span className="text-sm sm:text-base">Continue with Google</span>
@@ -142,7 +153,7 @@ function signin() {
 
         <Link
           to={'/github-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 sm:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm sm:text-base">Continue with Github</span>
@@ -152,4 +163,4 @@ function signin() {
   );
 }
 
-export default signin;
+export default signup;
