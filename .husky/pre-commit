@@ -2,9 +2,9 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd frontend
-echo frontend code is formatting...
+echo [FRONTEND] Running the prettier format for you.
 npx lint-staged
 
 cd ../backend
-echo backend code is formatting...
+echo [BACKEND] Running the prettier format for you
 npx lint-staged
