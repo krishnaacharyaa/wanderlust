@@ -8,14 +8,15 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "redis": "^4.6.13",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "redis": "^4.6.13"
   },
   "scripts": {
     "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "check": "prettier --check .",
     "format": "prettier --write .",
     "vercel-build": "echo yay"

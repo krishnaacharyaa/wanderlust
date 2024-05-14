@@ -9,6 +9,8 @@ export const validCategories = [
 ];
 export const HTTP_STATUS = {
   OK: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -19,6 +21,7 @@ export const RESPONSE_MESSAGES = {
   COMMON: {
     INTERNAL_SERVER_ERROR: 'Internal Server Error',
     REQUIRED_FIELDS: 'All fields are required.',
+    SOMETHING_WRONG: 'Something went wrong'
   },
   POSTS: {
     CREATED: 'Post created successfully',
@@ -27,15 +30,23 @@ export const RESPONSE_MESSAGES = {
     INVALID_CATEGORY: 'Invalid category',
     MAX_CATEGORIES: 'Please select up to three categories only',
     INVALID_IMAGE_URL: 'Image URL must end with .jpg, .jpeg, .webp, or .png',
+    NOT_ALLOWED: 'You are not allowed to perform this action.',
   },
   USERS: {
     SIGNED_UP: 'New user created',
     SIGNED_IN: 'Successfully signed in',
     SIGNED_OUT: 'Successfully signed out',
+    USER_EXISTS: 'User with this email or username already exists',
     EMAIL_ALREADY_IN_USE: 'Email have been already used.',
     USER_NOT_EXISTS: "User don't exist",
     AUTH_CODE_NOT_FOUND: 'Something went wrong',
     INVALID_PASSWORD: 'Invalid password.',
+    INVALID_TOKEN: 'Token is Invalid or expired!',
+    VALID_TOKEN: 'Token is valid',
+    UNAUTHORIZED_USER: 'You are not authorized!',
+    RE_LOGIN: 'Please log in again',
+    UPDATE: 'User updated Successfully!',
+    DELETED: 'User deleted successfully!',
   },
 };
 
