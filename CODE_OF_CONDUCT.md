@@ -1,16 +1,5 @@
 # Wanderlust - GSSoC Contributors Code of Conduct
 
-In our project, we believe in creating an open and inclusive space for everyone. To ensure a respectful and positive community, follow these key guidelines:
-
-1. **Respect Each Other**: Treat all participants kindly and respectfully.
-2. **Use Inclusive Language**: Keep your language welcoming and inclusive when communicating.
-3. **Accept Constructive Feedback**: Be open to constructive criticism and focus on what's best for the community.
-4. **No Unacceptable Behavior**: Avoid behaviors like harassment, trolling, insults, or anything that's inappropriate in a professional setting.
-
-We're committed to maintaining a positive and inclusive community, and your cooperation is crucial for making this a safe and enjoyable space for everyone.
-
-<a name="setting-up-the-project"></a>
-
 
 ## ❌ You'll never get issue assigned
 
