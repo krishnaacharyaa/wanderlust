@@ -402,7 +402,34 @@ export const signOutUser = asyncHandler(async (req, res) => {
 
 // check user
 export const isLoggedIn = asyncHandler(async (req, res) => {
+  let access_token = req.cookies?.access_token
+  let refresh_token = req.cookies?.refresh_token
   const { _id } = req.params
+
+  if (access_token) {
+    try {
+      await jwt.verify(access_token, JWT_SECRET)
+      return res.status(HTTP_STATUS.OK).json(
+        new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN)
+      )
+    } catch (error) {
+      // Access token invalid, proceed to check refresh token
+    }
+  }
+  else if (refresh_token) {
+    try {
+      await jwt.verify(refresh_token, JWT_SECRET)
+      access_token = await user.generateAccessToken()
+      return res
+        .status(HTTP_STATUS.OK)
+        .cookie('access_token', access_token, cookieOptions)
+        .json(
+          new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN)
+        )
+    } catch (error) {
+      // Access token invalid, proceed to check refresh token that is in db
+    }
+  }
   const user = await User.findById(_id)
   if (!user) {
     return res.status(HTTP_STATUS.NOT_FOUND).json(
@@ -420,12 +447,21 @@ export const isLoggedIn = asyncHandler(async (req, res) => {
 
   try {
     await jwt.verify(refreshToken, JWT_SECRET)
+    access_token = await user.generateAccessToken()
+    refresh_token = await user.generateRefreshToken()
+
+    user.refreshToken = refresh_token
+    await user.save()
+    return res
+      .status(HTTP_STATUS.OK)
+      .cookie('access_token', access_token, cookieOptions)
+      .cookie('refresh_token', refresh_token, cookieOptions)
+      .json(
+        new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN)
+      )
   } catch (error) {
     return res.status(HTTP_STATUS.UNAUTHORIZED).json(
       new ApiResponse(HTTP_STATUS.UNAUTHORIZED, '', RESPONSE_MESSAGES.USERS.INVALID_TOKEN)
     )
   }
-  return res.status(HTTP_STATUS.OK).json(
-    new ApiResponse(HTTP_STATUS.OK, refreshToken, RESPONSE_MESSAGES.USERS.VALID_TOKEN)
-  )
-})
+});
