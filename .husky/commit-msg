@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+regex_pattern="^(fix|feat|docs|chore|refactor)-#[0-9]+: .+( 📝)?$"
+if [[ $commit_msg =~ $regex_pattern ]]; then
+  echo "commit message valid ."
+else
+  echo "Invalid commit message format. Please follow the specified format: <tag>-#<issue number>: <commit message>"
+  exit 1
+fi
+
+

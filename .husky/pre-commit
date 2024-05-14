@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+cd frontend
+echo frontend code is formatting...
+npx lint-staged
+
+cd ../backend
+echo backend code is formatting...
+npx lint-staged
