@@ -9,5 +9,8 @@
     "install-frontend": "cd frontend && npm i",
     "install-backend": "cd backend && npm i",
     "installer": "npm i && npm run install-backend && npm run install-frontend"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0"
   }
 }
