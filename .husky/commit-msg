@@ -3,7 +3,7 @@
 
 commit_msg_file="$1"
 commit_msg=$(cat "$commit_msg_file")
-regex_pattern="^(fix|feat|docs|chore|refactor)(-#[0-9]+)?: .+( 📝)?\$"
+regex_pattern="^(fix|feat|docs|chore|refactor)(-#[0-9]+)?: .+\$"
 if [[ $commit_msg =~ $regex_pattern ]]; then
   echo "Hey hurrah! Thank you for giving attention and following our community guidelines, we are waiting to merge your code into the project !!"
 else
