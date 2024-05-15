@@ -2,22 +2,18 @@ import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
 import LogOutIcon from '@/assets/svg/logout-icon.svg';
 import LogInIcon from '@/assets/svg/login-icon.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
 import { AxiosError, isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import axiosInstance from '@/helpers/axios-instance';
-import { useEffect, useState } from 'react';
 import Loader from '@/components/skeletons/loader';
+import useAuthData from '@/hooks/useAuthData';
+import userState from '@/utils/user-state';
+
 function header() {
   const navigate = useNavigate();
-  const location = useLocation()
-  const [data, setData] = useState({
-    _id: localStorage.getItem("userId") || '',
-    token: '',
-    loading: true
-  })
-
+  const { token, loading } = useAuthData();
 
   const handleLogout = async () => {
     try {
@@ -26,8 +22,7 @@ function header() {
         pending: 'Wait ...',
         success: {
           render({ data }) {
-            localStorage.removeItem("userId")
-            localStorage.removeItem("role")
+            userState.removeUser()
             navigate('/');
             return data?.data?.message
           },
@@ -55,42 +50,22 @@ function header() {
     }
   };
 
-  useEffect(() => {
-    async function fetchToken() {
-      try {
-        const res = await axiosInstance.get(`/api/auth/check/${data._id}`)
-        setData({
-          ...data,
-          token: res.data?.data,
-          loading: false
-        })
-      } catch (error) {
-        setData({
-          ...data,
-          token: '',
-          loading: false
-        })
-      }
-    }
-    fetchToken()
-  }, [location])
-
   return (
     <div className="relative -mt-2 h-[460px] bg-[url('./assets/wanderlustbg.webp')] bg-cover bg-fixed bg-center">
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="absolute inset-0 flex flex-col px-4 py-8 text-slate-50 md:px-16">
+      <div className="absolute inset-0 flex flex-col px-4 py-8 text-slate-50 sm:px-16">
         <div className="flex w-full justify-between">
           <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
             WanderLust
           </div>
           <div className="flex justify-between items-center">
-            <div className="flex items-center justify-end md:pr-20">
+            <div className="flex items-center justify-end sm:px-20">
               <ThemeToggle />
             </div>
             <div>
-              {data.loading ? (
+              {loading ? (
                 <Loader />
-              ) : data.token ? (
+              ) : token ? (
                 <div className="flex gap-2 ">
                   <button
                     className="active:scale-click rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
