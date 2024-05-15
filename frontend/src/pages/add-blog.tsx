@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,6 +8,7 @@ import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
 import userState from '@/utils/user-state';
+import axiosInstance from '@/helpers/axios-instance';
 
 type FormData = {
   title: string;
@@ -20,8 +20,6 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
-
-  const user = userState.getUser();
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -100,9 +98,7 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
-          headers: { access_token: 'Bearer ' + user },
-        });
+        const response = await axiosInstance.post('/api/posts/', formData);
 
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
@@ -111,12 +107,12 @@ function AddBlog() {
           toast.error('Error: ' + response.data.message);
         }
       } catch (err: any) {
-        if (err.response.status === 403) {
-          toast.error('Error: ' + 'Your session has expired, please login again!');
-          userState.setUser(null);
+        if (err.response.status === 400) {
+          toast.error('Your session has expired, please login again!');
+          userState.removeUser();
           navigate('/');
-        } else if (err.response.status === 401) {
-          toast.error('Error: ' + 'You are not authorized!');
+        } else if (err.response.status === 403) {
+          toast.error('You are not authorized!');
           navigate('/');
         } else {
           console.log('Error :', err.message);
