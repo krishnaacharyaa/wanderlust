@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
+import userState from '@/utils/user-state';
 
 function signin() {
   const navigate = useNavigate();
@@ -29,8 +30,9 @@ function signin() {
         pending: 'Checking credentials ...',
         success: {
           render({ data }) {
-            localStorage.setItem("userId", data?.data?.data?.user?._id)
-            localStorage.setItem("role", data?.data?.data?.user?.role)
+            const userId = data?.data?.data?.user?._id;
+            const userRole = data?.data?.data?.user?.role;
+            userState.setUser({ _id: userId, role: userRole })
             reset()
             navigate('/')
             return data?.data?.message
