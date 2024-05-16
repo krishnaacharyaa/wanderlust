@@ -9,6 +9,7 @@ import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axios-instance';
+import { AxiosError, isAxiosError } from 'axios';
 
 type FormData = {
   title: string;
@@ -98,25 +99,45 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axiosInstance.post('/api/posts/', formData);
+        const postPromise = axiosInstance.post('/api/posts/', formData);
 
-        if (response.status === 200) {
-          toast.success('Blog post successfully created!');
+        toast.promise(postPromise, {
+          pending: 'Creating blog post...',
+          success: {
+            render() {
+              setFormData({
+                title: '',
+                authorName: '',
+                imageLink: '',
+                categories: [],
+                description: '',
+                isFeaturedPost: false,
+              })
+              navigate('/');
+              return "Blog created successfully";
+            },
+          },
+          error: {
+            render({ data }) {
+              if (data instanceof AxiosError) {
+                if (data?.response?.data?.message) {
+                  return data?.response?.data?.message;
+                }
+              }
+              return "Blog creation failed";
+            },
+          }
+        })
+
+        return (await postPromise).data;
+
+      } catch (error: any) {
+        if (isAxiosError(error)) {
           navigate('/');
-        } else {
-          toast.error('Error: ' + response.data.message);
-        }
-      } catch (err: any) {
-        if (err.response.status === 400) {
-          toast.error('Your session has expired, please login again!');
           userState.removeUser();
-          navigate('/');
-        } else if (err.response.status === 403) {
-          toast.error('You are not authorized!');
-          navigate('/');
+          console.error(error.response?.data?.message);
         } else {
-          console.log('Error :', err.message);
-          toast.error('Something went wrong. Please try again later.');
+          console.error(error);
         }
       }
     }
