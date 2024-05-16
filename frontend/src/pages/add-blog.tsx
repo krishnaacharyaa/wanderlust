@@ -65,7 +65,7 @@ function AddBlog() {
   //   const { name, value } = e.target;
   //   setFormData({ ...formData, [name]: value });
   // };
-  
+
   const handleCategoryClick = (category: string) => {
     if (isValidCategory(category)) return;
 
@@ -225,6 +225,7 @@ function AddBlog() {
               type="text"
               placeholder="Shree Sharma"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+
               {...register("authorName" )}
             />
               {errors?.authorName && <p className="text-red-500">{errors.authorName.message}</p>}
