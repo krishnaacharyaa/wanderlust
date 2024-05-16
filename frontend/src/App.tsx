@@ -8,7 +8,6 @@ import SignIn from '@/pages/signin-page';
 import SignUp from '@/pages/signup-page';
 import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
-import AdminContainer from './components/admin-container';
 import useThemeClass from './utils/theme-changer';
 import { useLayoutEffect } from 'react';
 import NotFound from '@/pages/not-found';
@@ -39,7 +38,7 @@ function App() {
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>
           </Route>
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NOTFOUND />} />
         </Routes>
         <Footer />
       </div>
