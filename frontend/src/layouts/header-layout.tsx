@@ -21,6 +21,7 @@ function header() {
     }
   }, [accessToken, userState]);
 
+  console.log('adding some suggestion in the pr');
   const handleLogout = async () => {
     try {
       const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/auth/signout');
