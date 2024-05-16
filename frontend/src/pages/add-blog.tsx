@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,6 +9,9 @@ import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
 import userState from '@/utils/user-state';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type FormData = {
   title: string;
@@ -20,14 +23,15 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
-
   const user = userState.getUser();
+  const navigate = useNavigate();
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
   };
 
   const [modal, setmodal] = useState(false);
+
   const [formData, setFormData] = useState<FormData>({
     title: '',
     authorName: '',
@@ -37,15 +41,30 @@ function AddBlog() {
     isFeaturedPost: false,
   });
 
+  const addBlogSchema = z.object({
+    title: z.string().min(3, 'Title must be at least 3 characters long'),
+    description: z.string().min(10, 'Description must be at least 10 characters long'),
+    authorName: z.string().min(2, 'Author name must be at least 2 characters long'),
+    image: z.union([
+      z.string().url({ message: 'Image URL must be a valid URL' }),
+      z.object({ type: z.literal('image/*').optional() }),
+    ]),
+    categories: z.array(z.string()).max(3, 'Select up to three categories'),
+  });
+
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(addBlogSchema)
+  });
+
   //checks the length of the categories array and if the category is already selected
   const isValidCategory = (category: string): boolean => {
     return formData.categories.length >= 3 && !formData.categories.includes(category);
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
 
   const handleCategoryClick = (category: string) => {
     if (isValidCategory(category)) return;
@@ -73,13 +92,13 @@ function AddBlog() {
   const handleCheckboxChange = () => {
     setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
   };
-  const validateFormData = () => {
+  const validateFormData = (data: FormData) => {
     if (
-      !formData.title ||
-      !formData.authorName ||
-      !formData.imageLink ||
-      !formData.description ||
-      formData.categories.length === 0
+      !data.title ||
+      !data.authorName ||
+      !data.imageLink ||
+      !data.description ||
+      data.categories.length === 0
     ) {
       toast.error('All fields must be filled out.');
       return false;
@@ -93,12 +112,10 @@ function AddBlog() {
       toast.error('Select up to three categories.');
       return false;
     }
-
     return true;
   };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (validateFormData()) {
+  const onSubmit = async (data: FormData) => {
+    if (validateFormData(data)) {
       try {
         const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
           headers: { access_token: 'Bearer ' + user },
@@ -106,7 +123,9 @@ function AddBlog() {
 
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
-          navigate('/');
+          setTimeout(() => {
+          navigate('/'); // Navigate to home after 2 seconds
+          }, 2000);
         } else {
           toast.error('Error: ' + response.data.message);
         }
@@ -125,7 +144,6 @@ function AddBlog() {
       }
     }
   };
-  const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -154,7 +172,7 @@ function AddBlog() {
         </div>
       </div>
       <div className="flex justify-center">
-        <form onSubmit={handleSubmit} className="sm:w-5/6 lg:w-2/3">
+        <form onSubmit={handleSubmit(onSubmit)} className="sm:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
@@ -172,31 +190,33 @@ function AddBlog() {
 
           <div className="mb-2">
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
-              Blog title <Asterisk />
-            </div>
-            <input
+            <label htmlFor="title" title="must be longer than 3">
+                Blog Title <Asterisk />
+            </label>
+            <input id="title"
               type="text"
-              name="title"
               placeholder="Travel Bucket List for this Year"
               autoComplete="off"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.title}
-              onChange={handleInputChange}
+              {...register("title")}
             />
+            {errors.title?.message && <p className="text-red-500">{errors.title?.message}</p>}
+          </div>
           </div>
 
           <div className="mb-1">
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
+            <label htmlFor="concent" title="DEscription should be clear and longer than 10 characters">
               Blog content <Asterisk />
+            </label>
             </div>
             <textarea
-              name="description"
               placeholder="Start writing here&hellip;"
               rows={5}
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.description}
-              onChange={handleInputChange}
+              {...register("description"  )}
             />
+            {errors.description?.message && <p className="text-red-500">{errors.description?.message}</p>}
           </div>
 
           <div className="mb-2">
@@ -205,14 +225,14 @@ function AddBlog() {
             </div>
             <input
               type="text"
-              name="authorName"
               placeholder="Shree Sharma"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.authorName}
-              onChange={handleInputChange}
+              {...register("authorName" )}
             />
+              {errors?.authorName && <p className="text-red-500">{errors.authorName.message}</p>}
           </div>
 
+        <div className="mb-2">
           <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
             Blog cover image
             <span className="text-xs tracking-wide text-dark-tertiary">
@@ -224,13 +244,15 @@ function AddBlog() {
             <input
               type="url"
               id="imagelink"
-              name="imageLink"
               placeholder="https://&hellip;"
               autoComplete="off"
+              accept="image/*"
               className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
-              value={formData.imageLink}
-              onChange={handleInputChange}
-            />
+              {...register("imageLink" )}
+              />
+              {errors.imageLink && <p className="text-red-500">{errors.imageLink.message}</p>}
+              {selectedImage && <span className="text-green-500">Image Selected: {selectedImage}</span>}  
+            
             <button
               name="openModal"
               type="button"
@@ -241,6 +263,7 @@ function AddBlog() {
             >
               Pick image
             </button>
+          </div>
           </div>
           <div className="mb-4 flex flex-col">
             <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary sm:mr-4 sm:w-fit">
