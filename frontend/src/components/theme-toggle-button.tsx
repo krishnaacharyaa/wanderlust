@@ -1,13 +1,14 @@
 import { useLayoutEffect, useState } from 'react';
 import Sun from '@/assets/svg/sun.svg';
 import Moon from '@/assets/svg/moon.svg';
+import useThemeClass from '@/utils/theme-changer';
 function ThemeToggle() {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean | null>(null);
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
   };
   useLayoutEffect(() => {
-      const storedTheme = localStorage.getItem('theme') ?? '';
+      const storedTheme = useThemeClass();
       setIsDarkTheme(storedTheme === 'dark');   
   }, []);
   
