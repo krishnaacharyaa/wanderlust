@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+// import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +14,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import axiosInstance from '@/helpers/axios-instance';
+import { AxiosError, isAxiosError } from 'axios';
 
 type FormData = {
   title: string;
@@ -113,30 +116,45 @@ function AddBlog() {
   const onSubmit = async (data: FormData) => {
     if (validateFormData(data)) {
       try {
-      
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', data, {
-          headers: { access_token: 'Bearer ' + user },
-        });
+        const postPromise = axiosInstance.post('/api/posts/', formData);
 
-        if (response.status === 200) {
-          toast.success('Blog post successfully created!');
-          setTimeout(() => {
-            navigate('/'); // Navigate to home after 2 seconds
-          }, 2000);
-        } else {
-          toast.error('Error: ' + response.data.message);
-        }
-      } catch (err: any) {
-        if (err.response.status === 403) {
-          toast.error('Error: ' + 'Your session has expired, please login again!');
-          userState.setUser(null);
+        toast.promise(postPromise, {
+          pending: 'Creating blog post...',
+          success: {
+            render() {
+              setFormData({
+                title: '',
+                authorName: '',
+                imageLink: '',
+                categories: [],
+                description: '',
+                isFeaturedPost: false,
+              })
+              navigate('/');
+              return "Blog created successfully";
+            },
+          },
+          error: {
+            render({ data }) {
+              if (data instanceof AxiosError) {
+                if (data?.response?.data?.message) {
+                  return data?.response?.data?.message;
+                }
+              }
+              return "Blog creation failed";
+            },
+          }
+        })
+
+        return (await postPromise).data;
+
+      } catch (error: any) {
+        if (isAxiosError(error)) {
           navigate('/');
-        } else if (err.response.status === 401) {
-          toast.error('Error: ' + 'You are not authorized!');
-          navigate('/');
+          userState.removeUser();
+          console.error(error.response?.data?.message);
         } else {
-          console.log('Error :', err.message);
-          toast.error('Something went wrong. Please try again later.');
+          console.error(error);
         }
       }
     }
