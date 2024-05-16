@@ -13,7 +13,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-
 type FormData = {
   title: string;
   authorName: string;
@@ -30,6 +29,9 @@ function AddBlog() {
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
   };
+
+  const [modal, setmodal] = useState(false);
+
   const [formData, setFormData] = useState<FormData>({
     title: '',
     authorName: '',
@@ -38,8 +40,6 @@ function AddBlog() {
     description: '',
     isFeaturedPost: false,
   });
-
-  const [modal, setmodal] = useState(false);
 
   const addBlogSchema = z.object({
     title: z.string().min(3, 'Title must be at least 3 characters long'),
@@ -65,7 +65,7 @@ function AddBlog() {
   //   const { name, value } = e.target;
   //   setFormData({ ...formData, [name]: value });
   // };
-
+  
   const handleCategoryClick = (category: string) => {
     if (isValidCategory(category)) return;
 
@@ -121,7 +121,7 @@ function AddBlog() {
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
           setTimeout(() => {
-            navigate('/'); // Navigate to home after 2 seconds
+          navigate('/'); // Navigate to home after 2 seconds
           }, 2000);
         } else {
           toast.error('Error: ' + response.data.message);
@@ -169,7 +169,7 @@ function AddBlog() {
         </div>
       </div>
       <div className="flex justify-center">
-        <form onSubmit={handleSubmit(onSubmit)} className="md:w-5/6 lg:w-2/3">
+        <form onSubmit={handleSubmit(onSubmit)} className="sm:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
@@ -204,7 +204,7 @@ function AddBlog() {
 
           <div className="mb-1">
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
-            <label htmlFor="concent" title="DEscription should be clear and longer than 10 characters">
+            <label htmlFor="concent" title="Description should be clear and longer than 10 characters">
               Blog content <Asterisk />
             </label>
             </div>
@@ -223,14 +223,13 @@ function AddBlog() {
             </div>
             <input
               type="text"
-              // name="authorName"
-              placeholder="Shris Sharma"
+              placeholder="Shree Sharma"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
               {...register("authorName" )}
             />
               {errors?.authorName && <p className="text-red-500">{errors.authorName.message}</p>}
-
           </div>
+
         <div className="mb-2">
           <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
             Blog cover image
@@ -248,10 +247,10 @@ function AddBlog() {
               accept="image/*"
               className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
               {...register("imageLink" )}
-            />
-            {errors.imageLink && <p className="text-red-500">{errors.imageLink.message}</p>}
-            {selectedImage && <span className="text-green-500">Image Selected: {selectedImage}</span>}
-
+              />
+              {errors.imageLink && <p className="text-red-500">{errors.imageLink.message}</p>}
+              {selectedImage && <span className="text-green-500">Image Selected: {selectedImage}</span>}  
+            
             <button
               name="openModal"
               type="button"
