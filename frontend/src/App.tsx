@@ -38,7 +38,6 @@ function App() {
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>
           </Route>
-          <Route path="*" element={<NOTFOUND />} />
         </Routes>
         <Footer />
       </div>
