@@ -1,24 +1,46 @@
 class UserState {
   private static instance: UserState;
-  private user!: string | null;
+  private user: { _id: string; role: string } | null;
 
-  constructor() {
-    if (!UserState.instance) {
+  private constructor() {
+    const userId = localStorage.getItem('userId');
+    const userRole = localStorage.getItem('role');
+
+    if (userId && userRole) {
+      this.user = { _id: userId, role: userRole };
+    } else {
       this.user = null;
-      UserState.instance = this;
+    }
+  }
+
+  static getInstance(): UserState {
+    if (!UserState.instance) {
+      UserState.instance = new UserState();
     }
     return UserState.instance;
   }
 
-  setUser(user: string | null): void {
+  setUser(user: { _id: string; role: string } | null): void {
     this.user = user;
+    if (user) {
+      localStorage.setItem('userId', user._id);
+      localStorage.setItem('role', user.role);
+    } else {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('role');
+    }
   }
 
-  getUser(): string | null {
+  getUser(): { _id: string; role: string } | null {
     return this.user;
+  }
+
+  removeUser(): void {
+    this.setUser(null);
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
   }
 }
 
-const userState = new UserState();
-
+const userState = UserState.getInstance();
 export default userState;
