@@ -11,8 +11,10 @@ import userState from '@/utils/user-state';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import axiosInstance from '@/helpers/axios-instance';
 import { AxiosError, isAxiosError } from 'axios';
+
 
 type FormData = {
   title: string;
@@ -32,6 +34,7 @@ function AddBlog() {
 
   const [modal, setmodal] = useState(false);
 
+
   const [formData, setFormData] = useState<FormData>({
     title: '',
     authorName: '',
@@ -40,6 +43,8 @@ function AddBlog() {
     description: '',
     isFeaturedPost: false,
   });
+
+  
 
   const addBlogSchema = z.object({
     title: z.string().min(3, 'Title must be at least 3 characters long'),
@@ -99,6 +104,7 @@ function AddBlog() {
       !data.imageLink ||
       !data.description ||
       data.categories.length === 0
+      
     ) {
       toast.error('All fields must be filled out.');
       return false;
@@ -150,7 +156,6 @@ function AddBlog() {
           navigate('/'); 
           userState.removeUser();
           console.error(error.response?.data?.message);
-       
         } else {
           console.error(error);
         }
@@ -266,7 +271,7 @@ function AddBlog() {
               />
               {errors.imageLink && <p className="text-red-500">{errors.imageLink.message}</p>}
               {selectedImage && <span className="text-green-500">Image Selected: {selectedImage}</span>}  
-            
+              
             <button
               name="openModal"
               type="button"
