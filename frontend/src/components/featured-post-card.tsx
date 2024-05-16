@@ -5,6 +5,8 @@ import CategoryPill from '@/components/category-pill';
 import { createSlug } from '@/utils/slug-generator';
 import { TestProps } from '@/types/test-props';
 
+
+
 export default function FeaturedPostCard({
   post,
   testId = 'featuredPostCard',
