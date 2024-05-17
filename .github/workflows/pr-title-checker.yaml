@@ -1,0 +1,33 @@
+name: "PR Title Checker"
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Run PR Title Checker
+        uses: thehanimo/pr-title-checker@v1.4.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          pass_on_octokit_error: false
+          configuration_path: .github/pr-title-checker-config.json
+
+      - name: Close PR if title is invalid
+        if: failure()  
+        run: gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
