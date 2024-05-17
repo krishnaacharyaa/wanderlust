@@ -9,8 +9,14 @@ import SignUp from '@/pages/signup-page';
 import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import AdminContainer from './components/admin-container';
+import { useLayoutEffect } from 'react';
+import useThemeClass from './utils/theme-changer';
+import NotFound from './pages/not-found';
 
 function App() {
+  useLayoutEffect(() => {
+    useThemeClass();
+  }, []);
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -27,6 +33,7 @@ function App() {
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
