@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,6 +8,8 @@ import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
 import userState from '@/utils/user-state';
+import axiosInstance from '@/helpers/axios-instance';
+import { AxiosError, isAxiosError } from 'axios';
 
 type FormData = {
   title: string;
@@ -20,8 +21,6 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
-
-  const user = userState.getUser();
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -100,27 +99,45 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
-          headers: { access_token: 'Bearer ' + user },
-        });
+        const postPromise = axiosInstance.post('/api/posts/', formData);
 
-        if (response.status === 200) {
-          toast.success('Blog post successfully created!');
+        toast.promise(postPromise, {
+          pending: 'Creating blog post...',
+          success: {
+            render() {
+              setFormData({
+                title: '',
+                authorName: '',
+                imageLink: '',
+                categories: [],
+                description: '',
+                isFeaturedPost: false,
+              })
+              navigate('/');
+              return "Blog created successfully";
+            },
+          },
+          error: {
+            render({ data }) {
+              if (data instanceof AxiosError) {
+                if (data?.response?.data?.message) {
+                  return data?.response?.data?.message;
+                }
+              }
+              return "Blog creation failed";
+            },
+          }
+        })
+
+        return (await postPromise).data;
+
+      } catch (error: any) {
+        if (isAxiosError(error)) {
           navigate('/');
+          userState.removeUser();
+          console.error(error.response?.data?.message);
         } else {
-          toast.error('Error: ' + response.data.message);
-        }
-      } catch (err: any) {
-        if (err.response.status === 403) {
-          toast.error('Error: ' + 'Your session has expired, please login again!');
-          userState.setUser(null);
-          navigate('/');
-        } else if (err.response.status === 401) {
-          toast.error('Error: ' + 'You are not authorized!');
-          navigate('/');
-        } else {
-          console.log('Error :', err.message);
-          toast.error('Something went wrong. Please try again later.');
+          console.error(error);
         }
       }
     }
