@@ -10,7 +10,6 @@ import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import useThemeClass from './utils/theme-changer';
 import { useLayoutEffect } from 'react';
-import NotFound from '@/pages/not-found';
 import UnprotectedRoute from './components/unprotected-route';
 import RequireAuth from './components/require-auth';
 import NotFound from './pages/not-found';
@@ -19,6 +18,7 @@ function App() {
   useLayoutEffect(() => {
     useThemeClass();
   }, []);
+  
   return (
     <BrowserRouter>
       <ScrollToTop />
