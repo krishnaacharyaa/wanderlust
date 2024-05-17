@@ -6,6 +6,7 @@ on:
       - synchronize
       - reopened
       - edited
+      - closed
 
 permissions:
   contents: write
@@ -20,14 +21,24 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run PR Title Checker
+        id: title-check
         uses: thehanimo/pr-title-checker@v1.4.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
           configuration_path: .github/pr-title-checker-config.json
 
       - name: Close PR if title is invalid
-        if: failure()  
+        if: failure()
         run: gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Reopen PR if title is corrected
+        if: github.event.action == 'edited' && success()
+        run: |
+          if [ "${{ github.event.pull_request.state }}" == "closed" ]; then
+            gh pr reopen ${{ github.event.pull_request.number }} -R ${{ github.repository }}
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
