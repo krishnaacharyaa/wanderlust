@@ -17,22 +17,22 @@ function signup() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const res = axiosInstance.post('/api/auth/email-password/signup', data)
+      const res = axiosInstance.post('/api/auth/email-password/signup', data);
       toast.promise(res, {
         pending: 'Creating account ...',
         success: {
           render({ data }) {
             const userId = data?.data?.data?.user?._id;
             const userRole = data?.data?.data?.user?.role;
-            userState.setUser({ _id: userId, role: userRole })
-            reset()
-            navigate('/')
-            return data?.data?.message
+            userState.setUser({ _id: userId, role: userRole });
+            reset();
+            navigate('/');
+            return data?.data?.message;
           },
         },
         error: {
@@ -42,13 +42,11 @@ function signup() {
                 return data?.response?.data?.message;
               }
             }
-            return "Signup failed"
+            return 'Signup failed';
           },
         },
-      }
-      )
-      return (await res).data
-
+      });
+      return (await res).data;
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error.response?.data?.message);
@@ -57,7 +55,6 @@ function signup() {
       }
     }
   };
-
 
   return (
     <div className="m-4 flex-grow cursor-default bg-white py-4">

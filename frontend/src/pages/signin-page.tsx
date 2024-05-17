@@ -17,14 +17,12 @@ function signin() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const response = axiosInstance.post('/api/auth/email-password/signin',
-        data
-      );
+      const response = axiosInstance.post('/api/auth/email-password/signin', data);
 
       toast.promise(response, {
         pending: 'Checking credentials ...',
@@ -32,10 +30,10 @@ function signin() {
           render({ data }) {
             const userId = data?.data?.data?.user?._id;
             const userRole = data?.data?.data?.user?.role;
-            userState.setUser({ _id: userId, role: userRole })
-            reset()
-            navigate('/')
-            return data?.data?.message
+            userState.setUser({ _id: userId, role: userRole });
+            reset();
+            navigate('/');
+            return data?.data?.message;
           },
         },
         error: {
@@ -45,13 +43,12 @@ function signin() {
                 return data?.response?.data?.message;
               }
             }
-            return "Signin failed"
+            return 'Signin failed';
           },
         },
-      }
-      )
+      });
 
-      return (await response).data
+      return (await response).data;
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error.response?.data?.message);

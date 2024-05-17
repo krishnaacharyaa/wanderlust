@@ -8,10 +8,9 @@ function ThemeToggle() {
     setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
   };
   useLayoutEffect(() => {
-      const storedTheme = useThemeClass();
-      setIsDarkTheme(storedTheme === 'dark');   
+    const storedTheme = useThemeClass();
+    setIsDarkTheme(storedTheme === 'dark');
   }, []);
-  
 
   useLayoutEffect(() => {
     if (isDarkTheme !== null) {

@@ -17,14 +17,14 @@ function header() {
 
   const handleLogout = async () => {
     try {
-      const response = axiosInstance.post('/api/auth/signout')
+      const response = axiosInstance.post('/api/auth/signout');
       toast.promise(response, {
         pending: 'Wait ...',
         success: {
           render({ data }) {
-            userState.removeUser()
+            userState.removeUser();
             navigate('/');
-            return data?.data?.message
+            return data?.data?.message;
           },
         },
         error: {
@@ -34,13 +34,12 @@ function header() {
                 return data?.response?.data?.message;
               }
             }
-            return "Signout failed"
+            return 'Signout failed';
           },
         },
-      }
-      )
+      });
 
-      return (await response).data
+      return (await response).data;
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error.response?.data?.message || 'An error occurred');
@@ -58,7 +57,7 @@ function header() {
           <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
             WanderLust
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <div className="flex items-center justify-end sm:px-20">
               <ThemeToggle />
             </div>
