@@ -24,7 +24,7 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
             className={`sm:group-hover:scale-hover h-full w-full rounded-t-lg object-cover transition-transform ease-in-out`}
           />
         </div>
-        <div className="p-3">
+        <div className="p-3 h-48">
           <div className="mb-1 text-xs text-light-info dark:text-dark-info">
             {post.authorName} • {formatPostTime(post.timeOfPost)}
           </div>
