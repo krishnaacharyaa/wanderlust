@@ -45,15 +45,16 @@ describe('Unit Tests : Signup Component', async () => {
     } = await formSetup();
     await userActions.type(usernameInput, 'aryastark');
     await userActions.type(emailInput, 'arya@gmail.com');
-    await userActions.type(passwordInput, '12345678');
-    await userActions.type(confirmpasswordInput, '1234');
-    await userActions.click(signupbuttonText);
-    await waitFor(() => {
-      expect(form.getByText(INVALID_CONFIRMPWD_ERRORMESSAGE)).toBeInTheDocument();
-    });
-  });
 
-  test('Signup : Failure - Invalid Username', async () => {
+    await userActions.type(passwordInput,"12345678")
+    await userActions.type(confirmpasswordInput,"1234")
+    await userActions.click(signupbuttonText);
+    await waitFor(()=>{
+      expect(form.getByText(INVALID_CONFIRMPWD_ERRORMESSAGE)).toBeInTheDocument()
+    })
+  })
+
+  test('Signup : Failure - Invalid Username', async() => {
     const userActions = userEvent.setup();
     const {
       form,
@@ -109,7 +110,6 @@ describe('Unit Tests : Signup Component', async () => {
 
   test('should call the signup api when all the input values are valid and should redirect to home page', async () => {
     const userActions = userEvent.setup();
-
     const { usernameInput, emailInput, passwordInput, confirmpasswordInput, signupbuttonText } =
       await formSetup();
     await userActions.type(usernameInput, 'aryastark');

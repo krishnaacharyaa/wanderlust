@@ -31,8 +31,8 @@ function HomePage() {
         <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
-                .fill(0)
-                .map((_, index) => <PostCardSkeleton key={index} />)
+              .fill(0)
+              .map((_, index) => <PostCardSkeleton key={index} />)
             : posts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>

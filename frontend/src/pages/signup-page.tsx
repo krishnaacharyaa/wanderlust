@@ -56,6 +56,7 @@ function signup() {
     }
   };
 
+
   return (
     <div className="m-4 flex-grow cursor-default bg-white py-4">
       <div className="mb-4 flex justify-center">
