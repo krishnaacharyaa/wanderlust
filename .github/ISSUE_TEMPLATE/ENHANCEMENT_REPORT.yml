@@ -1,0 +1,41 @@
+name: 🛠 Enhancement Request
+description: Request an enhancement or improvement to an existing feature
+title: "[ENHANCEMENT] <title>"
+labels: ["enhancement"]
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: Please provide a detailed description of the enhancement or improvement you'd like to request.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: Describe the current behavior or feature that you believe needs enhancement.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed Enhancement
+      description: Explain how you envision the enhancement or improvement to work or what changes you'd like to see.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Use Case
+      description: How would this enhancement benefit you or others? Please provide a use case.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Blockers
+      description: If there are any blockers or related issues that need to be addressed before this enhancement can be implemented, please describe them and provide the issue IDs.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Additional Information/ Attachments
+      description: Any additional information, images, diagrams, files, context, or details you'd like to provide about the enhancement request.
+    validations:
+      required: false

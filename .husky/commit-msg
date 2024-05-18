@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+regex_pattern="^(fix|feat|docs|chore|refactor)(-#[0-9]+)?: .+\$"
+if [[ $commit_msg =~ $regex_pattern ]]; then
+  echo ""
+  echo "Hey, hurrah! Thank you for giving attention and following our community guidelines."
+  echo "We're excited to merge your code into the project!"
+  echo ""
+else
+  echo ""
+  echo "Oops!! It seems like you haven't read our community guidelines yet!!"
+  echo "Commits can be of form:"
+  echo ""
+  echo "<tag>-#<issue number>: <commit message>   # if you have relevant issue"
+  echo "OR"
+  echo "<tag>: <commit message>                   # if you don't have relevant issue"
+  echo ""
+  echo "Examples:"
+  echo "❌ \033[31mFixed a bug\033[0m"
+  echo "✅ \033[32mfix-#123: Fixed a bug\033[0m"
+  echo "❌ \033[31mUpdated documentation file\033[0m"
+  echo "✅ \033[32mchore: Updated documentation\033[0m"
+ 
+  echo ""
+  echo "To know all the available tags and for more details"
+  echo  "Kindly refer to \033[0m\033[4;34m\033]8;;https://github.com/krishnaacharyaa/wanderlust/blob/9b11b769bb23150b746296cf9008056633d21921/.github/CONTRIBUTING.md#guidelines-for-contributions\a\033[4;34mContributing Guidelines\033]8;;\a\033[0m."
+  echo ""
+exit 1
+fi

@@ -1,0 +1,35 @@
+name: 🚀 Feature Request
+description: Request a new feature or enhancement
+title: "[FEATURE] <title>"
+labels: ["feature"]
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: Please provide a detailed description of the new feature or enhancement you'd like to request.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Use Case
+      description: How would this feature be useful to you or others? Please explain the use case.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed Solution
+      description: If you have any ideas on how this feature could be implemented, please share them here.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: Any additional information or context you'd like to provide about this feature request.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Attachments
+      description: You can attach images, diagrams, or any relevant files to support your feature request.
+    validations:
+      required: false

@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .scale-hover {
+    transform: scale(1.12);
+  }
+  .scale-click {
+    transform: scale(0.95);
+  }
+}
