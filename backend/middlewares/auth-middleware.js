@@ -4,7 +4,6 @@ import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import jwt from 'jsonwebtoken';
 
 export const authMiddleware = async (req, res, next) => {
-  console.log('this is the good thing');
   const token = req.cookies?.access_token;
   if (!token) {
     return next(new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.RE_LOGIN));
