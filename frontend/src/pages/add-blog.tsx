@@ -246,10 +246,12 @@ function AddBlog() {
               type="text"
               placeholder="Shree Sharma"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+
               {...register("authorName" )}
             />
               {errors?.authorName && <p className="text-red-500">{errors.authorName.message}</p>}
           </div>
+
 
         <div className="mb-2">
           <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
