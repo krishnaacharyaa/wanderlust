@@ -27,18 +27,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
           configuration_path: .github/pr-title-checker-config.json
-      - name: pr title satisfied
-        if: sucess()
-        run: |
+      - name: pt title satisfied
+        if: success()
+        run: | 
           gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you! Your PR title meets our guidelines."
-
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
       - name: Close PR if title is invalid
         if: failure()
         run: |
           gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body |
-            "Thank you for your PR. Unfortunately, it doesn't meet our quality checks.\n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format.\n\nFor example, it should be like: fix-#124: Added responsiveness to the Home page screen.\n\nOnce you've updated the title to follow the regex format, we can proceed with your PR. Thank you for understanding!"
-
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you for your PR. Unfortunately, it doesn't meet our quality checks.Please ensure you follow our contribution guidelines. The PR title should match the required format.For example, it should be like: fix-#124: Added responsiveness to the Home page screen.Once you've updated the title to follow the regex format, we can proceed with your PR. Thank you for understanding!"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
