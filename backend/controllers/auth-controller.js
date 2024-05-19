@@ -17,14 +17,17 @@ export const signUpWithEmail = asyncHandler(async (req, res) => {
     throw new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.COMMON.REQUIRED_FIELDS)
   }
 
-  const existingUserByUserName= await User.findOne({ userName });
-  if(existingUserByUserName){
-    throw new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.USER_USERNAME_EXISTS)
-  }
+  const existingUser = await User.findOne({ 
+    $or: [{ userName }, { email }] 
+  });
   
-  const existingUserByEmail = await User.findOne({ email });
-  if(existingUserByEmail){
-    throw new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.USER_EMAIL_EXISTS)
+  if (existingUser) {
+    if (existingUser.userName === userName) {
+      throw new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.USER_USERNAME_EXISTS);
+    }
+    if (existingUser.email === email) {
+      throw new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.USER_EMAIL_EXISTS);
+    }
   }
 
   const user = new User({
