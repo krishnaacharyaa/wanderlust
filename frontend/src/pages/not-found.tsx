@@ -4,7 +4,7 @@ import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadFull } from 'tsparticles';
 import ThemeToggle from '@/components/theme-toggle-button';
 
-function ErrorPage() {
+function NotFound() {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean | null>(true);
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
@@ -132,4 +132,4 @@ function ErrorPage() {
   );
 }
 
-export default ErrorPage;
+export default NotFound;

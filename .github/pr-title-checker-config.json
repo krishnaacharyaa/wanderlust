@@ -1,14 +1,13 @@
 {
-  "LABEL": {
-    "name": "Title needs formatting",
-    "color": "F9D0C4"
-  },
-  "CHECKS": {
-    "regexp": "^(fix|feat|docs|chore|refactor)(-#[0-9]+)?: .+"
-  },
-  "MESSAGES": {
-    "success": "Thank you! Your PR title meets our guidelines.",
-    "failure": "Thank you for your PR. Unfortunately, it doesn't meet our quality checks. \n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format. \n\nFor example, it should be like: \"fix-#124: Added responsiveness to the Home page screen.\" \n\nOnce you've updated the title to follow the regex format, we can proceed with your PR. Thank you for understanding!"
-  }
-
+	"LABEL": {
+		"name": "Title needs formatting",
+		"color": "F9D0C4"
+	},
+	"CHECKS": {
+		"regexp": "^(fix|feat|docs|chore|refactor)(-#[0-9]+)?: .+"
+	},
+	"MESSAGES": {
+		"success": "Thank you mate!! The PR title meets project's contributing guidelines.",
+		"failure": "Hey wait!! Have you not still checked our contribution guidelines? Don't tell me!! Okay I'll tell one last time ; For your title to be reviewed the PR title should match the required format. \n\nFor example, it should be like: \"fix-#124: Added responsiveness to the Home page screen.\" \n\nOnce done, just trust in us, we'll reconsider your PR 😉"
+	}
 }
