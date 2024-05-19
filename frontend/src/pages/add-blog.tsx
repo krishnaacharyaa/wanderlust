@@ -65,11 +65,6 @@ function AddBlog() {
     return formData.categories.length >= 3 && !formData.categories.includes(category);
   };
 
-  // const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
-
   const handleCategoryClick = (category: string) => {
     if (isValidCategory(category)) return;
 
