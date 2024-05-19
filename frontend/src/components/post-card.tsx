@@ -10,11 +10,11 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
   const slug = createSlug(post.title);
   return (
     <div
-      className={`active:scale-click group w-full sm:w-1/2 lg:w-1/3 xl:w-1/4`}
+      className={`active:scale-click group w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-6`}
       data-testid={testId}
     >
       <div
-        className={`mb-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card ${'sm:mr-8 sm:mt-4'}`}
+        className={`flex flex-col justify-between h-full mb-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card ${'sm:mr-8 sm:mt-4'}`}
         onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       >
         <div className="h-48 w-full overflow-hidden">
@@ -24,7 +24,7 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
             className={`sm:group-hover:scale-hover h-full w-full rounded-t-lg object-cover transition-transform ease-in-out`}
           />
         </div>
-        <div className="p-3 h-48">
+        <div className="p-3 flex-grow flex flex-col justify-between">
           <div className="mb-1 text-xs text-light-info dark:text-dark-info">
             {post.authorName} • {formatPostTime(post.timeOfPost)}
           </div>
