@@ -4,7 +4,7 @@ const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).
 
 export const signInSchema = z.object({
   userNameOrEmail: z.string().min(1, { message: 'username or email is required' }),
-  password: z.string().min(1, 'Password must be at least 1 character'),
+  password: z.string().min(8, 'Password must be at least 8 character'),
 });
 
 export const signUpSchema = z

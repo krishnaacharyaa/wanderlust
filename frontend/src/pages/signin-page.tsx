@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
+import { useState } from 'react';
 
 function signin() {
   const navigate = useNavigate();
@@ -17,14 +18,18 @@ function signin() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const response = axiosInstance.post('/api/auth/email-password/signin',
-        data
-      );
+      const response = axiosInstance.post('/api/auth/email-password/signin', data);
 
       toast.promise(response, {
         pending: 'Checking credentials ...',
@@ -32,10 +37,10 @@ function signin() {
           render({ data }) {
             const userId = data?.data?.data?.user?._id;
             const userRole = data?.data?.data?.user?.role;
-            userState.setUser({ _id: userId, role: userRole })
-            reset()
-            navigate('/')
-            return data?.data?.message
+            userState.setUser({ _id: userId, role: userRole });
+            reset();
+            navigate('/');
+            return data?.data?.message;
           },
         },
         error: {
@@ -45,13 +50,12 @@ function signin() {
                 return data?.response?.data?.message;
               }
             }
-            return "Signin failed"
+            return 'Signin failed';
           },
         },
-      }
-      )
+      });
 
-      return (await response).data
+      return (await response).data;
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error.response?.data?.message);
@@ -84,15 +88,58 @@ function signin() {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="relative mb-4">
             <input
               {...register('password')}
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 transform focus:outline-none"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-gray-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-gray-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"
+                  />
+                </svg>
+              )}
+            </button>
             {errors.password && (
-              <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
+              <p className="p-3 text-xs text-red-500">{errors.password.message}</p>
             )}
           </div>
 
