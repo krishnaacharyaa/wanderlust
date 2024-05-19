@@ -7,6 +7,7 @@ import { TestProps } from '@/types/test-props';
 
 export default function PostCard({ post, testId = 'postcard' }: { post: Post } & TestProps) {
   const navigate = useNavigate();
+  console.log('This is for the testing purpose');
   const slug = createSlug(post.title);
   return (
     <div
