@@ -123,8 +123,8 @@ function signup() {
             >
               {showPassword ? <Passwordvisible /> : <Passwordhide />}
             </button>
-            {errors.password && (
-              <p className="p-3 text-xs text-red-500">{errors.password.message}</p>
+            {errors.fullName && (
+              <p className="p-3 text-xs text-red-500">{errors.fullName.message}</p>
             )}
           </div>
 
