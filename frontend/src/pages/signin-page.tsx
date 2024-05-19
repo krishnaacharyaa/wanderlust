@@ -17,7 +17,8 @@ function signin() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
+    setError
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = async (data: FieldValues) => {
@@ -41,8 +42,10 @@ function signin() {
         error: {
           render({ data }) {
             if (data instanceof AxiosError) {
-              if (data?.response?.data?.message) {
-                return data?.response?.data?.message;
+              if (data?.response?.data?.message.includes('User')) {
+                setError('userNameOrEmail',{ type: 'manual', message: data?.response?.data?.message});
+              } else {
+                setError("password",{ type: 'manual', message: data?.response?.data?.message});
               }
             }
             return "Signin failed"
