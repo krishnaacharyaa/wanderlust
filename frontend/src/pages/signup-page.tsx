@@ -17,7 +17,8 @@ function signup() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
+    setError
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
@@ -38,8 +39,10 @@ function signup() {
         error: {
           render({ data }) {
             if (data instanceof AxiosError) {
-              if (data?.response?.data?.message) {
-                return data?.response?.data?.message;
+              if (data?.response?.data?.message.includes('Username')) {
+                setError('userName',{ type: 'manual', message: data?.response?.data?.message }); 
+              } else {
+                setError('email',{ type: 'manual', message: data?.response?.data?.message });
               }
             }
             return "Signup failed"
@@ -70,7 +73,7 @@ function signup() {
       </div>
       <div className="m-2 mt-8 flex flex-col items-center justify-center gap-2">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-3/4 lg:w-2/5">
-          <div className="mb-3">
+          <div className="mb-2">
             <input
               {...register('userName')}
               type="text"
@@ -81,7 +84,7 @@ function signup() {
               <p className="p-3 text-xs text-red-500">{`${errors.userName.message}`}</p>
             )}
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <input
               {...register('fullName')}
               type="text"
@@ -92,7 +95,7 @@ function signup() {
               <p className="p-3 text-xs text-red-500">{`${errors.fullName.message}`}</p>
             )}
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <input
               {...register('email')}
               type="email"
@@ -103,7 +106,7 @@ function signup() {
               <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
             )}
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <input
               {...register('password')}
               type="password"
