@@ -8,7 +8,8 @@
     "start": "concurrently -n \"FRONTEND,BACKEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start-frontend\" \"npm run start-backend\"",
     "install-frontend": "cd frontend && npm i",
     "install-backend": "cd backend && npm i",
-    "installer": "npm i && npm run install-backend && npm run install-frontend"
+    "installer": "npm i && npm run install-backend && npm run install-frontend",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "husky": "^8.0.0"

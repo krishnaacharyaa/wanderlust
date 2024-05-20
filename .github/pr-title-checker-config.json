@@ -1,0 +1,13 @@
+{
+	"LABEL": {
+		"name": "Title needs formatting",
+		"color": "F9D0C4"
+	},
+	"CHECKS": {
+		"regexp": "^(fix|feat|docs|chore|refactor)(-#[0-9]+)?: .+"
+	},
+	"MESSAGES": {
+		"success": "Thank you mate!! The PR title meets project's contributing guidelines.",
+		"failure": "Hey wait!! Have you not still checked our contribution guidelines? Don't tell me!! Okay I'll tell one last time ; For your title to be reviewed the PR title should match the required format. \n\nFor example, it should be like: \"fix-#124: Added responsiveness to the Home page screen.\" \n\nOnce done, just trust in us, we'll reconsider your PR 😉"
+	}
+}

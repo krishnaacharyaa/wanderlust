@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "test": "vitest run",
-    "coverage": "vitest run --coverage "
+    "coverage": "vitest run --coverage ",
+    "prepare": "cd .. && npm install"
   },
   "lint-staged": {
     "src/**/*.{js,ts,tsx,jsx}": [
