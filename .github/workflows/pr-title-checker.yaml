@@ -22,7 +22,7 @@ jobs:
 
       - name: Run PR Title Checker
         id: title-check
-        uses: thehanimo/pr-title-checker@v1.4.1
+        uses: actions/checkout@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
