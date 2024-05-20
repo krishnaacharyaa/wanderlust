@@ -8,29 +8,29 @@
 <hr>
 
 <div>
-<h3>• Watch our collaboration video : </h3>
-  <a href="https://youtu.be/ANfC1u_N_A0?feature=shared"> <img src="https://github.com/krishnaacharyaa/wanderlust/assets/133582566/47d71dd6-0390-479e-9d4e-3f077ef1a987.png" width="45" height="40"></a> <h4> with TechwithShubham </h4> 
-  For an in-depth look! 🎬 Dive into the details and discover more about our exciting project.
+  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/e26a26de-f46b-4f43-b981-3c5640875ea8" width="35" height="35"> Important Links</h2>
 </div>
-<hr>
 
-## About :
-
-**• WanderLust** is a straightforward MERN travel blog website ✈. This project aims to help people contribute to open source, enhance their  React skills, and master Git. 
-<hr>
-
-<div>
-<h3>• Figma Links of Our Project :</h3>
-  <a href="https://www.figma.com/file/zqNcWGGKBo5Q2TwwVgR6G5/WanderLust--A-Travel-Blog-App?type=design&node-id=0%3A1&mode=design&t=c4oCG8N1Fjf7pxTt-1">
-  <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/ffda08c0-3c7a-46b0-b7ac-6bc374184ec7.png" width="45" height="40"></a> <h4> Dive into our Figma designs to explore visually stunning layouts and interfaces tailored to enhance your travel blogging experience. </h4> 
-</div>
+<table border="1">
+  <tr>
+      <td><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/5ca6c472-5c73-41b2-a2df-389cc3e14881.png" alt="Discord Logo" width="50"></td>
+      <td><a href="https://discord.gg/FEKasAdCrG"> Join our project's Discord Channel here</a></td>
+  </tr>
+  <tr>
+      <td><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/ffda08c0-3c7a-46b0-b7ac-6bc374184ec7.png" alt="Figma Logo" width="50"></td>
+      <td><a href="https://www.figma.com/file/zqNcWGGKBo5Q2TwwVgR6G5/WanderLust--A-Travel-Blog-App?type=design&node-id=0%3A1&mode=design&t=c4oCG8N1Fjf7pxTt-1"> Find our project's Figma links here</a></td>
+  </tr>
+  <tr>
+      <td><img src="https://github.com/krishnaacharyaa/wanderlust/assets/133582566/47d71dd6-0390-479e-9d4e-3f077ef1a987.png" alt="YouTube Logo" width="50"></td>
+      <td><a href="https://youtu.be/ANfC1u_N_A0?feature=shared"> Find our Collaboration Video with TechwithShubham here</a></td>
+  </tr>
+</table>
 
 <hr>
 
 <div>
   <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/4a07b161-b8d6-4803-804a-3b0db699023e" width="35" height="35"> Goal of this project </h2>
 </div>
-
 
 At its core, this project embodies two important aims:
 
@@ -41,7 +41,7 @@ _We want you to get the most out of this project—it's all about learning, cont
 <hr>
 
 <div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/1ee5934a-27be-4502-a7bf-e6a8c78fe5a3" width="35" height="35"> Features :</h2>
+  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/1ee5934a-27be-4502-a7bf-e6a8c78fe5a3" width="35" height="35"> Features</h2>
 </div>
 
 - **Featured Posts :** Highlight top travel stories and destinations on the homepage to showcase the best content and inspire readers with exciting travel experiences.
@@ -65,8 +65,8 @@ If you would like to contribute to the project, please follow our contribution g
   </div>
 
    <div>
-  <h3>This project is part of <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/c0def4be-3f50-4b6a-8781-91856a8a6822" width="30" height="20">GirlScript Summer of Code. We warmly welcome contributions from the community to help elevate Wanderlust.
-  </h3>
+  <h4>This project is part of <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/c0def4be-3f50-4b6a-8781-91856a8a6822" width="30" height="20">GirlScript Summer of Code. We warmly welcome contributions from the community to help elevate Wanderlust.
+  </h4>
   </div>
 
 <hr>
@@ -95,15 +95,9 @@ This project is licensed under the [MIT License](./LICENSE).
 
 If you find this project interesting and inspiring, please consider showing your support by starring it on GitHub! Your star goes a long way in helping me reach more developers and encourages me to keep enhancing the project.
 
-• Feel free to get in touch with me for any further queries or support, happy to help :)
+Feel free to get in touch with me for any further queries or support, happy to help :)
 
 <hr>
-
-## 📞Contact 
-<div>
-<a href="https://www.linkedin.com/in/krishnaacharyaa/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="https://www.linkedin.com/in/krishnaacharyaa/" height="30" width="40" /></a> <a href="https://discord.gg/FEKasAdCrG" target="blank"><img align="center" src="https://github.com/Meetjain1/wanderlust/assets/133582566/5ca6c472-5c73-41b2-a2df-389cc3e14881.png" alt="https://discord.gg/FEKasAdCrG" height="40" width="40" /></a>
-<a href="https://twitter.com/krishnaacharyaa" target="blank"><img align="center" src="https://github.com/Meetjain1/wanderlust/assets/133582566/de571ba5-ffbc-433a-8ca3-ae26b67a5f52.png" height="40" width="40" /></a>
-
 
 </div>
 
