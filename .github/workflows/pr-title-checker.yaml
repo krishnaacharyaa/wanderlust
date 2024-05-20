@@ -7,7 +7,8 @@ on:
       - reopened
       - edited
       - closed
-      
+
+
 permissions:
   contents: write
   pull-requests: write
@@ -16,6 +17,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+      - name: My Step
+        uses: my-action/my-action@v1
+        with:
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
       - name: Run PR Title Checker
         id: title-check
         uses: thehanimo/pr-title-checker@v1.4.1
