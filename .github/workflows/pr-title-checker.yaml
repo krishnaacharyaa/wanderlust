@@ -8,7 +8,6 @@ on:
       - edited
       - closed
 
-
 permissions:
   contents: write
   pull-requests: write
@@ -16,18 +15,18 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+
     steps:
-      - name: My Step
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run PR Title Checker
         id: title-check
         uses: thehanimo/pr-title-checker@v1.4.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
-          configuration_path: .github/pr-title-checker-config.json
+          github_configuration_owner: krishnaacharyaa
+          github_configuration_repo: wanderlust
+          github_configuration_path: .github/pr-title-checker-config.json
+          github_configuration_ref: main
       - name: pt title satisfied
         if: success()
         run: | 
