@@ -14,15 +14,16 @@
 <table border="1">
   <tr>
       <td><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/5ca6c472-5c73-41b2-a2df-389cc3e14881.png" alt="Discord Logo" width="50"></td>
-      <td><a href="https://discord.gg/FEKasAdCrG"> Join our project's Discord Channel here</a></td>
+      <td> Join our project's Discord Channel here <a href="https://discord.gg/FEKasAdCrG"><a style="text-decoration: none"></a> 🔗 </a></td>
   </tr>
   <tr>
       <td><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/ffda08c0-3c7a-46b0-b7ac-6bc374184ec7.png" alt="Figma Logo" width="50"></td>
-      <td><a href="https://www.figma.com/file/zqNcWGGKBo5Q2TwwVgR6G5/WanderLust--A-Travel-Blog-App?type=design&node-id=0%3A1&mode=design&t=c4oCG8N1Fjf7pxTt-1"> Find our project's Figma links here</a></td>
+      <td>Find our project's Figma links here<a href="https://www.figma.com/file/zqNcWGGKBo5Q2TwwVgR6G5/WanderLust--A-Travel-Blog-App?type=design&node-id=0%3A1&mode=design&t=c4oCG8N1Fjf7pxTt-1"><a style="text-decoration: none"></a> 🔗
+      </a></td>
   </tr>
   <tr>
       <td><img src="https://github.com/krishnaacharyaa/wanderlust/assets/133582566/47d71dd6-0390-479e-9d4e-3f077ef1a987.png" alt="YouTube Logo" width="50"></td>
-      <td><a href="https://youtu.be/ANfC1u_N_A0?feature=shared"> Find our Collaboration Video with TechwithShubham here</a></td>
+      <td> Find our Collaboration Video with TechwithShubham here <a href="https://youtu.be/ANfC1u_N_A0?feature=shared"><a style="text-decoration: none"></a> 🔗 </a></td>
   </tr>
 </table>
 
@@ -64,10 +65,21 @@ If you would like to contribute to the project, please follow our contribution g
     <h2><img src="https://github.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/blob/master/Emojis/Hand%20gestures/Flexed%20Biceps.png?raw=true" width="35" height="35" > Open Source Programs</h2>
   </div>
 
-   <div>
-  <h4>This project is part of <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/c0def4be-3f50-4b6a-8781-91856a8a6822" width="30" height="20">GirlScript Summer of Code. We warmly welcome contributions from the community to help elevate Wanderlust.
-  </h4>
-  </div>
+  <table border="1" cellpadding="10">
+        <tr>
+            <td rowspan="2">
+                <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/21b2bc42-bdd5-487a-a083-1b262c2f6d9b" alt="GSSOC Logo" width="100" height="55">
+            </td>
+            <td>
+                <strong>GSSOC 2024</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                This project is part of GirlScript Summer of Code. We warmly welcome contributions from the community to help elevate Wanderlust.
+            </td>
+        </tr>
+    </table>
 
 <hr>
 
@@ -106,8 +118,8 @@ Feel free to get in touch with me for any further queries or support, happy to h
 
 We extend our heartfelt gratitude for your invaluable contribution to our project! Your efforts play a pivotal role in elevating Wanderlust to greater heights. 😊
 
-<center>
+<div>
 <a href="https://github.com/krishnaacharyaa/wanderlust/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=krishnaacharyaa/wanderlust" />
+  <img width="90%" src="https://contrib.rocks/image?repo=krishnaacharyaa/wanderlust" />
 </a>
-</center>
+</div>
