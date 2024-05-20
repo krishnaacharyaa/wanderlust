@@ -27,31 +27,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
           configuration_path: .github/pr-title-checker-config.json
-
-      - name: Read messages from JSON
-        id: read_messages
-        run: |
-          success_message=$(jq -r '.MESSAGES.success' .github/pr-title-checker-config.json)
-          failure_message=$(jq -r '.MESSAGES.failure' .github/pr-title-checker-config.json)
-          echo "SUCCESS_MESSAGE=$success_message" >> $GITHUB_ENV
-          echo "FAILURE_MESSAGE=$failure_message" >> $GITHUB_ENV
-
-      - name: Comment if title is satisfied
+      - name: pt title satisfied
         if: success()
-        run: |
-          gh pr comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "$SUCCESS_MESSAGE"
-        env:
+        run: | 
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you `${{github.actor}}`! Your PR title meets our guidelines."
+        env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SUCCESS_MESSAGE: ${{ env.SUCCESS_MESSAGE }}
-
+  
       - name: Close PR if title is invalid
         if: failure()
         run: |
           gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "$FAILURE_MESSAGE"
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hello `${{github.actor}}` Thank you for your PR. Unfortunately, it doesn\'t meet our quality checks.\n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format.\n\nFor example, it should be like: `fix-#124: Added responsiveness to the Home page screen.`\n\nIf you have any query kindly check our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md).'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FAILURE_MESSAGE: ${{ env.FAILURE_MESSAGE }}
 
       - name: Reopen PR if title is corrected
         if: github.event.action == 'edited' && success()
