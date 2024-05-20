@@ -8,6 +8,7 @@ on:
       - edited
       - closed
 
+
 permissions:
   contents: write
   pull-requests: write
@@ -15,7 +16,6 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-
     steps:
       - name: Run PR Title Checker
         id: title-check
@@ -23,16 +23,13 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
-          github_configuration_owner: krishnaacharyaa
-          github_configuration_repo: wanderlust
-          github_configuration_path: .github/pr-title-checker-config.json
-          github_configuration_ref: main
+          configuration_path: .github/pr-title-checker-config.json
       - name: pt title satisfied
         if: success()
         run: | 
           gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you `${{github.actor}}`! Your PR title meets our guidelines."
         env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_CODE }}
   
       - name: Close PR if title is invalid
         if: failure()
@@ -40,7 +37,7 @@ jobs:
           gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
           gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hello `${{github.actor}}` Thank you for your PR. Unfortunately, it doesn\'t meet our quality checks.\n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format.\n\nFor example, it should be like: `fix-#124: Added responsiveness to the Home page screen.`\n\nIf you have any query kindly check our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md).'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_CODE }}
 
       - name: Reopen PR if title is corrected
         if: github.event.action == 'edited' && success()
@@ -49,4 +46,4 @@ jobs:
             gh pr reopen ${{ github.event.pull_request.number }} -R ${{ github.repository }}
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_CODE }}
