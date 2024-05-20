@@ -31,8 +31,8 @@ jobs:
       - name: Read messages from JSON
         id: read_messages
         run: |
-          success_message=$(jq -r '.success' .github/pr-title-checker-config.json)
-          failure_message=$(jq -r '.failure' .github/pr-title-checker-config.json)
+          success_message=$(jq -r '.MESSAGES.success' .github/pr-title-checker-config.json)
+          failure_message=$(jq -r '.MESSAGES.failure' .github/pr-title-checker-config.json)
           echo "SUCCESS_MESSAGE=$success_message" >> $GITHUB_ENV
           echo "FAILURE_MESSAGE=$failure_message" >> $GITHUB_ENV
 
