@@ -34,8 +34,8 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
           <p className="line-clamp-2 text-sm text-light-description dark:text-dark-description">
             {post.description}
           </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {post.categories.map((category, index) => (
+          <div className="mt-4 flex gap-2">
+            {post.categories.slice(0, 3).map((category, index) => (
               <CategoryPill key={`${category}-${index}`} category={category} />
             ))}
           </div>
