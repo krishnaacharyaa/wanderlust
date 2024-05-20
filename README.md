@@ -1,4 +1,4 @@
-<div align="center">
+<div>
   <h1>Wanderlust</h1>
   <h2>The Ultimate Travel Blog 🌍✈ for You </h2>
 </div>
@@ -7,27 +7,30 @@
 
 <hr>
 
-<div align="center">
-<h3>• Watch our collaboration video :-</h3>
+<div>
+<h3>• Watch our collaboration video : </h3>
   <a href="https://youtu.be/ANfC1u_N_A0?feature=shared"> <img src="https://github.com/krishnaacharyaa/wanderlust/assets/133582566/47d71dd6-0390-479e-9d4e-3f077ef1a987.png" width="45" height="40"></a> <h4> with TechwithShubham </h4> 
   For an in-depth look! 🎬 Dive into the details and discover more about our exciting project.
 </div>
 <hr>
 
-## About :-
+## About :
 
 **• WanderLust** is a straightforward MERN travel blog website ✈. This project aims to help people contribute to open source, enhance their  React skills, and master Git. 
 <hr>
 
-<div align="center">
-<h3>• Figma Links of Our Project :-</h3>
+<div>
+<h3>• Figma Links of Our Project :</h3>
   <a href="https://www.figma.com/file/zqNcWGGKBo5Q2TwwVgR6G5/WanderLust--A-Travel-Blog-App?type=design&node-id=0%3A1&mode=design&t=c4oCG8N1Fjf7pxTt-1">
-  <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/ffda08c0-3c7a-46b0-b7ac-6bc374184ec7.png" width="45" height="40"></a> <h4> • Dive into our Figma designs to explore visually stunning layouts and interfaces tailored to enhance your travel blogging experience. </h4> 
+  <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/ffda08c0-3c7a-46b0-b7ac-6bc374184ec7.png" width="45" height="40"></a> <h4> Dive into our Figma designs to explore visually stunning layouts and interfaces tailored to enhance your travel blogging experience. </h4> 
 </div>
 
 <hr>
 
-## 🎯 Goal of this project :-
+<div>
+  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/4a07b161-b8d6-4803-804a-3b0db699023e" width="35" height="35"> Goal of this project </h2>
+</div>
+
 
 At its core, this project embodies two important aims:
 
@@ -37,14 +40,19 @@ At its core, this project embodies two important aims:
 _We want you to get the most out of this project—it's all about learning, contributing, and growing in the open-source community._
 <hr>
 
-## Features :-
+<div>
+  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/1ee5934a-27be-4502-a7bf-e6a8c78fe5a3" width="35" height="35"> Features :</h2>
+</div>
 
 - **Featured Posts :** Highlight top travel stories and destinations on the homepage to showcase the best content and inspire readers with exciting travel experiences.
 - **User-Friendly Interface:** Navigate effortlessly through captivating travel content with our intuitive design.
 - **Discover By topic categories:** **Discover by Topic Categories**: Explore diverse travel experiences categorized by travel, nature, city, Adventure and Beaches..
+  
 <hr>
 
-## 🌟 Ready to Contribute?
+<div>
+  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/90f3930e-5a12-4a4e-8ac9-0dc7d5396adb" width="35" height="35"> Ready to Contribute?</h2>
+</div>
 
 Kindly go through [CONTRIBUTING.md](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) to understand everything from setup to contributing guidelines.
 
@@ -53,16 +61,13 @@ If you would like to contribute to the project, please follow our contribution g
 <hr>
 <!-- Open Source Programs -->
   <div>
-    <h2><img src="https://github.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/blob/master/Emojis/Hand%20gestures/Flexed%20Biceps.png?raw=true" width="35" height="35" >Open Source Programs</h2>
+    <h2><img src="https://github.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/blob/master/Emojis/Hand%20gestures/Flexed%20Biceps.png?raw=true" width="35" height="35" > Open Source Programs</h2>
   </div>
 
    <div>
   <h3>This project is part of <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/c0def4be-3f50-4b6a-8781-91856a8a6822" width="30" height="20">GirlScript Summer of Code. We warmly welcome contributions from the community to help elevate Wanderlust.
   </h3>
   </div>
-
-  
-
 
 <hr>
 
@@ -84,7 +89,9 @@ This project is licensed under the [MIT License](./LICENSE).
 
 <hr>
 
-## 💖 Show Your Support
+<div>
+  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/af38ec84-7387-4af7-af85-8f408a4654e9" width="35" height="35"> Show Your Support</h2>
+</div>
 
 If you find this project interesting and inspiring, please consider showing your support by starring it on GitHub! Your star goes a long way in helping me reach more developers and encourages me to keep enhancing the project.
 
@@ -103,7 +110,7 @@ If you find this project interesting and inspiring, please consider showing your
 <hr>
  <!-- Cotributors -->
 <div>
-  <h2><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png" width="35" height="35"> Contributors</h2>
+  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/20610b38-b287-4bf0-8f28-932b9c76163d" width="40" height="40"> Contributors</h2>
 </div>
 
 We extend our heartfelt gratitude for your invaluable contribution to our project! Your efforts play a pivotal role in elevating Wanderlust to greater heights. 😊
@@ -113,4 +120,3 @@ We extend our heartfelt gratitude for your invaluable contribution to our projec
   <img src="https://contrib.rocks/image?repo=krishnaacharyaa/wanderlust" />
 </a>
 </center>
-
