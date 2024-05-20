@@ -15,11 +15,13 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-
     steps:
+     - name: Checkout code
+       uses: actions/checkout@v2
+       
       - name: Run PR Title Checker
         id: title-check
-        uses: thehanimo/pr-title-checker@v1.4.1
+        uses: reviewdog/action-pr-title@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
