@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
+import ThemeToggle from '@/components/theme-toggle-button';
 
 function signup() {
   const navigate = useNavigate();
@@ -18,40 +19,38 @@ function signup() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setError
+    setError,
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const res = axiosInstance.post('/api/auth/email-password/signup', data)
+      const res = axiosInstance.post('/api/auth/email-password/signup', data);
       toast.promise(res, {
         pending: 'Creating account ...',
         success: {
           render({ data }) {
             const userId = data?.data?.data?.user?._id;
             const userRole = data?.data?.data?.user?.role;
-            userState.setUser({ _id: userId, role: userRole })
-            reset()
-            navigate('/')
-            return data?.data?.message
+            userState.setUser({ _id: userId, role: userRole });
+            reset();
+            navigate('/');
+            return data?.data?.message;
           },
         },
         error: {
           render({ data }) {
             if (data instanceof AxiosError) {
               if (data?.response?.data?.message.includes('Username')) {
-                setError('userName',{ type: 'manual', message: data?.response?.data?.message }); 
+                setError('userName', { type: 'manual', message: data?.response?.data?.message });
               } else {
-                setError('email',{ type: 'manual', message: data?.response?.data?.message });
+                setError('email', { type: 'manual', message: data?.response?.data?.message });
               }
             }
-            return "Signup failed"
+            return 'Signup failed';
           },
         },
-      }
-      )
-      return (await res).data
-
+      });
+      return (await res).data;
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error.response?.data?.message);
@@ -61,14 +60,16 @@ function signup() {
     }
   };
 
-
   return (
-    <div className="m-4 flex-grow cursor-default bg-white py-4">
-      <div className="mb-4 flex justify-center">
+    <div className="flex-grow cursor-default bg-white py-4 dark:bg-dark-card">
+      <div className="m-4 mb-4 flex justify-center">
         <div className="flex w-full items-center justify-center">
-          <h2 className="w-3/4 text-center text-lg font-bold text-black sm:text-xl">
+          <h2 className="w-3/4 pl-48 text-center text-lg font-bold text-black dark:text-dark-primary sm:text-xl">
             Sign up to WanderLust
           </h2>
+          <div className="flex items-center justify-end px-4 sm:px-20">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
       <div className="m-2 mt-8 flex flex-col items-center justify-center gap-2">
@@ -131,12 +132,12 @@ function signup() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600 sm:text-lg sm:font-semibold"
+            className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600 dark:bg-dark sm:text-lg sm:font-semibold"
           >
             Sign Up
           </button>
         </form>
-        <div className="mt-2 flex w-5/6 flex-col items-center justify-center gap-4 text-center text-sm font-normal sm:text-base">
+        <div className="mt-2 flex w-5/6 flex-col items-center justify-center gap-4 text-center text-sm font-normal dark:text-dark-primary sm:text-base">
           <p>
             Already have an account?
             <Link to={'/signin'} className="text-blue-600 hover:text-blue-500">
@@ -150,7 +151,7 @@ function signup() {
 
         <Link
           to={'/google-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 dark:border-gray-700 dark:text-dark-primary dark:hover:bg-gray-700 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
           <span className="text-sm sm:text-base">Continue with Google</span>
@@ -158,7 +159,7 @@ function signup() {
 
         <Link
           to={'/github-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 dark:border-gray-700 dark:text-dark-primary dark:hover:bg-gray-700 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm sm:text-base">Continue with Github</span>
