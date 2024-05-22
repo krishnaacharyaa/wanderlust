@@ -6,8 +6,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/stylistic-type-checked',
-    'airbnb-base',
-    'prettier',
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules/'],
   parser: '@typescript-eslint/parser',
@@ -17,8 +16,8 @@ module.exports = {
     'import', 
   ],
   parserOptions: {
-    project: './tsconfig.json', // Point to your tsconfig.json file
-    tsconfigRootDir: __dirname,
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname
   },
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
