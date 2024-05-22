@@ -4,14 +4,14 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended", "prettier", "airbnb-base"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "env": {
     "jest": true,
     "es2021": true,
     "node": true
   },
   
-  "plugins": ["babel", "jest"],
+  "plugins": ["babel", "jest", "prettier"],
   "rules": {
     "no-console": "off",
     "import/extensions": "off"
