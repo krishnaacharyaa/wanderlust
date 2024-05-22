@@ -36,6 +36,6 @@ jobs:
       - name: Close PR if title is invalid
         if: failure()
         run: |
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hey @${{ github.actor }}! Hold your horses 🐴! Thanks for your PR, but we have some style rules around here. Your PR title doesn\'t quite cut the mustard.\n\nMake sure you follow our contribution guidelines: PR titles should look like `fix-#124: Added responsiveness to the Home page screen`.\n\nCheck out our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) for more details. Fix it up, and I'll be happy to take another look 😉.'
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hey @${{ github.actor }}! Hold your horses 🐴! Thanks for your PR, but we have some style rules around here. Your PR title doesn\'t quite cut the mustard.\n\nMake sure you follow our contribution guidelines: PR titles should look like `fix-#124: Added responsiveness to the Home page screen`.\n\nCheck out our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) for more details. Fix it up, and I\'ll be happy to take another look 😉.'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
