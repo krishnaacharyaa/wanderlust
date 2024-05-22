@@ -4,9 +4,7 @@ on:
     types:
       - opened
       - synchronize
-      - reopened
       - edited
-      - closed
 
 permissions:
   contents: write
@@ -28,10 +26,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pass_on_octokit_error: false
           configuration_path: .github/pr-title-checker-config.json
-      - name: pt title satisfied
+
+      - name: PR title satisfied
         if: success()
         run: |
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you ${{github.actor}}! Your PR title meets our guidelines."
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you @${{ github.actor }}! Your PR title meets our guidelines."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -39,15 +38,13 @@ jobs:
         if: failure()
         run: |
           gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hello ${{github.actor}} Thank you for your PR. Unfortunately, it doesn\'t meet our quality checks.\n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format.\n\nFor example, it should be like: `fix-#124: Added responsiveness to the Home page screen.`\n\nIf you have any query kindly check our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md).'
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hello @${{ github.actor }}, thank you for your PR. Unfortunately, it doesn\'t meet our quality checks.\n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format.\n\nFor example, it should be like: `fix-#124: Added responsiveness to the Home page screen.`\n\nIf you have any questions, kindly check our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md).'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Reopen PR if title is corrected
         if: github.event.action == 'edited' && success()
         run: |
-          if [ "${{ github.event.pull_request.state }}" == "closed" ]; then
-            gh pr reopen ${{ github.event.pull_request.number }} -R ${{ github.repository }}
-          fi
+          gh pr reopen ${{ github.event.pull_request.number }} -R ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
