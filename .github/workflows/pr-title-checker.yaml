@@ -3,7 +3,6 @@ on:
   pull_request_target:
     types:
       - opened
-      - synchronize
       - edited
 
 permissions:
@@ -30,21 +29,13 @@ jobs:
       - name: PR title satisfied
         if: success()
         run: |
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you @${{ github.actor }}! Your PR title meets our guidelines."
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Hey @${{ github.actor }}! Thank you for going through the contributing guidelines. Give Krishna sometime, I hope he'll show up 😜"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Close PR if title is invalid
         if: failure()
         run: |
-          gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hello @${{ github.actor }}, thank you for your PR. Unfortunately, it doesn\'t meet our quality checks.\n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format.\n\nFor example, it should be like: `fix-#124: Added responsiveness to the Home page screen.`\n\nIf you have any questions, kindly check our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md).'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Reopen PR if title is corrected
-        if: github.event.action == 'edited' && success()
-        run: |
-          gh pr reopen ${{ github.event.pull_request.number }} -R ${{ github.repository }}
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hey @${{ github.actor }}! Hold your horses 🐴! Thanks for your PR, but we have some style rules around here. Your PR title doesn\'t quite cut the mustard.\n\nMake sure you follow our contribution guidelines: PR titles should look like `fix-#124: Added responsiveness to the Home page screen`.\n\nCheck out our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) for more details. Fix it up, and I'll be happy to take another look 😉.'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
