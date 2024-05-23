@@ -49,10 +49,10 @@ jobs:
             printf '%s\n' "${MISSING_SECTIONS[@]}" >> $GITHUB_STEP_SUMMARY
             echo "## Invalid Strings Found:" >> $GITHUB_STEP_SUMMARY
             printf '%s\n' "${FOUND_INVALID_STRINGS[@]}" >> $GITHUB_STEP_SUMMARY
-            echo "::set-output name=result::failure"
+            echo "{result}={failure}" >> $GITHUB_OUTPUT
           else
             echo "PR description meets the template requirements."
-            echo "::set-output name=result::success"
+            echo "{result}={success}" >> $GITHUB_OUTPUT
           fi
 
       - name: Set PR label based on validation
