@@ -28,7 +28,7 @@ jobs:
           )
 
           PR_BODY=$(jq -r .pull_request.body < $GITHUB_EVENT_PATH)
-          echo PR_BODY
+          echo "$PR_BODY"
           MISSING_SECTIONS=()
           for section in "${REQUIRED_SECTIONS[@]}"; do
             if ! echo "$PR_BODY" | grep -q "$section"; then
