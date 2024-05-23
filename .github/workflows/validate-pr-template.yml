@@ -56,11 +56,15 @@ jobs:
           fi
 
       - name: Set PR label based on validation
-        if: ${{ steps.validate.outputs.result == 'failure' }}
+        if: ${{ env.result == 'failure' }}
         run: |
           gh pr edit ${{ github.event.pull_request.number }} --add-label "PR description needs formatting"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Remove PR label if validation passed
-        if: ${{ steps.validate.outputs.result == 'success' }}
+        if: ${{ env.result == 'success' }}
         run: |
           gh pr edit ${{ github.event.pull_request.number }} --remove-label "PR description needs formatting"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
