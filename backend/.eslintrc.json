@@ -4,7 +4,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "prettier"],
   "env": {
     "jest": true,
     "es2021": true,
@@ -12,25 +12,9 @@
   },
   "ignorePatterns": ["note_modules/"],
   
-  "plugins": ["babel", "jest", "@stylistic/js"],
+  "plugins": ["babel", "jest"],
   "rules": {
     "no-console": "off",
-    "import/extensions": "off",
-    "@stylistic/js/indent": [
-      "error",
-      2
-    ],
-    "@stylistic/js/linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "@stylistic/js/quotes": [
-      "error",
-      "single"
-    ],
-    "@stylistic/js/semi": [
-      "error",
-      "never"
-    ]
+    "import/extensions": "off"
   }
 }
