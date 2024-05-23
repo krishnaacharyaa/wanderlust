@@ -4,16 +4,33 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended"],
   "env": {
     "jest": true,
     "es2021": true,
     "node": true
   },
+  "ignorePatterns": ["note_modules/"],
   
-  "plugins": ["babel", "jest", "prettier"],
+  "plugins": ["babel", "jest", "@stylistic/js"],
   "rules": {
     "no-console": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "@stylistic/js/indent": [
+      "error",
+      2
+    ],
+    "@stylistic/js/linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "@stylistic/js/quotes": [
+      "error",
+      "single"
+    ],
+    "@stylistic/js/semi": [
+      "error",
+      "never"
+    ]
   }
 }
