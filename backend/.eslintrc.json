@@ -4,7 +4,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended", "prettier"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "env": {
     "jest": true,
     "es2021": true,
@@ -12,7 +12,7 @@
   },
   "ignorePatterns": ["note_modules/"],
   
-  "plugins": ["babel", "jest"],
+  "plugins": ["babel", "jest", "prettier"],
   "rules": {
     "no-console": "off",
     "import/extensions": "off"
