@@ -60,7 +60,6 @@ function AddBlog() {
     resolver: zodResolver(addBlogSchema),
   });
 
-  //checks the length of the categories array and if the category is already selected
   const isValidCategory = (category: string): boolean => {
     return formData.categories.length >= 3 && !formData.categories.includes(category);
   };
