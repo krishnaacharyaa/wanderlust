@@ -49,21 +49,21 @@ jobs:
             printf '%s\n' "${MISSING_SECTIONS[@]}" >> $GITHUB_STEP_SUMMARY
             echo "## Invalid Strings Found:" >> $GITHUB_STEP_SUMMARY
             printf '%s\n' "${FOUND_INVALID_STRINGS[@]}" >> $GITHUB_STEP_SUMMARY
-            echo "::set-output name=result::failure"
+            echo "{result}={failure}" >> $GITHUB_OUTPUT
           else
             echo "PR description meets the template requirements."
-            echo "::set-output name=result::success"
+            echo "{result}={success}" >> $GITHUB_OUTPUT
           fi
 
       - name: Set PR label based on validation
-        if: ${{ env.result == 'failure' }}
+        if: ${{ steps.validate.outputs.result == 'failure' }}
         run: |
           gh pr edit ${{ github.event.pull_request.number }} --add-label "PR description needs formatting"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Remove PR label if validation passed
-        if: ${{ env.result == 'success' }}
+        if: ${{ steps.validate.outputs.result == 'success' }}
         run: |
           gh pr edit ${{ github.event.pull_request.number }} --remove-label "PR description needs formatting"
         env:
