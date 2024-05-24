@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AddGoogleIcon from '@/assets/svg/google-color-icon.svg';
 import AddGithubIcon from '@/assets/svg/github-icon.svg';
@@ -11,7 +12,8 @@ import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
 
-function signin() {
+function Signin() {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -21,11 +23,13 @@ function signin() {
     setError
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prevState) => !prevState);
+  };
+
   const onSubmit = async (data: FieldValues) => {
     try {
-      const response = axiosInstance.post('/api/auth/email-password/signin',
-        data
-      );
+      const response = axiosInstance.post('/api/auth/email-password/signin', data);
 
       toast.promise(response, {
         pending: 'Checking credentials ...',
@@ -33,28 +37,27 @@ function signin() {
           render({ data }) {
             const userId = data?.data?.data?.user?._id;
             const userRole = data?.data?.data?.user?.role;
-            userState.setUser({ _id: userId, role: userRole })
-            reset()
-            navigate('/')
-            return data?.data?.message
+            userState.setUser({ _id: userId, role: userRole });
+            reset();
+            navigate('/');
+            return data?.data?.message;
           },
         },
         error: {
           render({ data }) {
             if (data instanceof AxiosError) {
               if (data?.response?.data?.message.includes('User')) {
-                setError('userNameOrEmail',{ type: 'manual', message: data?.response?.data?.message});
+                setError('userNameOrEmail', { type: 'manual', message: data?.response?.data?.message });
               } else {
-                setError("password",{ type: 'manual', message: data?.response?.data?.message});
+                setError('password', { type: 'manual', message: data?.response?.data?.message });
               }
             }
-            return "Signin failed"
+            return 'Signin failed';
           },
         },
-      }
-      )
+      });
 
-      return (await response).data
+      return (await response).data;
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error.response?.data?.message);
@@ -87,13 +90,20 @@ function signin() {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <input
               {...register('password')}
-              type="password"
+              type={isPasswordVisible ? 'text' : 'password'}
               placeholder="Password"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
             />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-3 top-3 text-neutral-500"
+            >
+              {isPasswordVisible ? 'Hide' : 'Show'}
+            </button>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
             )}
@@ -121,7 +131,7 @@ function signin() {
 
         <Link
           to={'/google-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
           <span className="text-sm sm:text-base">Continue with Google</span>
@@ -139,4 +149,5 @@ function signin() {
   );
 }
 
-export default signin;
+export default Signin;
+
