@@ -15,8 +15,8 @@ app.use(cors({
     origin: FRONTEND_URL,
     credentials: true
 }));
-app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.json({ limit: '50kb' }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
 
