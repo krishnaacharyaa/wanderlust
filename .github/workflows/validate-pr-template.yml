@@ -1,0 +1,70 @@
+name: Validate PR Template
+
+on:
+  pull_request_target:
+    types: [opened, edited]
+
+jobs:
+  validate-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Validate PR description
+        id: validate
+        run: |
+          echo "Validating PR template..."
+
+          REQUIRED_SECTIONS=("## Summary" "## Description" "## Images" "## Issue(s) Addressed" "## Prerequisites")
+          INVALID_STRINGS=(
+            "_Briefly describe the purpose of this PR._"
+            "_Explain in detail what this PR is all about. This should include the problem you're solving, the approach taken, and any technical details that reviewers need to know._"
+            "_Include any relevant images or diagrams that can help reviewers visualize the changes, if applicable_"
+            "_Enter the issue number of the bug(s) that this PR fixes_"
+            "Template should be strictly **Closes <issue_number>**"
+            "Example: Closes #1"
+          )
+
+          PR_BODY=$(jq -r .pull_request.body < $GITHUB_EVENT_PATH)
+          echo "$PR_BODY"
+          MISSING_SECTIONS=()
+          for section in "${REQUIRED_SECTIONS[@]}"; do
+            if ! echo "$PR_BODY" | grep -q "$section"; then
+              MISSING_SECTIONS+=("$section")
+            fi
+          done
+
+          FOUND_INVALID_STRINGS=()
+          for invalid in "${INVALID_STRINGS[@]}"; do
+            if echo "$PR_BODY" | grep -q "$invalid"; then
+              FOUND_INVALID_STRINGS+=("$invalid")
+            fi
+          done
+
+          if [ ${#MISSING_SECTIONS[@]} -ne 0 ] || [ ${#FOUND_INVALID_STRINGS[@]} -ne 0 ]; then
+            echo "PR description is missing required sections or contains invalid strings."
+            echo "## Missing Sections:" >> $GITHUB_STEP_SUMMARY
+            printf '%s\n' "${MISSING_SECTIONS[@]}" >> $GITHUB_STEP_SUMMARY
+            echo "## Invalid Strings Found:" >> $GITHUB_STEP_SUMMARY
+            printf '%s\n' "${FOUND_INVALID_STRINGS[@]}" >> $GITHUB_STEP_SUMMARY
+            echo "{result}={failure}" >> $GITHUB_OUTPUT
+          else
+            echo "PR description meets the template requirements."
+            echo "{result}={success}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set PR label based on validation
+        if: ${{ steps.validate.outputs.result == 'failure' }}
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "PR description needs formatting"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Remove PR label if validation passed
+        if: ${{ steps.validate.outputs.result == 'success' }}
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --remove-label "PR description needs formatting"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
