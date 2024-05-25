@@ -3,7 +3,6 @@ on:
   pull_request_target:
     types:
       - opened
-      - synchronize
       - edited
 
 permissions:
@@ -30,21 +29,13 @@ jobs:
       - name: PR title satisfied
         if: success()
         run: |
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body "Thank you @${{ github.actor }}! Your PR title meets our guidelines."
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body  "Hey @${{ github.actor }}! Thanks for sticking to the guidelines! High five! 🙌🏻"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Close PR if title is invalid
         if: failure()
         run: |
-          gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }}
-          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Hello @${{ github.actor }}, thank you for your PR. Unfortunately, it doesn\'t meet our quality checks.\n\nPlease ensure you follow our contribution guidelines. The PR title should match the required format.\n\nFor example, it should be like: `fix-#124: Added responsiveness to the Home page screen.`\n\nIf you have any questions, kindly check our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md).'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Reopen PR if title is corrected
-        if: github.event.action == 'edited' && success()
-        run: |
-          gh pr reopen ${{ github.event.pull_request.number }} -R ${{ github.repository }}
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Umm... did someone forget to read the style guide? Fix that PR title and let\'s try again! @${{ github.actor }}\nDon\'t worry, it happens to the best of us! Check out our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) for more details.'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
