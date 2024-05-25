@@ -17,6 +17,9 @@ export default {
           title: colors.slate[50],
           description: colors.slate[400],
           info: colors.slate[500],
+          field: colors.slate[900],
+          button: colors.slate[700],
+          textInField: colors.slate[50]
         },
         light: {
           DEFAULT: colors.slate[50],

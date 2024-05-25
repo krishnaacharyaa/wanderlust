@@ -83,7 +83,7 @@ function signin() {
               {...register('userNameOrEmail')}
               type="text"
               placeholder="Username or Email"
-              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
             />
             {errors.userNameOrEmail && (
               <p className="p-3 text-xs text-red-500">{`${errors.userNameOrEmail.message}`}</p>
@@ -95,7 +95,7 @@ function signin() {
               {...register('password')}
               type="password"
               placeholder="Password"
-              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm placeholder:text-neutral-500"
+              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
             />
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
@@ -105,7 +105,7 @@ function signin() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600 dark:bg-dark sm:text-lg sm:font-semibold"
+            className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600  dark:bg-dark-button sm:text-lg sm:font-semibold"
           >
             Log In
           </button>
