@@ -1,6 +1,6 @@
 <div>
   <h1>Wanderlust</h1>
-  <h2>The Ultimate Travel Blog 🌍✈ for You </h2>
+  <h2>The Ultimate Travel Blog 🌍✈️ for You </h2>
 </div>
 
 ![Preview Image](https://github.com/krishnaacharyaa/wanderlust/assets/116620586/17ba9da6-225f-481d-87c0-5d5a010a9538)
@@ -22,7 +22,7 @@
   </tr>
   <tr>
       <td><img src="https://github.com/krishnaacharyaa/wanderlust/assets/133582566/47d71dd6-0390-479e-9d4e-3f077ef1a987.png" alt="YouTube Logo" width="50"></td>
-      <td><a href="https://youtu.be/ANfC1u_N_A0?feature=shared"> Find our Collaboration Video with TechwithShubham here </a></td>
+      <td><a href="https://youtu.be/ANfC1u_N_A0?feature=shared"> Find our Collaboration Video with TrainwithShubham here </a></td>
   </tr>
 </table>
 
