@@ -23,6 +23,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@tsparticles/react": "^3.0.0",
     "axios": "^1.6.1",
+    "esbuild": "^0.21.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.292.0",
@@ -35,7 +36,7 @@
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "tsparticles": "^3.4.0",
-    "zod": "^3.22.4"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.6",
