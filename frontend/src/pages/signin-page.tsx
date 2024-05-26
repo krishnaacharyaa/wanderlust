@@ -11,8 +11,11 @@ import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
 import ThemeToggle from '@/components/theme-toggle-button';
+import { useState } from 'react';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 function signin() {
   const navigate = useNavigate();
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const {
     register,
     handleSubmit,
@@ -90,13 +93,20 @@ function signin() {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <input
               {...register('password')}
-              type="password"
+              type={passwordVisible ? 'text' : 'password'}
               placeholder="Password"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
             />
+            <button
+              type="button"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+            >
+              {passwordVisible ? <AiFillEyeInvisible className='text-neutral-800 dark:text-white' /> : <AiFillEye className='text-neutral-800 dark:text-white' />}
+            </button>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
             )}
