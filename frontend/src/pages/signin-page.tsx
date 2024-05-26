@@ -12,7 +12,9 @@ import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
 import ThemeToggle from '@/components/theme-toggle-button';
 import { useState } from 'react';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import EyeIcon from '@/assets/svg/eye.svg';
+import EyeOffIcon from '@/assets/svg/eye-off.svg';
+
 function signin() {
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -103,9 +105,9 @@ function signin() {
             <button
               type="button"
               onClick={() => setPasswordVisible(!passwordVisible)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+              className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
             >
-              {passwordVisible ? <AiFillEyeInvisible className='text-neutral-800 dark:text-white' /> : <AiFillEye className='text-neutral-800 dark:text-white' />}
+              <img src={passwordVisible ? EyeOffIcon : EyeIcon} alt="Toggle-visibility" className="w-5 h-5" />
             </button>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
