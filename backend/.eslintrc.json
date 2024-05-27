@@ -11,7 +11,7 @@
     "node": true
   },
   "ignorePatterns": ["note_modules/"],
-  
+
   "plugins": ["babel", "jest", "prettier"],
   "rules": {
     "no-console": "off",

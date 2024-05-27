@@ -33,6 +33,6 @@ router.post('/email-password/signin', signInWithEmailOrUsername);
 router.post('/signout', authMiddleware, signOutUser);
 
 //CHECK USER STATUS
-router.get('/check/:_id', isLoggedIn)
+router.get('/check/:_id', isLoggedIn);
 
 export default router;
