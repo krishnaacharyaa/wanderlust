@@ -19,14 +19,14 @@ else
   echo "<tag>: <commit message>                   # if you don't have relevant issue"
   echo ""
   echo "Examples:"
-  echo "❌ \033[31mFixed a bug\033[0m"
-  echo "✅ \033[32mfix-#123: Fixed a bug\033[0m"
-  echo "❌ \033[31mUpdated documentation file\033[0m"
-  echo "✅ \033[32mchore: Updated documentation\033[0m"
+  echo "❌ Fixed a bug"
+  echo "✅ fix-#123: Fixed a bug"
+  echo "❌ Updated documentation file"
+  echo "✅ chore: Updated documentation"
  
   echo ""
   echo "To know all the available tags and for more details"
-  echo  "Kindly refer to \033[0m\033[4;34m\033]8;;https://github.com/krishnaacharyaa/wanderlust/blob/9b11b769bb23150b746296cf9008056633d21921/.github/CONTRIBUTING.md#guidelines-for-contributions\a\033[4;34mContributing Guidelines\033]8;;\a\033[0m."
+  echo "Kindly refer to \033]8;;https://github.com/krishnaacharyaa/wanderlust/blob/9b11b769bb23150b746296cf9008056633d21921/.github/CONTRIBUTING.md#guidelines-for-contributions\aContributing Guidelines\033]8;;\a."
   echo ""
 exit 1
 fi
