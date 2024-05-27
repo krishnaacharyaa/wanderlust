@@ -1,5 +1,5 @@
 import { validCategories } from '../../utils/constants';
-
+import { jest } from '@jest/globals';
 export const res = {
   json: jest.fn(),
   status: jest.fn().mockReturnThis(),

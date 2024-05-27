@@ -6,14 +6,15 @@
   },
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "env": {
+    "node": true,
     "jest": true,
-    "es2021": true,
-    "node": true
+    "es2021": true
   },
   "ignorePatterns": ["note_modules/"],
 
   "plugins": ["babel", "jest", "prettier"],
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "no-console": "off",
     "import/extensions": "off"
   }

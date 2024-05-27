@@ -6,7 +6,7 @@ export const getAllUserHandler = async (req, res) => {
     const users = await User.find().select('_id name email');
     return res.status(HTTP_STATUS.OK).json({ users });
   } catch (error) {
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
 
@@ -31,7 +31,7 @@ export const changeUserRoleHandler = async (req, res) => {
   } catch (error) {
     res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR });
+      .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR, error: error });
   }
 };
 
@@ -47,6 +47,6 @@ export const deleteUserHandler = async (req, res) => {
   } catch (error) {
     res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR });
+      .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR, error: error });
   }
 };

@@ -18,6 +18,6 @@ export const isAuthorMiddleware = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
