@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
-chmod ug+x .husky/*
-chmod ug+x .git/hooks/*
 
 . "$(dirname -- "$0")/_/husky.sh"
 
