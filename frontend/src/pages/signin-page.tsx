@@ -107,7 +107,7 @@ function signin() {
               onClick={() => setPasswordVisible(!passwordVisible)}
               className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
             >
-              <img src={passwordVisible ? EyeOffIcon : EyeIcon} alt="Toggle-visibility" className="w-5 h-5" />
+              <img src={passwordVisible ? EyeIcon : EyeOffIcon} alt="Toggle-visibility" className="w-5 h-5" />
             </button>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
