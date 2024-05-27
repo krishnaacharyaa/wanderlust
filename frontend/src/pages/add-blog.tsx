@@ -112,9 +112,9 @@ function AddBlog() {
                 categories: [],
                 description: '',
                 isFeaturedPost: false,
-              })
+              });
               navigate('/');
-              return "Blog created successfully";
+              return 'Blog created successfully';
             },
           },
           error: {
@@ -124,13 +124,12 @@ function AddBlog() {
                   return data?.response?.data?.message;
                 }
               }
-              return "Blog creation failed";
+              return 'Blog creation failed';
             },
-          }
-        })
+          },
+        });
 
         return (await postPromise).data;
-
       } catch (error: any) {
         if (isAxiosError(error)) {
           navigate('/');

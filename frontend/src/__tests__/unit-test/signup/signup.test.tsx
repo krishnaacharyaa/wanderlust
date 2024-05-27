@@ -22,24 +22,17 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Unit Tests : Signup Component', async () => {
-
   test('Signup : Failure - Invalid Email Address', async () => {
     const userActions = userEvent.setup();
-    const {
-    
-      emailInput,
-      signupbuttonText,
-    } = await formSetup();
-   
+    const { emailInput, signupbuttonText } = await formSetup();
+
     await userActions.type(emailInput, 'abc@');
     await userActions.click(signupbuttonText);
-    await waitFor(()=>{
+    await waitFor(() => {
       //should need to trigger the default HTML validation error message
-      expect(emailInput.validity.typeMismatch).toBe(true)
-    })
-
-    
-  })
+      expect(emailInput.validity.typeMismatch).toBe(true);
+    });
+  });
   test('Signup : Failure - Confirm Password is not same as Password', async () => {
     const userActions = userEvent.setup();
     const {
@@ -52,15 +45,15 @@ describe('Unit Tests : Signup Component', async () => {
     } = await formSetup();
     await userActions.type(usernameInput, 'aryastark');
     await userActions.type(emailInput, 'arya@gmail.com');
-    await userActions.type(passwordInput,"12345678")
-    await userActions.type(confirmpasswordInput,"1234")
+    await userActions.type(passwordInput, '12345678');
+    await userActions.type(confirmpasswordInput, '1234');
     await userActions.click(signupbuttonText);
-    await waitFor(()=>{
-      expect(form.getByText(INVALID_CONFIRMPWD_ERRORMESSAGE)).toBeInTheDocument()
-    })
-  })
+    await waitFor(() => {
+      expect(form.getByText(INVALID_CONFIRMPWD_ERRORMESSAGE)).toBeInTheDocument();
+    });
+  });
 
-  test('Signup : Failure - Invalid Username', async() => {
+  test('Signup : Failure - Invalid Username', async () => {
     const userActions = userEvent.setup();
     const {
       form,
@@ -72,31 +65,25 @@ describe('Unit Tests : Signup Component', async () => {
     } = await formSetup();
     await userActions.type(usernameInput, 'ary');
     await userActions.type(emailInput, 'arya@gmail.com');
-    await userActions.type(passwordInput,"12345678")
-    await userActions.type(confirmpasswordInput,"12345678")
+    await userActions.type(passwordInput, '12345678');
+    await userActions.type(confirmpasswordInput, '12345678');
     await userActions.click(signupbuttonText);
-    await waitFor(()=>{
-      expect(form.getByText(INVALID_USERNAME_ERRORMESSAGE)).toBeInTheDocument()
-    })
-
-  })
-  
+    await waitFor(() => {
+      expect(form.getByText(INVALID_USERNAME_ERRORMESSAGE)).toBeInTheDocument();
+    });
+  });
 
   test('Signup : Failure - Form is submitted without any values', async () => {
     const userActions = userEvent.setup();
-    const {
-      form,
-      signupbuttonText,
-    } = await formSetup();
+    const { form, signupbuttonText } = await formSetup();
     await userActions.click(signupbuttonText);
-    await waitFor(()=>{
-      expect(form.getByText(USERNAME_EMPTY_ERRORMESSAGE)).toBeInTheDocument()
-      expect(form.getByText(EMAIL_EMPTY_ERRORMESSAGE)).toBeInTheDocument()
-      expect(form.getByText(PASSWORD_EMPTY_ERRORMESSAGE)).toBeInTheDocument()
-      expect(form.getByText(CONFIRMPASSWORD_EMPTY_ERRORMESSAGE)).toBeInTheDocument()
-
-    })
-  })
+    await waitFor(() => {
+      expect(form.getByText(USERNAME_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
+      expect(form.getByText(EMAIL_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
+      expect(form.getByText(PASSWORD_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
+      expect(form.getByText(CONFIRMPASSWORD_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
+    });
+  });
 
   test('should display invalid error message when providing invalid inputs during signup', async () => {
     const userActions = userEvent.setup();
@@ -123,14 +110,8 @@ describe('Unit Tests : Signup Component', async () => {
   test('should call the signup api when all the input values are valid and should redirect to home page', async () => {
     const userActions = userEvent.setup();
 
-    const {
-    
-      usernameInput,
-      emailInput,
-      passwordInput,
-      confirmpasswordInput,
-      signupbuttonText,
-    } = await formSetup();
+    const { usernameInput, emailInput, passwordInput, confirmpasswordInput, signupbuttonText } =
+      await formSetup();
     await userActions.type(usernameInput, 'aryastark');
     await userActions.type(emailInput, 'arya@gmail.com');
     await userActions.type(passwordInput, '123456789');
