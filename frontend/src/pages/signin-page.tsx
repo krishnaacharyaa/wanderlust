@@ -95,7 +95,7 @@ function signin() {
             )}
           </div>
 
-          <div className="mb-4 relative">
+          <div className="relative mb-4">
             <input
               {...register('password')}
               type={passwordVisible ? 'text' : 'password'}
@@ -107,7 +107,11 @@ function signin() {
               onClick={() => setPasswordVisible(!passwordVisible)}
               className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
             >
-              <img src={passwordVisible ? EyeIcon : EyeOffIcon} alt="Toggle-visibility" className="w-5 h-5" />
+              <img
+                src={passwordVisible ? EyeIcon : EyeOffIcon}
+                alt="Toggle-visibility"
+                className="h-5 w-5"
+              />
             </button>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
@@ -131,10 +135,10 @@ function signin() {
             </Link>
           </p>
 
-          <span>OR</span>
+          {/* <span>OR</span> */}
         </div>
 
-        <Link
+        {/* <Link
           to={'/google-auth'}
           className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700 md:w-3/4 lg:w-2/5"
         >
@@ -148,7 +152,7 @@ function signin() {
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm dark:text-dark-primary sm:text-base">Continue with Github</span>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
