@@ -19,7 +19,7 @@ export default {
           info: colors.slate[500],
           field: colors.slate[900],
           button: colors.slate[700],
-          textInField: colors.slate[50],
+          textInField: colors.slate[50]
         },
         light: {
           DEFAULT: colors.slate[50],
