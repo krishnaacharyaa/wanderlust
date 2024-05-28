@@ -21,5 +21,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              body: `Hey @${issue_assignee}, Kindly refer to our [contributing guidelines](${contributing_guidelines_url}) before getting started, so that we are in the same page 😉`
+              body: `Hey @${issue_assignee} 🎉! Thanks for jumping on this issue. Before you dive in, please check out our [contributing guidelines](${contributing_guidelines_url}) to ensure we're all on the same page. Happy coding! 🚀`
             });
