@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from '@/pages/home-page';
 import AddBlog from '@/pages/add-blog';
@@ -13,6 +14,7 @@ import UnprotectedRoute from './components/unprotected-route';
 import { useLayoutEffect } from 'react';
 import RequireAuth from './components/require-auth';
 import useThemeClass from './utils/theme-changer';
+import AdminContainer from './components/admin-container';
 
 function App() {
   useLayoutEffect(() => {
@@ -23,7 +25,7 @@ function App() {
       <ScrollToTop />
       <div className="flex min-h-screen flex-col">
         <Routes>
-          <Route path="/">
+        <Route path="/">
             <Route index element={<HomePage />} />
             <Route path="details-page/:title/:postId" element={<DetailsPage />} />
             <Route element={<UnprotectedRoute />}>
@@ -34,8 +36,10 @@ function App() {
               <Route path="add-blog" element={<AddBlog />} />
             </Route>
             <Route path="admin" element={<RequireAuth allowedRole={['ADMIN']} />}>
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="blogs" element={<AdminBlogs />} />
+              <Route element={<AdminContainer />}>
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="blogs" element={<AdminBlogs />} />
+              </Route>
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
