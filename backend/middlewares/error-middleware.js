@@ -1,6 +1,6 @@
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 
-const errorMiddleware = (err, req, res, next) => {
+const errorMiddleware = (err, req, res) => {
   console.error(err.stack);
 
   res.status(err.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
