@@ -9,7 +9,6 @@ export default [
   { 
     rules: { 
       'react/react-in-jsx-scope': 'off' , 
-      '@typescript-eslint/no-explicit-any': 'off', 
       'react/no-unescaped-entities': 'off'
     } 
   }
