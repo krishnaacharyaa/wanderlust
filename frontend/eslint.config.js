@@ -6,4 +6,11 @@ export default [
   { languageOptions: { globals: globals.browser } },
   ...tseslint.configs.recommended,
   pluginReactConfig,
+  { 
+    rules: { 
+      'react/react-in-jsx-scope': 'off' , 
+      '@typescript-eslint/no-explicit-any': 'off', 
+      'react/no-unescaped-entities': 'off'
+    } 
+  }
 ];
