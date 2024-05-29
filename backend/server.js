@@ -1,12 +1,12 @@
-import app from "./app.js";
-import connectDB from './config/db.js'
-import { PORT } from "./config/utils.js";
-import { connectToRedis } from "./services/redis.js";
+import app from './app.js';
+import connectDB from './config/db.js';
+import { PORT } from './config/utils.js';
+import { connectToRedis } from './services/redis.js';
 
-const port = PORT || 8080
+const port = PORT || 8080;
 
 // Connect to redis
-connectToRedis()
+connectToRedis();
 
 //Connect to Mongodb
 connectDB()
@@ -16,5 +16,5 @@ connectDB()
     });
   })
   .catch((error) => {
-    console.log("MongoDB connection failed:", error);
-  })
+    console.log('MongoDB connection failed:', error);
+  });

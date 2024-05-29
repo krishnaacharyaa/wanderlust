@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
-import AddGoogleIcon from '@/assets/svg/google-color-icon.svg';
-import AddGithubIcon from '@/assets/svg/github-icon.svg';
+// import AddGoogleIcon from '@/assets/svg/google-color-icon.svg';
+// import AddGithubIcon from '@/assets/svg/github-icon.svg';
 import { useForm } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
 import { TSignInSchema, signInSchema } from '@/lib/types';
@@ -11,8 +11,13 @@ import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
 import ThemeToggle from '@/components/theme-toggle-button';
+import { useState } from 'react';
+import EyeIcon from '@/assets/svg/eye.svg';
+import EyeOffIcon from '@/assets/svg/eye-off.svg';
+
 function signin() {
   const navigate = useNavigate();
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const {
     register,
     handleSubmit,
@@ -90,13 +95,24 @@ function signin() {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="relative mb-4">
             <input
               {...register('password')}
-              type="password"
+              type={passwordVisible ? 'text' : 'password'}
               placeholder="Password"
               className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
             />
+            <button
+              type="button"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
+            >
+              <img
+                src={passwordVisible ? EyeIcon : EyeOffIcon}
+                alt="Toggle-visibility"
+                className="h-5 w-5"
+              />
+            </button>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
             )}
@@ -119,10 +135,10 @@ function signin() {
             </Link>
           </p>
 
-          <span>OR</span>
+          {/* <span>OR</span> */}
         </div>
 
-        <Link
+        {/* <Link
           to={'/google-auth'}
           className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700 md:w-3/4 lg:w-2/5"
         >
@@ -136,7 +152,7 @@ function signin() {
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm dark:text-dark-primary sm:text-base">Continue with Github</span>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

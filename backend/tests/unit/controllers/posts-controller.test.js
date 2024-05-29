@@ -9,6 +9,7 @@ import {
   updatePostHandler,
 } from '../../../controllers/posts-controller.js';
 import Post from '../../../models/post.js';
+import { expect, jest, it, describe } from '@jest/globals';
 import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';
 import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';
 

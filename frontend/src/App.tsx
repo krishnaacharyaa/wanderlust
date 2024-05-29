@@ -30,10 +30,10 @@ function App() {
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
             </Route>
-            <Route element={<RequireAuth allowedRole={["ADMIN", "USER"]} />}>
+            <Route element={<RequireAuth allowedRole={['ADMIN', 'USER']} />}>
               <Route path="add-blog" element={<AddBlog />} />
             </Route>
-            <Route path='admin' element={<RequireAuth allowedRole={["ADMIN"]} />}>
+            <Route path="admin" element={<RequireAuth allowedRole={['ADMIN']} />}>
               <Route path="users" element={<AdminUsers />} />
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>

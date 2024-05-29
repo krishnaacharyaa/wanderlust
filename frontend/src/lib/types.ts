@@ -22,9 +22,7 @@ export const signUpSchema = z
         passwordRegex,
         'Password must be contains at least one uppercase and one lowercase and one digit and one special character'
       ),
-    confirmPassword: z
-      .string()
-      .min(1, { message: 'Confirm Password is required'}),
+    confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Confirm Password do not match',

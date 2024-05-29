@@ -11,14 +11,13 @@ function HomePage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axiosInstance.get('/api/posts')
-        setPosts(res.data)
+        const res = await axiosInstance.get('/api/posts');
+        setPosts(res.data);
       } catch (error) {
         console.error(error);
       }
-
-    }
-    fetchPosts()
+    };
+    fetchPosts();
   }, []);
 
   return (
@@ -32,8 +31,8 @@ function HomePage() {
         <div className="flex flex-wrap">
           {posts.length === 0
             ? Array(8)
-              .fill(0)
-              .map((_, index) => <PostCardSkeleton key={index} />)
+                .fill(0)
+                .map((_, index) => <PostCardSkeleton key={index} />)
             : posts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>

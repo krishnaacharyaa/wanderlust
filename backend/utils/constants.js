@@ -21,7 +21,7 @@ export const RESPONSE_MESSAGES = {
   COMMON: {
     INTERNAL_SERVER_ERROR: 'Internal Server Error',
     REQUIRED_FIELDS: 'All fields are required.',
-    SOMETHING_WRONG: 'Something went wrong'
+    SOMETHING_WRONG: 'Something went wrong',
   },
   POSTS: {
     CREATED: 'Post created successfully',

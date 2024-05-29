@@ -4,8 +4,7 @@ import { MONGODB_URI } from './utils.js';
 export default async function connectDB() {
   try {
     await mongoose.connect(MONGODB_URI, {
-      // set database name
-      dbName: 'wanderlust'
+      dbName: 'wanderlust',
     });
     console.log(`Database connected: ${MONGODB_URI}`);
   } catch (err) {
