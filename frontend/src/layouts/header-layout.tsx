@@ -55,7 +55,9 @@ function header() {
       <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 sm:px-16">
         <div className="flex w-full justify-between">
           <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
-            WanderLust
+            <a href="/" className="text-decoration-none text-slate-50">
+              WanderLust
+            </a>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-end px-4 sm:px-20">
