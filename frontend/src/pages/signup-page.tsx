@@ -131,7 +131,7 @@ function signup() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600 dark:bg-dark-button sm:text-lg sm:font-semibold"
+            className="flex w-full items-center justify-center rounded-lg bg-neutral-800 p-3 text-base font-medium text-light disabled:bg-neutral-600  dark:bg-light dark:text-dark dark:hover:bg-dark-secondary/80 sm:text-lg sm:font-semibold"
           >
             Sign Up
           </button>
