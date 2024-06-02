@@ -10,6 +10,7 @@ import axiosInstance from '@/helpers/axios-instance';
 import Loader from '@/components/skeletons/loader';
 import useAuthData from '@/hooks/useAuthData';
 import userState from '@/utils/user-state';
+import { Link } from 'react-router-dom';
 
 function header() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ function header() {
       <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 sm:px-16">
         <div className="flex w-full justify-between">
           <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
-            WanderLust
+          <Link to="/" style={{ textDecoration: 'none' }}>WanderLust</Link>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-end px-4 sm:px-20">
