@@ -130,7 +130,7 @@ function AddBlog() {
         });
 
         return (await postPromise).data;
-      } catch (error: any) {
+      } catch (error: unknown) {
         if (isAxiosError(error)) {
           navigate('/');
           userState.removeUser();
@@ -153,7 +153,7 @@ function AddBlog() {
   }
 
   return (
-    <div className="flex-grow cursor-default bg-slate-50 px-6 py-8 dark:bg-dark">
+    <div className="flex-grow cursor-default bg-slate-50 px-6 py-8 dark:bg-dark-card">
       <div className="mb-4 flex justify-center">
         <div className="flex w-[32rem] items-center justify-start space-x-4 sm:w-5/6 lg:w-4/6 ">
           <div className="w-fit cursor-pointer">
@@ -195,7 +195,7 @@ function AddBlog() {
               name="title"
               placeholder="Travel Bucket List for this Year"
               autoComplete="off"
-              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-slate-50 dark:placeholder:text-dark-tertiary"
               value={formData.title}
               onChange={handleInputChange}
             />
@@ -209,7 +209,7 @@ function AddBlog() {
               name="description"
               placeholder="Start writing here&hellip;"
               rows={5}
-              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary"
               value={formData.description}
               onChange={handleInputChange}
             />
@@ -223,7 +223,7 @@ function AddBlog() {
               type="text"
               name="authorName"
               placeholder="Shree Sharma"
-              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary"
               value={formData.authorName}
               onChange={handleInputChange}
             />
@@ -243,7 +243,7 @@ function AddBlog() {
               name="imageLink"
               placeholder="https://&hellip;"
               autoComplete="off"
-              className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
+              className="dark:text-textInField w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary lg:w-10/12"
               value={formData.imageLink}
               onChange={handleInputChange}
             />

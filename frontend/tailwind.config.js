@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require('tailwindcss/colors');
-const defaultTheme = require('tailwindcss/defaultTheme');
+import colors from 'tailwindcss/colors';
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -19,7 +19,7 @@ export default {
           info: colors.slate[500],
           field: colors.slate[900],
           button: colors.slate[700],
-          textInField: colors.slate[50],
+          textInField: colors.slate[50]
         },
         light: {
           DEFAULT: colors.slate[50],
