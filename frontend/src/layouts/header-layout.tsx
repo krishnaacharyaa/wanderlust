@@ -2,6 +2,7 @@ import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
 import LogOutIcon from '@/assets/svg/logout-icon.svg';
 import LogInIcon from '@/assets/svg/login-icon.svg';
+import AppIcon from '@/assets/svg/app-icon.svg';
 import { useNavigate } from 'react-router-dom';
 import Hero from '@/components/hero';
 import { AxiosError, isAxiosError } from 'axios';
@@ -57,7 +58,7 @@ function header() {
         <div className="flex w-full justify-between">
           <div className="flex cursor-text items-center justify-between gap-2 text-2xl font-semibold">
             <Link to="/">
-              <img src="./src/assets/svg/app-icon.svg" className="h-10 w-10" />
+              <img src={AppIcon} className="h-10 w-10" />
             </Link>
             <Link to="/" style={{ textDecoration: 'none' }}>
               WanderLust
