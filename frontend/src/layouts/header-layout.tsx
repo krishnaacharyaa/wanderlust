@@ -54,7 +54,10 @@ function header() {
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="absolute inset-0 flex flex-col px-8 py-8 text-slate-50 sm:px-16">
         <div className="flex w-full justify-between">
-          <div className="flex cursor-text items-center justify-between text-2xl font-semibold">
+          <div className="flex cursor-text items-center justify-between gap-2 text-2xl font-semibold">
+            <a href="/">
+              <img className="h-10 w-10" src="app-icon.svg" alt="logo WanderLust "></img>
+            </a>
             WanderLust
           </div>
           <div className="flex items-center justify-between">
