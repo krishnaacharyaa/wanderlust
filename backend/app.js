@@ -35,13 +35,13 @@ app.get('/likePost/:postId', (req, res) => {
   res.send('yayyy');
 });
 
-// app.all('*', (req, res) => {
-//   res.status(404).json({
-//     status: 404,
-//     success: false,
-//     message: '!Oops page not found',
-//   });
-// });
+app.all('*', (req, res) => {
+  res.status(404).json({
+    status: 404,
+    success: false,
+    message: '!Oops page not found',
+  });
+});
 
 app.use(errorMiddleware);
 export default app;

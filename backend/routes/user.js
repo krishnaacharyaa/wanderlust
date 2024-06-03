@@ -4,6 +4,8 @@ import {
   changeUserRoleHandler,
   deleteUserHandler,
   getAllUserHandler,
+  getUserInformartion,
+  updateUserHandler,
 } from '../controllers/user-controller.js';
 
 const router = Router();
@@ -16,5 +18,11 @@ router.patch('/:userId', authMiddleware, isAdminMiddleware, changeUserRoleHandle
 
 // delete the user
 router.delete('/:userId', authMiddleware, isAdminMiddleware, deleteUserHandler);
+
+// get user  info
+router.get('/:id', authMiddleware, getUserInformartion);
+
+// update user Information
+router.patch('/update/:id', authMiddleware, updateUserHandler);
 
 export default router;

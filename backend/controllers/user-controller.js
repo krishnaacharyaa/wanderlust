@@ -1,5 +1,6 @@
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import User from '../models/user.js';
+import bcrypt from 'bcryptjs';
 
 export const getAllUserHandler = async (req, res) => {
   try {
@@ -48,5 +49,43 @@ export const deleteUserHandler = async (req, res) => {
     res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR, error: error });
+  }
+};
+
+export const getUserInformartion = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById({ _id: userId }).select('_id userName email');
+    if (!user) {
+      res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS });
+    }
+    return res.status(HTTP_STATUS.OK).json(user);
+  } catch (err) {
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
+  }
+};
+
+export const updateUserHandler = async (req, res) => {
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          userName: req.body.username,
+          email: req.body.email,
+          password: hashPassword,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.status(HTTP_STATUS.OK).json(updatedUser);
+  } catch (err) {
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };

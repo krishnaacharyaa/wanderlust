@@ -7,7 +7,6 @@ import {
   getLatestPostsHandler,
   getPostByCategoryHandler,
   getPostByIdHandler,
-  getRandomData,
   likePostByUser,
   updatePostHandler,
 } from '../controllers/posts-controller.js';
@@ -31,8 +30,6 @@ router.get('/categories/:category', getPostByCategoryHandler);
 
 // Route for fetching the latest posts
 router.get('/latest', cacheHandler(REDIS_KEYS.LATEST_POSTS), getLatestPostsHandler);
-
-router.get('/random', getRandomData);
 
 // Get a specific post by ID
 router.get('/:id', getPostByIdHandler);
