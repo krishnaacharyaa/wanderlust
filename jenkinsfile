@@ -1,0 +1,58 @@
+pipeline{
+    agent any
+    environment{
+        SONAR_HOME= tool "sonar"
+    }
+    stages{
+        
+        stage("clone code from the github"){
+            steps{
+                git url: "https://github.com/KarthikEdhala/wanderlust", branch: "devops"
+            }
+        }
+        
+        stage("Sonarqube Quality Analysis"){
+            steps{
+                withSonarQubeEnv("sonar"){
+                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=wanderlust -Dsonar.projectKey=wanderlust"
+                }
+            }
+        }
+        stage("OWASP Dependency Check"){
+            steps{
+               dependencyCheck additionalArguments: "--scan ./", odcInstallation: "dc"
+               dependencyCheckPublisher pattern: "**/dependency-check-report.xml"
+            }
+        }
+        
+        stage("Sonar Quality Gate Scan"){
+            steps{
+               timeout(time: 2, unit: "MINUTES"){
+                   waitForQualityGate abortPipeline: false
+               }
+            }
+        }
+        
+        stage("Trivy File System Scan"){
+            steps{
+                sh "trivy fs --format table -o trivy-fs-report.html ."
+            }
+        }
+        
+        stage("Deploy the application using the docker-compose"){
+            steps{
+                sh "docker-compose up -d"
+            }
+        }
+        
+        stage("Importing the data into the Database"){
+            steps{
+                script{
+                    def mongoContainer= 'mongoContainer'
+                    def dataFile = './data/sample_posts.json'
+                    sh "docker exec -i ${mongoContainer} mongoimport --db wanderlust --collection posts --file ${dataFile} --jsonArray"
+                }
+            }
+        }
+    }
+}
