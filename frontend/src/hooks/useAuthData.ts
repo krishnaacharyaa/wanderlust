@@ -1,16 +1,16 @@
+import { useAuthContext } from '@/context/authContext';
 import axiosInstance from '@/helpers/axios-instance';
 import { AuthData } from '@/lib/types';
-import userState from '@/utils/user-state';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const useAuthData = (): AuthData => {
   const location = useLocation;
-  const user = userState.getUser();
+  const { user } = useAuthContext();
 
   const [data, setData] = useState<AuthData>({
-    _id: user?._id || '',
-    role: user?.role || '',
+    _id: user.id || '',
+    role: user.role || '',
     token: '',
     loading: true,
   });
@@ -20,7 +20,7 @@ const useAuthData = (): AuthData => {
       ...data,
       token: '',
     });
-  }, [user?._id]);
+  }, [user.id]);
 
   useEffect(() => {
     async function fetchToken() {

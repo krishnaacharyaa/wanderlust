@@ -54,6 +54,7 @@ function useLocalStorage(key: string, initialValue: Userstate) {
 
 export function useAuthContext() {
   const value = useContext(Context);
+
   if (value == null) {
     throw new Error('useAuth must be used with in and authprovider');
   }

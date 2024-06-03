@@ -1,20 +1,19 @@
 import { Navigate, Outlet } from 'react-router-dom';
-
-import { useAuthContext } from '@/context/authContext';
+import useAuthData from '@/hooks/useAuthData';
+import { Loader } from 'lucide-react';
 
 function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
-  // const { role, token, loading } = useAuthData();
-  const { user } = useAuthContext();
+  const { role, token, loading } = useAuthData();
 
-  // if (loading) {
-  //   return (
-  //     <>
-  //       <Loader />
-  //     </>
-  //   ); // Render a loading indicator
-  // }
+  if (loading) {
+    return (
+      <>
+        <Loader />
+      </>
+    ); // Render a loading indicator
+  }
 
-  return user.token && allowedRole.find((myRole) => myRole === user.role) ? (
+  return token && allowedRole.find((myRole) => myRole === role) ? (
     <Outlet />
   ) : (
     <Navigate to={'/signin'} />

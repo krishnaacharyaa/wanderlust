@@ -6,7 +6,7 @@ import { createSlug } from '@/utils/slug-generator';
 
 import { ThumbsUp } from 'lucide-react';
 
-import { useAuthContext } from '@/context/authContext';
+import useAuthData from '@/hooks/useAuthData';
 
 type PostCardProps = {
   post: Post;
@@ -17,7 +17,7 @@ type PostCardProps = {
 export default function FeaturedPostCard({ post, onLike, testId }: PostCardProps) {
   const navigate = useNavigate();
 
-  const { user } = useAuthContext();
+  const { _id } = useAuthData();
   const slug = createSlug(post.title);
 
   return (
@@ -59,7 +59,7 @@ export default function FeaturedPostCard({ post, onLike, testId }: PostCardProps
               <button
                 type="button"
                 onClick={() => onLike(post._id)}
-                className={`text-gray-400 hover:text-blue-500 ${user.id && post.likes.includes(user.id) && '!text-blue-500'}`}
+                className={`text-gray-400 hover:text-blue-500 ${_id && post.likes.includes(_id) && '!text-blue-500'}`}
               >
                 <ThumbsUp className="text-sm" />
               </button>

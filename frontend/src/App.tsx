@@ -13,6 +13,8 @@ import UnprotectedRoute from './components/unprotected-route';
 import { useLayoutEffect } from 'react';
 import RequireAuth from './components/require-auth';
 import useThemeClass from './utils/theme-changer';
+import { UserProfile } from './components/UserProfile';
+import { YourPosts } from './components/YourPosts';
 
 function App() {
   useLayoutEffect(() => {
@@ -32,6 +34,8 @@ function App() {
             </Route>
             <Route element={<RequireAuth allowedRole={['ADMIN', 'USER']} />}>
               <Route path="add-blog" element={<AddBlog />} />
+              <Route path="profile" element={<UserProfile />} />
+              <Route path="Your-Posts" element={<YourPosts />} />
             </Route>
             <Route path="admin" element={<RequireAuth allowedRole={['ADMIN']} />}>
               <Route path="users" element={<AdminUsers />} />
