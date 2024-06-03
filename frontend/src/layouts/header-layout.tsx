@@ -7,13 +7,14 @@ import Hero from '@/components/hero';
 import { AxiosError, isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import axiosInstance from '@/helpers/axios-instance';
-import Loader from '@/components/skeletons/loader';
-import useAuthData from '@/hooks/useAuthData';
-import userState from '@/utils/user-state';
+
+import { useAuthContext } from '@/context/authContext';
 
 function header() {
   const navigate = useNavigate();
-  const { token, loading } = useAuthData();
+  const { user, addAuth } = useAuthContext();
+
+  console.log(user);
 
   const handleLogout = async () => {
     try {
@@ -22,7 +23,12 @@ function header() {
         pending: 'Wait ...',
         success: {
           render({ data }) {
-            userState.removeUser();
+            addAuth({
+              email: '',
+              id: '',
+              role: '',
+              token: '',
+            });
             navigate('/');
             return data?.data?.message;
           },
@@ -62,9 +68,7 @@ function header() {
               <ThemeToggle />
             </div>
             <div>
-              {loading ? (
-                <Loader />
-              ) : token ? (
+              {user.token ? (
                 <div className="flex gap-2">
                   <button
                     className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"

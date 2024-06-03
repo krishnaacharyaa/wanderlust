@@ -1,19 +1,20 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import Loader from './skeletons/loader';
-import useAuthData from '@/hooks/useAuthData';
+
+import { useAuthContext } from '@/context/authContext';
 
 function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
-  const { role, token, loading } = useAuthData();
+  // const { role, token, loading } = useAuthData();
+  const { user } = useAuthContext();
 
-  if (loading) {
-    return (
-      <>
-        <Loader />
-      </>
-    ); // Render a loading indicator
-  }
+  // if (loading) {
+  //   return (
+  //     <>
+  //       <Loader />
+  //     </>
+  //   ); // Render a loading indicator
+  // }
 
-  return token && allowedRole.find((myRole) => myRole === role) ? (
+  return user.token && allowedRole.find((myRole) => myRole === user.role) ? (
     <Outlet />
   ) : (
     <Navigate to={'/signin'} />

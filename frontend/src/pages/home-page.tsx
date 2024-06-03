@@ -5,6 +5,7 @@ import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import Header from '@/layouts/header-layout';
 import axiosInstance from '@/helpers/axios-instance';
+
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 

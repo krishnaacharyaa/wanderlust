@@ -7,7 +7,6 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
-import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axios-instance';
 import { AxiosError, isAxiosError } from 'axios';
 
@@ -133,7 +132,6 @@ function AddBlog() {
       } catch (error: unknown) {
         if (isAxiosError(error)) {
           navigate('/');
-          userState.removeUser();
           console.error(error.response?.data?.message);
         } else {
           console.error(error);
@@ -209,7 +207,7 @@ function AddBlog() {
               name="description"
               placeholder="Start writing here&hellip;"
               rows={5}
-              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-white dark:placeholder:text-dark-tertiary"
               value={formData.description}
               onChange={handleInputChange}
             />
@@ -223,7 +221,7 @@ function AddBlog() {
               type="text"
               name="authorName"
               placeholder="Shree Sharma"
-              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-white dark:placeholder:text-dark-tertiary"
               value={formData.authorName}
               onChange={handleInputChange}
             />
@@ -243,7 +241,7 @@ function AddBlog() {
               name="imageLink"
               placeholder="https://&hellip;"
               autoComplete="off"
-              className="dark:text-textInField w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary lg:w-10/12"
+              className="dark:text-textInField w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-white dark:placeholder:text-dark-tertiary lg:w-10/12"
               value={formData.imageLink}
               onChange={handleInputChange}
             />

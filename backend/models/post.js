@@ -8,6 +8,14 @@ const postSchema = new Schema({
   description: String,
   isFeaturedPost: Boolean,
   timeOfPost: { type: Date, default: Date.now },
+  likes: {
+    type: Array,
+    default: [],
+  },
+  numberOfLikes: {
+    type: Number,
+    default: 0,
+  },
   authorId: {
     type: Schema.Types.ObjectId,
     ref: 'User',

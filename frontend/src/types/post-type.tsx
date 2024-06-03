@@ -6,6 +6,8 @@ type Post = {
   timeOfPost: string;
   description: string;
   categories: string[];
+  numberOfLikes: number;
+  likes: string[];
 };
 
 export default Post;

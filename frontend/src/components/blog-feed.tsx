@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import FeaturedPostCard from '@/components/featured-post-card';
 import LatestPostCard from '@/components/latest-post-card';
@@ -6,15 +6,29 @@ import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-c
 import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import { toast } from 'react-toastify';
+import axiosInstance from '@/helpers/axios-instance';
+
+type PostData = {
+  _id: string;
+  authorName: string;
+  title: string;
+  imageLink: string;
+  timeOfPost: string;
+  description: string;
+  categories: string[];
+  numberOfLikes: number;
+  likes: string[];
+};
 
 export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<PostData[]>([]);
   const [latestPosts, setLatestPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let categoryEndpoint =
+    const categoryEndpoint =
       selectedCategory === 'featured'
         ? '/api/posts/featured'
         : `/api/posts/categories/${selectedCategory}`;
@@ -42,6 +56,30 @@ export default function BlogFeed() {
       });
   }, []);
 
+  // handle like for feature posts
+  const handleLike = async (postId: string) => {
+    try {
+      const { data } = await axiosInstance.put(`/api/posts/likePost/${postId}`);
+      setPosts(
+        posts.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                likes: data.likes,
+                numberOfLikes: data.numberOfLikes,
+              }
+            : post
+        )
+      );
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 400) {
+          toast.error('please login');
+        }
+      }
+    }
+  };
+
   return (
     <div className="mx-auto my-6">
       <div className="-mx-4 flex flex-wrap">
@@ -61,7 +99,14 @@ export default function BlogFeed() {
                   .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
               : posts
                   .slice(0, 5)
-                  .map((post, index) => <FeaturedPostCard key={index} post={post} />)}
+                  .map((post) => (
+                    <FeaturedPostCard
+                      testId="featuredPostCard"
+                      key={post._id}
+                      post={post}
+                      onLike={handleLike}
+                    />
+                  ))}
           </div>
         </div>
         <div className="w-full p-4 sm:w-1/3">

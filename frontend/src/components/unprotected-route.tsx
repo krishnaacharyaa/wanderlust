@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuthData from '@/hooks/useAuthData';
+import { useAuthContext } from '@/context/authContext';
 
 function UnprotectedRoute() {
-  const { token } = useAuthData();
+  const { user } = useAuthContext();
 
-  return token ? <Navigate to="/" /> : <Outlet />;
+  return user.token ? <Navigate to="/" /> : <Outlet />;
 }
 
 export default UnprotectedRoute;

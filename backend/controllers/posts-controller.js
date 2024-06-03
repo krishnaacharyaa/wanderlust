@@ -44,7 +44,7 @@ export const createPostHandler = async (req, res) => {
       description,
       categories,
       isFeaturedPost,
-      authorId: req.user._id,
+      authorId: req.user._id || req.body.authorId,
     });
 
     const [savedPost] = await Promise.all([
@@ -112,12 +112,14 @@ export const getLatestPostsHandler = async (req, res) => {
 
 export const getPostByIdHandler = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById({ _id: req.params.id });
 
     // Validation - check if post exists
     if (!post) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
+    const authorId = post.authorId;
+    console.log(authorId);
 
     res.status(HTTP_STATUS.OK).json(post);
   } catch (err) {
@@ -153,6 +155,34 @@ export const deletePostByIdHandler = async (req, res) => {
     await User.findByIdAndUpdate(post.authorId, { $pull: { posts: req.params.id } });
 
     res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
+  } catch (err) {
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
+  }
+};
+
+export const likePostByUser = async (req, res) => {
+  try {
+    const post = await Post.findById({ _id: req.params.postId });
+    if (!post) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
+    }
+
+    const userIndex = post.likes.indexOf(req.user._id);
+    if (userIndex === -1) {
+      post.numberOfLikes += 1;
+      post.likes.push(req.user._id);
+    } else {
+      post.numberOfLikes -= 1;
+      post.likes.splice(userIndex, 1);
+    }
+    const [savedPost] = await Promise.all([
+      post.save(), // Save the post
+      deleteDataFromCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
+      deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
+      deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
+    ]);
+
+    res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }

@@ -9,13 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
-import userState from '@/utils/user-state';
 import ThemeToggle from '@/components/theme-toggle-button';
 import { useState } from 'react';
 import EyeIcon from '@/assets/svg/eye.svg';
 import EyeOffIcon from '@/assets/svg/eye-off.svg';
+import { useAuthContext } from '@/context/authContext';
 
 function signin() {
+  const { addAuth } = useAuthContext();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const {
@@ -36,7 +37,15 @@ function signin() {
           render({ data }) {
             const userId = data?.data?.data?.user?._id;
             const userRole = data?.data?.data?.user?.role;
-            userState.setUser({ _id: userId, role: userRole });
+            const token = data?.data?.data?.accessToken;
+            const email = data?.data?.data?.user?.email;
+
+            addAuth({
+              email,
+              token,
+              id: userId,
+              role: userRole,
+            });
             reset();
             navigate('/');
             return data?.data?.message;
