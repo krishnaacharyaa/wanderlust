@@ -158,17 +158,16 @@ export const deletePostByIdHandler = async (req, res) => {
   }
 };
 
-export const getAllCategoryPosts = async (req, res) => {
+export const getRelatedPostsByCategories = async (req, res) => {
   const { categories } = req.query;
   if (!categories) {
     return res
       .status(HTTP_STATUS.NOT_FOUND)
       .json({ message: RESPONSE_MESSAGES.POSTS.CATEGORIES_NOTFOUND });
   }
-  const categoryArray = categories.split(',');
   try {
     const filteredCategoryPosts = await Post.find({
-      categories: { $in: categoryArray },
+      categories: { $in: categories },
     });
     res.status(HTTP_STATUS.OK).json(filteredCategoryPosts);
   } catch (err) {

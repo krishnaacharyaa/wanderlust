@@ -9,17 +9,17 @@ import Post from '@/types/post-type';
 import axiosInstance from '@/helpers/axios-instance';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import PostCard from '@/components/post-card';
+import PostMobileViewComponent from '@/components/PostMobileViewComponent';
 
 export default function DetailsPage() {
   const { state } = useLocation();
-  const [post, setPost] = useState(state?.post);
+  const [post, setPost] = useState<Post>(state?.post);
   const initialVal = post === undefined;
   const [loading, setIsLoading] = useState(initialVal);
   const { postId } = useParams();
   const navigate = useNavigate();
-  const [relatedCategoryPosts, setrelatedCategoryPosts] = useState<Post[]>([]);
-  const [relatedPostsLoading, setrelatedPostsLoading] = useState<boolean>(false);
-  const [visiblePosts, setvisiblePosts] = useState<number>(3);
+  const [relatedCategoryPosts, setRelatedCategoryPosts] = useState<Post[]>([]);
+  const [relatedPostsLoading, setRelatedPostsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getPostById = async () => {
@@ -33,42 +33,28 @@ export default function DetailsPage() {
         console.log(error);
       }
     };
-    if (post === undefined) {
+    if (post === undefined || post !== state.post) {
       getPostById();
     }
-  }, [post]);
+  }, [state.post]);
 
   useEffect(() => {
-    const fetchrelatedCategoryPosts = async () => {
+    const fetchRelatedCategoryPosts = async () => {
       try {
-        setrelatedPostsLoading(true);
-        const res = await axiosInstance.get('/api/posts/allCategories', {
+        setRelatedPostsLoading(true);
+        const res = await axiosInstance.get('/api/posts/related-posts-by-category', {
           params: {
-            categories: post.categories.join(','),
+            categories: post.categories,
           },
         });
-        setrelatedCategoryPosts(res.data);
-        setrelatedPostsLoading(false);
+        setRelatedCategoryPosts(res.data);
+        setRelatedPostsLoading(false);
       } catch (err) {
-        setrelatedPostsLoading(false);
-        console.log(err);
+        setRelatedPostsLoading(false);
       }
     };
-    fetchrelatedCategoryPosts();
+    fetchRelatedCategoryPosts();
   }, [post.categories]);
-
-  useEffect(() => {
-    const handlewindowResize = () => {
-      if (window.innerWidth <= 768) {
-        setvisiblePosts(3);
-      } else {
-        setvisiblePosts(4);
-      }
-    };
-    handlewindowResize();
-    window.addEventListener('resize', handlewindowResize);
-    return () => window.removeEventListener('resize', handlewindowResize);
-  }, []);
 
   if (!loading)
     return (
@@ -120,13 +106,22 @@ export default function DetailsPage() {
               />
             </div>
           </div>
-          <div className="flex flex-wrap p-3">
+          <div className="block space-y-4 sm:hidden">
             {relatedPostsLoading
               ? Array(4)
                   .fill(0)
                   .map((_, index) => <PostCardSkeleton key={index} />)
               : relatedCategoryPosts
-                  .slice(0, visiblePosts)
+                  .slice(0, 3)
+                  .map((post) => <PostMobileViewComponent key={post._id} post={post} />)}
+          </div>
+          <div className="hidden sm:flex sm:flex-wrap sm:p-3">
+            {relatedPostsLoading
+              ? Array(4)
+                  .fill(0)
+                  .map((_, index) => <PostCardSkeleton key={index} />)
+              : relatedCategoryPosts
+                  .slice(0, 4)
                   .map((post) => <PostCard key={post._id} post={post} />)}
           </div>
         </div>
