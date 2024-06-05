@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   createPostHandler,
   deletePostByIdHandler,
+  getAllCategoryPosts,
   getAllPostsHandler,
   getFeaturedPostsHandler,
   getLatestPostsHandler,
@@ -23,6 +24,9 @@ router.get('/', cacheHandler(REDIS_KEYS.ALL_POSTS), getAllPostsHandler);
 
 // Route to get featured posts
 router.get('/featured', cacheHandler(REDIS_KEYS.FEATURED_POSTS), getFeaturedPostsHandler);
+
+// Route to get related category posts
+router.get('/AllCategories', getAllCategoryPosts);
 
 // Route to get posts by category
 router.get('/categories/:category', getPostByCategoryHandler);
