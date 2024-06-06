@@ -34,9 +34,24 @@ services:
       -  backend
     networks:
       - wanderlust
+ redis:
+   container_name: redis
+   restart: unless-stopped
+   image: redis:7.0.5-alpine 
+   expose:
+     - 6379
+   depends_on:
+     - mongodb    
 
 networks:
   wanderlust:
     driver: bridge
+    
+volumes:
+  data:
+    
+    
+    
+    
 
       
