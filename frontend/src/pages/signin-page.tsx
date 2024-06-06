@@ -94,25 +94,26 @@ function signin() {
               <p className="p-3 text-xs text-red-500">{`${errors.userNameOrEmail.message}`}</p>
             )}
           </div>
-
-          <div className="relative mb-4">
-            <input
-              {...register('password')}
-              type={passwordVisible ? 'text' : 'password'}
-              placeholder="Password"
-              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
-            />
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
-            >
-              <img
-                src={passwordVisible ? EyeIcon : EyeOffIcon}
-                alt="Toggle-visibility"
-                className="h-5 w-5"
+          <div className="mb-4 flex flex-col">
+            <div className="relative">
+              <input
+                {...register('password')}
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Password"
+                className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
               />
-            </button>
+              <button
+                type="button"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
+              >
+                <img
+                  src={passwordVisible ? EyeIcon : EyeOffIcon}
+                  alt="Toggle-visibility"
+                  className="h-5 w-5"
+                />
+              </button>
+            </div>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
             )}
