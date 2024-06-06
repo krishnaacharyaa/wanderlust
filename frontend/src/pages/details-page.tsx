@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
-import arrowRightIcon from '@/assets/svg/arrow-right.svg';
+import arrowRightWhiteIcon from '@/assets/svg/arrow-right-white.svg';
+import arrowRightBlackIcon from '@/assets/svg/arrow-right-black.svg';
 import formatPostTime from '@/utils/format-post-time';
 import CategoryPill from '@/components/category-pill';
 import { useEffect, useState } from 'react';
@@ -10,6 +11,7 @@ import axiosInstance from '@/helpers/axios-instance';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import PostCard from '@/components/post-card';
 import PostMobileViewComponent from '@/components/PostMobileViewComponent';
+import { PostMobileViewCardSkeleton } from '@/components/PostMobileViewCardSkeleton';
 
 export default function DetailsPage() {
   const { state } = useLocation();
@@ -20,6 +22,12 @@ export default function DetailsPage() {
   const navigate = useNavigate();
   const [relatedCategoryPosts, setRelatedCategoryPosts] = useState<Post[]>([]);
   const [relatedPostsLoading, setRelatedPostsLoading] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const theme = localStorage.getItem('theme');
+    setIsDarkMode(theme === 'dark');
+  }, []);
 
   useEffect(() => {
     const getPostById = async () => {
@@ -92,25 +100,25 @@ export default function DetailsPage() {
             </p>
           </div>
         </div>
-        <div className="container mx-auto flex flex-col px-4 py-6 text-white">
-          <div className="ml-4 flex justify-between text-2xl font-semibold  ">
+        <div className="container mx-auto flex flex-col space-y-2 px-4 py-6 dark:text-white">
+          <div className="flex flex-col text-2xl font-semibold sm:flex-col md:ml-4 md:flex-row  md:justify-between ">
             <div>Related Blogs</div>
-            <div className="mr-10 flex  cursor-pointer items-center gap-1 text-gray-400 hover:underline">
+            <div className="mr-10 flex cursor-pointer items-center text-sm text-gray-400 hover:underline">
               <Link to="/">
-                <div className="text-sm">see more blogs</div>
+                <div>see more blogs</div>
               </Link>
               <img
                 alt="arrow-right"
-                src={arrowRightIcon}
-                className="active:scale-click h-10 w-10 "
+                src={isDarkMode ? arrowRightWhiteIcon : arrowRightBlackIcon}
+                className="active:scale-click h-8 w-8"
               />
             </div>
           </div>
           <div className="block space-y-4 sm:hidden">
             {relatedPostsLoading
-              ? Array(4)
+              ? Array(3)
                   .fill(0)
-                  .map((_, index) => <PostCardSkeleton key={index} />)
+                  .map((_, index) => <PostMobileViewCardSkeleton key={index} />)
               : relatedCategoryPosts
                   .slice(0, 3)
                   .map((post) => <PostMobileViewComponent key={post._id} post={post} />)}
