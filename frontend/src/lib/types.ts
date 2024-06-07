@@ -28,7 +28,14 @@ export const signUpSchema = z
     message: 'Confirm Password do not match',
     path: ['confirmPassword'],
   });
-
+export const addBlogSchema = z.object({
+  title: z.string().min(3),
+  authorName: z.string().min(3),
+  imageLink: z.string().url(),
+  categories: z.array(z.string()).min(1),
+  description: z.string().min(10),
+  isFeaturedPost: z.boolean(),
+});
 export interface AuthData {
   _id: string;
   role: string;
@@ -38,3 +45,4 @@ export interface AuthData {
 
 export type TSignInSchema = z.infer<typeof signInSchema>;
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
+export type TAddBlogScheme = z.infer<typeof addBlogSchema>;

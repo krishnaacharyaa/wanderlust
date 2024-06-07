@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,67 +10,61 @@ import { categories } from '@/utils/category-colors';
 import userState from '@/utils/user-state';
 import axiosInstance from '@/helpers/axios-instance';
 import { AxiosError, isAxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import { TAddBlogScheme, addBlogSchema } from '@/lib/types';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type FormData = {
-  title: string;
-  authorName: string;
-  imageLink: string;
-  categories: string[];
-  description: string;
-  isFeaturedPost: boolean;
-};
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
-
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+    watch,
+  } = useForm<TAddBlogScheme>({
+    resolver: zodResolver(addBlogSchema),
+    defaultValues: {
+      title: '',
+      authorName: '',
+      imageLink: '',
+      categories: [],
+      description: '',
+      isFeaturedPost: false,
+    },
+  });
+  const formData = watch();
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
   };
 
   const [modal, setmodal] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
-    title: '',
-    authorName: '',
-    imageLink: '',
-    categories: [],
-    description: '',
-    isFeaturedPost: false,
-  });
 
   //checks the length of the categories array and if the category is already selected
   const isValidCategory = (category: string): boolean => {
     return formData.categories.length >= 3 && !formData.categories.includes(category);
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   const handleCategoryClick = (category: string) => {
     if (isValidCategory(category)) return;
 
     if (formData.categories.includes(category)) {
-      setFormData({
-        ...formData,
-        categories: formData.categories.filter((cat) => cat !== category),
-      });
+      setValue(
+        'categories',
+        formData.categories.filter((cat) => cat !== category)
+      );
     } else {
-      setFormData({
-        ...formData,
-        categories: [...formData.categories, category],
-      });
+      setValue('categories', [...formData.categories, category]);
     }
   };
 
   const handleselector = () => {
-    setFormData({
-      ...formData,
-      imageLink: selectedImage,
-    });
+    setValue('imageLink', selectedImage);
     setmodal(false);
   };
   const handleCheckboxChange = () => {
-    setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
+    setValue('isFeaturedPost', !formData.isFeaturedPost);
   };
   const validateFormData = () => {
     if (
@@ -95,24 +89,15 @@ function AddBlog() {
 
     return true;
   };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSumbit = async () => {
     if (validateFormData()) {
       try {
         const postPromise = axiosInstance.post('/api/posts/', formData);
-
         toast.promise(postPromise, {
           pending: 'Creating blog post...',
           success: {
             render() {
-              setFormData({
-                title: '',
-                authorName: '',
-                imageLink: '',
-                categories: [],
-                description: '',
-                isFeaturedPost: false,
-              });
+              reset();
               navigate('/');
               return 'Blog created successfully';
             },
@@ -136,7 +121,7 @@ function AddBlog() {
           userState.removeUser();
           console.error(error.response?.data?.message);
         } else {
-          console.error(error);
+          console.log(error);
         }
       }
     }
@@ -170,15 +155,15 @@ function AddBlog() {
         </div>
       </div>
       <div className="flex justify-center">
-        <form onSubmit={handleSubmit} className="sm:w-5/6 lg:w-2/3">
+        <form onSubmit={handleSubmit(onSumbit)} className="sm:w-5/6 lg:w-2/3">
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
                 Is this a featured blog?
               </span>
               <input
+                {...register('isFeaturedPost')}
                 type="checkbox"
-                name="isFeaturedPost"
                 className="ml-2 h-5 w-5 cursor-pointer rounded-full accent-purple-400"
                 checked={formData.isFeaturedPost}
                 onChange={handleCheckboxChange}
@@ -191,14 +176,18 @@ function AddBlog() {
               Blog title <Asterisk />
             </div>
             <input
+              {...register('title')}
               type="text"
-              name="title"
               placeholder="Travel Bucket List for this Year"
               autoComplete="off"
-              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-slate-50 dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField mb-1 w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-dark-textColor dark:placeholder:text-dark-tertiary"
               value={formData.title}
-              onChange={handleInputChange}
             />
+            {errors.title && (
+              <span className="p-2 text-sm text-red-500">
+                This field need Atleast three characters
+              </span>
+            )}
           </div>
 
           <div className="mb-1">
@@ -206,27 +195,32 @@ function AddBlog() {
               Blog content <Asterisk />
             </div>
             <textarea
-              name="description"
+              {...register('description')}
               placeholder="Start writing here&hellip;"
               rows={5}
-              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-dark-textColor dark:placeholder:text-dark-tertiary"
               value={formData.description}
-              onChange={handleInputChange}
             />
+            {errors.description && (
+              <span className="p-2 text-sm text-red-500">
+                This field need Atleast 10 characters
+              </span>
+            )}
           </div>
-
           <div className="mb-2">
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
               Author name <Asterisk />
             </div>
             <input
+              {...register('authorName')}
               type="text"
-              name="authorName"
               placeholder="Shree Sharma"
-              className="dark:text-textInField w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary"
+              className="dark:text-textInField mb-1 w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-dark-textColor dark:placeholder:text-dark-tertiary"
               value={formData.authorName}
-              onChange={handleInputChange}
             />
+            {errors.authorName && (
+              <span className="p-2 text-sm text-red-500">This field need atleast 3 characters</span>
+            )}
           </div>
 
           <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
@@ -236,35 +230,50 @@ function AddBlog() {
             </span>
             <Asterisk />
           </div>
-          <div className="mb-4 flex justify-between gap-2 sm:gap-4">
-            <input
-              type="url"
-              id="imagelink"
-              name="imageLink"
-              placeholder="https://&hellip;"
-              autoComplete="off"
-              className="dark:text-textInField w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:placeholder:text-dark-tertiary lg:w-10/12"
-              value={formData.imageLink}
-              onChange={handleInputChange}
-            />
-            <button
-              name="openModal"
-              type="button"
-              className="lg:text-md active:scale-click w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 sm:text-sm lg:w-2/12 lg:px-4 lg:py-3"
-              onClick={() => {
-                setmodal(true);
-              }}
-            >
-              Pick image
-            </button>
+          <div>
+            <div className="mb-1 flex justify-between gap-2 sm:gap-4">
+              <input
+                {...register('imageLink')}
+                type="url"
+                id="imagelink"
+                name="imageLink"
+                placeholder="https://&hellip;"
+                autoComplete="off"
+                className="dark:text-textInField w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-field dark:text-dark-textColor dark:placeholder:text-dark-tertiary lg:w-10/12"
+                value={formData.imageLink}
+              />
+              <button
+                name="openModal"
+                type="button"
+                className="lg:text-md active:scale-click w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 sm:text-sm lg:w-2/12 lg:px-4 lg:py-3"
+                onClick={() => {
+                  setmodal(true);
+                }}
+              >
+                Pick image
+              </button>
+            </div>
+            {errors.imageLink && (
+              <span className="p-2 text-sm text-red-500">
+                This field need url with image extenstion
+              </span>
+            )}
           </div>
+
           <div className="mb-4 flex flex-col">
             <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary sm:mr-4 sm:w-fit">
               Categories
-              <span className="text-xs tracking-wide text-dark-tertiary">
+              <span
+                {...register('categories')}
+                className="text-xs tracking-wide text-dark-tertiary"
+              >
                 &nbsp;(max 3 categories)&nbsp;
               </span>
               <Asterisk />
+              <br></br>
+              {errors.categories && (
+                <span className="text-sm text-red-500">maximum of 3 categories</span>
+              )}
             </label>
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
               {categories.map((category, index) => (
