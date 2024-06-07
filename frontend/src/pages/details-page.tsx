@@ -101,9 +101,9 @@ export default function DetailsPage() {
           </div>
         </div>
         <div className="container mx-auto flex flex-col space-y-2 px-4 py-6 dark:text-white">
-          <div className="flex flex-col text-2xl font-semibold sm:flex-col md:ml-4 md:flex-row  md:justify-between ">
+          <div className="flex justify-between text-2xl font-semibold ">
             <div>Related Blogs</div>
-            <div className="mr-10 flex cursor-pointer items-center text-sm text-gray-400 hover:underline">
+            <div className="flex cursor-pointer items-center text-sm text-gray-400 hover:underline sm:mr-10">
               <Link to="/">
                 <div>see more blogs</div>
               </Link>
