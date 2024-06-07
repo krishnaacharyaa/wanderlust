@@ -7,6 +7,7 @@ import {
   getLatestPostsHandler,
   getPostByCategoryHandler,
   getPostByIdHandler,
+  getRelatedPostsByCategories,
   updatePostHandler,
 } from '../controllers/posts-controller.js';
 import { REDIS_KEYS } from '../utils/constants.js';
@@ -23,6 +24,9 @@ router.get('/', cacheHandler(REDIS_KEYS.ALL_POSTS), getAllPostsHandler);
 
 // Route to get featured posts
 router.get('/featured', cacheHandler(REDIS_KEYS.FEATURED_POSTS), getFeaturedPostsHandler);
+
+// Route to get related category posts
+router.get('/related-posts-by-category', getRelatedPostsByCategories);
 
 // Route to get posts by category
 router.get('/categories/:category', getPostByCategoryHandler);
