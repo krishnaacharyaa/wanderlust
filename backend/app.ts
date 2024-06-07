@@ -2,11 +2,11 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import { FRONTEND_URL } from './config/utils.js';
-import authRouter from './routes/auth.js';
-import postsRouter from './routes/posts.js';
-import userRouter from './routes/user.js';
-import errorMiddleware from './middlewares/error-middleware.js';
+import { FRONTEND_URL } from './config/utils';
+import authRouter from './routes/auth';
+import postsRouter from './routes/posts';
+import userRouter from './routes/user';
+import errorMiddleware from './middlewares/error-middleware';
 
 const app = express();
 

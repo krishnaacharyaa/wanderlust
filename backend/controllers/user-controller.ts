@@ -1,16 +1,21 @@
-import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
-import User from '../models/user.js';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
+import User from '../models/user';
+import { Request, Response } from 'express';
 
-export const getAllUserHandler = async (req, res) => {
+export const getAllUserHandler = async (req: Request, res: Response) => {
   try {
     const users = await User.find().select('_id name email');
     return res.status(HTTP_STATUS.OK).json({ users });
   } catch (error) {
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message });
+    if (error instanceof Error) {
+      res.status(HTTP_STATUS.BAD_REQUEST).json({ message: error.message });
+    } else {
+      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error });
+    }
   }
 };
 
-export const changeUserRoleHandler = async (req, res) => {
+export const changeUserRoleHandler = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
     const { role } = req.body;
@@ -35,7 +40,7 @@ export const changeUserRoleHandler = async (req, res) => {
   }
 };
 
-export const deleteUserHandler = async (req, res) => {
+export const deleteUserHandler = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
     const user = await User.findByIdAndDelete(userId);

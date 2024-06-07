@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
@@ -11,7 +11,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1",
-    "redis": "^4.6.13"
+    "redis": "^4.6.13",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -21,8 +23,8 @@
   },
   "scripts": {
     "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "tsc && node dist/server.js",
+    "dev": "nodemon --exec ts-node server.ts",
     "check": "prettier --check .",
     "format": "prettier --write .",
     "vercel-build": "echo yay"
@@ -36,6 +38,12 @@
   "devDependencies": {
     "@babel/preset-env": "^7.23.2",
     "@stylistic/eslint-plugin-js": "^2.1.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/compression": "^1.7.5",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
     "babel-jest": "^29.7.0",
     "eslint": "^9.3.0",
     "eslint-config-prettier": "^9.1.0",
@@ -45,6 +53,7 @@
     "jest": "^29.7.0",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "typescript": "^5.4.5"
   }
 }

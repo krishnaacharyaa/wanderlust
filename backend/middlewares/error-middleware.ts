@@ -1,6 +1,14 @@
-import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
+import { NextFunction, Request, Response } from 'express';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
 
-const errorMiddleware = (err, req, res, next) => {
+type ErrorType = {
+  stack: any;
+  status: number;
+  message: string;
+  errors: string[];
+};
+
+const errorMiddleware = (err: ErrorType, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(err.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
     status: err.status || HTTP_STATUS.INTERNAL_SERVER_ERROR,

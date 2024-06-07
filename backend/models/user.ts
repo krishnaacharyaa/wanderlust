@@ -1,10 +1,11 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import JWT from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';
+import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils';
+import { IUser } from '../types/user-Type';
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
     userName: {
       type: String,
@@ -71,7 +72,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.methods = {
-  isPasswordCorrect: async function (password) {
+  isPasswordCorrect: async function (password: string) {
     return await bcrypt.compare(password, this.password);
   },
   generateAccessToken: async function () {
@@ -82,7 +83,7 @@ userSchema.methods = {
         email: this.email,
         role: this.role,
       },
-      JWT_SECRET,
+      JWT_SECRET!,
       {
         expiresIn: ACCESS_TOKEN_EXPIRES_IN,
       }
@@ -96,7 +97,7 @@ userSchema.methods = {
         email: this.email,
         role: this.role,
       },
-      JWT_SECRET,
+      JWT_SECRET!,
       {
         expiresIn: REFRESH_TOKEN_EXPIRES_IN,
       }
@@ -110,6 +111,6 @@ userSchema.methods = {
   },
 };
 
-const User = model('User', userSchema);
+const User = model<IUser>('User', userSchema);
 
 export default User;

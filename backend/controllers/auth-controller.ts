@@ -1,15 +1,16 @@
-import User from '../models/user.js';
+import User from '../models/user';
 import jwt from 'jsonwebtoken';
-import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
-import { cookieOptions } from '../utils/cookie_options.js';
-import { JWT_SECRET } from '../config/utils.js';
-import { ApiError } from '../utils/api-error.js';
-import { ApiResponse } from '../utils/api-response.js';
-import { asyncHandler } from '../utils/async-handler.js';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
+import { cookieOptions } from '../utils/cookie_options';
+import { JWT_SECRET } from '../config/utils';
+import { ApiError } from '../utils/api-error';
+import { ApiResponse } from '../utils/api-response';
+import { asyncHandler } from '../utils/async-handler';
+import { Response, Request } from 'express';
 
 //REGULAR EMAIL PASSWORD STRATEGY
 //1.Sign Up
-export const signUpWithEmail = asyncHandler(async (req, res) => {
+export const signUpWithEmail = asyncHandler(async (req: Request, res: Response) => {
   const { userName, fullName, email, password } = req.body;
   if (!userName || !fullName || !email || !password) {
     throw new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.COMMON.REQUIRED_FIELDS);
@@ -38,20 +39,27 @@ export const signUpWithEmail = asyncHandler(async (req, res) => {
   try {
     await user.validate();
   } catch (error) {
-    const validationErrors = [];
-    for (const key in error.errors) {
-      validationErrors.push(error.errors[key].message);
+    if (error instanceof ApiError) {
+      const validationErrors = [];
+      for (const key in error.errors) {
+        validationErrors.push(error.errors[key].message);
+      }
+      throw new ApiError(HTTP_STATUS.BAD_REQUEST, validationErrors.join(', '));
+    } else {
+      throw new ApiError(
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR
+      );
     }
-    throw new ApiError(HTTP_STATUS.BAD_REQUEST, validationErrors.join(', '));
   }
 
-  const accessToken = await user.generateAccessToken();
-  const refreshToken = await user.generateRefreshToken();
+  const accessToken: string = await user.generateAccessToken();
+  const refreshToken: string = await user.generateRefreshToken();
 
   user.refreshToken = refreshToken;
 
   await user.save();
-  user.password = undefined;
+  // user.password = undefined;
 
   res
     .status(HTTP_STATUS.OK)
@@ -90,12 +98,12 @@ export const signInWithEmailOrUsername = asyncHandler(async (req, res) => {
   if (!isCorrectPassword) {
     throw new ApiError(HTTP_STATUS.UNAUTHORIZED, RESPONSE_MESSAGES.USERS.INVALID_PASSWORD);
   }
-  const accessToken = await user.generateAccessToken();
+  const accessToken = await user;
   const refreshToken = await user.generateRefreshToken();
 
   user.refreshToken = refreshToken;
   await user.save();
-  user.password = undefined;
+  // user.password = undefined;
 
   res
     .status(HTTP_STATUS.OK)
@@ -115,8 +123,9 @@ export const signInWithEmailOrUsername = asyncHandler(async (req, res) => {
 });
 
 //Sign Out
-export const signOutUser = asyncHandler(async (req, res) => {
+export const signOutUser = asyncHandler(async (req: Request, res: Response) => {
   await User.findByIdAndUpdate(
+    // @ts-ignore
     req.user?._id,
     {
       $set: {
@@ -141,9 +150,15 @@ export const isLoggedIn = asyncHandler(async (req, res) => {
   let refresh_token = req.cookies?.refresh_token;
   const { _id } = req.params;
 
+  const user = await User.findById(_id);
+  if (!user) {
+    return res
+      .status(HTTP_STATUS.NOT_FOUND)
+      .json(new ApiResponse(HTTP_STATUS.NOT_FOUND, '', RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS));
+  }
   if (access_token) {
     try {
-      await jwt.verify(access_token, JWT_SECRET);
+      await jwt.verify(access_token, JWT_SECRET!);
       return res
         .status(HTTP_STATUS.OK)
         .json(new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN));
@@ -153,7 +168,7 @@ export const isLoggedIn = asyncHandler(async (req, res) => {
     }
   } else if (refresh_token) {
     try {
-      await jwt.verify(refresh_token, JWT_SECRET);
+      await jwt.verify(refresh_token, JWT_SECRET!);
       access_token = await user.generateAccessToken();
       return res
         .status(HTTP_STATUS.OK)
@@ -163,12 +178,6 @@ export const isLoggedIn = asyncHandler(async (req, res) => {
       // Access token invalid, proceed to check refresh token that is in db
       console.log(error);
     }
-  }
-  const user = await User.findById(_id);
-  if (!user) {
-    return res
-      .status(HTTP_STATUS.NOT_FOUND)
-      .json(new ApiResponse(HTTP_STATUS.NOT_FOUND, '', RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS));
   }
 
   const { refreshToken } = user;
@@ -180,7 +189,7 @@ export const isLoggedIn = asyncHandler(async (req, res) => {
   }
 
   try {
-    await jwt.verify(refreshToken, JWT_SECRET);
+    await jwt.verify(refreshToken, JWT_SECRET!);
     access_token = await user.generateAccessToken();
     refresh_token = await user.generateRefreshToken();
 
@@ -192,14 +201,18 @@ export const isLoggedIn = asyncHandler(async (req, res) => {
       .cookie('refresh_token', refresh_token, cookieOptions)
       .json(new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN));
   } catch (error) {
-    return res
-      .status(HTTP_STATUS.UNAUTHORIZED)
-      .json(
-        new ApiResponse(
-          HTTP_STATUS.UNAUTHORIZED,
-          error.message,
-          RESPONSE_MESSAGES.USERS.INVALID_TOKEN
-        )
-      );
+    if (error instanceof Error) {
+      return res
+        .status(HTTP_STATUS.UNAUTHORIZED)
+        .json(
+          new ApiResponse<string>(
+            HTTP_STATUS.UNAUTHORIZED,
+            error.message,
+            RESPONSE_MESSAGES.USERS.INVALID_TOKEN
+          )
+        );
+    } else {
+      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error });
+    }
   }
 });

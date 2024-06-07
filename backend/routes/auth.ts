@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { authMiddleware } from '../middlewares/auth-middleware.js';
+import { authMiddleware } from '../middlewares/auth-middleware';
 import {
   signUpWithEmail,
   signInWithEmailOrUsername,
   signOutUser,
   isLoggedIn,
-} from '../controllers/auth-controller.js';
+} from '../controllers/auth-controller';
 
 const router = Router();
 

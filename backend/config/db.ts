@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
-import { MONGODB_URI } from './utils.js';
+import { MONGODB_URI } from './utils';
 
 export default async function connectDB() {
   try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(MONGODB_URI!, {
       dbName: 'wanderlust',
     });
     console.log(`Database connected: ${MONGODB_URI}`);
   } catch (err) {
-    console.error(err.message);
+    console.error(err);
     process.exit(1);
   }
 

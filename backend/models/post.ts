@@ -1,7 +1,8 @@
-import { Schema, model } from 'mongoose';
+import { Model, Schema, model } from 'mongoose';
+import { IPost } from '../types/post-Type';
 
 const postSchema = new Schema({
-  authorName: String,
+  authorfName: String,
   title: String,
   imageLink: String,
   categories: [String],
@@ -15,4 +16,6 @@ const postSchema = new Schema({
   },
 });
 
-export default model('Post', postSchema);
+const Post: Model<IPost> = model<IPost>('Post', postSchema);
+
+export default Post;
