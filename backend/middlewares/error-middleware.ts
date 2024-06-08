@@ -1,14 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
 
-type ErrorType = {
-  stack: any;
+export type ErrorMiddlewareType = {
+  stack: string;
   status: number;
   message: string;
   errors: string[];
 };
 
-const errorMiddleware = (err: ErrorType, req: Request, res: Response, next: NextFunction) => {
+const errorMiddleware = (
+  err: ErrorMiddlewareType,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.error(err.stack);
   res.status(err.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
     status: err.status || HTTP_STATUS.INTERNAL_SERVER_ERROR,

@@ -1,4 +1,4 @@
-import { createClient } from 'redis';
+import { createClient, RedisClientType } from 'redis';
 import { REDIS_URL } from '../config/utils';
 
 let redis: any = null;

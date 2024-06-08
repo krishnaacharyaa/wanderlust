@@ -7,6 +7,7 @@ import { ApiError } from '../utils/api-error';
 import { ApiResponse } from '../utils/api-response';
 import { asyncHandler } from '../utils/async-handler';
 import { Response, Request } from 'express';
+import { RequestWithUserRole } from '../types/request-User-Type';
 
 //REGULAR EMAIL PASSWORD STRATEGY
 //1.Sign Up
@@ -98,12 +99,11 @@ export const signInWithEmailOrUsername = asyncHandler(async (req, res) => {
   if (!isCorrectPassword) {
     throw new ApiError(HTTP_STATUS.UNAUTHORIZED, RESPONSE_MESSAGES.USERS.INVALID_PASSWORD);
   }
-  const accessToken = await user;
+  const accessToken = await user.generateAccessToken();
   const refreshToken = await user.generateRefreshToken();
 
   user.refreshToken = refreshToken;
   await user.save();
-  // user.password = undefined;
 
   res
     .status(HTTP_STATUS.OK)
@@ -123,9 +123,8 @@ export const signInWithEmailOrUsername = asyncHandler(async (req, res) => {
 });
 
 //Sign Out
-export const signOutUser = asyncHandler(async (req: Request, res: Response) => {
+export const signOutUser = asyncHandler(async (req: RequestWithUserRole, res: Response) => {
   await User.findByIdAndUpdate(
-    // @ts-ignore
     req.user?._id,
     {
       $set: {
