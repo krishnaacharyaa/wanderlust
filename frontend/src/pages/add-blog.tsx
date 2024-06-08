@@ -66,63 +66,37 @@ function AddBlog() {
   const handleCheckboxChange = () => {
     setValue('isFeaturedPost', !formData.isFeaturedPost);
   };
-  const validateFormData = () => {
-    if (
-      !formData.title ||
-      !formData.authorName ||
-      !formData.imageLink ||
-      !formData.description ||
-      formData.categories.length === 0
-    ) {
-      toast.error('All fields must be filled out.');
-      return false;
-    }
-    const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
-    if (!imageLinkRegex.test(formData.imageLink)) {
-      toast.error('Image URL must end with .jpg, .jpeg, .webp or .png');
-      return false;
-    }
-    if (formData.categories.length > 3) {
-      toast.error('Select up to three categories.');
-      return false;
-    }
-
-    return true;
-  };
   const onSumbit = async () => {
-    if (validateFormData()) {
-      try {
-        const postPromise = axiosInstance.post('/api/posts/', formData);
-        toast.promise(postPromise, {
-          pending: 'Creating blog post...',
-          success: {
-            render() {
-              reset();
-              navigate('/');
-              return 'Blog created successfully';
-            },
+    try {
+      const postPromise = axiosInstance.post('/api/posts/', formData);
+      toast.promise(postPromise, {
+        pending: 'Creating blog post...',
+        success: {
+          render() {
+            reset();
+            navigate('/');
+            return 'Blog created successfully';
           },
-          error: {
-            render({ data }) {
-              if (data instanceof AxiosError) {
-                if (data?.response?.data?.message) {
-                  return data?.response?.data?.message;
-                }
+        },
+        error: {
+          render({ data }) {
+            if (data instanceof AxiosError) {
+              if (data?.response?.data?.message) {
+                return data?.response?.data?.message;
               }
-              return 'Blog creation failed';
-            },
+            }
+            return 'Blog creation failed';
           },
-        });
-
-        return (await postPromise).data;
-      } catch (error: unknown) {
-        if (isAxiosError(error)) {
-          navigate('/');
-          userState.removeUser();
-          console.error(error.response?.data?.message);
-        } else {
-          console.log(error);
-        }
+        },
+      });
+      return (await postPromise).data;
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        navigate('/');
+        userState.removeUser();
+        console.error(error.response?.data?.message);
+      } else {
+        console.log(error);
       }
     }
   };
@@ -184,9 +158,7 @@ function AddBlog() {
               value={formData.title}
             />
             {errors.title && (
-              <span className="p-2 text-sm text-red-500">
-                This field need Atleast three characters
-              </span>
+              <span className="p-2 text-sm text-red-500">{`${errors.title.message}`}</span>
             )}
           </div>
 
@@ -202,9 +174,7 @@ function AddBlog() {
               value={formData.description}
             />
             {errors.description && (
-              <span className="p-2 text-sm text-red-500">
-                This field need Atleast 10 characters
-              </span>
+              <span className="p-2 text-sm text-red-500">{`${errors.description.message}`}</span>
             )}
           </div>
           <div className="mb-2">
@@ -219,7 +189,7 @@ function AddBlog() {
               value={formData.authorName}
             />
             {errors.authorName && (
-              <span className="p-2 text-sm text-red-500">This field need atleast 3 characters</span>
+              <span className="p-2 text-sm text-red-500">{`${errors.authorName.message}`}</span>
             )}
           </div>
 
@@ -254,9 +224,7 @@ function AddBlog() {
               </button>
             </div>
             {errors.imageLink && (
-              <span className="p-2 text-sm text-red-500">
-                This field need url with image extenstion
-              </span>
+              <span className="p-2 text-sm text-red-500">{`${errors.imageLink.message}`}</span>
             )}
           </div>
 
@@ -272,7 +240,7 @@ function AddBlog() {
               <Asterisk />
               <br></br>
               {errors.categories && (
-                <span className="text-sm text-red-500">maximum of 3 categories</span>
+                <span className="text-sm text-red-500">{`${errors.categories.message}`}</span>
               )}
             </label>
             <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
