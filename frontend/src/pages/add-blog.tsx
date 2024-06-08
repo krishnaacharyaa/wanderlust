@@ -21,6 +21,7 @@ function AddBlog() {
     handleSubmit,
     reset,
     setValue,
+    trigger,
     formState: { errors },
     watch,
   } = useForm<TAddBlogScheme>({
@@ -57,6 +58,7 @@ function AddBlog() {
     } else {
       setValue('categories', [...formData.categories, category]);
     }
+    trigger('categories');
   };
 
   const handleselector = () => {
@@ -231,28 +233,26 @@ function AddBlog() {
           <div className="mb-4 flex flex-col">
             <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary sm:mr-4 sm:w-fit">
               Categories
-              <span
-                {...register('categories')}
-                className="text-xs tracking-wide text-dark-tertiary"
-              >
+              <span className="text-xs tracking-wide text-dark-tertiary">
                 &nbsp;(max 3 categories)&nbsp;
               </span>
               <Asterisk />
-              <br></br>
-              {errors.categories && (
-                <span className="text-sm text-red-500">{`${errors.categories.message}`}</span>
-              )}
             </label>
-            <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
-              {categories.map((category, index) => (
-                <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
-                  <CategoryPill
-                    category={category}
-                    selected={formData.categories.includes(category)}
-                    disabled={isValidCategory(category)}
-                  />
-                </span>
-              ))}
+            <div>
+              <div className="flex flex-wrap gap-3 rounded-lg p-2 dark:bg-dark-card dark:p-3">
+                {categories.map((category, index) => (
+                  <span key={`${category}-${index}`} onClick={() => handleCategoryClick(category)}>
+                    <CategoryPill
+                      category={category}
+                      selected={formData.categories.includes(category)}
+                      disabled={isValidCategory(category)}
+                    />
+                  </span>
+                ))}
+              </div>
+              {errors.categories && (
+                <span className="p-2 text-sm text-red-500">{`${errors.categories.message}`}</span>
+              )}
             </div>
           </div>
 
