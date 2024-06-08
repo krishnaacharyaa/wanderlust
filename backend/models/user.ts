@@ -3,9 +3,9 @@ import JWT from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils';
-import { IUser } from '../types/user-Type';
+import { UserType } from '../types/user-type';
 
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<UserType>(
   {
     userName: {
       type: String,
@@ -68,7 +68,7 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password!, 10);
 });
 
 userSchema.methods = {
@@ -111,6 +111,6 @@ userSchema.methods = {
   },
 };
 
-const User = model<IUser>('User', userSchema);
+const User = model<UserType>('User', userSchema);
 
 export default User;

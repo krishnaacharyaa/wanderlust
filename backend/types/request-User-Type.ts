@@ -1,12 +1,12 @@
 import { Request } from 'express';
 
-interface RequestUserType {
+type RequestUserType = {
   _id: string;
   role: string;
   userName: string;
   email: string;
-}
+};
 
-export interface RequestWithUserRole extends Request {
+export type RequestWithUserRole = Request & {
   user?: RequestUserType;
-}
+};

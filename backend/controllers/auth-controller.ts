@@ -7,7 +7,7 @@ import { ApiError } from '../utils/api-error';
 import { ApiResponse } from '../utils/api-response';
 import { asyncHandler } from '../utils/async-handler';
 import { Response, Request } from 'express';
-import { RequestWithUserRole } from '../types/request-User-Type';
+import { RequestWithUserRole } from '../types/request-user-type';
 
 //REGULAR EMAIL PASSWORD STRATEGY
 //1.Sign Up
@@ -60,7 +60,7 @@ export const signUpWithEmail = asyncHandler(async (req: Request, res: Response) 
   user.refreshToken = refreshToken;
 
   await user.save();
-  // user.password = undefined;
+  user.password = undefined;
 
   res
     .status(HTTP_STATUS.OK)
@@ -103,6 +103,7 @@ export const signInWithEmailOrUsername = asyncHandler(async (req, res) => {
   const refreshToken = await user.generateRefreshToken();
 
   user.refreshToken = refreshToken;
+  user.password = undefined;
   await user.save();
 
   res

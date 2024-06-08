@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
 
-export type ErrorMiddlewareType = {
+type ErrorMiddlewareType = {
   stack: string;
   status: number;
   message: string;

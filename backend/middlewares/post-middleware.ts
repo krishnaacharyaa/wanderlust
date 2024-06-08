@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import Post from '../models/post';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
-import type { RequestWithUserRole } from '../types/request-User-Type';
+import type { RequestWithUserRole } from '../types/request-user-type';
 
 export const isAuthorMiddleware = async (
   req: RequestWithUserRole,

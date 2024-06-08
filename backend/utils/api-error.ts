@@ -1,5 +1,5 @@
 import { RESPONSE_MESSAGES } from './constants';
-import { ApiErrorType } from '../types/api-Error-Type';
+import { ApiErrorType } from '../types/api-error-type';
 
 class ApiError extends Error implements ApiErrorType {
   status: number;

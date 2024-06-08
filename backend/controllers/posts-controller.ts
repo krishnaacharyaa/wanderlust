@@ -3,7 +3,7 @@ import Post from '../models/post';
 import User from '../models/user';
 import { deleteDataFromCache, storeDataInCache } from '../utils/cache-posts';
 import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants';
-import { RequestWithUserRole } from '../types/request-User-Type';
+import { RequestWithUserRole } from '../types/request-user-type';
 
 export const createPostHandler = async (req: RequestWithUserRole, res: Response) => {
   try {
@@ -196,7 +196,7 @@ export const deletePostByIdHandler = async (req: Request, res: Response) => {
 export const getRelatedPostsByCategories = async (req: Request, res: Response) => {
   const { categories } = req.query;
   if (!categories) {
-    return res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Categories not Found' });
+    return res.status(HTTP_STATUS.NOT_FOUND).json(RESPONSE_MESSAGES.POSTS);
   }
 
   try {

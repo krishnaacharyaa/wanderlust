@@ -1,6 +1,6 @@
-import { IUser } from './user-Type';
+import { UserType } from './user-type';
 
-export interface IPost extends Document {
+export type PostType = {
   _id?: string;
   authorName: string;
   title: string;
@@ -9,5 +9,5 @@ export interface IPost extends Document {
   description: string;
   isFeaturedPost: boolean;
   timeOfPost: Date;
-  authorId: IUser['_id'];
-}
+  authorId: UserType['_id'];
+};

@@ -3,7 +3,7 @@ import { JWT_SECRET } from '../config/utils';
 import { ApiError } from '../utils/api-error';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
 import jwt from 'jsonwebtoken';
-import { RequestWithUserRole } from '../types/request-User-Type';
+import { RequestWithUserRole } from '../types/request-user-type';
 
 export const authMiddleware = async (
   req: RequestWithUserRole,
@@ -16,7 +16,7 @@ export const authMiddleware = async (
   }
 
   if (token) {
-    jwt.verify(token, JWT_SECRET!, (error: any, payload: any) => {
+    await jwt.verify(token, JWT_SECRET!, (error: any, payload: any) => {
       if (error) {
         return new ApiError(HTTP_STATUS.FORBIDDEN, RESPONSE_MESSAGES.USERS.INVALID_TOKEN);
       }
