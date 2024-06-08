@@ -28,6 +28,38 @@ export const signUpSchema = z
     message: 'Confirm Password do not match',
     path: ['confirmPassword'],
   });
+const isValidImageLink = (value: string) => {
+  const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
+  return imageLinkRegex.test(value);
+};
+export const addBlogSchema = z.object({
+  title: z.string().refine((value) => value.trim().split(/\s+/).length >= 3, {
+    message: 'Oops! Title needs more spice. Give it at least 3 words.',
+  }),
+  isFeaturedPost: z.boolean(),
+  description: z.string().refine((value) => value.trim().split(/\s+/).length >= 10, {
+    message: 'Oops! Description needs more detail. Give it at least 10 words',
+  }),
+  authorName: z
+    .string()
+    .min(3, {
+      message: "C'ome on! Your name cannot be less than 3 characters.",
+    })
+    .max(15, {
+      message: "Hey isn't it too big of a name, can you limit it to 15 characters",
+    }),
+  imageLink: z.string().refine((value) => isValidImageLink(value), {
+    message: 'Hmm... Image link should end with .jpg, .jpeg, .webp, or .png.',
+  }),
+  categories: z
+    .array(z.string())
+    .min(1, {
+      message: 'Easy there! Select at least one category.',
+    })
+    .max(3, {
+      message: 'Easy there! Not more than 3 categories.',
+    }),
+});
 
 export interface AuthData {
   _id: string;
@@ -38,3 +70,4 @@ export interface AuthData {
 
 export type TSignInSchema = z.infer<typeof signInSchema>;
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
+export type TAddBlogScheme = z.infer<typeof addBlogSchema>;
