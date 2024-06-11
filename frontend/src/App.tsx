@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from '@/pages/home-page';
 import AddBlog from '@/pages/add-blog';
@@ -25,7 +24,7 @@ function App() {
       <ScrollToTop />
       <div className="flex min-h-screen flex-col">
         <Routes>
-        <Route path="/">
+          <Route path="/">
             <Route index element={<HomePage />} />
             <Route path="details-page/:title/:postId" element={<DetailsPage />} />
             <Route element={<UnprotectedRoute />}>

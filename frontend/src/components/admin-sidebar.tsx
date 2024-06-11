@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import UserIcon from '@/assets/svg/user-icon';
 import BlogIcon from '@/assets/svg/blog-icon';

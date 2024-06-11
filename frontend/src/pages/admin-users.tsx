@@ -1,4 +1,3 @@
-import React from 'react';
 import axiosInstance from '@/helpers/axios-instance';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';

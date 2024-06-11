@@ -1,4 +1,3 @@
-import React from 'react';
 import ThemeToggle from '@/components/theme-toggle-button';
 import AddIcon from '@/assets/svg/add-icon-white.svg';
 import LogOutIcon from '@/assets/svg/logout-icon.svg';
