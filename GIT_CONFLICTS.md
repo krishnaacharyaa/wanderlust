@@ -1,6 +1,4 @@
-## Welcome to the Wanderlust project! This is a collaborative effort to build an amazing application. We appreciate your contributions and aim to make the process as smooth as possible.
-
-## Common QnA for Git and Open Source Contributions
+## Common QnA
 
 <details>
 <summary>
