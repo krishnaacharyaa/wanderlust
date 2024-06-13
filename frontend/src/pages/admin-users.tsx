@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-interface User {
-  _id: string;
-  fullName: string;
-  role: 'ADMIN' | 'USER';
-  email: string;
-}
-
 enum role {
   admin = 'ADMIN',
   user = 'USER',
 }
+
+type User = {
+  _id: string;
+  fullName: string;
+  role: role;
+  email: string;
+};
 
 const AdminUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -64,7 +64,7 @@ const AdminUsers = () => {
                     {user?.email}
                   </p>
                 </div>
-                {user.role === 'ADMIN' && (
+                {user.role === role.admin && (
                   <button
                     onClick={() => handleClick(user._id, role.user)}
                     className="h-fit rounded-xl border border-black bg-black px-4 py-2 text-sm font-semibold text-white"
@@ -72,7 +72,7 @@ const AdminUsers = () => {
                     Admin
                   </button>
                 )}
-                {user.role === 'USER' && (
+                {user.role === role.user && (
                   <button
                     onClick={() => handleClick(user._id, role.admin)}
                     className="h-fit rounded-xl border border-black bg-transparent px-4 py-2 text-sm font-semibold text-white"
