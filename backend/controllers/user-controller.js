@@ -6,7 +6,7 @@ export const getAllUserHandler = async (req, res) => {
     const users = await User.find().select('_id fullName role email');
     return res.status(HTTP_STATUS.OK).json({ users });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR });
