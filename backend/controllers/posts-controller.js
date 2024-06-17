@@ -135,8 +135,11 @@ export const updatePostHandler = async (req, res) => {
     if (!updatedPost) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
-
-    res.status(HTTP_STATUS.OK).json(updatedPost);
+    // invalidate the redis cache
+    await deleteDataFromCache(REDIS_KEYS.ALL_POSTS),
+      await deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS),
+      await deleteDataFromCache(REDIS_KEYS.LATEST_POSTS),
+      await res.status(HTTP_STATUS.OK).json(updatedPost);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
@@ -152,7 +155,11 @@ export const deletePostByIdHandler = async (req, res) => {
     }
     await User.findByIdAndUpdate(post.authorId, { $pull: { posts: req.params.id } });
 
-    res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
+    // invalidate the redis cache
+    await deleteDataFromCache(REDIS_KEYS.ALL_POSTS),
+      await deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS),
+      await deleteDataFromCache(REDIS_KEYS.LATEST_POSTS),
+      res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
