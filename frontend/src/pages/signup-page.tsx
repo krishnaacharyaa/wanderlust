@@ -63,7 +63,7 @@ function signup() {
     <div className="flex-grow cursor-default bg-white py-4 dark:bg-dark-card">
       <div className="m-4 mb-4 flex justify-center">
         <div className="flex w-full items-center justify-center">
-          <h2 className="w-3/4 pl-48 text-center text-lg font-bold text-black dark:text-dark-primary sm:text-xl">
+          <h2 className="w-3/4 pl-0 text-center text-xl font-bold text-black dark:text-dark-primary sm:text-xl">
             Sign up to WanderLust
           </h2>
           <div className="flex items-center justify-end px-4 sm:px-20">
@@ -71,7 +71,7 @@ function signup() {
           </div>
         </div>
       </div>
-      <div className="m-2 mt-8 flex flex-col items-center justify-center gap-2">
+      <div className="m-[50px] mt-[200px] flex flex-col items-center justify-center gap-2">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-3/4 lg:w-2/5">
           <div className="mb-2">
             <input
