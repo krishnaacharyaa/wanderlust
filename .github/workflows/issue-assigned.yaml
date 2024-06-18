@@ -15,7 +15,7 @@ jobs:
           script: |
             const issue_number = context.issue.number;
             const issue_assignee = context.payload.assignee.login;
-            const contributing_guidelines_url = 'https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md';
+            const contributing_guidelines_url = 'https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md#guidelines-for-contributions';
 
             github.rest.issues.createComment({
               owner: context.repo.owner,
