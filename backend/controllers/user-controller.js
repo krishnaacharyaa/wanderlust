@@ -1,5 +1,6 @@
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import User from '../models/user.js';
+import { Role } from '../types/role-type.js';
 
 export const getAllUserHandler = async (req, res) => {
   try {
@@ -17,7 +18,7 @@ export const changeUserRoleHandler = async (req, res) => {
   try {
     const userId = req.params.userId;
     const { role } = req.body;
-    if (role === 'USER' || role === 'ADMIN') {
+    if (role === Role.User || role === Role.Admin) {
       const user = await User.findById(userId);
       if (!user)
         return res
