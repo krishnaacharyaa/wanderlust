@@ -3,10 +3,13 @@ import User from '../models/user.js';
 
 export const getAllUserHandler = async (req, res) => {
   try {
-    const users = await User.find().select('_id name email');
+    const users = await User.find().select('_id fullName role email');
     return res.status(HTTP_STATUS.OK).json({ users });
   } catch (error) {
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message });
+    console.log(error);
+    res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -14,7 +17,7 @@ export const changeUserRoleHandler = async (req, res) => {
   try {
     const userId = req.params.userId;
     const { role } = req.body;
-    if (role === 'user' || role === 'admin') {
+    if (role === 'USER' || role === 'ADMIN') {
       const user = await User.findById(userId);
       if (!user)
         return res
@@ -29,6 +32,7 @@ export const changeUserRoleHandler = async (req, res) => {
     }
     return res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.USERS.UPDATE });
   } catch (error) {
+    console.log(error);
     res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR, error: error });
@@ -45,6 +49,7 @@ export const deleteUserHandler = async (req, res) => {
         .json({ message: RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS });
     res.status(HTTP_STATUS.NO_CONTENT).json({ message: RESPONSE_MESSAGES.USERS.DELETED });
   } catch (error) {
+    console.log(error);
     res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR, error: error });

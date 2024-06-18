@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 function header() {
   const navigate = useNavigate();
   const { token, loading } = useAuthData();
+  const user = userState.getUser();
 
   const handleLogout = async () => {
     try {
@@ -73,6 +74,17 @@ function header() {
                 <Loader />
               ) : token ? (
                 <div className="flex gap-2">
+                  {user?.role === 'ADMIN' && (
+                    <button
+                      className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
+                      onClick={() => {
+                        navigate('/admin/blogs');
+                      }}
+                    >
+                      Dashboard
+                    </button>
+                  )}
+
                   <button
                     className="active:scale-click hidden rounded border border-slate-50 px-4 py-2 hover:bg-slate-500/25 md:inline-block"
                     onClick={() => {
