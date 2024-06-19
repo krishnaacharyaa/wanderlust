@@ -3,6 +3,7 @@ import JWT from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';
+import { Role } from '../types/role-type.tsx';
 
 const userSchema = new Schema(
   {
@@ -47,8 +48,8 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      default: 'USER',
-      enum: ['USER', 'ADMIN'],
+      default: Role.User,
+      enum: [Role.User, Role.Admin],
     },
     posts: [
       {

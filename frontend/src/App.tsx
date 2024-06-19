@@ -14,7 +14,7 @@ import { useLayoutEffect } from 'react';
 import RequireAuth from './components/require-auth';
 import useThemeClass from './utils/theme-changer';
 import AdminContainer from './components/admin-container';
-import { Role } from './types/role-type';
+import { Role } from './types/role-type.tsx';
 
 function App() {
   useLayoutEffect(() => {

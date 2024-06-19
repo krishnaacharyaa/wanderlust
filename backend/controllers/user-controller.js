@@ -1,6 +1,6 @@
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import User from '../models/user.js';
-import { Role } from '../types/role-type.js';
+import { Role } from '../types/role-type.tsx';
 
 export const getAllUserHandler = async (req, res) => {
   try {

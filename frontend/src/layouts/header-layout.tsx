@@ -12,7 +12,7 @@ import Loader from '@/components/skeletons/loader';
 import useAuthData from '@/hooks/useAuthData';
 import userState from '@/utils/user-state';
 import { Link } from 'react-router-dom';
-import { Role } from '@/types/role-type';
+import { Role } from '@/types/role-type.tsx';
 
 function header() {
   const navigate = useNavigate();
