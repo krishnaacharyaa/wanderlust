@@ -2,6 +2,7 @@ import { JWT_SECRET } from '../config/utils.js';
 import { ApiError } from '../utils/api-error.js';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import jwt from 'jsonwebtoken';
+import { Role } from '../types/role-type.js';
 
 export const authMiddleware = async (req, res, next) => {
   const token = req.cookies?.access_token;
@@ -22,7 +23,7 @@ export const authMiddleware = async (req, res, next) => {
 
 export const isAdminMiddleware = async (req, res, next) => {
   const role = req.user.role;
-  if (role !== 'ADMIN') {
+  if (role !== Role.Admin) {
     return new ApiError(HTTP_STATUS.UNAUTHORIZED, RESPONSE_MESSAGES.USERS.UNAUTHORIZED_USER);
   }
   next();
