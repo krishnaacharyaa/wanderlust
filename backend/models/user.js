@@ -3,7 +3,7 @@ import JWT from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';
-import { Role } from '../types/role-type.tsx';
+import { Role } from '../types/role-type.js';
 
 const userSchema = new Schema(
   {

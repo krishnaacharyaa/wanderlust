@@ -2,7 +2,7 @@ import { JWT_SECRET } from '../config/utils.js';
 import { ApiError } from '../utils/api-error.js';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import jwt from 'jsonwebtoken';
-import { Role } from '../types/role-type.tsx';
+import { Role } from '../types/role-type.js';
 
 export const authMiddleware = async (req, res, next) => {
   const token = req.cookies?.access_token;
