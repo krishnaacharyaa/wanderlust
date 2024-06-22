@@ -13,6 +13,8 @@ import UnprotectedRoute from './components/unprotected-route';
 import { useLayoutEffect } from 'react';
 import RequireAuth from './components/require-auth';
 import useThemeClass from './utils/theme-changer';
+import AdminContainer from './components/admin-container';
+import { Role } from './types/role-type.tsx';
 
 function App() {
   useLayoutEffect(() => {
@@ -30,12 +32,14 @@ function App() {
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
             </Route>
-            <Route element={<RequireAuth allowedRole={['ADMIN', 'USER']} />}>
+            <Route element={<RequireAuth allowedRole={[Role.Admin, Role.User]} />}>
               <Route path="add-blog" element={<AddBlog />} />
             </Route>
-            <Route path="admin" element={<RequireAuth allowedRole={['ADMIN']} />}>
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="blogs" element={<AdminBlogs />} />
+            <Route path="admin" element={<RequireAuth allowedRole={[Role.Admin]} />}>
+              <Route element={<AdminContainer />}>
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="blogs" element={<AdminBlogs />} />
+              </Route>
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
