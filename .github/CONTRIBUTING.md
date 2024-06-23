@@ -1,4 +1,4 @@
-![image](https://github.com/krishnaacharyaa/wanderlust/assets/138745427/216b10d5-8792-492c-866d-d9f179226992)# Contributing
+# Contributing
 
 Welcome to the project! I'm really excited to have you on board, and before we dive into the guidelines, let me share the essence of why this project was created.
 
@@ -40,14 +40,19 @@ To setup the project locally follow the steps:
 1. Fork and Star the project.
 2. Clone your forked repository.
 3. Run `npm run installer`.
-4. Set up your database
-   - Run MongoDB locally at `mongodb://localhost:27017`.
-   - Open MongoDB compass and connect to the same URL.
-   - Create a database named wanderlust and add two collections, 'posts' and 'users' 
-   - Import sample posts data to posts collection from `backend/data/sample_posts.json`.
-   - Run redis at `redis://127.0.0.1:6379` locally
-5. Rename the `.env.sample` file in the backend folder to `.env` and copy it to the frontend folder.
-6. Launch the development server with `npm start` in the root directory of the repository.
+4. Set up your databases
+   - Make sure you [install mongodb](https://www.mongodb.com/docs/manual/installation/) and run it in `mongodb://localhost:27017`
+     ```bash
+     # To populate the database with sample posts, you can copy the content from the `backend/data/sample_posts.json` file and
+     # insert it as a document in the `wanderlust/posts` collection in your local MongoDB database using either MongoDB Compass or `mongoimport`.
+     mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
+      ```
+   - Make sure you [install redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) and run it in `redis://127.0.0.1:6379`
+5. Set up env variables
+   - ```sh
+     cp backend/.env.sample backend/.env && cp frontend/.env.sample frontend/.env.local
+     ```
+7. Launch the development server with `npm start` in the root directory of the repository.
 
 <a name="request-for-changes-pull-requests"></a>
 
@@ -112,7 +117,6 @@ To contribute to this project, you need to create a fork of the repository and t
 Commit your changes, then push the branch to your fork with `git push -u fork` and open a pull request on [the Wanderlust repository](https://github.com/krishnaacharyaa/wanderlust) following the template provided.
 
 <a name="guidelines-to-follow"></a>
-Sure, let's refine the guidelines while keeping them clear and straightforward:
 
 ## Guidelines for Contributions
 
