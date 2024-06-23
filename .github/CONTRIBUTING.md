@@ -40,11 +40,19 @@ To setup the project locally follow the steps:
 1. Fork and Star the project.
 2. Clone your forked repository.
 3. Run `npm run installer`.
-4. Set up your MongoDB database:
-   - Open MongoDB Compass and run MongoDB locally at `mongodb://localhost:27017`.
-   - Import sample posts data from `backend/data/sample_posts.json`.
-5. Rename the `.env.sample` file in the backend and frontend folders to `.env`.
-6. Launch the development server with `npm start` in the root directory of the repository.
+4. Set up your databases
+   - Make sure you [install mongodb](https://www.mongodb.com/docs/manual/installation/) and run it in `mongodb://localhost:27017`
+     ```bash
+     # To populate the database with sample posts, you can copy the content from the `backend/data/sample_posts.json` file and
+     # insert it as a document in the `wanderlust/posts` collection in your local MongoDB database using either MongoDB Compass or `mongoimport`.
+     mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
+      ```
+   - Make sure you [install redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) and run it in `redis://127.0.0.1:6379`
+5. Set up env variables
+   - ```sh
+     cp backend/.env.sample backend/.env && cp frontend/.env.sample frontend/.env.local
+     ```
+7. Launch the development server with `npm start` in the root directory of the repository.
 
 <a name="request-for-changes-pull-requests"></a>
 
@@ -109,7 +117,6 @@ To contribute to this project, you need to create a fork of the repository and t
 Commit your changes, then push the branch to your fork with `git push -u fork` and open a pull request on [the Wanderlust repository](https://github.com/krishnaacharyaa/wanderlust) following the template provided.
 
 <a name="guidelines-to-follow"></a>
-Sure, let's refine the guidelines while keeping them clear and straightforward:
 
 ## Guidelines for Contributions
 
