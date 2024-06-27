@@ -36,18 +36,32 @@ We're committed to maintaining a positive and inclusive community, and your coop
 ## Setting up the Project
 
 To setup the project locally follow the steps:
-
 1. Fork and Star the project.
 2. Clone your forked repository.
 3. Run `npm run installer`.
 4. Set up your databases
-   - Make sure you [install mongodb](https://www.mongodb.com/docs/manual/installation/) and run it in `mongodb://localhost:27017`
-     ```bash
-     # To populate the database with sample posts, you can copy the content from the `backend/data/sample_posts.json` file and
-     # insert it as a document in the `wanderlust/posts` collection in your local MongoDB database using either MongoDB Compass or `mongoimport`.
-     mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
-      ```
+   - Make sure you [install mongodb](https://www.mongodb.com/docs/manual/installation/) and run it on port `27017`
+     - Follow one of the two ways to prefill the sample data in the db
+        <details>
+        <summary>mongoimport</summary>
+           
+        ```bash
+        mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
+        ```
+        </details>
+        
+        OR
+       
+        <details>
+        <summary>Manual insertion using mongodb compass</summary>
+           
+        1. Create `wanderlust` db
+        2. Create a new collection named `posts` in the `wanderlust` db
+        3. Use **ADD DATA** option in the `posts` collection and use the content from `backend/data/sample_posts.json` file
+        </details>
    - Make sure you [install redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) and run it in `redis://127.0.0.1:6379`
+
+
 5. Set up env variables
    - ```sh
      cp backend/.env.sample backend/.env && cp frontend/.env.sample frontend/.env.local
