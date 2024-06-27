@@ -11,7 +11,14 @@ import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
 import ThemeToggle from '@/components/theme-toggle-button';
+import { useState } from 'react';
+import EyeIcon from '@/assets/svg/eye.svg';
+import EyeOffIcon from '@/assets/svg/eye-off.svg';
+
 function signup() {
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [confirmPasswordVisible, setconfirmPasswordVisible] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const {
     register,
@@ -106,24 +113,54 @@ function signup() {
               <p className="p-3 text-xs text-red-500">{`${errors.email.message}`}</p>
             )}
           </div>
-          <div className="mb-2">
-            <input
-              {...register('password')}
-              type="password"
-              placeholder="Password"
-              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
-            />
+
+          {/** Password Section */}
+          <div className="mb-2 flex flex-col">
+            <div className="relative">
+              <input
+                {...register('password')}
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Password"
+                className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
+              />
+              <button
+                type="button"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
+              >
+                <img
+                  src={passwordVisible ? EyeIcon : EyeOffIcon}
+                  alt="Toggle-visibility"
+                  className="h-5 w-5"
+                />
+              </button>
+            </div>
             {errors.password && (
               <p className="p-3 text-xs text-red-500">{`${errors.password.message}`}</p>
             )}
           </div>
-          <div className="mb-4">
-            <input
-              {...register('confirmPassword')}
-              type="password"
-              placeholder="Confirm Password"
-              className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
-            />
+          {/** Confirm Password Section */}
+          <div className="mb-4 flex flex-col">
+            <div className="relative">
+              <input
+                {...register('confirmPassword')}
+                type={confirmPasswordVisible ? 'text' : 'password'}
+                placeholder="Confirm Password"
+                className="w-full rounded-lg bg-zinc-100 p-3 font-normal placeholder:text-sm dark:bg-dark-field dark:text-dark-textInField"
+              />
+
+              <button
+                type="button"
+                onClick={() => setconfirmPasswordVisible(!confirmPasswordVisible)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
+              >
+                <img
+                  src={confirmPasswordVisible ? EyeIcon : EyeOffIcon}
+                  alt="Toggle-visibility"
+                  className="h-5 w-5"
+                />
+              </button>
+            </div>
             {errors.confirmPassword && (
               <p className="p-3 text-xs text-red-500">{`${errors.confirmPassword.message}`}</p>
             )}

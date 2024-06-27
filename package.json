@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"compression": "^1.7.4",
 		"concurrently": "^8.2.2"
 	},
 	"scripts": {

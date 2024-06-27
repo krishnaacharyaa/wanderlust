@@ -17,7 +17,7 @@ import EyeOffIcon from '@/assets/svg/eye-off.svg';
 
 function signin() {
   const navigate = useNavigate();
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
