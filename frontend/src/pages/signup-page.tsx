@@ -14,7 +14,7 @@ import ThemeToggle from '@/components/theme-toggle-button';
 import { useState } from 'react';
 import EyeIcon from '@/assets/svg/eye.svg';
 import EyeOffIcon from '@/assets/svg/eye-off.svg';
-
+import '../styles/signup-page.css';
 function Signup() {
   const navigate = useNavigate();
   const {
@@ -68,7 +68,7 @@ function Signup() {
     <div className="flex-grow cursor-default bg-white py-4 dark:bg-dark-card">
       <div className="m-4 mb-4 flex justify-center">
         <div className="flex w-full items-center justify-center">
-          <h2 className="w-3/4 pl-2 text-center text-lg font-bold text-black dark:text-dark-primary sm:text-xl">
+          <h2 className="headingPadding text-center text-lg font-bold text-black dark:text-dark-primary sm:text-xl">
             Sign up to WanderLust
           </h2>
           <div className="flex items-center justify-end px-4 sm:px-20">
