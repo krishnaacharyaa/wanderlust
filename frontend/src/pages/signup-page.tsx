@@ -67,7 +67,7 @@ function Signup() {
     <div className="flex-grow cursor-default bg-white py-4 dark:bg-dark-card">
       <div className="m-4 mb-4 flex justify-center">
         <div className="flex w-full items-center justify-center">
-          <h2 className="text-center text-lg font-bold text-black dark:text-dark-primary sm:w-2/4 sm:pl-2 sm:text-xl lg:w-3/4 lg:pl-48">
+          <h2 className="text-center text-lg font-bold text-black dark:text-dark-primary sm:w-2/4 sm:pl-2 sm:text-xl md:w-3/4 md:pl-48">
             Sign up to WanderLust
           </h2>
           <div className="flex items-center justify-end px-4 sm:px-20">
