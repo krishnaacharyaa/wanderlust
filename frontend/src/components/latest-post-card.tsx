@@ -24,7 +24,7 @@ export default function LatestPostCard({
             <CategoryPill key={`${category}-${index}`} category={category} />
           ))}
         </div>
-        <img src={linkIcon} alt={post.title} className="h-3 w-3" />
+        <img src={linkIcon} alt={post.title} className="h-4 w-4 dark:invert" />
       </div>
       <div className="mb-2 line-clamp-1 font-semibold text-light-title dark:text-dark-title">
         {post.title}
