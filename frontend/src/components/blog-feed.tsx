@@ -14,7 +14,7 @@ export default function BlogFeed() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let categoryEndpoint =
+    const categoryEndpoint =
       selectedCategory === 'featured'
         ? '/api/posts/featured'
         : `/api/posts/categories/${selectedCategory}`;
