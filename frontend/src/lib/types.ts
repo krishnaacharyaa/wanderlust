@@ -32,7 +32,7 @@ const isValidImageLink = (value: string) => {
   const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
   return imageLinkRegex.test(value);
 };
-export const addBlogSchema = z.object({
+export const formBlogSchema = z.object({
   title: z.string().refine((value) => value.trim().split(/\s+/).length >= 3, {
     message: 'Oops! Title needs more spice. Give it at least 3 words.',
   }),
@@ -70,4 +70,4 @@ export interface AuthData {
 
 export type TSignInSchema = z.infer<typeof signInSchema>;
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
-export type TAddBlogScheme = z.infer<typeof addBlogSchema>;
+export type TFormBlogSchema = z.infer<typeof formBlogSchema>;

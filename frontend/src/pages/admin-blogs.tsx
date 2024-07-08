@@ -6,9 +6,12 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Post from '@/types/post-type';
+import { useNavigate } from 'react-router-dom';
 
 const AdminBlogs = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -24,6 +27,8 @@ const AdminBlogs = () => {
     if (response.status === 200) {
       fetchData();
       toast.success('Post successfully deleted !');
+    } else {
+      toast?.error('Something went wrong!');
     }
   };
 
@@ -61,7 +66,10 @@ const AdminBlogs = () => {
                   </p>
                 </div>
                 <div className="mt-2 flex flex-col gap-2 sm:mt-0 sm:flex-row ">
-                  <button className="h-fit rounded-xl border-0 text-base font-semibold text-light-title dark:text-dark-title sm:text-xl">
+                  <button
+                    onClick={() => navigate(`/edit-blog/${post?._id}`, { state: { post } })}
+                    className="h-fit rounded-xl border-0 text-base font-semibold text-light-title dark:text-dark-title sm:text-xl"
+                  >
                     <PenIcon />
                   </button>
                   <button

@@ -11,12 +11,12 @@ export const isAuthorMiddleware = async (req, res, next) => {
     }
 
     console.log(post.authorId, userId);
-    if (post.authorId.toString() !== userId) {
+    if (post?.authorId?.toString() !== userId) {
       return res
         .status(HTTP_STATUS.FORBIDDEN)
         .json({ message: RESPONSE_MESSAGES.POSTS.NOT_ALLOWED });
     }
-    next();
+    return next();
   } catch (error) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
