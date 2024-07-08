@@ -47,12 +47,81 @@ _We want you to get the most out of this project—it's all about learning, cont
 - **Featured Posts :** Highlight top travel stories and destinations on the homepage to showcase the best content and inspire readers with exciting travel experiences.
 - **User-Friendly Interface:** Navigate effortlessly through captivating travel content with our intuitive design.
 - **Discover By topic categories:** **Discover by Topic Categories**: Explore diverse travel experiences categorized by travel, nature, city, Adventure and Beaches..
-- Installs MongoDB for the backend.
+- **Environment Setup Step :** 
+- Setting Up Project After Git Clone
+1. Clone Repository:
+#git clone https://github.com/krishnaacharyaa/wanderlust
+--> Clones the "wanderlust" repository from the provided GitHub URL.
+2. Navigate to Cloned Directory:
+#cd wanderlust/
+--> Changes the current directory to the "wanderlust" directory.
+3. List Directory Contents:
+#ls
+--> Lists contents of the current directory.
+4. Install Node Version Manager (NVM):
+
+URL for installation---> https://nodejs.org/en/download/package-manager
+
+#curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+--> Installs Node Version Manager (NVM) for managing Node.js versions.
+5. Install Node.js version 21:
+#nvm install 21
+--> Installs Node.js version 21 using NVM.
+6. Verify Node.js and npm Installation:
+#node -v
+#npm -v
+--> Checks installed versions of Node.js and npm.
+7. Navigate to Backend Directory:
+#cd wanderlust/backend/
+--> Moves to the "backend" directory.
+8. Install Backend Dependencies:
+#npm i
+--> Installs Node.js dependencies for the backend.
+
+9. Install MongoDB:
+URL for installation of Mongodb---> https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
+
+#sudo apt-get install gnupg curl
+#curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+   --dearmor
+#echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list   
+#sudo apt-get update
+--> Installs MongoDB for the backend.
 #sudo apt-get install -y mongodb-org
-- Starts the MongoDB service.
+--> Starts the MongoDB service.
 #sudo systemctl start mongod
-- to access the mongodb.
-#mongosh 
+--> to access the mongodb.
+#mongosh
+
+11. Import Sample Data to MongoDB: on this path /wanderlust/backend
+#mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
+
+12. Set Up Environment Variables:
+#cp .env.sample .env
+--> Copies the sample environment file.
+13. View Environment Variables:
+#cat .env
+--> Displays contents of the environment file.
+14. Start Backend Server:
+#npm start
+--> Initiates the backend server.
+
+15. Navigate to Frontend Directory:
+#cd ../frontend/
+--> Moves to the "frontend" directory.
+16. Install Frontend Dependencies:
+#npm i
+--> Installs dependencies for the frontend.
+17. Create Local Environment File for Frontend:
+#cp .env.sample .env.local
+--> Creates a local environment file for the frontend.
+18. Start Frontend Development Server:
+#npm run dev
+--> Launches the development server for the frontend.
+19. Run Frontend Server with Specific Host:
+#npm run dev -- --host
+--> Starts frontend server with a specific host.
 <hr>
 
 <div>
