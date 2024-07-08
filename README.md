@@ -57,7 +57,7 @@ _We want you to get the most out of this project—it's all about learning, cont
 
 2. Navigate to Cloned Directory:
 
-**cd wanderlust/**
+**#cd wanderlust/**
 > Changes the current directory to the "wanderlust" directory.
 
 3. List Directory Contents:
