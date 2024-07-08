@@ -138,6 +138,7 @@ _We want you to get the most out of this project—it's all about learning, cont
 > Launches the development server for the frontend.
 
 20. Run Frontend Server with Specific Host:
+
 **#npm run dev -- --host**
 > Starts frontend server with a specific host.
 
