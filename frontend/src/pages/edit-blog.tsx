@@ -32,10 +32,8 @@ const EditBlog = () => {
 
   const navigate = useNavigate();
 
-  if (post?.authorId && userData?._id) {
-    if (userData?.role === 'USER' && post?.authorId !== userData?._id) {
-      navigate(-1);
-    }
+  if (userData?.role === 'USER' && post?.authorId !== userData?._id) {
+    navigate(-1);
   }
 
   if (!loading) {
