@@ -4,6 +4,7 @@ import Signup from '@/pages/signup-page';
 import {
   CONFIRMPASSWORD_PLACEHOLDER,
   EMAILINPUT_PLACEHOLDER,
+  NAME,
   PASSWORDINPUT_PLACEHOLDER,
   SIGNUPBUTTON_TEXT,
   USERNAME_PLACEHOLDER,
@@ -15,7 +16,7 @@ export const formSetup = () => {
       <Signup />
     </BrowserRouter>
   );
-
+  const nameInput = form.getByPlaceholderText(NAME);
   const usernameInput = form.getByPlaceholderText(USERNAME_PLACEHOLDER);
   const emailInput = form.getByPlaceholderText(EMAILINPUT_PLACEHOLDER);
   const passwordInput = form.getByPlaceholderText(PASSWORDINPUT_PLACEHOLDER);
@@ -23,6 +24,7 @@ export const formSetup = () => {
   const signupbuttonText = form.getByText(SIGNUPBUTTON_TEXT);
 
   if (
+    !(nameInput instanceof HTMLInputElement) ||
     !(usernameInput instanceof HTMLInputElement) ||
     !(emailInput instanceof HTMLInputElement) ||
     !(passwordInput instanceof HTMLInputElement) ||
@@ -32,5 +34,13 @@ export const formSetup = () => {
     throw new Error('Issue during test setup, some input elemnts are not rendered');
   }
 
-  return { form, usernameInput, emailInput, passwordInput, confirmpasswordInput, signupbuttonText };
+  return {
+    form,
+    usernameInput,
+    emailInput,
+    passwordInput,
+    confirmpasswordInput,
+    signupbuttonText,
+    nameInput,
+  };
 };

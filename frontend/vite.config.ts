@@ -14,7 +14,7 @@ export default defineConfig({
     reporters: ['verbose'],
     exclude: [
       ...configDefaults.exclude,
-      './src/__tests__/integration/home.test.tsx',
+      './src/__tests__/integration-test/home.test.tsx',
       './src/__tests__/App.test.tsx',
     ],
 
