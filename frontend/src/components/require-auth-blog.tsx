@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { AddBlogPostSkeleton } from './skeletons/add-blog-post-skeleton';
 import useAuthData from '@/hooks/useAuthData';
-import Loader from './skeletons/loader';
 
 function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
   const { role, token, loading } = useAuthData();
@@ -8,7 +8,7 @@ function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
   if (loading) {
     return (
       <>
-        <Loader/>
+        <AddBlogPostSkeleton />
       </>
     ); // Render a loading indicator
   }
