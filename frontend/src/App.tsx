@@ -11,6 +11,7 @@ import AdminBlogs from '@/pages/admin-blogs';
 import NotFound from '@/pages/not-found';
 import UnprotectedRoute from './components/unprotected-route';
 import { useLayoutEffect } from 'react';
+import RequireAuth from './components/require-auth-blog';
 import RequireAuthBlog from './components/require-auth-blog';
 import useThemeClass from './utils/theme-changer';
 import AdminContainer from './components/admin-container';
@@ -35,7 +36,7 @@ function App() {
             <Route element={<RequireAuthBlog allowedRole={[Role.Admin, Role.User]} />}>
               <Route path="add-blog" element={<AddBlog />} />
             </Route>
-            <Route path="admin" element={<RequireAuthBlog allowedRole={[Role.Admin]} />}>
+            <Route path="admin" element={<RequireAuth allowedRole={[Role.Admin]} />}>
               <Route element={<AdminContainer />}>
                 <Route path="users" element={<AdminUsers />} />
                 <Route path="blogs" element={<AdminBlogs />} />
