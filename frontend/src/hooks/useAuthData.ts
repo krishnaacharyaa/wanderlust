@@ -32,6 +32,7 @@ const useAuthData = (): AuthData => {
           loading: false,
         });
       } catch (error) {
+        console.error('Error fetching token:', error);
         setData({
           ...data,
           token: '',

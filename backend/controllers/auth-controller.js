@@ -115,7 +115,7 @@ export const signInWithEmailOrUsername = asyncHandler(async (req, res) => {
 });
 
 //Sign Out
-export const signOutUser = asyncHandler(async (req, res) => {
+export const signOutUser = asyncHandler(async (req, res, next) => {
   await User.findByIdAndUpdate(
     req.user?._id,
     {
@@ -128,19 +128,31 @@ export const signOutUser = asyncHandler(async (req, res) => {
     }
   );
 
-  res
-    .status(HTTP_STATUS.OK)
-    .clearCookie('access_token', cookieOptions)
-    .clearCookie('refresh_token', cookieOptions)
-    .json(new ApiResponse(HTTP_STATUS.OK, '', RESPONSE_MESSAGES.USERS.SIGNED_OUT));
-});
+  // Passport.js logout
+  req.logout((err) => {
+    if (err) {
+      return next(new ApiError(HTTP_STATUS.INTERNAL_SERVER_ERROR, 'Logout failed'));
+    }
 
+    res
+      .status(HTTP_STATUS.OK)
+      .clearCookie('access_token', cookieOptions)
+      .clearCookie('refresh_token', cookieOptions)
+      .clearCookie('jwt', cookieOptions)
+      .json(new ApiResponse(HTTP_STATUS.OK, '', RESPONSE_MESSAGES.USERS.SIGNED_OUT));
+  });
+});
 // check user
 export const isLoggedIn = asyncHandler(async (req, res) => {
   let access_token = req.cookies?.access_token;
   let refresh_token = req.cookies?.refresh_token;
   const { _id } = req.params;
 
+  if (!_id) {
+    return res
+      .status(HTTP_STATUS.BAD_REQUEST)
+      .json(new ApiResponse(HTTP_STATUS.BAD_REQUEST, '', 'User ID is required'));
+  }
   if (access_token) {
     try {
       await jwt.verify(access_token, JWT_SECRET);
@@ -148,22 +160,32 @@ export const isLoggedIn = asyncHandler(async (req, res) => {
         .status(HTTP_STATUS.OK)
         .json(new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN));
     } catch (error) {
-      // Access token invalid, proceed to check refresh token
-      console.log(error);
+      console.log('Access token verification error:', error.message);
     }
-  } else if (refresh_token) {
+  }
+  // If access token is not valid, check the refresh token
+  if (refresh_token) {
     try {
       await jwt.verify(refresh_token, JWT_SECRET);
+      const user = await User.findById(_id);
+      if (!user) {
+        return res
+          .status(HTTP_STATUS.NOT_FOUND)
+          .json(
+            new ApiResponse(HTTP_STATUS.NOT_FOUND, '', RESPONSE_MESSAGES.USERS.USER_NOT_EXISTS)
+          );
+      }
       access_token = await user.generateAccessToken();
       return res
         .status(HTTP_STATUS.OK)
         .cookie('access_token', access_token, cookieOptions)
         .json(new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN));
     } catch (error) {
-      // Access token invalid, proceed to check refresh token that is in db
-      console.log(error);
+      console.log('Refresh token verification error:', error.message);
     }
   }
+
+  // If neither token is valid, handle accordingly
   const user = await User.findById(_id);
   if (!user) {
     return res

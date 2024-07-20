@@ -3,6 +3,7 @@ import { ApiError } from '../utils/api-error.js';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import jwt from 'jsonwebtoken';
 import { Role } from '../types/role-type.js';
+import User from '../models/user.js';
 
 export const authMiddleware = async (req, res, next) => {
   const token = req.cookies?.access_token;
@@ -10,14 +11,13 @@ export const authMiddleware = async (req, res, next) => {
     return next(new ApiError(HTTP_STATUS.BAD_REQUEST, RESPONSE_MESSAGES.USERS.RE_LOGIN));
   }
 
-  if (token) {
-    await jwt.verify(token, JWT_SECRET, (error, payload) => {
-      if (error) {
-        return new ApiError(HTTP_STATUS.FORBIDDEN, RESPONSE_MESSAGES.USERS.INVALID_TOKEN);
-      }
-      req.user = payload;
-      next();
-    });
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+    req.user = await User.findById(payload.id);
+    next();
+  } catch (error) {
+    console.log('Token verification error:', error.message);
+    return next(new ApiError(HTTP_STATUS.FORBIDDEN, RESPONSE_MESSAGES.USERS.INVALID_TOKEN));
   }
 };
 
