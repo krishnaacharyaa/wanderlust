@@ -28,7 +28,7 @@ router.get(
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
     });
-    res.redirect('http://localhost:5173/signup?google-callback=true');
+    res.redirect(`${process.env.FRONTEND_URL}/signup?google-callback=true`);
   }
 );
 
