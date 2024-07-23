@@ -8,7 +8,7 @@ function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
   if (loading) {
     return (
       <>
-        <Loader/>
+        <Loader />
       </>
     ); // Render a loading indicator
   }

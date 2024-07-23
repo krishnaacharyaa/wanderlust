@@ -34,7 +34,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: false,
       minLength: [8, 'Password must be at least 8 character '],
       match: [
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
@@ -60,7 +60,13 @@ const userSchema = new Schema(
     refreshToken: String,
     forgotPasswordToken: String,
     forgotPasswordExpiry: Date,
+    googleId: {
+      type: String,
+      unique: true,
+      required: false,
+    },
   },
+
   { timestamps: true }
 );
 

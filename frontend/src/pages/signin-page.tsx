@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-// import AddGoogleIcon from '@/assets/svg/google-color-icon.svg';
+import AddGoogleIcon from '@/assets/svg/google-color-icon.svg';
 // import AddGithubIcon from '@/assets/svg/github-icon.svg';
 import { useForm } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
@@ -11,12 +11,13 @@ import { AxiosError, isAxiosError } from 'axios';
 import axiosInstance from '@/helpers/axios-instance';
 import userState from '@/utils/user-state';
 import ThemeToggle from '@/components/theme-toggle-button';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import EyeIcon from '@/assets/svg/eye.svg';
 import EyeOffIcon from '@/assets/svg/eye-off.svg';
 function signin() {
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const toastShownRef = useRef(false);
   const {
     register,
     handleSubmit,
@@ -68,11 +69,48 @@ function signin() {
     }
   };
 
+  useEffect(() => {
+    const handleGoogleCallback = async () => {
+      const searchParams = new URLSearchParams(location.search);
+      const isGoogleCallback = searchParams.get('google-callback') === 'true';
+
+      if (isGoogleCallback && !toastShownRef.current) {
+        try {
+          const response = await axiosInstance.get('/api/auth/check');
+          const { user } = response.data;
+          if (user && user._id && user.role) {
+            userState.setUser({ _id: user._id, role: user.role });
+            navigate('/');
+            if (!toastShownRef.current) {
+              toast.success('Successfully logged in with Google');
+              toastShownRef.current = true;
+            }
+          } else {
+            console.error('User data is incomplete:', user);
+          }
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch (error) {
+          console.error('Error handling Google login:', error);
+          if (!toastShownRef.current) {
+            toast.error('Failed to log in with Google');
+            toastShownRef.current = true;
+          }
+        }
+      }
+    };
+
+    handleGoogleCallback();
+  }, [location, navigate]);
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_PATH}/api/auth/google`;
+  };
+
   return (
     <div className="flex-grow cursor-default bg-white py-4 dark:bg-dark-card">
       <div className="m-4 mb-4 flex justify-center">
         <div className="flex w-full items-center justify-center">
-          <h2 className="text-center text-lg font-bold text-black dark:text-dark-primary w-2/4 pl-2 sm:text-xl md:w-3/4 md:pl-48">
+          <h2 className="w-2/4 pl-2 text-center text-lg font-bold text-black dark:text-dark-primary sm:text-xl md:w-3/4 md:pl-48">
             Sign in to WanderLust
           </h2>
           <div className="flex items-center justify-end px-4 sm:px-20">
@@ -138,21 +176,21 @@ function signin() {
           {/* <span>OR</span> */}
         </div>
 
-        {/* <Link
-          to={'/google-auth'}
-          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4  border-gray-300 p-3 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700 md:w-3/4 lg:w-2/5"
+        <button
+          className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 dark:border-gray-700 dark:text-dark-primary dark:hover:bg-gray-700 md:w-3/4 lg:w-2/5"
+          onClick={handleGoogleLogin}
         >
           <img className="h-4 w-6 pl-1 sm:h-5 sm:w-10" src={AddGoogleIcon} />
-          <span className="text-sm dark:text-dark-primary sm:text-base">Continue with Google</span>
-        </Link>
+          <span className="text-sm sm:text-base">Continue with Google</span>
+        </button>
 
-        <Link
+        {/* <Link
           to={'/github-auth'}
           className="flex w-full items-center justify-center space-x-2 rounded-lg border-2 border-b-4 border-gray-300 p-3 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700 md:w-3/4 lg:w-2/5"
         >
           <img className="h-4 w-6 sm:h-5 sm:w-10" src={AddGithubIcon} />
           <span className="text-sm dark:text-dark-primary sm:text-base">Continue with Github</span>
-        </Link> */}
+        </Link>  */}
       </div>
     </div>
   );
