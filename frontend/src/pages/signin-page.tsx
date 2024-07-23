@@ -77,8 +77,7 @@ function signin() {
       if (isGoogleCallback && !toastShownRef.current) {
         try {
           const response = await axiosInstance.get('/api/auth/check');
-          const { token, user } = response.data;
-          localStorage.setItem('token', token);
+          const { user } = response.data;
           if (user && user._id && user.role) {
             userState.setUser({ _id: user._id, role: user.role });
             navigate('/');
