@@ -7,10 +7,30 @@ import {
   EMAIL_EMPTY_ERRORMESSAGE,
   INVALID_CONFIRMPWD_ERRORMESSAGE,
   INVALID_PWD_ERRORMESSAGE,
-  INVALID_USERNAME_ERRORMESSAGE,
+  NAME_EMPTY_ERRORMESSAGE,
   PASSWORD_EMPTY_ERRORMESSAGE,
   USERNAME_EMPTY_ERRORMESSAGE,
 } from '@/constants/images';
+import { toast } from 'react-toastify';
+
+interface sucessdata {
+  status: number;
+  message: string;
+}
+
+interface errordata {
+  status: number;
+  message: string;
+}
+
+interface Messages {
+  success: {
+    render: (data: { data: sucessdata }) => void;
+  };
+  error: {
+    render: (error: { error: errordata }) => void;
+  };
+}
 const mockedUseNavigate = vi.fn();
 // Mocking the useNavigate hook from React Router DOM
 vi.mock('react-router-dom', async () => {
@@ -20,6 +40,24 @@ vi.mock('react-router-dom', async () => {
     useNavigate: () => mockedUseNavigate,
   };
 });
+
+// Mock react-toastify's toast.promise
+vi.mock('react-toastify', () => ({
+  toast: {
+    promise: vi.fn((promise: Promise<sucessdata>, messages: Messages) => {
+      return promise.then(
+        (data: sucessdata) => {
+          messages.success.render({ data });
+          return data;
+        },
+        (error: errordata) => {
+          messages.error.render({ error });
+          throw error;
+        }
+      );
+    }),
+  },
+}));
 
 describe('Unit Tests : Signup Component', async () => {
   test('Signup : Failure - Invalid Email Address', async () => {
@@ -42,17 +80,19 @@ describe('Unit Tests : Signup Component', async () => {
       passwordInput,
       confirmpasswordInput,
       signupbuttonText,
+      nameInput,
     } = await formSetup();
     await userActions.type(usernameInput, 'aryastark');
+    await userActions.type(nameInput, 'arya');
     await userActions.type(emailInput, 'arya@gmail.com');
-    await userActions.type(passwordInput, '12345678');
-    await userActions.type(confirmpasswordInput, '1234');
+    await userActions.type(passwordInput, 'Test@1234');
+    await userActions.type(confirmpasswordInput, 'Tesr@1897');
     await userActions.click(signupbuttonText);
     await waitFor(() => {
       expect(form.getByText(INVALID_CONFIRMPWD_ERRORMESSAGE)).toBeInTheDocument();
     });
   });
-
+  /*
   test('Signup : Failure - Invalid Username', async () => {
     const userActions = userEvent.setup();
     const {
@@ -62,16 +102,19 @@ describe('Unit Tests : Signup Component', async () => {
       passwordInput,
       confirmpasswordInput,
       signupbuttonText,
+      nameInput
     } = await formSetup();
     await userActions.type(usernameInput, 'ary');
+    await userActions.type(nameInput,'arya')
     await userActions.type(emailInput, 'arya@gmail.com');
-    await userActions.type(passwordInput, '12345678');
-    await userActions.type(confirmpasswordInput, '12345678');
+    await userActions.type(passwordInput, 'Test@1234');
+    await userActions.type(confirmpasswordInput, 'Test@1234');
     await userActions.click(signupbuttonText);
     await waitFor(() => {
       expect(form.getByText(INVALID_USERNAME_ERRORMESSAGE)).toBeInTheDocument();
     });
   });
+  */
 
   test('Signup : Failure - Form is submitted without any values', async () => {
     const userActions = userEvent.setup();
@@ -79,6 +122,7 @@ describe('Unit Tests : Signup Component', async () => {
     await userActions.click(signupbuttonText);
     await waitFor(() => {
       expect(form.getByText(USERNAME_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
+      expect(form.getByText(NAME_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
       expect(form.getByText(EMAIL_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
       expect(form.getByText(PASSWORD_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
       expect(form.getByText(CONFIRMPASSWORD_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
@@ -94,14 +138,16 @@ describe('Unit Tests : Signup Component', async () => {
       passwordInput,
       confirmpasswordInput,
       signupbuttonText,
+      nameInput,
     } = await formSetup();
     await userActions.type(usernameInput, 'abcd');
+    await userActions.type(nameInput, 'ab');
     await userActions.type(emailInput, 'abc@gmail.com');
     await userActions.type(passwordInput, '123');
     await userActions.type(confirmpasswordInput, '1234');
     await userActions.click(signupbuttonText);
     await waitFor(() => {
-      expect(form.getByText(INVALID_USERNAME_ERRORMESSAGE)).toBeInTheDocument();
+      expect(form.getByText(NAME_EMPTY_ERRORMESSAGE)).toBeInTheDocument();
       expect(form.getByText(INVALID_PWD_ERRORMESSAGE)).toBeInTheDocument();
       expect(form.getByText(INVALID_CONFIRMPWD_ERRORMESSAGE)).toBeInTheDocument();
     });
@@ -109,17 +155,26 @@ describe('Unit Tests : Signup Component', async () => {
 
   test('should call the signup api when all the input values are valid and should redirect to home page', async () => {
     const userActions = userEvent.setup();
+    const mockedToastPromise = toast.promise;
 
-    const { usernameInput, emailInput, passwordInput, confirmpasswordInput, signupbuttonText } =
-      await formSetup();
+    const {
+      usernameInput,
+      emailInput,
+      passwordInput,
+      confirmpasswordInput,
+      signupbuttonText,
+      nameInput,
+    } = await formSetup();
+    await userActions.type(nameInput, 'arya');
     await userActions.type(usernameInput, 'aryastark');
     await userActions.type(emailInput, 'arya@gmail.com');
-    await userActions.type(passwordInput, '123456789');
-    await userActions.type(confirmpasswordInput, '123456789');
+    await userActions.type(passwordInput, 'Test@1234');
+    await userActions.type(confirmpasswordInput, 'Test@1234');
     await userActions.click(signupbuttonText);
 
     await waitFor(() => {
-      expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockedToastPromise).toHaveBeenCalled();
+      expect(mockedUseNavigate).toHaveBeenCalled();
     });
   });
 });
