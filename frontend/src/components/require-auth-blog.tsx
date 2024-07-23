@@ -1,14 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { AddBlogPostSkeleton } from './skeletons/add-blog-post-skeleton';
 import useAuthData from '@/hooks/useAuthData';
-import Loader from './skeletons/loader';
 
-function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
+function RequireAuthBlog({ allowedRole }: { allowedRole: string[] }) {
   const { role, token, loading } = useAuthData();
 
   if (loading) {
     return (
       <>
-        <Loader />
+        <AddBlogPostSkeleton />
       </>
     ); // Render a loading indicator
   }
@@ -20,4 +20,4 @@ function RequireAuth({ allowedRole }: { allowedRole: string[] }) {
   );
 }
 
-export default RequireAuth;
+export default RequireAuthBlog;
