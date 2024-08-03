@@ -12,6 +12,10 @@ import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import PostCard from '@/components/post-card';
 import PostMobileViewComponent from '@/components/PostMobileViewComponent';
 import { PostMobileViewCardSkeleton } from '@/components/PostMobileViewCardSkeleton';
+import PenIcon from '@/assets/svg/pen-icon';
+import TrasnIcon from '@/assets/svg/trash-icon';
+import { toast } from 'react-toastify';
+import useAuthData from '@/hooks/useAuthData';
 
 export default function DetailsPage() {
   const { state } = useLocation();
@@ -24,16 +28,36 @@ export default function DetailsPage() {
   const [relatedPostsLoading, setRelatedPostsLoading] = useState<boolean>(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
 
+  const userData = useAuthData();
+
   useEffect(() => {
     const theme = localStorage.getItem('theme');
     setIsDarkMode(theme === 'dark');
   }, []);
 
+  const handleDeleteClick = async () => {
+    let url = `/api/posts/${postId}`;
+    if (userData?.role === 'ADMIN') {
+      url = `/api/posts/admin/${postId}`;
+    }
+    try {
+      const resposne = await axios.delete(import.meta.env.VITE_API_PATH + url, {
+        withCredentials: true,
+      });
+      if (resposne.status === 200) {
+        toast.success('Successfully post deleted!');
+        navigate('/');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('something went wrong');
+    }
+  };
+
   useEffect(() => {
     const getPostById = async () => {
       try {
         await axios.get(import.meta.env.VITE_API_PATH + `/api/posts/${postId}`).then((response) => {
-          console.log(response.data);
           setIsLoading(false);
           setPost(response.data);
         });
@@ -70,13 +94,24 @@ export default function DetailsPage() {
         <div className="relative flex flex-col">
           <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover sm:h-96" />
           <div className="absolute left-0 top-0 h-full w-full bg-slate-950/60"></div>
-          <div className="absolute top-12 w-full cursor-pointer justify-start px-2 text-lg text-slate-50 sm:top-20 sm:px-8 sm:text-xl lg:px-12 lg:text-2xl">
+          <div className="absolute top-12 flex w-full cursor-pointer justify-between px-2 text-lg text-slate-50 sm:top-20 sm:px-8 sm:text-xl lg:px-12 lg:text-2xl">
             <img
               alt="white"
               src={navigateBackWhiteIcon}
               className="active:scale-click h-5 w-10"
               onClick={() => navigate(-1)}
             />
+
+            {(post?.authorId === userData?._id || userData?.role === 'ADMIN') && (
+              <div className="flex gap-4">
+                <button onClick={handleDeleteClick}>
+                  <TrasnIcon />
+                </button>
+                <button onClick={() => navigate(`/edit-blog/${postId}`, { state: { post } })}>
+                  <PenIcon />
+                </button>
+              </div>
+            )}
           </div>
           <div className="absolute bottom-6 w-full max-w-xl px-4 text-slate-50 sm:bottom-8 sm:max-w-3xl sm:px-8 lg:bottom-12 lg:max-w-5xl lg:px-12">
             <div className="mb-4 flex space-x-2">
