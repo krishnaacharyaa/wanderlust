@@ -13,6 +13,6 @@
 		"prepare": "husky install && chmod ug+x .husky/*"
 	},
 	"devDependencies": {
-		"husky": "^8.0.0"
+		"husky": "^8.0.3"
 	}
 }

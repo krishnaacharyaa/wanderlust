@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Source the Husky script
-source "$(dirname -- "$0")/_/husky.sh"
+. "$(dirname -- "$0")/_/husky.sh"
 
 # Run Prettier on frontend files
 cd frontend || { echo "Failed to change directory to frontend"; exit 1; }
@@ -12,5 +12,4 @@ npx lint-staged
 cd ../backend || { echo "Failed to change directory to backend"; exit 1; }
 echo "[BACKEND] Running the prettier format for you."
 npx lint-staged
-
 
