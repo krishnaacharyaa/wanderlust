@@ -1,7 +1,7 @@
 import { createClient } from 'redis';
-import { REDIS_URL } from '../config/utils.js';
+import { REDIS_URL } from '../config/utils';
 
-let redis = null;
+let redis: any = null;
 
 export async function connectToRedis() {
   try {
@@ -14,7 +14,7 @@ export async function connectToRedis() {
     } else {
       console.log('Redis not configured, cache disabled.');
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error connecting to Redis:', error.message);
   }
 }

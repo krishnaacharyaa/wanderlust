@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import { authMiddleware } from '../middlewares/auth-middleware.js';
-import passport from '../config/passport.js';
+import { authMiddleware } from '../middlewares/auth-middleware';
+import passport from '../config/passport';
 import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
 import {
   signUpWithEmail,
   signInWithEmailOrUsername,
   signOutUser,
   isLoggedIn,
-} from '../controllers/auth-controller.js';
+} from '../controllers/auth-controller';
 
 const router = Router();
 
@@ -21,8 +22,11 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  (req: Request, res: Response) => {
+    let token = '';
+    if (process.env.JWT_SECRET) {
+      token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    }
     res.cookie('access_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

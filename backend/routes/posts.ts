@@ -10,9 +10,9 @@ import {
   getRelatedPostsByCategories,
   updatePostHandler,
 } from '../controllers/posts-controller.js';
-import { REDIS_KEYS } from '../utils/constants.js';
-import { cacheHandler } from '../utils/middleware.js';
-import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware.js';
+import { REDIS_KEYS } from '../utils/constants';
+import { cacheHandler } from '../utils/middleware';
+import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware';
 import { isAuthorMiddleware } from '../middlewares/post-middleware.js';
 const router = Router();
 

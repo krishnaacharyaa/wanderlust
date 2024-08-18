@@ -7,11 +7,11 @@ import {
   getPostByCategoryHandler,
   getPostByIdHandler,
   updatePostHandler,
-} from '../../../controllers/posts-controller.js';
-import Post from '../../../models/post.js';
+} from '../../../controllers/posts-controller';
+import Post from '../../../models/post';
 import { expect, jest, it, describe } from '@jest/globals';
-import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';
-import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';
+import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants';
+import { createPostObject, createRequestObject, res } from '../../utils/helper-objects';
 
 jest.mock('../../../models/post.js', () => ({
   __esModule: true,
@@ -21,11 +21,9 @@ jest.mock('../../../models/post.js', () => ({
 describe('createPostHandler', () => {
   it('Post creation: Success - All fields are valid', async () => {
     const postObject = createPostObject();
-    const req = createRequestObject({ body: postObject });
+    const req: any = createRequestObject({ body: postObject });
 
-    Post.mockImplementationOnce(() => ({
-      save: jest.fn().mockResolvedValueOnce(postObject),
-    }));
+    jest.spyOn(Post.prototype, 'save').mockImplementationOnce(() => Promise.resolve(postObject));
 
     await createPostHandler(req, res);
 
@@ -39,7 +37,7 @@ describe('createPostHandler', () => {
     const postObject = createPostObject({
       imageLink: 'https://www.forTestingPurposeOnly/my-image.gif', // Invalid image URL
     });
-    const req = createRequestObject({ body: postObject });
+    const req: any = createRequestObject({ body: postObject });
 
     await createPostHandler(req, res);
 
@@ -54,7 +52,7 @@ describe('createPostHandler', () => {
     delete postObject.title;
     delete postObject.authorName;
 
-    const req = createRequestObject({ body: postObject });
+    const req: any = createRequestObject({ body: postObject });
 
     await createPostHandler(req, res);
 
@@ -66,7 +64,7 @@ describe('createPostHandler', () => {
     const postObject = createPostObject({
       categories: [validCategories[0], validCategories[1], validCategories[2], validCategories[3]], // 4 categories
     });
-    const req = createRequestObject({ body: postObject });
+    const req: any = createRequestObject({ body: postObject });
 
     await createPostHandler(req, res);
 
@@ -78,13 +76,9 @@ describe('createPostHandler', () => {
 
   it('Post creation: Failure - Internal server error', async () => {
     const postObject = createPostObject();
-    const req = createRequestObject({ body: postObject });
+    const req: any = createRequestObject({ body: postObject });
 
-    Post.mockImplementationOnce(() => ({
-      save: jest
-        .fn()
-        .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR)),
-    }));
+    jest.spyOn(Post.prototype, 'save').mockImplementationOnce(() => Promise.resolve(postObject));
 
     await createPostHandler(req, res);
 
@@ -97,7 +91,7 @@ describe('createPostHandler', () => {
 
 describe('getAllPostsHandler', () => {
   it('Get all posts: Success - Retrieving all posts list', async () => {
-    const req = createRequestObject();
+    const req: any = createRequestObject();
 
     const mockPosts = [
       createPostObject({ title: 'Test Post - 1' }),
@@ -105,7 +99,7 @@ describe('getAllPostsHandler', () => {
       createPostObject({ title: 'Test Post - 3' }),
     ];
 
-    Post.find = jest.fn().mockResolvedValueOnce(mockPosts);
+    jest.spyOn(Post, 'find').mockResolvedValue(mockPosts);
 
     await getAllPostsHandler(req, res);
 
@@ -114,12 +108,10 @@ describe('getAllPostsHandler', () => {
   });
 
   it('Get all posts: Failure - Internal Server Error', async () => {
-    const req = createRequestObject();
-
-    Post.find = jest
-      .fn()
+    const req: any = createRequestObject();
+    jest
+      .spyOn(Post, 'find')
       .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
-
     await getAllPostsHandler(req, res);
 
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
@@ -131,7 +123,7 @@ describe('getAllPostsHandler', () => {
 
 describe('getFeaturedPostsHandler', () => {
   it('Get featured posts: Success - Retrieving all featured posts list', async () => {
-    const req = createRequestObject();
+    const req: any = createRequestObject();
 
     const mockFeaturedPosts = [
       createPostObject({ title: 'Test Post - 1', isFeaturedPost: true }),
@@ -139,7 +131,7 @@ describe('getFeaturedPostsHandler', () => {
       createPostObject({ title: 'Test Post - 3', isFeaturedPost: true }),
     ];
 
-    Post.find = jest.fn().mockResolvedValueOnce(mockFeaturedPosts);
+    jest.spyOn(Post, 'find').mockResolvedValue(mockFeaturedPosts);
 
     await getFeaturedPostsHandler(req, res);
 
@@ -148,12 +140,10 @@ describe('getFeaturedPostsHandler', () => {
   });
 
   it('Get featured posts: Failure - Internal Server Error', async () => {
-    const req = createRequestObject();
-
-    Post.find = jest
-      .fn()
+    const req: any = createRequestObject();
+    jest
+      .spyOn(Post, 'find')
       .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
-
     await getFeaturedPostsHandler(req, res);
 
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
@@ -165,7 +155,7 @@ describe('getFeaturedPostsHandler', () => {
 
 describe('getPostByCategoryHandler', () => {
   it('Get posts by category: Success - Retrieving posts list of specified category', async () => {
-    const req = createRequestObject({ params: { category: validCategories[1] } });
+    const req: any = createRequestObject({ params: { category: validCategories[1] } });
 
     const mockPosts = [
       createPostObject({ title: 'Test Post - 1', categories: [validCategories[1]] }),
@@ -173,7 +163,7 @@ describe('getPostByCategoryHandler', () => {
       createPostObject({ title: 'Test Post - 3', categories: [validCategories[1]] }),
     ];
 
-    Post.find = jest.fn().mockResolvedValueOnce(mockPosts);
+    jest.spyOn(Post, 'find').mockResolvedValue(mockPosts);
 
     await getPostByCategoryHandler(req, res);
 
@@ -182,7 +172,7 @@ describe('getPostByCategoryHandler', () => {
   });
 
   it('Get posts by category: Failure - Invalid category', async () => {
-    const req = createRequestObject({ params: { category: 'Invalid Category' } });
+    const req: any = createRequestObject({ params: { category: 'Invalid Category' } });
 
     await getPostByCategoryHandler(req, res);
 
@@ -191,10 +181,10 @@ describe('getPostByCategoryHandler', () => {
   });
 
   it('Get posts by category: Failure - Internal Server Error', async () => {
-    const req = createRequestObject({ params: { category: validCategories[1] } });
+    const req: any = createRequestObject({ params: { category: validCategories[1] } });
 
-    Post.find = jest
-      .fn()
+    jest
+      .spyOn(Post, 'find')
       .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
 
     await getPostByCategoryHandler(req, res);
@@ -208,7 +198,7 @@ describe('getPostByCategoryHandler', () => {
 
 describe('getLatestPostsHandler', () => {
   it('Get latest posts: Success - Retrieving most recent posts list', async () => {
-    const req = createRequestObject();
+    const req: any = createRequestObject();
 
     const mockPosts = [
       createPostObject({ title: 'Test Post - 1' }),
@@ -216,9 +206,7 @@ describe('getLatestPostsHandler', () => {
       createPostObject({ title: 'Test Post - 3' }),
     ];
 
-    Post.find.mockReturnValueOnce({
-      sort: jest.fn().mockResolvedValueOnce(mockPosts),
-    });
+    jest.spyOn(Post, 'find').mockResolvedValueOnce(mockPosts);
 
     await getLatestPostsHandler(req, res);
 
@@ -227,13 +215,11 @@ describe('getLatestPostsHandler', () => {
   });
 
   it('Get latest posts: Failure - Internal Server Error', async () => {
-    const req = createRequestObject();
+    const req: any = createRequestObject();
 
-    Post.find.mockReturnValueOnce({
-      sort: jest
-        .fn()
-        .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR)),
-    });
+    jest
+      .spyOn(Post, 'find')
+      .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
 
     await getLatestPostsHandler(req, res);
 
@@ -246,11 +232,11 @@ describe('getLatestPostsHandler', () => {
 
 describe('getPostByIdHandler', () => {
   it('Get post by ID: Success - Retrieving Specific Post', async () => {
-    const req = createRequestObject({ params: { id: '6910293383' } });
+    const req: any = createRequestObject({ params: { id: '6910293383' } });
 
-    const mockPost = createPostObject({ _id: '6910293383' });
+    const mockPost: any = createPostObject({ _id: '6910293383' });
 
-    Post.findById = jest.fn().mockResolvedValueOnce(mockPost);
+    jest.spyOn(Post, 'find').mockResolvedValueOnce(mockPost);
 
     await getPostByIdHandler(req, res);
 
@@ -259,9 +245,9 @@ describe('getPostByIdHandler', () => {
   });
 
   it('Get post by ID: Failure - Post not found (Specified post ID is invalid)', async () => {
-    const req = createRequestObject({ params: { id: '6910293383' } });
+    const req: any = createRequestObject({ params: { id: '6910293383' } });
 
-    Post.findById = jest.fn().mockResolvedValueOnce(null);
+    jest.spyOn(Post, 'findById').mockResolvedValue(null);
 
     await getPostByIdHandler(req, res);
 
@@ -270,10 +256,10 @@ describe('getPostByIdHandler', () => {
   });
 
   it('Get post by ID: Failure - Internal Server Error', async () => {
-    const req = createRequestObject({ params: { id: '6910293383' } });
+    const req: any = createRequestObject({ params: { id: '6910293383' } });
 
-    Post.findById = jest
-      .fn()
+    jest
+      .spyOn(Post, 'findById')
       .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
 
     await getPostByIdHandler(req, res);
@@ -287,7 +273,7 @@ describe('getPostByIdHandler', () => {
 
 describe('updatePostHandler', () => {
   it('Update post: Success - Modifying post content', async () => {
-    const req = createRequestObject({
+    const req: any = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
     });
@@ -295,7 +281,7 @@ describe('updatePostHandler', () => {
     const mockPost = createPostObject({ _id: '6910293383', title: 'Updated Post' });
 
     // Mock the behavior of Post.findByIdAndUpdate
-    Post.findByIdAndUpdate = jest.fn().mockResolvedValueOnce(mockPost);
+    jest.spyOn(Post, 'findByIdAndUpdate').mockResolvedValueOnce(mockPost);
 
     await updatePostHandler(req, res);
 
@@ -304,13 +290,13 @@ describe('updatePostHandler', () => {
   });
 
   it('Update post: Failure - Post not found (Specified post ID is invalid)', async () => {
-    const req = createRequestObject({
+    const req: any = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
     });
 
     // Mock the behavior of Post.findByIdAndUpdate
-    Post.findByIdAndUpdate = jest.fn().mockResolvedValueOnce(null);
+    jest.spyOn(Post, 'findByIdAndUpdate').mockResolvedValueOnce(null);
 
     await updatePostHandler(req, res);
 
@@ -319,15 +305,14 @@ describe('updatePostHandler', () => {
   });
 
   it('Update post: Failure - Internal Server Error', async () => {
-    const req = createRequestObject({
+    const req: any = createRequestObject({
       params: { id: '6910293383' },
       body: { title: 'Updated Post' },
     });
     // Mock the behavior of Post.findByIdAndUpdate
-    Post.findByIdAndUpdate = jest
-      .fn()
+    jest
+      .spyOn(Post, 'findByIdAndUpdate')
       .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
-
     await updatePostHandler(req, res);
 
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.INTERNAL_SERVER_ERROR);
@@ -339,12 +324,12 @@ describe('updatePostHandler', () => {
 
 describe('deletePostByIdHandler', () => {
   it('Delete Post: Success - Removing Post with specified ID', async () => {
-    const req = createRequestObject({ params: { id: '6910293383' } });
+    const req: any = createRequestObject({ params: { id: '6910293383' } });
 
     const mockPost = createPostObject({ _id: '6910293383' });
 
     // Mock the behavior of Post.findByIdAndRemove
-    Post.findByIdAndDelete = jest.fn().mockResolvedValueOnce(mockPost);
+    jest.spyOn(Post, 'findByIdAndDelete').mockResolvedValueOnce(mockPost);
 
     await deletePostByIdHandler(req, res);
 
@@ -355,10 +340,13 @@ describe('deletePostByIdHandler', () => {
   });
 
   it('Delete Post: Failure - Post not found (Specified post ID is invalid)', async () => {
-    const req = createRequestObject({ params: { id: '6910293383' } });
+    const req: any = createRequestObject({ params: { id: '6910293383' } });
 
     // Mock the behavior of Post.findByIdAndRemove
-    Post.findByIdAndDelete = jest.fn().mockResolvedValueOnce(null);
+
+    jest
+      .spyOn(Post, 'findByIdAndDelete')
+      .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
 
     await deletePostByIdHandler(req, res);
 
@@ -367,11 +355,11 @@ describe('deletePostByIdHandler', () => {
   });
 
   it('Delete Post: Failure - Internal Server Error', async () => {
-    const req = createRequestObject({ params: { id: '6910293383' } });
+    const req: any = createRequestObject({ params: { id: '6910293383' } });
 
     // Mock the behavior of Post.findByIdAndRemove
-    Post.findByIdAndDelete = jest
-      .fn()
+    jest
+      .spyOn(Post, 'findByIdAndDelete')
       .mockRejectedValueOnce(new Error(RESPONSE_MESSAGES.COMMON.INTERNAL_SERVER_ERROR));
 
     await deletePostByIdHandler(req, res);

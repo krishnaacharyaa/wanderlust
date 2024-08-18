@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
 import request from 'supertest';
-import Post from '../../../models/post.js';
-import server from '../../../server.js';
-import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';
-import { createPostObject } from '../../utils/helper-objects.js';
+import Post from '../../../models/post';
+import server from '../../../server';
+import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants';
+import { createPostObject } from '../../utils/helper-objects';
 import { expect, jest, it, afterAll, describe } from '@jest/globals';
 
 afterAll(async () => {
   await mongoose.disconnect();
 });
 
-let postId;
+let postId: any;
 const invalidPostId = '609c16c69405b14574c99999';
 describe('Integration Tests: Post creation', () => {
   it('Post creation: Success - All fields are valid', async () => {
@@ -21,7 +21,7 @@ describe('Integration Tests: Post creation', () => {
     expect(response.status).toBe(HTTP_STATUS.OK);
     expect(response.body).toHaveProperty('_id');
     expect(fetchedPost).not.toBeNull();
-    expect(fetchedPost.title).toBe(createPostObject().title);
+    expect(fetchedPost?.title).toBe(createPostObject().title);
   });
 
   it('Post creation: Failure - Missing required fields', async () => {
@@ -128,7 +128,7 @@ describe('Integration Tests: Update Post', () => {
 
     expect(response.status).toBe(HTTP_STATUS.OK);
     expect(updatedPost).not.toBeNull();
-    expect(updatedPost.title).toBe('Updated Post');
+    expect(updatedPost?.title).toBe('Updated Post');
   });
 
   it('Update Post: Failure - Invalid post ID', async () => {
