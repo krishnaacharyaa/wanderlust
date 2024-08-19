@@ -13,7 +13,6 @@ export const createPostHandler = async (req: Request, res: Response) => {
       description,
       isFeaturedPost = false,
     } = req.body;
-
     const userId = req.user._id;
 
     // Validation - check if all fields are filled
@@ -50,9 +49,9 @@ export const createPostHandler = async (req: Request, res: Response) => {
 
     const [savedPost] = await Promise.all([
       post.save(), // Save the post
-      deleteDataFromCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
-      deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
-      deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
+      // deleteDataFromCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
+      // deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
+      // deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
     ]);
 
     // updating user doc to include the ObjectId of the created post
@@ -60,7 +59,7 @@ export const createPostHandler = async (req: Request, res: Response) => {
 
     res.status(HTTP_STATUS.OK).json(savedPost);
   } catch (err: any) {
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err });
   }
 };
 

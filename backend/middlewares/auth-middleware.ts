@@ -6,13 +6,14 @@ import { Role } from '../types/role-type';
 import User from '../models/user';
 
 import { Request, Response, NextFunction } from 'express';
+import { ObjectId } from 'mongoose';
 
 interface JwtPayload {
-  _id: string;
+  _id: ObjectId;
 }
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies?.access_token;
+  const token = await req.cookies.access_token;
   if (!token) {
     return next(
       new ApiError({
@@ -24,11 +25,10 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
   try {
     const { _id } = jwt.verify(token, JWT_SECRET as string) as JwtPayload;
-
     req.user = await User.findById(_id);
     next();
   } catch (error: any) {
-    console.log('Token verification error:', error.message);
+    console.log('Token verification error:', error);
     return next(
       new ApiError({
         status: HTTP_STATUS.FORBIDDEN,

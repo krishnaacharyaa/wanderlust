@@ -2,7 +2,6 @@ import { createClient } from 'redis';
 import { REDIS_URL } from '../config/utils';
 
 let redis: any = null;
-
 export async function connectToRedis() {
   try {
     if (REDIS_URL) {
@@ -19,6 +18,6 @@ export async function connectToRedis() {
   }
 }
 
-export function getRedisClient() {
+export function getRedisClient(): any {
   return redis;
 }

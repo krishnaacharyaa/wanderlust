@@ -6,7 +6,6 @@ import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '.
 import { Role } from '../types/role-type';
 
 interface UserObject extends Document {
-  id: number;
   userName: string;
   fullName: string;
   email: string;

@@ -4,7 +4,7 @@ interface CookieObject {
   httpOnly: boolean;
   sameSite: 'lax' | 'strict' | 'none';
   secure: boolean;
-  maxAge?: number | undefined;
+  maxAge: number;
 }
 const maxAge =
   typeof ACCESS_COOKIE_MAXAGE === 'string' ? parseInt(ACCESS_COOKIE_MAXAGE, 10) : defaultMaxAge;
