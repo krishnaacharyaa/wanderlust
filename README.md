@@ -106,7 +106,7 @@ This project is licensed under the [MIT License](./LICENSE).
 
 If you find this project interesting and inspiring, please consider showing your support by starring it on GitHub! Your star goes a long way in helping me reach more developers and encourages me to keep enhancing the project.
 
-Feel free to get in touch with me for any further queries or support, happy to help :)
+Feel free to get in touch with me for any further queries or support, happy to help :-)
 
 <hr>
 
