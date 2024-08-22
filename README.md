@@ -36,6 +36,22 @@ At its core, this project embodies two important aims:
 
 1. **Start Your Open Source Journey**: It's aimed to kickstart your open-source journey. Here, you'll learn the basics of Git and get a solid grip on the MERN stack and I strongly believe that learning and building should go hand in hand.
 2. **React Mastery**: Once you've got the basics down, a whole new adventure begins of mastering React. This project covers everything, from simple form validation to advanced performance enhancements. And I've planned much more cool stuff to add in the near future if the project hits more number of contributors.
+3. **Install Required Dependencies **
+    # installs fnm (Fast Node Manager)
+winget install Schniz.fnm
+
+# configure fnm environment
+fnm env --use-on-cd | Out-String | Invoke-Expression
+
+# download and install Node.js
+fnm use --install-if-missing 20
+
+# verifies the right Node.js version is in the environment
+node -v # should print `v20.17.0`
+
+# verifies the right npm version is in the environment
+npm -v # should print `10.8.2`
+
 
 _We want you to get the most out of this project—it's all about learning, contributing, and growing in the open-source community._
 <hr>
