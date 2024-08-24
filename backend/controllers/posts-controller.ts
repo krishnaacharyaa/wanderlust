@@ -49,9 +49,9 @@ export const createPostHandler = async (req: Request, res: Response) => {
 
     const [savedPost] = await Promise.all([
       post.save(), // Save the post
-      // deleteDataFromCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
-      // deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
-      // deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
+      deleteDataFromCache(REDIS_KEYS.ALL_POSTS), // Invalidate cache for all posts
+      deleteDataFromCache(REDIS_KEYS.FEATURED_POSTS), // Invalidate cache for featured posts
+      deleteDataFromCache(REDIS_KEYS.LATEST_POSTS), // Invalidate cache for latest posts
     ]);
 
     // updating user doc to include the ObjectId of the created post
