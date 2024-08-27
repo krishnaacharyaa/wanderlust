@@ -7,11 +7,11 @@ import {
   getPostByCategoryHandler,
   getPostByIdHandler,
   updatePostHandler,
-} from '../../../controllers/posts-controller';
-import Post from '../../../models/post';
+} from '../../../controllers/posts-controller.js';
+import Post from '../../../models/post.js';
 import { expect, jest, it, describe } from '@jest/globals';
-import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants';
-import { createPostObject, createRequestObject, res } from '../../utils/helper-objects';
+import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';
+import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';
 
 jest.mock('../../../models/post.js', () => ({
   __esModule: true,

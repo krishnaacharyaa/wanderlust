@@ -1,4 +1,4 @@
-import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import { Request, Response, NextFunction } from 'express';
 
 const errorMiddleware = (err: any, req: Request, res: Response, next: NextFunction) => {

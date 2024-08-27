@@ -1,12 +1,12 @@
-import app from './app';
-import connectDB from './config/db';
-import { PORT } from './config/utils';
+import app from './app.js';
+import connectDB from './config/db.js';
+import { PORT } from './config/utils.js';
 import { connectToRedis } from './services/redis.js';
 
 const server = () => {
   const port = PORT || 8080;
 
-  // Redis connection
+  // Redis connections
   connectToRedis();
   // mongodb connection
   connectDB()
