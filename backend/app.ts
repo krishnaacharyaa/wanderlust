@@ -2,20 +2,20 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import { FRONTEND_URL } from './config/utils.js';
 import authRouter from './routes/auth.js';
 import postsRouter from './routes/posts.js';
 import userRouter from './routes/user.js';
 import errorMiddleware from './middlewares/error-middleware.js';
 import passport from './config/passport.js';
 import session from 'express-session';
+import { FRONTEND_URL } from './config/utils.js';
 
 const app = express();
 
 app.use(
   cors({
     // added origin
-    origin: [FRONTEND_URL, 'http://localhost:3000'],
+    origin: [FRONTEND_URL as string, 'http://localhost:3000'],
     credentials: true,
   })
 );
