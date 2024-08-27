@@ -6,7 +6,7 @@ function isRedisEnabled() {
   return getRedisClient() !== null;
 }
 
-export async function retrieveDataFromCache(key) {
+export async function retrieveDataFromCache(key: any) {
   if (!isRedisEnabled()) return null; // Skip cache if Redis is not available
 
   const cacheKey = `${REDIS_PREFIX}:${key}`;
@@ -17,16 +17,17 @@ export async function retrieveDataFromCache(key) {
   return null;
 }
 
-export async function storeDataInCache(key, data) {
+export async function storeDataInCache(key: any, data: any) {
   if (!isRedisEnabled()) return; // Skip cache if Redis is not available
 
   const cacheKey = `${REDIS_PREFIX}:${key}`;
   await getRedisClient().set(cacheKey, JSON.stringify(data));
 }
 
-export async function deleteDataFromCache(key) {
+export async function deleteDataFromCache(key: any): Promise<void> {
   if (!isRedisEnabled()) return; // Skip cache if Redis is not available
-
   const cacheKey = `${REDIS_PREFIX}:${key}`;
-  await getRedisClient().del(cacheKey);
+  if (getRedisClient().exists(cacheKey)) {
+    await getRedisClient().del(cacheKey);
+  }
 }

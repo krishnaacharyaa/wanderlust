@@ -1,10 +1,24 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import JWT from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';
 import { Role } from '../types/role-type.js';
 
+interface UserObject extends Document {
+  userName: string;
+  fullName: string;
+  email: string;
+  password?: string;
+  avatar: string;
+  role: string;
+  posts: Schema.Types.ObjectId;
+  refreshToken?: string;
+  isPasswordCorrect(password: string): Promise<boolean>;
+  generateAccessToken(): Promise<string>;
+  generateRefreshToken(): Promise<string>;
+  generateResetToken(): Promise<string>;
+}
 const userSchema = new Schema(
   {
     userName: {
@@ -74,40 +88,44 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password! = await bcrypt.hash(this.password!, 10);
 });
 
 userSchema.methods = {
-  isPasswordCorrect: async function (password) {
+  isPasswordCorrect: async function (password: string) {
     return await bcrypt.compare(password, this.password);
   },
   generateAccessToken: async function () {
-    return JWT.sign(
-      {
-        _id: this._id,
-        username: this.userName,
-        email: this.email,
-        role: this.role,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-      }
-    );
+    if (JWT_SECRET) {
+      return JWT.sign(
+        {
+          _id: this._id,
+          username: this.userName,
+          email: this.email,
+          role: this.role,
+        },
+        JWT_SECRET,
+        {
+          expiresIn: ACCESS_TOKEN_EXPIRES_IN,
+        }
+      );
+    }
   },
   generateRefreshToken: async function () {
-    return JWT.sign(
-      {
-        _id: this._id,
-        username: this.userName,
-        email: this.email,
-        role: this.role,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: REFRESH_TOKEN_EXPIRES_IN,
-      }
-    );
+    if (JWT_SECRET) {
+      return JWT.sign(
+        {
+          _id: this._id,
+          username: this.userName,
+          email: this.email,
+          role: this.role,
+        },
+        JWT_SECRET,
+        {
+          expiresIn: REFRESH_TOKEN_EXPIRES_IN,
+        }
+      );
+    }
   },
   generateResetToken: async function () {
     const resetToken = crypto.randomBytes(20).toString('hex');
@@ -117,6 +135,6 @@ userSchema.methods = {
   },
 };
 
-const User = model('User', userSchema);
+const User = model<UserObject>('User', userSchema);
 
 export default User;
