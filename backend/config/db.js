@@ -3,11 +3,11 @@ import { MONGODB_URI } from './utils.js';
 
 export default async function connectDB() {
   try {
-    await mongoose.connect(MONGODB_URI as string, {
+    await mongoose.connect(MONGODB_URI, {
       dbName: 'wanderlust',
     });
     console.log(`Database connected: ${MONGODB_URI}`);
-  } catch (err: any) {
+  } catch (err) {
     console.error(err.message);
     process.exit(1);
   }
