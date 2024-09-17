@@ -17,7 +17,7 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
         className={`mb-4 cursor-pointer rounded-lg bg-light shadow-md dark:bg-dark-card ${'sm:mr-8 sm:mt-4'}`}
         onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       >
-        <div className="h-48 w-full overflow-hidden">
+        <div className="h-48 w-full overflow-hidden rounded-t-lg">
           <img
             src={post.imageLink}
             alt={post.title}
