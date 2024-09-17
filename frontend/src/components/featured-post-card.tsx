@@ -17,7 +17,7 @@ export default function FeaturedPostCard({
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       data-testid={testId}
     >
-      <div className="w-full overflow-hidden rounded-t-lg sm:w-1/3">
+      <div className="w-full overflow-hidden rounded-b-lg rounded-t-lg sm:w-1/3">
         <img
           src={post.imageLink}
           alt={post.title}
