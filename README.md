@@ -34,29 +34,64 @@ _I'd love for you to make the most of this project - it's all about learning, he
 
 3. **Install Required Dependencies**
 
+4. ** install npm **
+
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+   - Installs Node Version Manager (NVM) for managing Node.js versions.
+
+5. **Install Node.js version 21:
    ```bash
+    nvm install 21
+   - Installs Node.js version 21 using NVM.
+   ```
+6. **Verify Node.js and npm Installation:**
+   ```bash
+     node -v
+     npm -v
+    ```
+  - Checks installed versions of Node.js and npm.
+  ```bash
    npm i
    ```
 
-4. **Set up your MongoDB Database**
-
+7. **Set up your MongoDB Database**
+  
+  ``` bash 
+     
+    curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
    - Open MongoDB Compass and connect MongoDB locally at `mongodb://localhost:27017`.
+ 
 
-5. **Import sample data**
+   echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 
-   > To populate the database with sample posts, you can copy the content from the `backend/data/sample_posts.json` file and insert it as a document in the `wanderlust/posts` collection in your local MongoDB database using either MongoDB Compass or `mongoimport`.
+
+ sudo apt-get update
+
+sudo apt-get install -y mongodb-org
+
+sudo systemctl start mongod
+sudo systemctl enable mongod
+
+
+
+sudo systemctl status mongod
+```
+
+. **Import sample data**
+
+8.   > To populate the database with sample posts, you can copy the content from the `backend/data/sample_posts.json` file and insert it as a document in the `wanderlust/posts` collection in your local MongoDB database using either MongoDB Compass or `mongoimport`.
 
    ```bash
    mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
    ```
 
-6. **Configure Environment Variables**
+9. **Configure Environment Variables**
 
    ```bash
    cp .env.sample .env
    ```
 
-7. **Start the Backend Server**
+10. **Start the Backend Server**
 
    ```bash
    npm start
