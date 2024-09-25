@@ -39,24 +39,44 @@ At its core, this project embodies two important aims:
 
 _We want you to get the most out of this project—it's all about learning, contributing, and growing in the open-source community._
 <hr>
+## Installation and Setup Instructions
 
-<div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/1ee5934a-27be-4502-a7bf-e6a8c78fe5a3" width="35" height="35"> Features</h2>
-</div>
+1. **Install npm:**
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+2. **Install Node.js version 21:**
 
-- **Featured Posts :** Highlight top travel stories and destinations on the homepage to showcase the best content and inspire readers with exciting travel experiences.
-- **User-Friendly Interface:** Navigate effortlessly through captivating travel content with our intuitive design.
-- **Discover By topic categories:** **Discover by Topic Categories**: Explore diverse travel experiences categorized by travel, nature, city, Adventure and Beaches..
+    nvm install 21
+3. **Verify Node.js and npm Installation:**
+   node -v
+   npm -v
   
-<hr>
+Checks installed versions of Node.js and npm.
+   npm i
+4. **Set up your MongoDB Database:**
+ ```bash
+  curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
+echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+sudo systemctl start mongod
+sudo systemctl enable mongod
+sudo systemctl status mongod
+ 
+ ```
+5. **Import Sample Data:**
+```bash
+  mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
+  
+```
 
-<div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/90f3930e-5a12-4a4e-8ac9-0dc7d5396adb" width="35" height="35"> Ready to Contribute?</h2>
-</div>
+6. **Configure Environment Variables:**
+```bash
+ cp .env.sample .env
+```
 
-Kindly go through [CONTRIBUTING.md](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) to understand everything from setup to contributing guidelines.
 
-If you would like to contribute to the project, please follow our contribution guidelines.
+ 
 
 <hr>
 <!-- Open Source Programs -->
