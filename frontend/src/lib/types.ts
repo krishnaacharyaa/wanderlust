@@ -1,37 +1,73 @@
 import { z } from 'zod';
 
-const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
 export const signInSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Email is required' })
-    .regex(emailRegex, 'Invalid email address'),
-  password: z.string().min(1, { message: 'Password is required' }),
+  userNameOrEmail: z.string().min(1, { message: 'username or email is required' }),
+  password: z.string().min(1, 'Password must be at least 1 character'),
 });
 
 export const signUpSchema = z
   .object({
-    username: z.string().min(1, { message: 'Username is required' }),
-    email: z
+    userName: z.string().min(1, { message: 'Username is required' }),
+    fullName: z
       .string()
-      .min(1, { message: 'Email is required' })
-      .regex(emailRegex, 'Invalid email address'),
-    password: z.string().min(1, { message: 'Password is required' }),
+      .min(3, { message: 'Name must be at least 3 character' })
+      .max(15, { message: 'Name should be less than 15 character' }),
+    email: z.string().email('Enter valid email'),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 character')
+      .regex(
+        passwordRegex,
+        'Password must be contains at least one uppercase and one lowercase and one digit and one special character'
+      ),
     confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
   })
-  .refine((data) => data.username.trim().length >= 5, {
-    message: 'Username must be at least 5 characters long',
-    path: ['username'],
-  })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'Confirm Password do not match',
     path: ['confirmPassword'],
-  })
-  .refine((data) => data.password.trim().length >= 8, {
-    message: 'Password must be at least 8 characters long',
-    path: ['password'],
   });
+const isValidImageLink = (value: string) => {
+  const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
+  return imageLinkRegex.test(value);
+};
+export const formBlogSchema = z.object({
+  title: z.string().refine((value) => value.trim().split(/\s+/).length >= 3, {
+    message: 'Oops! Title needs more spice. Give it at least 3 words.',
+  }),
+  isFeaturedPost: z.boolean(),
+  description: z.string().refine((value) => value.trim().split(/\s+/).length >= 10, {
+    message: 'Oops! Description needs more detail. Give it at least 10 words',
+  }),
+  authorName: z
+    .string()
+    .min(3, {
+      message: "C'ome on! Your name cannot be less than 3 characters.",
+    })
+    .max(15, {
+      message: "Hey isn't it too big of a name, can you limit it to 15 characters",
+    }),
+  imageLink: z.string().refine((value) => isValidImageLink(value), {
+    message: 'Hmm... Image link should end with .jpg, .jpeg, .webp, or .png.',
+  }),
+  categories: z
+    .array(z.string())
+    .min(1, {
+      message: 'Easy there! Select at least one category.',
+    })
+    .max(3, {
+      message: 'Easy there! Not more than 3 categories.',
+    }),
+});
+
+export interface AuthData {
+  _id: string;
+  role: string;
+  token: string;
+  loading: boolean;
+}
 
 export type TSignInSchema = z.infer<typeof signInSchema>;
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
+export type TFormBlogSchema = z.infer<typeof formBlogSchema>;

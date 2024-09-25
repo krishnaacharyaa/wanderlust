@@ -1,0 +1,41 @@
+name: 'PR Title Checker'
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+
+permissions:
+  contents: write
+  pull-requests: write
+  repository-projects: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Run PR Title Checker
+        id: title-check
+        uses: thehanimo/pr-title-checker@v1.4.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pass_on_octokit_error: false
+          configuration_path: .github/pr-title-checker-config.json
+
+      - name: PR title satisfied
+        if: success()
+        run: |
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body  "Hey @${{ github.actor }}! Thanks for sticking to the guidelines! High five! 🙌🏻"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Close PR if title is invalid
+        if: failure()
+        run: |
+          gh issue comment ${{ github.event.pull_request.number }} -R ${{ github.repository }} --body $'Umm... did someone forget to read the style guide? Fix that PR title and let\'s try again! @${{ github.actor }}\nDon\'t worry, it happens to the best of us! Check out our [contributor guidelines](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) for more details.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

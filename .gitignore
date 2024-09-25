@@ -5,3 +5,5 @@ backend/node_modules
 /node_modules
 coverage/
 .idea/
+backend/dist
+package-lock.json

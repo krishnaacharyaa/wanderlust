@@ -1,13 +1,18 @@
 {
-  "dependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "scripts": {
-    "start-frontend": "cd frontend && npm run dev",
-    "start-backend": "cd backend && npm start",
-    "start": "concurrently -n \"FRONTEND,BACKEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start-frontend\" \"npm run start-backend\"",
-    "install-frontend": "cd frontend && npm i",
-    "install-backend": "cd backend && npm i",
-    "installer": "npm i && npm run install-backend && npm run install-frontend"
-  }
+	"dependencies": {
+		"concurrently": "^8.2.2",
+		"js-cookie": "^3.0.5"
+	},
+	"scripts": {
+		"start-frontend": "cd frontend && npm run dev",
+		"start-backend": "cd backend && npm start",
+		"start": "concurrently -n \"FRONTEND,BACKEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start-frontend\" \"npm run start-backend\"",
+		"install-frontend": "cd frontend && npm i",
+		"install-backend": "cd backend && npm i",
+		"installer": "npm i && npm run install-backend && npm run install-frontend",
+		"prepare": "husky install && chmod ug+x .husky/*"
+	},
+	"devDependencies": {
+		"husky": "^8.0.0"
+	}
 }

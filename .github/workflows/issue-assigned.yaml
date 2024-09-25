@@ -1,0 +1,25 @@
+name: Issue Assigned Comment
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  comment-on-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on the assigned issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue_number = context.issue.number;
+            const issue_assignee = context.payload.assignee.login;
+            const contributing_guidelines_url = 'https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md#guidelines-for-contributions';
+
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: `Hey @${issue_assignee} 🎉! Thanks for jumping on this issue. Before you dive in, please check out our [contributing guidelines](${contributing_guidelines_url}) to ensure we're all on the same page. Happy coding! 🚀`
+            });

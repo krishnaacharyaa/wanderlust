@@ -13,7 +13,7 @@ export default function FeaturedPostCard({
   const slug = createSlug(post.title);
   return (
     <div
-      className={`active:scale-click group flex h-auto cursor-pointer flex-col gap-2 rounded-lg bg-light dark:bg-dark-card sm:h-48 sm:flex-row`}
+      className={`active:scale-click group flex h-auto cursor-pointer flex-col gap-2 rounded-lg border bg-slate-50 dark:border-none dark:bg-dark-card sm:h-48 sm:flex-row`}
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       data-testid={testId}
     >

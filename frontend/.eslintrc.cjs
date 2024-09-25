@@ -1,4 +1,4 @@
-module.exports = {
+export default  {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
@@ -6,9 +6,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/stylistic-type-checked',
-    'prettier',
+    'plugin:prettier/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules/'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
   rules: {

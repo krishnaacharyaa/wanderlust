@@ -20,7 +20,7 @@ export default function CategoryPill({ category, disabled, selected = false }: C
   return (
     <span
       className={twMerge(
-        'cursor-pointer rounded-3xl px-3 py-1 text-xs font-medium text-light-primary/80 dark:text-dark-primary/80 ',
+        'cursor-pointer overflow-hidden truncate whitespace-nowrap rounded-3xl px-3 py-1 text-xs font-medium text-light-primary/80 dark:text-dark-primary/80',
         disabled ? disabledColor : getSelectedColor(selected)
       )}
     >

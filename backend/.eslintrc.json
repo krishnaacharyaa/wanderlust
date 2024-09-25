@@ -4,14 +4,18 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended", "prettier"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "env": {
+    "node": true,
     "jest": true,
-    "es2021": true,
-    "node": true
+    "es2021": true
   },
-  "plugins": ["babel", "jest"],
+  "ignorePatterns": ["note_modules/"],
+
+  "plugins": ["babel", "jest", "prettier"],
   "rules": {
-    "no-console": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-console": "off",
+    "import/extensions": "off"
   }
 }
