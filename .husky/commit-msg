@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#! /bin/bash
 
 commit_msg_file="$1"
 commit_msg=$(cat "$commit_msg_file")
