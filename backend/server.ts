@@ -1,3 +1,4 @@
+import logger from './config/logger.js';
 import app from './app.js';
 import connectDB from './config/db.js';
 import { PORT } from './config/utils.js';
@@ -12,11 +13,11 @@ const server = () => {
   connectDB()
     .then(() => {
       app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+        logger.info(`Server is running on port ${port}`);
       });
     })
     .catch((error) => {
-      console.log('MongoDB connection failed:', error);
+      logger.error('MongoDB connection failed:', error);
     });
 };
 server();
