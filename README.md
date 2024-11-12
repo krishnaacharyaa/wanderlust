@@ -1,5 +1,5 @@
 <div>
-  <h1>Wanderlust</h1>
+  <h1>MY First Projecta</h1>
   <h2>The Ultimate Travel Blog 🌍✈️ for You </h2>
 </div>
 
