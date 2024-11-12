@@ -6,7 +6,7 @@
 ![Preview Image](https://github.com/krishnaacharyaa/wanderlust/assets/116620586/17ba9da6-225f-481d-87c0-5d5a010a9538)
 
 <hr>
-<h1>This is my Second practice editing git hub repositary</h1>
+<h1>THis is my first fi	le editing file on README files </h1>
 <div>
   <h2>🔗 Important Links</h2>
 </div>
