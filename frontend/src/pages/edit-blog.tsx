@@ -22,7 +22,7 @@ const EditBlog = () => {
           setPost(response.data);
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     if (post === undefined || post !== state?.post) {

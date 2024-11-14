@@ -49,7 +49,7 @@ export default function DetailsPage() {
         navigate('/');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error('something went wrong');
     }
   };
@@ -62,7 +62,7 @@ export default function DetailsPage() {
           setPost(response.data);
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     if (post === undefined || post !== state.post) {
