@@ -6,9 +6,11 @@ import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-c
 import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import NoDataComponent from './no-data';
 
 export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');
+  const [selectedTitleCategory, setTitleSelectedCategory] = useState('Featured Posts');
   const [posts, setPosts] = useState([]);
   const [latestPosts, setLatestPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +31,9 @@ export default function BlogFeed() {
       .catch((error) => {
         console.error(error);
       });
+      selectedCategory === 'featured'
+              ? setTitleSelectedCategory('Featured Posts')
+              : setTitleSelectedCategory(`Posts related to "${selectedCategory}"`)
   }, [selectedCategory]);
 
   useEffect(() => {
@@ -50,18 +55,20 @@ export default function BlogFeed() {
             What's hot?
           </div>
           <h1 className="mb-2 cursor-text text-xl font-semibold dark:text-dark-primary">
-            {selectedCategory === 'featured'
-              ? 'Featured Posts'
-              : `Posts related to "${selectedCategory}"`}
+            {selectedTitleCategory}
           </h1>
           <div className="flex flex-col gap-6">
-            {posts.length === 0 || loading == true
+            {loading == true
               ? Array(5)
                   .fill(0)
                   .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
-              : posts
+              : posts.length > 0  ? posts
                   .slice(0, 5)
-                  .map((post, index) => <FeaturedPostCard key={index} post={post} />)}
+                  .map((post, index) => <FeaturedPostCard key={index} post={post} />)
+                  : (<NoDataComponent>
+                        Not found post for <p className="underline underline-offset-8 decoration-2  decoration-sky-500">{selectedTitleCategory}</p>
+                      </NoDataComponent>)
+              }
           </div>
         </div>
         <div className="w-full p-4 sm:w-1/3">

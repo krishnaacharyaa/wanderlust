@@ -14,7 +14,7 @@ export default function LatestPostCard({
   const slug = createSlug(post.title);
   return (
     <div
-      className={`active:scale-click cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-none dark:bg-dark-card`}
+      className={`active:scale-click cursor-pointer rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-amber-100 dark:bg-dark-card hover:border-sky-500 dark:hover:border-indigo-500 transition-colors ease-in-out delay-100 duration-300`}
       onClick={() => navigate(`/details-page/${slug}/${post._id}`, { state: { post } })}
       data-testid={testId}
     >
@@ -30,7 +30,7 @@ export default function LatestPostCard({
         {post.title}
       </div>
       <div className="text-xs text-light-info dark:text-dark-info">
-        {post.authorName} • {formatPostTime(post.timeOfPost)}
+        <strong>{post.authorName}</strong> • {formatPostTime(post.timeOfPost)}
       </div>
     </div>
   );
