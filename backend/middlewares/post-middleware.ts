@@ -1,7 +1,7 @@
 import Post from '../models/post.js';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import { Request, Response, NextFunction } from 'express';
-
+import logger from '../config/logger.js';
 export const isAuthorMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.user._id;
@@ -11,7 +11,7 @@ export const isAuthorMiddleware = async (req: Request, res: Response, next: Next
       return res.status(HTTP_STATUS.NOT_FOUND).json({ message: RESPONSE_MESSAGES.POSTS.NOT_FOUND });
     }
 
-    console.log(post.authorId, userId);
+    logger.debug(`authorId => ${post.authorId.toString()}, userId => ${userId}`);
     if (post.authorId.toString() !== userId) {
       return res
         .status(HTTP_STATUS.FORBIDDEN)

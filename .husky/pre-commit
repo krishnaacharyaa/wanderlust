@@ -1,6 +1,4 @@
-#!/usr/bin/env sh
-
-. "$(dirname -- "$0")/_/husky.sh"
+#! /bin/bash
 
 cd frontend
 echo [FRONTEND] Running the prettier format for you.

@@ -25,10 +25,11 @@
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
-    "nodemon": "^3.0.1",
+    "nodemon": "^3.1.7",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "redis": "^4.6.13"
+    "redis": "^4.6.13",
+    "winston": "^3.16.0"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -37,9 +38,10 @@
     ]
   },
   "scripts": {
+    "build": "tsc",
     "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "npm run build && NODE_ENV=sample node dist/server.js",
+    "dev": "NODE_ENV=sample nodemon dist/server.js",
     "check": "prettier --check .",
     "format": "prettier --write .",
     "vercel-build": "echo yay"
@@ -69,6 +71,7 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "supertest": "^6.3.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
 }

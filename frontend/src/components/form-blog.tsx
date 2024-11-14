@@ -119,7 +119,7 @@ function FormBlog({ type, postId, post }: FormBlogPropType) {
         userState.removeUser();
         console.error(error.response?.data?.message);
       } else {
-        console.log(error);
+        console.error(error);
       }
     }
   };

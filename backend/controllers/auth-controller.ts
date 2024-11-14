@@ -7,6 +7,7 @@ import { ApiError } from '../utils/api-error.js';
 import { ApiResponse } from '../utils/api-response.js';
 import { asyncHandler } from '../utils/async-handler.js';
 import { NextFunction, Request, Response } from 'express';
+import logger from '../config/logger.js';
 
 //REGULAR EMAIL PASSWORD STRATEGY
 //1.Sign Up
@@ -190,7 +191,7 @@ export const isLoggedIn = asyncHandler(async (req: Request, res: Response) => {
         .status(HTTP_STATUS.OK)
         .json(new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN));
     } catch (error: any) {
-      console.log('Access token verification error:', error.message);
+      logger.error(`Access token verification error: ${error.message}`);
     }
   }
   // If access token is not valid, check the refresh token
@@ -213,7 +214,7 @@ export const isLoggedIn = asyncHandler(async (req: Request, res: Response) => {
         .cookie('access_token', access_token, cookieOptions)
         .json(new ApiResponse(HTTP_STATUS.OK, access_token, RESPONSE_MESSAGES.USERS.VALID_TOKEN));
     } catch (error: any) {
-      console.log('Refresh token verification error:', error.message);
+      logger.error(`Refresh token verification error: ${error.message}`);
     }
   }
 

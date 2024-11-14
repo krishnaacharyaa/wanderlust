@@ -4,7 +4,7 @@ import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
 import jwt from 'jsonwebtoken';
 import { Role } from '../types/role-type.js';
 import User from '../models/user.js';
-
+import logger from '../config/logger.js';
 import { Request, Response, NextFunction } from 'express';
 import { ObjectId } from 'mongoose';
 
@@ -28,7 +28,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     req.user = await User.findById(_id);
     next();
   } catch (error: any) {
-    console.log('Token verification error:', error);
+    logger.error(`Token verification error: ${error}`);
     return next(
       new ApiError({
         status: HTTP_STATUS.FORBIDDEN,
