@@ -25,7 +25,6 @@ export default function BlogFeed() {
     axios
       .get(import.meta.env.VITE_API_PATH + categoryEndpoint)
       .then((response) => {
-        console.log(response)
         setPosts(response.data);
         setLoading(false);
       })
