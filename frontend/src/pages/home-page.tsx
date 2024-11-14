@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import BlogFeed from '@/components/blog-feed';
-import PostCard from '@/components/post-card';
-import Post from '@/types/post-type';
-import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
+import Post, { PostType } from '@/types/post-type';
 import Header from '@/layouts/header-layout';
 import axiosInstance from '@/helpers/axios-instance';
+import PostsComponent from '@/components/posts';
+
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -16,6 +17,7 @@ function HomePage() {
       } catch (error) {
         console.error(error);
       }
+      setLoading(false);
     };
     fetchPosts();
   }, []);
@@ -29,11 +31,13 @@ function HomePage() {
           All Posts
         </h1>
         <div className="flex flex-wrap">
-          {posts.length === 0
-            ? Array(8)
-                .fill(0)
-                .map((_, index) => <PostCardSkeleton key={index} />)
-            : posts.map((post) => <PostCard key={post._id} post={post} />)}
+          <PostsComponent 
+            loading={loading}
+            posts={posts}
+            skeletonCount={8}
+            noPostValidation="No data"
+            type={PostType.POST}
+          />
         </div>
       </div>
     </div>

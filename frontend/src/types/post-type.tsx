@@ -9,4 +9,10 @@ type Post = {
   authorId?: string;
 };
 
+export enum PostType {
+  FEATURE="feature",
+  POST="post",
+  LATEST="latest",
+}
+
 export default Post;

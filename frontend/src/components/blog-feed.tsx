@@ -1,12 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import FeaturedPostCard from '@/components/featured-post-card';
-import LatestPostCard from '@/components/latest-post-card';
-import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';
-import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
-import NoDataComponent from './no-data';
+import PostsComponent from './posts';
+import { PostType } from '@/types/post-type';
 
 export default function BlogFeed() {
   const [selectedCategory, setSelectedCategory] = useState('featured');
@@ -14,6 +11,7 @@ export default function BlogFeed() {
   const [posts, setPosts] = useState([]);
   const [latestPosts, setLatestPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [latesloading, setLatestLoading] = useState(true);
 
   useEffect(() => {
     const categoryEndpoint =
@@ -26,17 +24,17 @@ export default function BlogFeed() {
       .get(import.meta.env.VITE_API_PATH + categoryEndpoint)
       .then((response) => {
         setPosts(response.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
-      });
+      }).finally(() => setLoading(false));
       selectedCategory === 'featured'
               ? setTitleSelectedCategory('Featured Posts')
               : setTitleSelectedCategory(`Posts related to "${selectedCategory}"`)
   }, [selectedCategory]);
 
   useEffect(() => {
+    setLatestLoading(true);
     axios
       .get(import.meta.env.VITE_API_PATH + '/api/posts/latest')
       .then((response) => {
@@ -44,7 +42,7 @@ export default function BlogFeed() {
       })
       .catch((error) => {
         console.error(error);
-      });
+      }).finally(() => setLatestLoading(false));
   }, []);
 
   return (
@@ -58,17 +56,13 @@ export default function BlogFeed() {
             {selectedTitleCategory}
           </h1>
           <div className="flex flex-col gap-6">
-            {loading == true
-              ? Array(5)
-                  .fill(0)
-                  .map((_, index) => <FeaturedPostCardSkeleton key={index} />)
-              : posts.length > 0  ? posts
-                  .slice(0, 5)
-                  .map((post, index) => <FeaturedPostCard key={index} post={post} />)
-                  : (<NoDataComponent>
-                        Not found post for <p className="underline underline-offset-8 decoration-2  decoration-sky-500">{selectedTitleCategory}</p>
-                      </NoDataComponent>)
-              }
+            <PostsComponent 
+              loading={loading}
+              posts={posts}
+              skeletonCount={5}
+              noPostValidation={<>Not found post for <p className="underline underline-offset-8 decoration-2  decoration-sky-500">{selectedTitleCategory}</p></>}
+              type={PostType.FEATURE}
+            />
           </div>
         </div>
         <div className="w-full p-4 sm:w-1/3">
@@ -103,13 +97,13 @@ export default function BlogFeed() {
               Latest Posts
             </h2>
             <div className="flex flex-col gap-4">
-              {latestPosts.length === 0
-                ? Array(5)
-                    .fill(0)
-                    .map((_, index) => <LatestPostCardSkeleton key={index} />)
-                : latestPosts
-                    .slice(0, 5)
-                    .map((post, index) => <LatestPostCard key={index} post={post} />)}
+                <PostsComponent 
+                  loading={latesloading}
+                  posts={latestPosts}
+                  skeletonCount={5}
+                  noPostValidation={<p>Not data</p>}
+                  type={PostType.LATEST}
+                />
             </div>
           </div>
         </div>
