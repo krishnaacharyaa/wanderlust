@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
 import logger from './logger.js';
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+//dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+dotenv.config({ path: '.env' });
 
 const options = {
   PORT: process.env.PORT,
@@ -13,7 +14,8 @@ const options = {
   REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN,
   JWT_SECRET: process.env.JWT_SECRET,
   FRONTEND_URL: process.env.FRONTEND_URL,
-  NODE_ENV: process.env.NODE_ENV || 'sample',
+  //  NODE_ENV: process.env.NODE_ENV || 'sample',
+  NODE_ENV: process.env.NODE_ENV,
 };
 logger.info(`Google strategy => Client id: ${process.env.GOOGLE_CLIENT_ID}`);
 logger.info(`Configurations vairables: ${JSON.stringify(options)}`);

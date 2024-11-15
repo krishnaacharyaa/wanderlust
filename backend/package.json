@@ -40,8 +40,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
-    "start": "npm run build && NODE_ENV=sample node dist/server.js",
-    "dev": "NODE_ENV=sample nodemon dist/server.js",
+    "start": "npm run build && node dist/server.js",
+    "dev": "nodemon dist/server.js",
     "check": "prettier --check .",
     "format": "prettier --write .",
     "vercel-build": "echo yay"
