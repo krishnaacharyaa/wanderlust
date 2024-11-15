@@ -10,8 +10,7 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "test": "vitest run",
-    "coverage": "vitest run --coverage ",
-    "prepare": "cd .. && npm install --legacy-peer-deps"
+    "coverage": "vitest run --coverage"
   },
   "lint-staged": {
     "src/**/*.{js,ts,tsx,jsx}": [
