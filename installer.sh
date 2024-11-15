@@ -6,18 +6,33 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Variable
+# Variables
 BACKEND_DIR="backend"
+BACKEND_ENV_DIR="./backend/.env"
 FRONTEND_DIR="frontend"
+FRONTEND_ENV_DIR="./frontend/.env"
 REDIS="redis"
 MONGO_DB="mongodb"
 MONGO_EXPRESS="mongo-express"
-ENVIRONMENT="sample"
+
+BACKEND_PORT=8080
+MONGODB_URI="mongodb://127.0.0.1/wanderlust"
+REDIS_URL="redis://127.0.0.1:6379"
+FRONTEND_URL=http://localhost:5173
+BACKEND_URL=http://localhost:8080
+ACCESS_COOKIE_MAXAGE=120000
+ACCESS_TOKEN_EXPIRES_IN='120s'
+REFRESH_COOKIE_MAXAGE=120000
+REFRESH_TOKEN_EXPIRES_IN='120s'
+JWT_SECRET=70dd8b38486eee723ce2505f6db06f1ee503fde5eb06fc04687191a0ed665f3f98776902d2c89f6b993b1c579a87fedaf584c693a106f7cbf16e8b4e67e9d6df
+NODE_ENV=Development
+GOOGLE_CLIENT_ID=30628847356-3j14qkcetnk8tp9khl3s5tpkiccc266g.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
 
 # Creando archivo de logs
 mkdir -p logs
 mkdir -p logs/docker
-LOG_NAME_FILE=$( date -u +"%Y-%m-%dT%H:%M:%SZ" )-logs.txt
+LOG_NAME_FILE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")-logs.txt
 LOG_PATH=logs/$LOG_NAME_FILE
 touch $LOG_PATH
 
@@ -32,23 +47,23 @@ log_multi() {
     printf "$1"
 }
 
-write_log(){
-    local timestamp=$( date -u +"%Y-%m-%dT%H:%M:%SZ" )
-    echo "$timestamp - ${message}" >> $LOG_PATH
+write_log() {
+    local timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    echo "$timestamp - ${message}" >>$LOG_PATH
 }
 
 print_message() {
     local color=$1
     local message=$2
-    write_log 
-    local timestamp=$( date -u +"%Y-%m-%dT%H:%M:%SZ" )
+    write_log
+    local timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
     echo -e "${timestamp} - ${color}${message}${NC}"
 }
 
-check_installed_tools(){
-    if command -v $1 &>/dev/null; then 
+check_installed_tools() {
+    if command -v $1 &>/dev/null; then
         print_message $GREEN "$1 está instalado."
-    else 
+    else
         print_message $RED "$1 no está instalado. Por favor, instale $1 e intente nuevamente."
         exit 1
     fi
@@ -61,15 +76,12 @@ check_installed_tools jq
 check_installed_tools docker
 check_installed_tools node
 
-# A. Instalar dependencias
+# Instalar dependencias
 npm run installer
 
-# B. Crear contenedores
-
-# B1. Eliminar contendores
-for CONTAINER_NAME in $REDIS $MONGO_DB $MONGO_EXPRESS
-do
-    if [ $(docker ps -q -a --filter "name=$CONTAINER_NAME" 2> /dev/null) ]; then
+# Eliminar contendores
+for CONTAINER_NAME in $REDIS $MONGO_DB $MONGO_EXPRESS; do
+    if [ $(docker ps -q -a --filter "name=$CONTAINER_NAME" 2>/dev/null) ]; then
         print_message $GREEN "Ya existe el contendor: $CONTAINER_NAME"
     else
         print_message $GREEN "Creando contenedor $CONTAINER_NAME"
@@ -77,14 +89,14 @@ do
             docker run --name mongodb -p 27017:27017 -d mongo:8.0.3-noble
         elif [ $CONTAINER_NAME == $MONGO_EXPRESS ]; then
             docker run -d \
-            --name mongo-express \
-            --link mongodb:mongo \
-            -p 8081:8081 \
-            -e ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
-            -e ME_CONFIG_OPTIONS_EDITORTHEME="ambiance" \
-            -e ME_CONFIG_BASICAUTH_USERNAME="user" \
-            -e ME_CONFIG_BASICAUTH_PASSWORD="pass" \
-            mongo-express
+                --name mongo-express \
+                --link mongodb:mongo \
+                -p 8081:8081 \
+                -e ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
+                -e ME_CONFIG_OPTIONS_EDITORTHEME="ambiance" \
+                -e ME_CONFIG_BASICAUTH_USERNAME="user" \
+                -e ME_CONFIG_BASICAUTH_PASSWORD="pass" \
+                mongo-express
             print_message $YELLOW "Auth para mongo express => User: user - password: pass"
         else
             docker run -d --name redis -p 6379:6379 redis
@@ -92,15 +104,14 @@ do
     fi
 done
 
-
-# C. instalar typescript globalmente
-if [[ ! -n $( tsc -v ) ]]; then
+# Instalar typescript globalmente
+if [[ ! -n $(tsc -v) ]]; then
     print_message $GREEN "Instalando typescript globalmente"
     npm i -g typescript
 fi
 
-# D. Compilar backend
-if [ -f "$BACKEND_DIR/dist" ]; then 
+# Compilar backend
+if [ -f "$BACKEND_DIR/dist" ]; then
     print_message $GREEN "Eliminando carpeta dist"
     rm $BACKEND_DIR/dist
 fi
@@ -110,46 +121,30 @@ cd $BACKEND_DIR
 npm run build
 cd ..
 
-# E. Configuracion de ambiente
-NODE_ENV_DEFAULT="sample"
-read -p "Cual ambiente desea configurar NODE_ENV [production/development/sample]: " ENVIRONMENT
-ENVIRONMENT="${ENVIRONMENT:-$NODE_ENV_DEFAULT}"
-print_message $GREEN "Ambiente Seleccionado -> $ENVIRONMENT"
-export NODE_ENV=$ENVIRONMENT
+# Agregando variables de ambiente backend
+print_message $YELLOW "Agregando credenciales backend"
+rm $BACKEND_ENV_DIR
+cat <<EOF >>"$BACKEND_ENV_DIR"
+PORT=$BACKEND_PORT
+MONGODB_URI=$MONGODB_URI
+REDIS_URL=$REDIS_URL
+FRONTEND_URL=$FRONTEND_URL
+BACKEND_URL=$BACKEND_URL
+ACCESS_COOKIE_MAXAGE=$ACCESS_COOKIE_MAXAGE
+ACCESS_TOKEN_EXPIRES_IN=$ACCESS_TOKEN_EXPIRES_IN
+REFRESH_COOKIE_MAXAGE=$REFRESH_COOKIE_MAXAGE
+REFRESH_TOKEN_EXPIRES_IN=$REFRESH_TOKEN_EXPIRES_IN
+JWT_SECRET=$JWT_SECRET
+NODE_ENV=$NODE_ENV
+GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+EOF
 
-# F. Configuracion de credenciales
-print_message $YELLOW "GOOGLE_CLIENT_ID -> $GOOGLE_CLIENT_ID"
-LACK_CREDS=false
-if [ -z "$GOOGLE_CLIENT_ID" ] | [  -z "$GOOGLE_CLIENT_SECRET" ]; then
-    print_message $RED "Faltan credenciales"
-    log_multi "
-        para conseguir estos tokens ingrese a https://console.cloud.google.com/apis/credentials?project=devops-final-1731180691822
-        ** si no tiene permisos me avisan y los agrego luego de agregado se descargan las credenciales de identity de ese proyecto
-    "
-    LACK_CREDS=true
-    sudo -v
-fi 
+# Agregando variables de ambiente frontend
+print_message $YELLOW "Agregando variables de ambiente frontend"
+rm $FRONTEND_ENV_DIR
+cat <<EOF >>"$FRONTEND_ENV_DIR"
+echo "VITE_API_PATH=$BACKEND_URL" >>"$FRONTEND_ENV_DIR"
+EOF
 
-if [ -z "$GOOGLE_CLIENT_ID" ]; then
-    read -e -p "GOOGLE_CLIENT_ID=" GOOGLE_CLIENT_ID_TOKEN
-    export GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID_TOKEN
-    echo "export GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID_TOKEN" >> ~/.bashrc
-    echo "export GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID_TOKEN" >> ~/.zshrc
-fi
-
-if [ -z "$GOOGLE_CLIENT_SECRET" ]; then
-    read -e -p "GOOGLE_CLIENT_SECRET=" GOOGLE_CLIENT_SECRET_TOKEN
-    export GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET_TOKEN
-    echo "export GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET_TOKEN" >> ~/.bashrc
-    echo "export GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET_TOKEN" >> ~/.zshrc
-    print_message $GREEN "Credenciales exportadas correctamente"
-fi
-
-if [ "$LACK_CREDS" = true ]; then
-    print_message $GREEN "todo listo ahora puede ejecutar => npm run start"
-    sleep 3
-    source ~/.bashrc
-    exec /bin/zsh
-fi
-sleep 3
 npm run start
