@@ -10,7 +10,7 @@
     "jest": true,
     "es2021": true
   },
-  "ignorePatterns": ["note_modules/"],
+  "ignorePatterns": ["node_modules/"],
 
   "plugins": ["babel", "jest", "prettier"],
   "rules": {
