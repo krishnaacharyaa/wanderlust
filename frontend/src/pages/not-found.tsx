@@ -25,7 +25,7 @@ function NotFound() {
   }, []);
 
   return (
-    <div>
+    <div style={{ cursor: 'url(/travelCursor.png),auto' }}>
       <div className="relative -mt-2 ">
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col bg-white px-4 py-8 text-black dark:bg-dark  dark:text-slate-50 sm:px-16">

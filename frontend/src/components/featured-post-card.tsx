@@ -21,7 +21,7 @@ export default function FeaturedPostCard({
         <img
           src={post.imageLink}
           alt={post.title}
-          className={`sm:group-hover:scale-hover h-48 w-full rounded-lg object-cover shadow-lg transition-transform ease-in-out sm:h-full`}
+          className={`sm:group-hover:scale-hover h-48 w-full rounded-lg object-cover shadow-lg transition-transform duration-700 ease-in-out sm:h-full`}
         />
       </div>
       <div className="flex h-full w-full flex-col gap-2 p-3 sm:w-2/3">

@@ -10,3 +10,16 @@
     transform: scale(0.95);
   }
 }
+
+body,
+html {
+  cursor: url('/travelCursor.png'), pointer;
+}
+body::-webkit-scrollbar {
+  background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background: rgb(41, 126, 199);
+  border-radius: 50px;
+  box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.3);
+}

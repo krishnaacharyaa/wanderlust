@@ -40,7 +40,7 @@ const AdminUsers = () => {
   }, []);
 
   return (
-    <div className="w-full p-3 px-5 sm:p-12">
+    <div className="w-full p-3 px-5 sm:p-12" style={{ cursor: 'url(/travelCursor.png),auto' }}>
       <h1 className="absolute left-16 top-3 text-2xl font-bold text-light-title dark:text-dark-title sm:static">
         Users
       </h1>

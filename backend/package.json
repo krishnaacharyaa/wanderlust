@@ -38,7 +38,7 @@
   },
   "scripts": {
     "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
-    "start": "node server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon server.js",
     "check": "prettier --check .",
     "format": "prettier --write .",
@@ -69,6 +69,7 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "supertest": "^6.3.3",
-    "typescript": "^5.5.4"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }

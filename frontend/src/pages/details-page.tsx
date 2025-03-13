@@ -90,7 +90,10 @@ export default function DetailsPage() {
 
   if (!loading)
     return (
-      <div className="flex-grow bg-light dark:bg-dark">
+      <div
+        className="flex-grow bg-light dark:bg-dark"
+        style={{ cursor: 'url(/travelCursor.png),auto' }}
+      >
         <div className="relative flex flex-col">
           <img src={post.imageLink} alt={post.title} className="h-80 w-full object-cover sm:h-96" />
           <div className="absolute left-0 top-0 h-full w-full bg-slate-950/60"></div>

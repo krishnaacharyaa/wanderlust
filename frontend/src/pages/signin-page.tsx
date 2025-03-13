@@ -107,7 +107,10 @@ function signin() {
   };
 
   return (
-    <div className="flex-grow cursor-default bg-white py-4 dark:bg-dark-card">
+    <div
+      className="flex-grow cursor-default bg-white py-4 dark:bg-dark-card"
+      style={{ cursor: 'url(/travelCursor.png),auto' }}
+    >
       <div className="m-4 mb-4 flex justify-center">
         <div className="flex w-full items-center justify-center">
           <h2 className="w-2/4 pl-2 text-center text-lg font-bold text-black dark:text-dark-primary sm:text-xl md:w-3/4 md:pl-48">

@@ -21,7 +21,10 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="w-full cursor-default bg-light dark:bg-dark">
+    <div
+      className="w-full cursor-default bg-light dark:bg-dark"
+      style={{ cursor: 'url(/travelCursor.png),auto' }}
+    >
       <Header />
       <div className="mx-4 sm:mx-8 lg:mx-16">
         <BlogFeed />

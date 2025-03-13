@@ -21,7 +21,7 @@ export default function PostCard({ post, testId = 'postcard' }: { post: Post } &
           <img
             src={post.imageLink}
             alt={post.title}
-            className={`sm:group-hover:scale-hover h-full w-full rounded-t-lg object-cover transition-transform ease-in-out`}
+            className={`sm:group-hover:scale-hover h-full w-full rounded-t-lg object-cover transition-transform duration-700 ease-in-out`}
           />
         </div>
         <div className="p-3">
