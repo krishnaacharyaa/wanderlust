@@ -32,40 +32,44 @@ In our project, we believe in creating an open and inclusive space for everyone.
 We're committed to maintaining a positive and inclusive community, and your cooperation is crucial for making this a safe and enjoyable space for everyone.
 
 <a name="setting-up-the-project"></a>
-
-## Setting up the Project
+# Setting up the Project
 
 To setup the project locally follow the steps:
+
 1. Fork and Star the project.
+
 2. Clone your forked repository.
-3. Run `npm run installer`.
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/wanderlust.git
+   ```
+
+3. Download the required dependencies
+   ```bash
+   cd wanderlust
+   npm run installer
+   ```
+
 4. Set up your databases
-   - Make sure you [install mongodb](https://www.mongodb.com/docs/manual/installation/) and run it on port `27017`
-     - Follow one of the two ways to prefill the sample data in the db
-        <details>
-        <summary>mongoimport</summary>
-           
-        ```bash
-        mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
-        ```
-        </details>
-        
-        OR
-       
-        <details>
-        <summary>Manual insertion using mongodb compass</summary>
-           
-        1. Create `wanderlust` db
-        2. Create a new collection named `posts` in the `wanderlust` db
-        3. Use **ADD DATA** option in the `posts` collection and use the content from `backend/data/sample_posts.json` file
-        </details>
+   - Make sure you install [ mongodb](https://www.mongodb.com/docs/manual/installation/) and run it on port `27017`
+
+     **Option 1: mongoimport**
+     ```bash
+     mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
+     ```
+
+     **Option 2: Manual insertion using mongodb compass**
+     - Create `wanderlust` db
+     - Create a new collection named `posts` in the `wanderlust` db
+     - Use **ADD DATA** option in the `posts` collection and use the content from `backend/data/sample_posts.json` file
+
+5. Set up Redis
    - Make sure you [install redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) and run it in `redis://127.0.0.1:6379`
 
+6. Set up env variables
+   ```bash
+   cp backend/.env.sample backend/.env && cp frontend/.env.sample frontend/.env.local
+   ```
 
-5. Set up env variables
-   - ```sh
-     cp backend/.env.sample backend/.env && cp frontend/.env.sample frontend/.env.local
-     ```
 7. Launch the development server with `npm start` in the root directory of the repository.
 
 <a name="request-for-changes-pull-requests"></a>
