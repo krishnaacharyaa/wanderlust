@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"concurrently": "^8.2.2",
+		"concurrently": "^9.1.2",
 		"js-cookie": "^3.0.5"
 	},
 	"scripts": {
@@ -10,9 +10,10 @@
 		"install-frontend": "cd frontend && npm i",
 		"install-backend": "cd backend && npm i",
 		"installer": "npm i && npm run install-backend && npm run install-frontend",
-		"prepare": "husky install && chmod ug+x .husky/*"
+		"prepare": "husky install",
+		"postinstall": "chmod +x .husky/*"
 	},
 	"devDependencies": {
-		"husky": "^8.0.0"
+		"husky": "^9.1.7"
 	}
 }
