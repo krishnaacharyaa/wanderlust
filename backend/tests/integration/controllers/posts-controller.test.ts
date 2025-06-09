@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import request from 'supertest';
 import Post from '../../../models/post';
-import server from '../../../server';
+import server from '../../../api/server';
 import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants';
 import { createPostObject } from '../../utils/helper-objects';
 import { expect, jest, it, afterAll, describe } from '@jest/globals';

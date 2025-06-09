@@ -15,6 +15,7 @@
     "@types/passport-google-oauth20": "^2.0.16",
     "@types/redis": "^4.0.11",
     "@types/supertest": "^6.0.2",
+    "@vercel/node": "^5.2.1",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
