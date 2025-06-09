@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from './constants.js';
+import { HTTP_STATUS } from './constants';
 
 class ApiResponse {
   public status: number;

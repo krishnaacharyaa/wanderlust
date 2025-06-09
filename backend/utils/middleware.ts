@@ -1,5 +1,5 @@
-import { retrieveDataFromCache } from './cache-posts.js';
-import { HTTP_STATUS } from './constants.js';
+import { retrieveDataFromCache } from './cache-posts';
+import { HTTP_STATUS } from './constants';
 import { Request, Response, NextFunction } from 'express';
 
 export const cacheHandler =

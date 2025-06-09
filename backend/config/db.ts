@@ -1,5 +1,5 @@
 import mongoose, { AnyArray } from 'mongoose';
-import { MONGODB_URI } from './utils.js';
+import { MONGODB_URI } from './utils';
 
 export default async function connectDB() {
   try {

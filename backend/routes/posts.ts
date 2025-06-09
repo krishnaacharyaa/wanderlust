@@ -9,11 +9,11 @@ import {
   getPostByIdHandler,
   getRelatedPostsByCategories,
   updatePostHandler,
-} from '../controllers/posts-controller.js';
-import { REDIS_KEYS } from '../utils/constants.js';
-import { cacheHandler } from '../utils/middleware.js';
-import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware.js';
-import { isAuthorMiddleware } from '../middlewares/post-middleware.js';
+} from '../controllers/posts-controller';
+import { REDIS_KEYS } from '../utils/constants';
+import { cacheHandler } from '../utils/middleware';
+import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware';
+import { isAuthorMiddleware } from '../middlewares/post-middleware';
 const router = Router();
 
 // Create a new post

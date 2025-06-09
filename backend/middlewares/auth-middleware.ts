@@ -1,9 +1,9 @@
-import { JWT_SECRET } from '../config/utils.js';
-import { ApiError } from '../utils/api-error.js';
-import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
+import { JWT_SECRET } from '../config/utils';
+import { ApiError } from '../utils/api-error';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
 import jwt from 'jsonwebtoken';
-import { Role } from '../types/role-type.js';
-import User from '../models/user.js';
+import { Role } from '../types/role-type';
+import User from '../models/user';
 
 import { Request, Response, NextFunction } from 'express';
 import { ObjectId } from 'mongoose';

@@ -1,7 +1,7 @@
-import Post from '../models/post.js';
-import User from '../models/user.js';
-import { deleteDataFromCache, storeDataInCache } from '../utils/cache-posts.js';
-import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants.js';
+import Post from '../models/post';
+import User from '../models/user';
+import { deleteDataFromCache, storeDataInCache } from '../utils/cache-posts';
+import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants';
 import { Request, Response, NextFunction } from 'express';
 export const createPostHandler = async (req: Request, res: Response) => {
   try {

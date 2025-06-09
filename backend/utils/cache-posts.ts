@@ -1,5 +1,5 @@
-import { getRedisClient } from '../services/redis.js';
-import { REDIS_PREFIX } from './constants.js';
+import { getRedisClient } from '../services/redis';
+import { REDIS_PREFIX } from './constants';
 
 // Helper function to check if Redis is available
 function isRedisEnabled() {

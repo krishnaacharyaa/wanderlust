@@ -1,5 +1,5 @@
-import Post from '../models/post.js';
-import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';
+import Post from '../models/post';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
 import { Request, Response, NextFunction } from 'express';
 
 export const isAuthorMiddleware = async (req: Request, res: Response, next: NextFunction) => {

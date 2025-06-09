@@ -1,4 +1,4 @@
-import { validCategories } from '../../utils/constants.js';
+import { validCategories } from '../../utils/constants';
 import { jest } from '@jest/globals';
 
 import { Response } from 'express';
