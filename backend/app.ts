@@ -2,13 +2,13 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import authRouter from './routes/auth.js';
-import postsRouter from './routes/posts.js';
-import userRouter from './routes/user.js';
-import errorMiddleware from './middlewares/error-middleware.js';
-import passport from './config/passport.js';
+import authRouter from './routes/auth';
+import postsRouter from './routes/posts';
+import userRouter from './routes/user';
+import errorMiddleware from './middlewares/error-middleware';
+import passport from './config/passport';
 import session from 'express-session';
-import { FRONTEND_URL } from './config/utils.js';
+import { FRONTEND_URL } from './config/utils';
 
 const app = express();
 
