@@ -1,5 +1,5 @@
 import { Error as MongooseError } from 'mongoose';
-import { RESPONSE_MESSAGES } from './constants';
+import { RESPONSE_MESSAGES } from './constants.js';
 
 interface ApiErrorParams {
   status: number;

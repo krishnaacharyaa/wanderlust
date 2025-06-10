@@ -1,4 +1,4 @@
-import { ACCESS_COOKIE_MAXAGE, NODE_ENV } from '../config/utils';
+import { ACCESS_COOKIE_MAXAGE, NODE_ENV } from '../config/utils.js';
 const defaultMaxAge = 3600000;
 interface CookieObject {
   httpOnly: boolean;
