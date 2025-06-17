@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ObjectId } from 'mongoose';
 
 interface JwtPayload {
-  _id: ObjectId;
+  id: ObjectId;
 }
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
@@ -24,8 +24,8 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   }
 
   try {
-    const { _id } = jwt.verify(token, JWT_SECRET as string) as JwtPayload;
-    req.user = await User.findById(_id);
+    const { id } = jwt.verify(token, JWT_SECRET as string) as JwtPayload;
+    req.user = await User.findById(id);
     next();
   } catch (error: any) {
     console.log('Token verification error:', error);
