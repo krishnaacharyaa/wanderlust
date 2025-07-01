@@ -116,6 +116,7 @@ Feel free to get in touch with me for any further queries or support, happy to h
 </div>
 
 We extend our heartfelt gratitude for your invaluable contribution to our project! Your efforts play a pivotal role in elevating Wanderlust to greater heights. 😊
+This file is edit by Junaid 
 
 <div>
 <a href="https://github.com/krishnaacharyaa/wanderlust/graphs/contributors">
