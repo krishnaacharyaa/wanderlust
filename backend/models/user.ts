@@ -50,16 +50,27 @@ const userSchema = new Schema<UserObject>(
         'Please enter a valid email address',
       ],
     },
+    // password: {
+    //   type: String,
+    //   required: false,
+    //   minLength: [8, 'Password must be at least 8 characters'],
+    //   match: [
+    //     /^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/,
+    //     'Password must contain at least one uppercase, one lowercase, one digit, and one special character',
+    //   ],
+    //   select: false,
+    // },
     password: {
       type: String,
       required: false,
       minLength: [8, 'Password must be at least 8 characters'],
       match: [
-        /^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/,
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-]).{8,}$/,
         'Password must contain at least one uppercase, one lowercase, one digit, and one special character',
       ],
       select: false,
     },
+
     avatar: {
       type: String,
       required: false,
